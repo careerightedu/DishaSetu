@@ -1,0 +1,7724 @@
+{
+  "1": {
+    "id": 1,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "2": {
+    "id": 2,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Conventional": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "3": {
+    "id": 3,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Realistic": 1.0
+      }
+    }
+  },
+  "4": {
+    "id": 4,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "5": {
+    "id": 5,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "6": {
+    "id": 6,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "7": {
+    "id": 7,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Logical": 0.5,
+        "Investigative": 0.5
+      }
+    }
+  },
+  "8": {
+    "id": 8,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "9": {
+    "id": 9,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Artistic": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "10": {
+    "id": 10,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Investigative": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "11": {
+    "id": 11,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "12": {
+    "id": 12,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "13": {
+    "id": 13,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Artistic": 1.0
+      },
+      "D": {
+        "Social": 1.0
+      }
+    }
+  },
+  "14": {
+    "id": 14,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Enterprising": 1.0
+      },
+      "C": {
+        "Artistic": 1.0
+      },
+      "D": {
+        "Realistic": 1.0
+      }
+    }
+  },
+  "15": {
+    "id": 15,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "16": {
+    "id": 16,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Investigative": 0.3
+      },
+      "D": {
+        "Conventional": 0.2
+      }
+    }
+  },
+  "17": {
+    "id": 17,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Artistic": 1.0
+      }
+    }
+  },
+  "18": {
+    "id": 18,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Enterprising": 0.5
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "19": {
+    "id": 19,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Enterprising": 0.5
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "20": {
+    "id": 20,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Investigative": 0.3
+      },
+      "D": {
+        "Artistic": 0.3
+      }
+    }
+  },
+  "21": {
+    "id": 21,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "22": {
+    "id": 22,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Enterprising": 0.5
+      },
+      "C": {
+        "Enterprising": 0.3
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "23": {
+    "id": 23,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "24": {
+    "id": 24,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 0.5
+      }
+    }
+  },
+  "25": {
+    "id": 25,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "26": {
+    "id": 26,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Artistic": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "27": {
+    "id": 27,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Investigative": 0.5
+      },
+      "C": {
+        "Social": 0.3
+      },
+      "D": {
+        "Conventional": 0.2
+      }
+    }
+  },
+  "28": {
+    "id": 28,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "29": {
+    "id": 29,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "30": {
+    "id": 30,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Enterprising": 0.5
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "31": {
+    "id": 31,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Enterprising": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Artistic": 1.0
+      }
+    }
+  },
+  "32": {
+    "id": 32,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Enterprising": 0.5
+      },
+      "D": {
+        "Investigative": 0.3
+      }
+    }
+  },
+  "33": {
+    "id": 33,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Investigative": 0.5
+      },
+      "C": {
+        "Investigative": 0.2
+      },
+      "D": {
+        "Investigative": 0.3
+      }
+    }
+  },
+  "34": {
+    "id": 34,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Artistic": 1.0
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "35": {
+    "id": 35,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Social": 1.0
+      },
+      "C": {
+        "Artistic": 1.0
+      },
+      "D": {
+        "Realistic": 0.5
+      }
+    }
+  },
+  "36": {
+    "id": 36,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Realistic": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Social": 0.3
+      }
+    }
+  },
+  "37": {
+    "id": 37,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Realistic": 1.0
+      }
+    }
+  },
+  "38": {
+    "id": 38,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "39": {
+    "id": 39,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "40": {
+    "id": 40,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Realistic": 0.1
+      }
+    }
+  },
+  "41": {
+    "id": 41,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Realistic": 0.5
+      },
+      "C": {
+        "Conventional": 0.3
+      },
+      "D": {
+        "Social": 0.3
+      }
+    }
+  },
+  "42": {
+    "id": 42,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "43": {
+    "id": 43,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "44": {
+    "id": 44,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Artistic": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "45": {
+    "id": 45,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Social": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Investigative": 0.5
+      }
+    }
+  },
+  "46": {
+    "id": 46,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "47": {
+    "id": 47,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Social": 1.0
+      }
+    }
+  },
+  "48": {
+    "id": 48,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Social": 0.5
+      },
+      "C": {
+        "Conventional": 0.3
+      },
+      "D": {
+        "Investigative": 0.3
+      }
+    }
+  },
+  "49": {
+    "id": 49,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 0.8
+      },
+      "D": {
+        "Investigative": 0.8
+      }
+    }
+  },
+  "50": {
+    "id": 50,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "51": {
+    "id": 51,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Creative": 0.5
+      },
+      "C": {
+        "Logical": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "52": {
+    "id": 52,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Investigative": 0.5,
+        "Logical": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "53": {
+    "id": 53,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Logical": 1.0
+      }
+    }
+  },
+  "54": {
+    "id": 54,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Creative": 1.0
+      }
+    }
+  },
+  "55": {
+    "id": 55,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Creative": 0.5
+      },
+      "C": {
+        "Logical": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "56": {
+    "id": 56,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Logical": 0.5,
+        "Creative": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "57": {
+    "id": 57,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Creative": 0.5
+      },
+      "C": {
+        "Logical": 0.3
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "58": {
+    "id": 58,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Creative": 0.5
+      },
+      "C": {
+        "Creative": 0.2
+      },
+      "D": {
+        "Conventional": 0.5
+      }
+    }
+  },
+  "59": {
+    "id": 59,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Creative": 0.5
+      },
+      "C": {
+        "Logical": 0.3
+      },
+      "D": {
+        "Investigative": 0.5
+      }
+    }
+  },
+  "60": {
+    "id": 60,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Investigative": 0.5,
+        "Logical": 0.5
+      },
+      "C": {
+        "Creative": 0.5
+      },
+      "D": {
+        "Social": 0.3
+      }
+    }
+  },
+  "61": {
+    "id": 61,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Creative": 1.0
+      }
+    }
+  },
+  "62": {
+    "id": 62,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Logical": 1.0
+      }
+    }
+  },
+  "63": {
+    "id": 63,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Social": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Investigative": 0.3
+      }
+    }
+  },
+  "64": {
+    "id": 64,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Verbal": 0.5
+      },
+      "C": {
+        "Logical": 0.3
+      },
+      "D": {
+        "Conventional": 0.2
+      }
+    }
+  },
+  "65": {
+    "id": 65,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Logical": 1.0
+        },
+        "1": {
+          "Creative": 1.0
+        },
+        "2": {
+          "Social": 1.0
+        },
+        "3": {
+          "Conventional": 1.0
+        }
+      }
+    }
+  },
+  "66": {
+    "id": 66,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Conventional": 0.3
+      },
+      "D": {
+        "Conventional": 0.2
+      }
+    }
+  },
+  "67": {
+    "id": 67,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Numerical": 0.5
+      },
+      "C": {
+        "Verbal": 0.5
+      },
+      "D": {
+        "Numerical": 0.3
+      }
+    }
+  },
+  "68": {
+    "id": 68,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Verbal": 0.3
+      },
+      "D": {
+        "Logical": 0.5
+      }
+    }
+  },
+  "69": {
+    "id": 69,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "70": {
+    "id": 70,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Numerical": 1.0
+      }
+    }
+  },
+  "71": {
+    "id": 71,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Numerical": 0.5
+      },
+      "C": {
+        "Verbal": 0.5
+      },
+      "D": {
+        "Verbal": 0.3
+      }
+    }
+  },
+  "72": {
+    "id": 72,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "73": {
+    "id": 73,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "74": {
+    "id": 74,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 0.5,
+        "Numerical": 0.5
+      },
+      "B": {
+        "Conventional": 0.5
+      }
+    }
+  },
+  "75": {
+    "id": 75,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.5
+      },
+      "C": {
+        "Spatial": 0.2
+      },
+      "D": {
+        "Spatial": 0.1
+      }
+    }
+  },
+  "76": {
+    "id": 76,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.5
+      },
+      "C": {
+        "Spatial": 0.2
+      },
+      "D": {
+        "Spatial": 0.1
+      }
+    }
+  },
+  "77": {
+    "id": 77,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.5
+      },
+      "C": {
+        "Spatial": 0.3
+      },
+      "D": {
+        "Social": 0.3
+      }
+    }
+  },
+  "78": {
+    "id": 78,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "79": {
+    "id": 79,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Spatial": 1.0
+        },
+        "1": {
+          "Verbal": 1.0
+        },
+        "2": {
+          "Artistic": 1.0
+        },
+        "3": {
+          "Enterprising": 1.0
+        }
+      }
+    }
+  },
+  "80": {
+    "id": 80,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.5
+      },
+      "C": {
+        "Spatial": 0.2
+      },
+      "D": {
+        "Spatial": 0.1
+      }
+    }
+  },
+  "81": {
+    "id": 81,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "82": {
+    "id": 82,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.5
+      },
+      "C": {
+        "Logical": 0.5
+      },
+      "D": {
+        "Spatial": 0.3
+      }
+    }
+  },
+  "83": {
+    "id": 83,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Verbal": 0.5
+      },
+      "C": {
+        "Spatial": 0.5
+      },
+      "D": {
+        "Verbal": 0.3
+      }
+    }
+  },
+  "84": {
+    "id": 84,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Verbal": 0.5
+      },
+      "C": {
+        "Verbal": 0.3
+      },
+      "D": {
+        "Verbal": 0.5
+      }
+    }
+  },
+  "85": {
+    "id": 85,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Spatial": 1.0
+      }
+    }
+  },
+  "86": {
+    "id": 86,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "87": {
+    "id": 87,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Verbal": 0.5
+      },
+      "C": {
+        "Verbal": 0.3
+      },
+      "D": {
+        "Verbal": 0.2
+      }
+    }
+  },
+  "88": {
+    "id": 88,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Verbal": 0.5
+      },
+      "C": {
+        "Verbal": 0.3
+      },
+      "D": {
+        "Verbal": 0.2
+      }
+    }
+  },
+  "89": {
+    "id": 89,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "LIKERT": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "90": {
+    "id": 90,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Social Impact": 1.0
+      }
+    }
+  },
+  "91": {
+    "id": 91,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Achievement": 0.7
+      },
+      "D": {
+        "Balance": 0.5
+      }
+    }
+  },
+  "92": {
+    "id": 92,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Achievement": 1.0
+      }
+    }
+  },
+  "93": {
+    "id": 93,
+    "responseType": "Ranking",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Achievement": 0.5,
+        "Balance": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Achievement": 0.3
+      }
+    }
+  },
+  "94": {
+    "id": 94,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Achievement": 1.0
+        },
+        "1": {
+          "Achievement": 0.8,
+          "Social Impact": 0.5
+        },
+        "2": {
+          "Wealth": 1.0
+        },
+        "3": {
+          "Social Impact": 1.0
+        }
+      }
+    }
+  },
+  "95": {
+    "id": 95,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Achievement": 0.5,
+        "Security": 0.5
+      },
+      "C": {
+        "Security": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "96": {
+    "id": 96,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Security": 0.5
+      },
+      "C": {
+        "Balance": 0.5
+      },
+      "D": {
+        "Achievement": 0.7
+      }
+    }
+  },
+  "97": {
+    "id": 97,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Achievement": 0.5,
+        "Wealth": 0.5
+      },
+      "C": {
+        "Social Impact": 0.5,
+        "Achievement": 0.3
+      },
+      "D": {
+        "Achievement": 0.6
+      }
+    }
+  },
+  "98": {
+    "id": 98,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Autonomy": 0.5
+      },
+      "D": {
+        "Security": 0.5
+      }
+    }
+  },
+  "99": {
+    "id": 99,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Autonomy": 0.7
+      },
+      "C": {
+        "Security": 0.7
+      },
+      "D": {
+        "Security": 1.0
+      }
+    }
+  },
+  "100": {
+    "id": 100,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Wealth": 1.0
+      }
+    }
+  },
+  "101": {
+    "id": 101,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Autonomy": 0.5,
+        "Conventional": 0.5
+      },
+      "C": {
+        "Conventional": 0.7
+      },
+      "D": {
+        "Security": 0.5
+      }
+    }
+  },
+  "102": {
+    "id": 102,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Autonomy": 1.0
+        },
+        "1": {
+          "Achievement": 0.7,
+          "Security": 0.5
+        },
+        "2": {
+          "Autonomy": 0.7
+        },
+        "3": {
+          "Security": 1.0
+        }
+      }
+    }
+  },
+  "103": {
+    "id": 103,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Autonomy": 0.5,
+        "Balance": 0.5
+      },
+      "C": {
+        "Security": 0.7
+      },
+      "D": {
+        "Security": 1.0
+      }
+    }
+  },
+  "104": {
+    "id": 104,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Security": 1.0
+      }
+    }
+  },
+  "105": {
+    "id": 105,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Balance": 0.5
+      },
+      "B": {
+        "Achievement": 0.7
+      },
+      "C": {
+        "Achievement": 0.5,
+        "Social Impact": 0.5
+      },
+      "D": {
+        "Achievement": 1.0
+      }
+    }
+  },
+  "106": {
+    "id": 106,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "107": {
+    "id": 107,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Balance": 1.0
+      },
+      "C": {
+        "Balance": 0.7,
+        "Wealth": 0.5
+      },
+      "D": {
+        "Balance": 0.5
+      }
+    }
+  },
+  "108": {
+    "id": 108,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Achievement": 1.0,
+          "Wealth": 0.7
+        },
+        "1": {
+          "Social Impact": 1.0,
+          "Achievement": 0.7
+        },
+        "2": {
+          "Balance": 1.0
+        },
+        "3": {
+          "Autonomy": 1.0,
+          "Balance": 0.7
+        }
+      }
+    }
+  },
+  "109": {
+    "id": 109,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Achievement": 0.7,
+        "Wealth": 0.7
+      },
+      "B": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "110": {
+    "id": 110,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Balance": 0.7
+      },
+      "C": {
+        "Balance": 0.5
+      },
+      "D": {
+        "Achievement": 1.0
+      }
+    }
+  },
+  "111": {
+    "id": 111,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Security": 1.0
+      },
+      "B": {
+        "Risk Appetite": 1.0
+      }
+    }
+  },
+  "112": {
+    "id": 112,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Security": 1.0
+      },
+      "B": {
+        "Security": 0.5
+      },
+      "C": {
+        "Achievement": 0.5
+      },
+      "D": {
+        "Risk Appetite": 0.5
+      }
+    }
+  },
+  "113": {
+    "id": 113,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Security": 1.0
+      }
+    }
+  },
+  "114": {
+    "id": 114,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Security": 0.5,
+        "Achievement": 0.5
+      },
+      "C": {
+        "Security": 1.0
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "115": {
+    "id": 115,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Logical": 0.5,
+        "Risk Appetite": 0.5
+      },
+      "C": {
+        "Security": 1.0
+      },
+      "D": {
+        "Security": 0.7
+      }
+    }
+  },
+  "116": {
+    "id": 116,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Security": 1.0
+      },
+      "B": {
+        "Risk Appetite": 1.0
+      }
+    }
+  },
+  "117": {
+    "id": 117,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Security": 0.5,
+        "Achievement": 0.5
+      },
+      "C": {
+        "Security": 1.0
+      },
+      "D": {
+        "Achievement": 0.3
+      }
+    }
+  },
+  "118": {
+    "id": 118,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 0.7
+      },
+      "B": {
+        "Security": 0.5,
+        "Risk Appetite": 0.5
+      },
+      "C": {
+        "Security": 1.0
+      },
+      "D": {
+        "Achievement": 0.5
+      }
+    }
+  },
+  "119": {
+    "id": 119,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Social Impact": 1.0
+      }
+    }
+  },
+  "120": {
+    "id": 120,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 1.0
+      },
+      "B": {
+        "Social Impact": 0.5,
+        "Wealth": 0.5
+      },
+      "C": {
+        "Wealth": 0.7
+      },
+      "D": {
+        "Wealth": 1.0
+      }
+    }
+  },
+  "121": {
+    "id": 121,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Social Impact": 1.0
+      }
+    }
+  },
+  "122": {
+    "id": 122,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 1.0
+      },
+      "B": {
+        "Social Impact": 0.5,
+        "Wealth": 0.5
+      },
+      "C": {
+        "Wealth": 0.5
+      },
+      "D": {
+        "Wealth": 0.7
+      }
+    }
+  },
+  "123": {
+    "id": 123,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Social Impact": 1.0
+        },
+        "1": {
+          "Social Impact": 0.8,
+          "Achievement": 0.5
+        },
+        "2": {
+          "Social Impact": 0.7,
+          "Artistic": 0.5
+        },
+        "3": {
+          "Wealth": 0.7,
+          "Social Impact": 0.5
+        }
+      }
+    }
+  },
+  "124": {
+    "id": 124,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 1.0
+      },
+      "B": {
+        "Social Impact": 0.5,
+        "Wealth": 0.5
+      },
+      "C": {
+        "Wealth": 0.5
+      },
+      "D": {
+        "Wealth": 0.7
+      }
+    }
+  },
+  "125": {
+    "id": 125,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 1.0
+      },
+      "B": {
+        "Social Impact": 0.5
+      },
+      "C": {
+        "Wealth": 0.5,
+        "Social Impact": 0.3
+      },
+      "D": {
+        "Social Impact": 0.2
+      }
+    }
+  },
+  "126": {
+    "id": 126,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "127": {
+    "id": 127,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Logical": 0.5,
+        "Wealth": 0.5
+      },
+      "C": {
+        "Security": 0.5
+      },
+      "D": {
+        "Achievement": 0.3
+      }
+    }
+  },
+  "128": {
+    "id": 128,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Wealth": 0.7,
+        "Security": 0.5
+      },
+      "C": {
+        "Balance": 0.7
+      },
+      "D": {
+        "Social Impact": 0.7
+      }
+    }
+  },
+  "129": {
+    "id": 129,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "LIKERT": {
+        "Wealth": 1.0
+      }
+    }
+  },
+  "130": {
+    "id": 130,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "131": {
+    "id": 131,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "RANKING": {
+        "0": {
+          "Wealth": 1.0
+        },
+        "1": {
+          "Achievement": 1.0
+        },
+        "2": {
+          "Social Impact": 1.0
+        },
+        "3": {
+          "Autonomy": 1.0
+        },
+        "4": {
+          "Balance": 1.0
+        }
+      }
+    }
+  },
+  "132": {
+    "id": 132,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Leadership": 0.5
+      },
+      "C": {
+        "Leadership": 0.2
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "133": {
+    "id": 133,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Leadership": 0.3
+      }
+    }
+  },
+  "134": {
+    "id": 134,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0,
+        "Social": 0.5
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "135": {
+    "id": 135,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Leadership": 0.5,
+        "Conventional": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "136": {
+    "id": 136,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Leadership": 1.0
+        },
+        "1": {
+          "Leadership": 0.7,
+          "Social": 0.5
+        },
+        "2": {
+          "Leadership": 0.5
+        },
+        "3": {
+          "Social": 0.5,
+          "Leadership": 0.3
+        }
+      }
+    }
+  },
+  "137": {
+    "id": 137,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Leadership": 0.5
+      },
+      "C": {
+        "Leadership": 0.3
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "138": {
+    "id": 138,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Leadership": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Leadership": 0.2
+      }
+    }
+  },
+  "139": {
+    "id": 139,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.7
+      },
+      "C": {
+        "Pace": 0.4
+      },
+      "D": {
+        "Pace": 0.2
+      }
+    }
+  },
+  "140": {
+    "id": 140,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.5
+      },
+      "C": {
+        "Logical": 0.5
+      },
+      "D": {
+        "Security": 0.3
+      }
+    }
+  },
+  "141": {
+    "id": 141,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.3
+      }
+    }
+  },
+  "142": {
+    "id": 142,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.7
+      },
+      "C": {
+        "Pace": 0.4
+      },
+      "D": {
+        "Pace": 0.2
+      }
+    }
+  },
+  "143": {
+    "id": 143,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.3
+      }
+    }
+  },
+  "144": {
+    "id": 144,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.5
+      },
+      "C": {
+        "Security": 0.5
+      },
+      "D": {
+        "Security": 0.7
+      }
+    }
+  },
+  "145": {
+    "id": 145,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 0.2
+      },
+      "B": {
+        "People vs Task": 1.0
+      },
+      "C": {
+        "People vs Task": 0.5
+      },
+      "D": {
+        "People vs Task": 0.1
+      }
+    }
+  },
+  "146": {
+    "id": 146,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 0.2
+      },
+      "B": {
+        "People vs Task": 1.0
+      }
+    }
+  },
+  "147": {
+    "id": 147,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 1.0
+      },
+      "B": {
+        "People vs Task": 0.5
+      },
+      "C": {
+        "People vs Task": 0.2
+      },
+      "D": {
+        "People vs Task": 0.1
+      }
+    }
+  },
+  "148": {
+    "id": 148,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 0.2
+      },
+      "B": {
+        "People vs Task": 1.0
+      }
+    }
+  },
+  "149": {
+    "id": 149,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 0.5
+      },
+      "B": {
+        "People vs Task": 0.3
+      },
+      "C": {
+        "People vs Task": 0.7
+      },
+      "D": {
+        "People vs Task": 0.1
+      }
+    }
+  },
+  "150": {
+    "id": 150,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "People vs Task": 0.2
+        },
+        "1": {
+          "People vs Task": 1.0
+        },
+        "2": {
+          "Achievement": 0.7
+        },
+        "3": {
+          "Conventional": 0.5
+        }
+      }
+    }
+  },
+  "151": {
+    "id": 151,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 0.2
+      },
+      "B": {
+        "Structure Preference": 1.0
+      },
+      "C": {
+        "Structure Preference": 0.3
+      },
+      "D": {
+        "Structure Preference": 0.5
+      }
+    }
+  },
+  "152": {
+    "id": 152,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 1.0
+      },
+      "B": {
+        "Structure Preference": 0.2
+      }
+    }
+  },
+  "153": {
+    "id": 153,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 0.5
+      },
+      "B": {
+        "Structure Preference": 0.7
+      },
+      "C": {
+        "Structure Preference": 0.2
+      },
+      "D": {
+        "Structure Preference": 0.1
+      }
+    }
+  },
+  "154": {
+    "id": 154,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Structure Preference": 1.0
+        },
+        "1": {
+          "Structure Preference": 0.2
+        },
+        "2": {
+          "Structure Preference": 0.5
+        },
+        "3": {
+          "Structure Preference": 0.1
+        }
+      }
+    }
+  },
+  "155": {
+    "id": 155,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 0.7,
+        "Structure Preference": 0.2
+      },
+      "B": {
+        "Structure Preference": 0.5,
+        "Autonomy": 0.5
+      },
+      "C": {
+        "Structure Preference": 1.0
+      },
+      "D": {
+        "Structure Preference": 0.7
+      }
+    }
+  },
+  "156": {
+    "id": 156,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0,
+        "Structure Preference": 0.2
+      },
+      "B": {
+        "Structure Preference": 1.0,
+        "Autonomy": 0.2
+      }
+    }
+  },
+  "157": {
+    "id": 157,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 0.2,
+        "Autonomy": 0.7
+      },
+      "B": {
+        "Structure Preference": 1.0
+      }
+    }
+  },
+  "158": {
+    "id": 158,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 1.0
+      },
+      "B": {
+        "Structure Preference": 0.3,
+        "Autonomy": 0.5
+      },
+      "C": {
+        "Structure Preference": 0.2
+      },
+      "D": {
+        "Structure Preference": 0.1
+      }
+    }
+  },
+  "159": {
+    "id": 159,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 1.0
+      },
+      "B": {
+        "Team Orientation": 0.2
+      }
+    }
+  },
+  "160": {
+    "id": 160,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 1.0,
+        "Leadership": 0.5
+      },
+      "B": {
+        "Team Orientation": 0.3
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Logical": 0.5
+      }
+    }
+  },
+  "161": {
+    "id": 161,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 1.0
+      },
+      "B": {
+        "Team Orientation": 0.5
+      },
+      "C": {
+        "Team Orientation": 0.2
+      },
+      "D": {
+        "Team Orientation": 0.1
+      }
+    }
+  },
+  "162": {
+    "id": 162,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 0.5
+      },
+      "B": {
+        "Team Orientation": 0.7
+      },
+      "C": {
+        "Team Orientation": 1.0
+      },
+      "D": {
+        "Team Orientation": 0.2
+      }
+    }
+  },
+  "163": {
+    "id": 163,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Team Orientation": 0.7
+        },
+        "1": {
+          "Team Orientation": 1.0
+        },
+        "2": {
+          "Team Orientation": 0.2
+        },
+        "3": {
+          "Team Orientation": 0.5
+        }
+      }
+    }
+  },
+  "164": {
+    "id": 164,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 1.0,
+        "Leadership": 0.5
+      },
+      "B": {
+        "Team Orientation": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Team Orientation": 0.3
+      }
+    }
+  },
+  "165": {
+    "id": 165,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 1.0
+      },
+      "B": {
+        "Team Orientation": 0.5,
+        "Conventional": 0.5
+      },
+      "C": {
+        "Team Orientation": 0.2
+      },
+      "D": {
+        "Team Orientation": 0.3
+      }
+    }
+  },
+  "166": {
+    "id": 166,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 0.1
+      },
+      "B": {
+        "Family Influence": 0.5
+      },
+      "C": {
+        "Family Influence": 1.0
+      },
+      "D": {
+        "Family Influence": 0.7
+      }
+    }
+  },
+  "167": {
+    "id": 167,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 0.1
+      },
+      "B": {
+        "Family Influence": 0.5
+      },
+      "C": {
+        "Family Influence": 0.7
+      },
+      "D": {
+        "Family Influence": 1.0
+      }
+    }
+  },
+  "168": {
+    "id": 168,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 0.5
+      },
+      "B": {
+        "Family Influence": 0.7
+      },
+      "C": {
+        "Family Influence": 0.1
+      },
+      "D": {
+        "Family Influence": 1.0
+      }
+    }
+  },
+  "169": {
+    "id": 169,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "LIKERT": {
+        "Family Influence": 1.0
+      }
+    }
+  },
+  "170": {
+    "id": 170,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 1.0
+      },
+      "B": {
+        "Family Influence": 0.7
+      },
+      "C": {
+        "Family Influence": 0.2
+      },
+      "D": {
+        "Family Influence": 0.5
+      }
+    }
+  },
+  "171": {
+    "id": 171,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 0.1
+      },
+      "B": {
+        "Family Influence": 0.3
+      },
+      "C": {
+        "Family Influence": 1.0
+      },
+      "D": {
+        "Family Influence": 0.5
+      }
+    }
+  },
+  "172": {
+    "id": 172,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 1.0
+      },
+      "B": {
+        "Family Influence": 0.7
+      },
+      "C": {
+        "Family Influence": 0.3
+      },
+      "D": {
+        "Family Influence": 0.5
+      }
+    }
+  },
+  "173": {
+    "id": 173,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 1.0
+      },
+      "B": {
+        "Financial Constraints": 0.7
+      },
+      "C": {
+        "Financial Constraints": 0.3
+      },
+      "D": {
+        "Financial Constraints": 0.1
+      }
+    }
+  },
+  "174": {
+    "id": 174,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 1.0
+      },
+      "B": {
+        "Financial Constraints": 0.7
+      },
+      "C": {
+        "Financial Constraints": 0.3
+      },
+      "D": {
+        "Financial Constraints": 0.1
+      }
+    }
+  },
+  "175": {
+    "id": 175,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 1.0
+      },
+      "B": {
+        "Financial Constraints": 0.1
+      }
+    }
+  },
+  "176": {
+    "id": 176,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 0.5
+      },
+      "B": {
+        "Financial Constraints": 1.0
+      },
+      "C": {
+        "Financial Constraints": 0.7
+      },
+      "D": {
+        "Financial Constraints": 0.3
+      }
+    }
+  },
+  "177": {
+    "id": 177,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 0.3
+      },
+      "B": {
+        "Financial Constraints": 0.7
+      },
+      "C": {
+        "Financial Constraints": 1.0
+      },
+      "D": {
+        "Financial Constraints": 0.5
+      }
+    }
+  },
+  "178": {
+    "id": 178,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 0.3
+      },
+      "B": {
+        "Financial Constraints": 0.7
+      },
+      "C": {
+        "Financial Constraints": 1.0
+      },
+      "D": {
+        "Financial Constraints": 0.5
+      }
+    }
+  },
+  "179": {
+    "id": 179,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.5
+      },
+      "C": {
+        "Location Flexibility": 0.3
+      },
+      "D": {
+        "Location Flexibility": 0.1
+      }
+    }
+  },
+  "180": {
+    "id": 180,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 0.7
+      },
+      "B": {
+        "Location Flexibility": 0.5
+      },
+      "C": {
+        "Location Flexibility": 0.2
+      },
+      "D": {
+        "Location Flexibility": 1.0
+      }
+    }
+  },
+  "181": {
+    "id": 181,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.3
+      }
+    }
+  },
+  "182": {
+    "id": 182,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.5
+      },
+      "C": {
+        "Location Flexibility": 0.3
+      },
+      "D": {
+        "Location Flexibility": 0.1
+      }
+    }
+  },
+  "183": {
+    "id": 183,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.5
+      },
+      "C": {
+        "Location Flexibility": 0.3
+      },
+      "D": {
+        "Location Flexibility": 0.1
+      }
+    }
+  },
+  "184": {
+    "id": 184,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.5
+      },
+      "C": {
+        "Location Flexibility": 0.3
+      },
+      "D": {
+        "Location Flexibility": 0.1
+      }
+    }
+  },
+  "185": {
+    "id": 185,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 0.1
+      },
+      "B": {
+        "Risk Appetite": 1.0
+      }
+    }
+  },
+  "186": {
+    "id": 186,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.5
+      },
+      "C": {
+        "Risk Appetite": 0.1
+      },
+      "D": {
+        "Risk Appetite": 0.3
+      }
+    }
+  },
+  "187": {
+    "id": 187,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.7
+      },
+      "C": {
+        "Risk Appetite": 0.3
+      },
+      "D": {
+        "Risk Appetite": 0.2
+      }
+    }
+  },
+  "188": {
+    "id": 188,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 0.7
+      },
+      "B": {
+        "Risk Appetite": 0.3
+      }
+    }
+  },
+  "189": {
+    "id": 189,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.5
+      },
+      "C": {
+        "Risk Appetite": 0.1
+      },
+      "D": {
+        "Risk Appetite": 0.2
+      }
+    }
+  },
+  "190": {
+    "id": 190,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Risk Appetite": 1.0
+        },
+        "1": {
+          "Risk Appetite": 0.7
+        },
+        "2": {
+          "Risk Appetite": 0.3
+        },
+        "3": {
+          "Risk Appetite": 0.1
+        }
+      }
+    }
+  },
+  "191": {
+    "id": 191,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.5
+      },
+      "C": {
+        "Risk Appetite": 0.1
+      },
+      "D": {
+        "Risk Appetite": 0.2
+      }
+    }
+  },
+  "192": {
+    "id": 192,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Work Hours": 1.0
+      },
+      "B": {
+        "Work Hours": 0.5,
+        "Balance": 0.5
+      },
+      "C": {
+        "Work Hours": 0.3
+      },
+      "D": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "193": {
+    "id": 193,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Balance": 1.0
+      },
+      "B": {
+        "Work Hours": 0.5,
+        "Balance": 0.5
+      },
+      "C": {
+        "Work Hours": 0.7
+      },
+      "D": {
+        "Work Hours": 1.0
+      }
+    }
+  },
+  "194": {
+    "id": 194,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Work Hours": 1.0
+      },
+      "B": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "195": {
+    "id": 195,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Work Hours": 1.0
+      },
+      "B": {
+        "Work Hours": 0.5,
+        "Balance": 0.5
+      },
+      "C": {
+        "Work Hours": 0.3,
+        "Balance": 0.7
+      },
+      "D": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "196": {
+    "id": 196,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Work Hours": 1.0
+      },
+      "B": {
+        "Work Hours": 0.5,
+        "Balance": 0.5
+      },
+      "C": {
+        "Wealth": 0.7
+      },
+      "D": {
+        "Autonomy": 0.7
+      }
+    }
+  },
+  "197": {
+    "id": 197,
+    "responseType": "Multi-select",
+    "scoringMap": {
+      "MULTI": {
+        "Exam Awareness": 1.0
+      }
+    }
+  },
+  "198": {
+    "id": 198,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Exam Awareness": 1.0
+      },
+      "B": {
+        "Exam Awareness": 0.7
+      },
+      "C": {
+        "Exam Awareness": 0.3
+      },
+      "D": {
+        "Exam Awareness": 0.1
+      }
+    }
+  },
+  "199": {
+    "id": 199,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Exam Awareness": 1.0
+      },
+      "B": {
+        "Exam Awareness": 0.5
+      },
+      "C": {
+        "Exam Awareness": 0.2
+      },
+      "D": {
+        "Exam Awareness": 0.1
+      }
+    }
+  },
+  "200": {
+    "id": 200,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Exam Awareness": 0.1
+      },
+      "B": {
+        "Exam Awareness": 0.5
+      },
+      "C": {
+        "Exam Awareness": 1.0
+      },
+      "D": {
+        "Exam Awareness": 0.7
+      }
+    }
+  },
+  "201": {
+    "id": 201,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "LIKERT": {
+        "Exam Awareness": 1.0
+      }
+    }
+  },
+  "202": {
+    "id": 202,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Exam Awareness": 0.1
+      },
+      "B": {
+        "Exam Awareness": 0.5
+      },
+      "C": {
+        "Exam Awareness": 1.0
+      },
+      "D": {
+        "Exam Awareness": 0.7
+      }
+    }
+  },
+  "203": {
+    "id": 203,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 0.7
+      },
+      "B": {
+        "Learning Style": 0.5
+      },
+      "C": {
+        "Learning Style": 1.0
+      },
+      "D": {
+        "Learning Style": 0.3
+      }
+    }
+  },
+  "204": {
+    "id": 204,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 1.0
+      },
+      "B": {
+        "Learning Style": 0.7
+      },
+      "C": {
+        "Learning Style": 0.5
+      },
+      "D": {
+        "Learning Style": 0.3
+      }
+    }
+  },
+  "205": {
+    "id": 205,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 1.0
+      },
+      "B": {
+        "Learning Style": 0.7
+      },
+      "C": {
+        "Learning Style": 0.3
+      },
+      "D": {
+        "Learning Style": 0.5
+      }
+    }
+  },
+  "206": {
+    "id": 206,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 0.7
+      },
+      "B": {
+        "Learning Style": 0.5
+      },
+      "C": {
+        "Learning Style": 1.0
+      },
+      "D": {
+        "Learning Style": 0.3
+      }
+    }
+  },
+  "207": {
+    "id": 207,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 1.0
+      },
+      "B": {
+        "Learning Style": 0.5
+      },
+      "C": {
+        "Learning Style": 0.3
+      },
+      "D": {
+        "Learning Style": 0.7
+      }
+    }
+  },
+  "208": {
+    "id": 208,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 1.0
+      },
+      "B": {
+        "Learning Style": 0.5
+      },
+      "C": {
+        "Learning Style": 0.7
+      },
+      "D": {
+        "Learning Style": 0.3
+      }
+    }
+  },
+  "209": {
+    "id": 209,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Performance Band": 1.0
+      },
+      "B": {
+        "Performance Band": 0.7
+      },
+      "C": {
+        "Performance Band": 0.4
+      },
+      "D": {
+        "Performance Band": 0.1
+      }
+    }
+  },
+  "210": {
+    "id": 210,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Performance Band": 1.0
+      },
+      "B": {
+        "Performance Band": 0.7
+      },
+      "C": {
+        "Performance Band": 0.4
+      },
+      "D": {
+        "Performance Band": 0.2
+      }
+    }
+  },
+  "211": {
+    "id": 211,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Performance Band": 1.0
+      },
+      "B": {
+        "Performance Band": 0.5
+      },
+      "C": {
+        "Performance Band": 0.7
+      },
+      "D": {
+        "Performance Band": 0.3
+      }
+    }
+  },
+  "212": {
+    "id": 212,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Performance Band": 1.0
+      },
+      "B": {
+        "Performance Band": 0.7
+      },
+      "C": {
+        "Performance Band": 0.5
+      },
+      "D": {
+        "Performance Band": 0.2
+      }
+    }
+  },
+  "213": {
+    "id": 213,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Performance Band": 0.5
+      },
+      "C": {
+        "Achievement": 0.7
+      },
+      "D": {
+        "Performance Band": 0.3
+      }
+    }
+  },
+  "214": {
+    "id": 214,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 0.5,
+        "Performance Band": 0.3
+      },
+      "B": {
+        "Performance Band": 0.5
+      },
+      "C": {
+        "Creative": 0.5
+      },
+      "D": {
+        "Social": 0.5
+      }
+    }
+  },
+  "215": {
+    "id": 215,
+    "responseType": "Multi-select",
+    "scoringMap": {
+      "MULTI": {
+        "Subject Strength": 1.0
+      }
+    }
+  },
+  "216": {
+    "id": 216,
+    "responseType": "Multi-select",
+    "scoringMap": {
+      "MULTI": {
+        "Subject Strength": 1.0
+      }
+    }
+  },
+  "217": {
+    "id": 217,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Subject Strength": 1.0
+      },
+      "B": {
+        "Subject Strength": 0.7
+      },
+      "C": {
+        "Subject Strength": 0.4
+      },
+      "D": {
+        "Subject Strength": 0.1
+      }
+    }
+  },
+  "218": {
+    "id": 218,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Logical": 1.0,
+          "Numerical": 0.7
+        },
+        "1": {
+          "Artistic": 1.0,
+          "Creative": 0.7
+        },
+        "2": {
+          "Investigative": 1.0,
+          "Social": 0.5
+        },
+        "3": {
+          "Realistic": 1.0
+        }
+      }
+    }
+  },
+  "219": {
+    "id": 219,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 0.7
+      },
+      "B": {
+        "Artistic": 0.7,
+        "Creative": 0.7
+      },
+      "C": {
+        "Realistic": 0.7
+      },
+      "D": {
+        "Social": 0.7
+      }
+    }
+  },
+  "220": {
+    "id": 220,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 0.5
+      },
+      "B": {
+        "Artistic": 0.5,
+        "Creative": 0.5
+      },
+      "C": {
+        "Logical": 0.5,
+        "Numerical": 0.5
+      },
+      "D": {
+        "Verbal": 0.5,
+        "Social": 0.5
+      }
+    }
+  },
+  "221": {
+    "id": 221,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Decision Confidence": 1.0
+      },
+      "B": {
+        "Decision Confidence": 0.7
+      },
+      "C": {
+        "Decision Confidence": 0.4
+      },
+      "D": {
+        "Decision Confidence": 0.1
+      }
+    }
+  },
+  "222": {
+    "id": 222,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Decision Confidence": 1.0
+      }
+    }
+  },
+  "223": {
+    "id": 223,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 0.7,
+        "Decision Confidence": 0.5
+      },
+      "B": {
+        "Investigative": 0.5,
+        "Decision Confidence": 0.5
+      },
+      "C": {
+        "Decision Confidence": 0.7
+      },
+      "D": {
+        "Decision Confidence": 0.1
+      }
+    }
+  },
+  "224": {
+    "id": 224,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Logical": 0.5
+      },
+      "B": {
+        "Social": 0.5
+      },
+      "C": {
+        "Autonomy": 0.5,
+        "Creative": 0.5
+      },
+      "D": {
+        "Decision Confidence": 1.0
+      }
+    }
+  },
+  "225": {
+    "id": 225,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 0.5,
+        "Decision Confidence": 0.7
+      },
+      "B": {
+        "Investigative": 0.5,
+        "Decision Confidence": 0.5
+      },
+      "C": {
+        "Security": 0.5
+      },
+      "D": {
+        "Decision Confidence": 0.3
+      }
+    }
+  },
+  "226": {
+    "id": 226,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Security": 0.5,
+        "Decision Confidence": 0.1
+      },
+      "B": {
+        "Risk Appetite": 0.3,
+        "Decision Confidence": 0.5
+      },
+      "C": {
+        "Risk Appetite": 0.7,
+        "Decision Confidence": 0.7
+      },
+      "D": {
+        "Logical": 0.5,
+        "Decision Confidence": 0.3
+      }
+    }
+  },
+  "227": {
+    "id": 227,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Industry Knowledge": 1.0
+      }
+    }
+  },
+  "228": {
+    "id": 228,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 1.0
+      },
+      "B": {
+        "Industry Knowledge": 0.5
+      },
+      "C": {
+        "Industry Knowledge": 0.2
+      },
+      "D": {
+        "Industry Knowledge": 0.1
+      }
+    }
+  },
+  "229": {
+    "id": 229,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Industry Knowledge": 1.0
+      }
+    }
+  },
+  "230": {
+    "id": 230,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 1.0
+      },
+      "B": {
+        "Industry Knowledge": 0.5
+      },
+      "C": {
+        "Industry Knowledge": 0.2
+      },
+      "D": {
+        "Industry Knowledge": 0.1
+      }
+    }
+  },
+  "231": {
+    "id": 231,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 1.0
+      },
+      "B": {
+        "Industry Knowledge": 0.5
+      },
+      "C": {
+        "Industry Knowledge": 0.2
+      },
+      "D": {
+        "Industry Knowledge": 0.1
+      }
+    }
+  },
+  "232": {
+    "id": 232,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 1.0
+      },
+      "B": {
+        "Industry Knowledge": 0.5
+      },
+      "C": {
+        "Industry Knowledge": 0.2
+      },
+      "D": {
+        "Industry Knowledge": 0.1
+      }
+    }
+  },
+  "233": {
+    "id": 233,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 1.0
+      },
+      "B": {
+        "Industry Knowledge": 0.5
+      },
+      "C": {
+        "Industry Knowledge": 0.2
+      },
+      "D": {
+        "Industry Knowledge": 0.1
+      }
+    }
+  },
+  "234": {
+    "id": 234,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0
+      },
+      "B": {
+        "Research Behaviour": 0.5
+      },
+      "C": {
+        "Research Behaviour": 0.2
+      },
+      "D": {
+        "Research Behaviour": 0.1
+      }
+    }
+  },
+  "235": {
+    "id": 235,
+    "responseType": "Multi-select",
+    "scoringMap": {
+      "MULTI": {
+        "Research Behaviour": 1.0
+      }
+    }
+  },
+  "236": {
+    "id": 236,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Research Behaviour": 1.0
+      }
+    }
+  },
+  "237": {
+    "id": 237,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "RANKED": {
+        "0": {
+          "Research Behaviour": 0.7,
+          "Social": 0.7
+        },
+        "1": {
+          "Research Behaviour": 1.0
+        },
+        "2": {
+          "Research Behaviour": 0.5,
+          "Realistic": 0.5
+        },
+        "3": {
+          "Research Behaviour": 0.3
+        }
+      }
+    }
+  },
+  "238": {
+    "id": 238,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0
+      },
+      "B": {
+        "Research Behaviour": 0.7
+      },
+      "C": {
+        "Research Behaviour": 0.3
+      },
+      "D": {
+        "Research Behaviour": 0.1
+      }
+    }
+  },
+  "239": {
+    "id": 239,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0
+      },
+      "B": {
+        "Research Behaviour": 0.5
+      },
+      "C": {
+        "Research Behaviour": 0.2
+      },
+      "D": {
+        "Research Behaviour": 0.1
+      }
+    }
+  },
+  "240": {
+    "id": 240,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.7
+      },
+      "C": {
+        "Situational Judgement": 0.5
+      },
+      "D": {
+        "Situational Judgement": 0.2
+      }
+    }
+  },
+  "241": {
+    "id": 241,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.5
+      },
+      "C": {
+        "Situational Judgement": 0.7
+      },
+      "D": {
+        "Situational Judgement": 0.3
+      }
+    }
+  },
+  "242": {
+    "id": 242,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.5
+      },
+      "C": {
+        "Situational Judgement": 0.2
+      },
+      "D": {
+        "Situational Judgement": 0.7
+      }
+    }
+  },
+  "243": {
+    "id": 243,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.7
+      },
+      "C": {
+        "Situational Judgement": 0.3
+      },
+      "D": {
+        "Situational Judgement": 0.5
+      }
+    }
+  },
+  "244": {
+    "id": 244,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.5
+      },
+      "C": {
+        "Situational Judgement": 0.7
+      },
+      "D": {
+        "Situational Judgement": 0.3
+      }
+    }
+  },
+  "245": {
+    "id": 245,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 0.7
+      },
+      "B": {
+        "Situational Judgement": 1.0
+      },
+      "C": {
+        "Situational Judgement": 0.5
+      },
+      "D": {
+        "Situational Judgement": 0.3
+      }
+    }
+  },
+  "246": {
+    "id": 246,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 0.7,
+        "Situational Judgement": 0.5
+      },
+      "B": {
+        "Logical": 0.5,
+        "Situational Judgement": 0.7
+      },
+      "C": {
+        "Situational Judgement": 0.3
+      },
+      "D": {
+        "Situational Judgement": 0.5
+      }
+    }
+  },
+  "247": {
+    "id": 247,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0,
+        "Situational Judgement": 0.5
+      },
+      "B": {
+        "Social": 0.5,
+        "Situational Judgement": 0.7
+      },
+      "C": {
+        "Family Influence": 1.0,
+        "Situational Judgement": 0.3
+      },
+      "D": {
+        "Situational Judgement": 0.5
+      }
+    }
+  },
+  "248": {
+    "id": 248,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.5
+      },
+      "C": {
+        "Situational Judgement": 0.7
+      },
+      "D": {
+        "Situational Judgement": 0.3
+      }
+    }
+  },
+  "249": {
+    "id": 249,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 0.5
+      },
+      "B": {
+        "Situational Judgement": 0.3,
+        "Autonomy": 0.7
+      },
+      "C": {
+        "Situational Judgement": 0.7
+      },
+      "D": {
+        "Situational Judgement": 1.0
+      }
+    }
+  },
+  "250": {
+    "id": 250,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.5
+      },
+      "C": {
+        "Situational Judgement": 0.2
+      },
+      "D": {
+        "Situational Judgement": 0.7
+      }
+    }
+  },
+  "251": {
+    "id": 251,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.5
+      },
+      "C": {
+        "Situational Judgement": 0.7
+      },
+      "D": {
+        "Situational Judgement": 0.3
+      }
+    }
+  },
+  "252": {
+    "id": 252,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "253": {
+    "id": 253,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "254": {
+    "id": 254,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "255": {
+    "id": 255,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "256": {
+    "id": 256,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "257": {
+    "id": 257,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "258": {
+    "id": 258,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "259": {
+    "id": 259,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "260": {
+    "id": 260,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "261": {
+    "id": 261,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "262": {
+    "id": 262,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "263": {
+    "id": 263,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "264": {
+    "id": 264,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "265": {
+    "id": 265,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "266": {
+    "id": 266,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "267": {
+    "id": 267,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "268": {
+    "id": 268,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "269": {
+    "id": 269,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "270": {
+    "id": 270,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "271": {
+    "id": 271,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "272": {
+    "id": 272,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "273": {
+    "id": 273,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "274": {
+    "id": 274,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "275": {
+    "id": 275,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "276": {
+    "id": 276,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "277": {
+    "id": 277,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "278": {
+    "id": 278,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "279": {
+    "id": 279,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "280": {
+    "id": 280,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "281": {
+    "id": 281,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "282": {
+    "id": 282,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "283": {
+    "id": 283,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "284": {
+    "id": 284,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "285": {
+    "id": 285,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "286": {
+    "id": 286,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "287": {
+    "id": 287,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "288": {
+    "id": 288,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "289": {
+    "id": 289,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "290": {
+    "id": 290,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "291": {
+    "id": 291,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "292": {
+    "id": 292,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "293": {
+    "id": 293,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "294": {
+    "id": 294,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "295": {
+    "id": 295,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "296": {
+    "id": 296,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "297": {
+    "id": 297,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "298": {
+    "id": 298,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "299": {
+    "id": 299,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "300": {
+    "id": 300,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "301": {
+    "id": 301,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "302": {
+    "id": 302,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 0.8,
+        "Investigative": 0.3
+      },
+      "B": {
+        "Artistic": 1.0
+      },
+      "C": {
+        "Social": 0.8,
+        "Investigative": 0.5
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "303": {
+    "id": 303,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Realistic": 1.0
+      }
+    }
+  },
+  "304": {
+    "id": 304,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Logical": 1.0
+      },
+      "C": {
+        "Social": 0.7,
+        "Creative": 0.5
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "305": {
+    "id": 305,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Conventional": 0.7
+      },
+      "C": {
+        "Artistic": 0.5
+      },
+      "D": {
+        "Social": 0.5
+      }
+    }
+  },
+  "306": {
+    "id": 306,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Enterprising": 0.7
+      }
+    }
+  },
+  "307": {
+    "id": 307,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Artistic": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "308": {
+    "id": 308,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Social": 0.7
+      },
+      "C": {
+        "Social": 0.4
+      },
+      "D": {
+        "Social": 0.2
+      }
+    }
+  },
+  "309": {
+    "id": 309,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Social": 0.5,
+        "Investigative": 0.5
+      }
+    }
+  },
+  "310": {
+    "id": 310,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Enterprising": 0.5
+      },
+      "C": {
+        "Investigative": 0.4
+      },
+      "D": {
+        "Conventional": 0.3
+      }
+    }
+  },
+  "311": {
+    "id": 311,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "312": {
+    "id": 312,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Conventional": 0.6
+      },
+      "C": {
+        "Artistic": 0.6
+      },
+      "D": {
+        "Artistic": 1.0
+      }
+    }
+  },
+  "313": {
+    "id": 313,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Conventional": 0.7
+      },
+      "C": {
+        "Artistic": 0.5
+      },
+      "D": {
+        "Conventional": 0.4
+      }
+    }
+  },
+  "314": {
+    "id": 314,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "315": {
+    "id": 315,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Realistic": 0.5
+      },
+      "C": {
+        "Conventional": 0.4
+      },
+      "D": {
+        "Investigative": 0.5
+      }
+    }
+  },
+  "316": {
+    "id": 316,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Realistic": 0.7
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Social": 0.5
+      }
+    }
+  },
+  "317": {
+    "id": 317,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Artistic": 0.6
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "318": {
+    "id": 318,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Social": 0.6
+      },
+      "C": {
+        "Achievement": 0.5
+      },
+      "D": {
+        "Achievement": 0.7
+      }
+    }
+  },
+  "319": {
+    "id": 319,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Investigative": 0.5
+      },
+      "C": {
+        "Social": 0.4
+      },
+      "D": {
+        "Creative": 0.4
+      }
+    }
+  },
+  "320": {
+    "id": 320,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Enterprising": 0.7
+      }
+    }
+  },
+  "321": {
+    "id": 321,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Logical": 1.0
+      }
+    }
+  },
+  "322": {
+    "id": 322,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Creative": 0.5
+      },
+      "C": {
+        "Verbal": 0.5
+      },
+      "D": {
+        "Conventional": 0.5
+      }
+    }
+  },
+  "323": {
+    "id": 323,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0,
+        "Logical": 0.5
+      },
+      "B": {
+        "Investigative": 0.7,
+        "Numerical": 0.5
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Numerical": 0.4
+      }
+    }
+  },
+  "324": {
+    "id": 324,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Numerical": 1.0
+      }
+    }
+  },
+  "325": {
+    "id": 325,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Verbal": 0.6
+      },
+      "C": {
+        "Verbal": 0.3
+      },
+      "D": {
+        "Verbal": 0.1
+      }
+    }
+  },
+  "326": {
+    "id": 326,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Verbal": 0.5
+      },
+      "C": {
+        "Logical": 0.6
+      },
+      "D": {
+        "Logical": 0.7
+      }
+    }
+  },
+  "327": {
+    "id": 327,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Verbal": 1.0
+      }
+    }
+  },
+  "328": {
+    "id": 328,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Logical": 0.7,
+        "Creative": 0.5
+      },
+      "C": {
+        "Investigative": 0.5
+      },
+      "D": {
+        "Conventional": 0.5
+      }
+    }
+  },
+  "329": {
+    "id": 329,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 1.0
+      },
+      "B": {
+        "Investigative": 0.7
+      },
+      "C": {
+        "Logical": 0.7
+      },
+      "D": {
+        "Social": 0.6
+      }
+    }
+  },
+  "330": {
+    "id": 330,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.5
+      },
+      "C": {
+        "Spatial": 0.3
+      },
+      "D": {
+        "Spatial": 0.1
+      }
+    }
+  },
+  "331": {
+    "id": 331,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.4
+      }
+    }
+  },
+  "332": {
+    "id": 332,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Conventional": 0.7
+      },
+      "C": {
+        "Balance": 0.6
+      },
+      "D": {
+        "Security": 0.6
+      }
+    }
+  },
+  "333": {
+    "id": 333,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Achievement": 1.0
+      }
+    }
+  },
+  "334": {
+    "id": 334,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Achievement": 0.6
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Balance": 0.7
+      }
+    }
+  },
+  "335": {
+    "id": 335,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Autonomy": 0.5,
+        "Security": 0.4
+      },
+      "C": {
+        "Security": 0.6
+      },
+      "D": {
+        "Security": 0.8
+      }
+    }
+  },
+  "336": {
+    "id": 336,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Security": 0.8
+      }
+    }
+  },
+  "337": {
+    "id": 337,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Balance": 1.0
+      },
+      "B": {
+        "Artistic": 0.7,
+        "Balance": 0.6
+      },
+      "C": {
+        "Achievement": 0.7
+      },
+      "D": {
+        "Achievement": 0.8
+      }
+    }
+  },
+  "338": {
+    "id": 338,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Balance": 0.6,
+        "Achievement": 0.5
+      },
+      "C": {
+        "Security": 0.5
+      },
+      "D": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "339": {
+    "id": 339,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Security": 1.0
+      }
+    }
+  },
+  "340": {
+    "id": 340,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Security": 1.0
+      },
+      "B": {
+        "Social Impact": 0.6
+      },
+      "C": {
+        "Achievement": 0.7
+      },
+      "D": {
+        "Autonomy": 0.7
+      }
+    }
+  },
+  "341": {
+    "id": 341,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 1.0
+      },
+      "B": {
+        "Social Impact": 0.7
+      },
+      "C": {
+        "Conventional": 0.5
+      },
+      "D": {
+        "Conventional": 0.2
+      }
+    }
+  },
+  "342": {
+    "id": 342,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 1.0
+      },
+      "B": {
+        "Wealth": 0.7
+      }
+    }
+  },
+  "343": {
+    "id": 343,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Security": 0.7
+      },
+      "C": {
+        "Balance": 0.6
+      },
+      "D": {
+        "Social Impact": 0.6
+      }
+    }
+  },
+  "344": {
+    "id": 344,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Wealth": 0.5,
+        "Security": 0.5
+      },
+      "C": {
+        "Balance": 0.7
+      },
+      "D": {
+        "Security": 1.0
+      }
+    }
+  },
+  "345": {
+    "id": 345,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Security": 1.0
+      },
+      "C": {
+        "Balance": 1.0
+      },
+      "D": {
+        "Social Impact": 0.7
+      }
+    }
+  },
+  "346": {
+    "id": 346,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Logical": 0.7,
+        "Leadership": 0.6
+      },
+      "C": {
+        "Social": 0.8,
+        "Leadership": 0.5
+      },
+      "D": {
+        "Conventional": 0.5
+      }
+    }
+  },
+  "347": {
+    "id": 347,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Leadership": 1.0
+      }
+    }
+  },
+  "348": {
+    "id": 348,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0,
+        "Social": 0.7
+      },
+      "B": {
+        "Conventional": 0.6
+      }
+    }
+  },
+  "349": {
+    "id": 349,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Pace": 0.1
+      },
+      "B": {
+        "Pace": 1.0
+      }
+    }
+  },
+  "350": {
+    "id": 350,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.6
+      },
+      "C": {
+        "Pace": 0.4,
+        "Autonomy": 0.5
+      },
+      "D": {
+        "Autonomy": 0.7
+      }
+    }
+  },
+  "351": {
+    "id": 351,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 0.1
+      },
+      "B": {
+        "People vs Task": 1.0
+      },
+      "C": {
+        "Creative": 0.8
+      },
+      "D": {
+        "Conventional": 0.7
+      }
+    }
+  },
+  "352": {
+    "id": 352,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 0.1
+      },
+      "B": {
+        "People vs Task": 1.0
+      }
+    }
+  },
+  "353": {
+    "id": 353,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 0.3,
+        "Autonomy": 0.8
+      },
+      "B": {
+        "Creative": 0.6
+      },
+      "C": {
+        "Structure Preference": 0.5
+      },
+      "D": {
+        "Structure Preference": 1.0
+      }
+    }
+  },
+  "354": {
+    "id": 354,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0,
+        "Structure Preference": 0.2
+      },
+      "B": {
+        "Structure Preference": 0.5
+      },
+      "C": {
+        "Structure Preference": 0.7
+      },
+      "D": {
+        "Structure Preference": 1.0
+      }
+    }
+  },
+  "355": {
+    "id": 355,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 1.0
+      },
+      "B": {
+        "Team Orientation": 0.2
+      }
+    }
+  },
+  "356": {
+    "id": 356,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 0.2,
+        "Social": 0.8
+      },
+      "B": {
+        "Team Orientation": 0.5
+      },
+      "C": {
+        "Team Orientation": 0.7
+      },
+      "D": {
+        "Team Orientation": 1.0
+      }
+    }
+  },
+  "357": {
+    "id": 357,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.6
+      },
+      "C": {
+        "Security": 0.8
+      },
+      "D": {
+        "Logical": 0.5
+      }
+    }
+  },
+  "358": {
+    "id": 358,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.5,
+        "Security": 0.5
+      },
+      "C": {
+        "Security": 0.7
+      },
+      "D": {
+        "Security": 1.0
+      }
+    }
+  },
+  "359": {
+    "id": 359,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.6
+      },
+      "C": {
+        "Security": 0.6
+      },
+      "D": {
+        "Security": 1.0
+      }
+    }
+  },
+  "360": {
+    "id": 360,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Work Hours": 1.0
+      },
+      "B": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "361": {
+    "id": 361,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Balance": 1.0
+      },
+      "B": {
+        "Work Hours": 0.6
+      },
+      "C": {
+        "Work Hours": 1.0
+      },
+      "D": {
+        "Balance": 0.5,
+        "Achievement": 0.5
+      }
+    }
+  },
+  "362": {
+    "id": 362,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Location Flexibility": 1.0
+      }
+    }
+  },
+  "363": {
+    "id": 363,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.5
+      },
+      "C": {
+        "Location Flexibility": 0.3
+      },
+      "D": {
+        "Location Flexibility": 0.1
+      }
+    }
+  },
+  "364": {
+    "id": 364,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 1.0
+      },
+      "B": {
+        "Financial Constraints": 0.6
+      },
+      "C": {
+        "Financial Constraints": 0.3
+      },
+      "D": {
+        "Financial Constraints": 0.1
+      }
+    }
+  },
+  "365": {
+    "id": 365,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Financial Constraints": 1.0
+      }
+    }
+  },
+  "366": {
+    "id": 366,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 1.0
+      },
+      "B": {
+        "Family Influence": 0.6
+      },
+      "C": {
+        "Family Influence": 0.3
+      },
+      "D": {
+        "Family Influence": 0.1
+      }
+    }
+  },
+  "367": {
+    "id": 367,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 1.0
+      },
+      "B": {
+        "Investigative": 0.6,
+        "Learning Style": 0.5
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Learning Style": 0.3
+      }
+    }
+  },
+  "368": {
+    "id": 368,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 0.7
+      },
+      "B": {
+        "Learning Style": 1.0
+      },
+      "C": {
+        "Verbal": 0.6,
+        "Learning Style": 0.7
+      },
+      "D": {
+        "Learning Style": 0.5
+      }
+    }
+  },
+  "369": {
+    "id": 369,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 0.8,
+        "Creative": 0.7
+      },
+      "B": {
+        "Structure Preference": 1.0
+      }
+    }
+  },
+  "370": {
+    "id": 370,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Performance Band": 1.0
+      },
+      "B": {
+        "Performance Band": 0.5,
+        "Investigative": 0.5
+      },
+      "C": {
+        "Performance Band": 0.4
+      },
+      "D": {
+        "Performance Band": 0.3
+      }
+    }
+  },
+  "371": {
+    "id": 371,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 0.7,
+        "Performance Band": 0.5
+      },
+      "B": {
+        "Performance Band": 1.0
+      },
+      "C": {
+        "Performance Band": 0.6,
+        "Logical": 0.5
+      },
+      "D": {
+        "Achievement": 0.7
+      }
+    }
+  },
+  "372": {
+    "id": 372,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 0.7,
+        "Logical": 0.5
+      },
+      "B": {
+        "Verbal": 0.7,
+        "Social": 0.5
+      },
+      "C": {
+        "Performance Band": 0.7
+      },
+      "D": {
+        "Creative": 0.5
+      }
+    }
+  },
+  "373": {
+    "id": 373,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 0.6
+      },
+      "B": {
+        "Investigative": 0.6,
+        "Realistic": 0.5
+      },
+      "C": {
+        "Logical": 0.6
+      },
+      "D": {
+        "Social": 0.7
+      }
+    }
+  },
+  "374": {
+    "id": 374,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Industry Knowledge": 0.7,
+        "Research Behaviour": 0.5
+      }
+    }
+  },
+  "375": {
+    "id": 375,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 1.0
+      },
+      "B": {
+        "Industry Knowledge": 0.5
+      },
+      "C": {
+        "Industry Knowledge": 0.2
+      },
+      "D": {
+        "Industry Knowledge": 0.1
+      }
+    }
+  },
+  "376": {
+    "id": 376,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "LIKERT": {
+        "Industry Knowledge": 1.0
+      }
+    }
+  },
+  "377": {
+    "id": 377,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 1.0
+      },
+      "B": {
+        "Industry Knowledge": 0.5
+      },
+      "C": {
+        "Industry Knowledge": 0.2
+      },
+      "D": {
+        "Industry Knowledge": 0.1
+      }
+    }
+  },
+  "378": {
+    "id": 378,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0,
+        "Investigative": 0.7
+      },
+      "B": {
+        "Research Behaviour": 0.5
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Research Behaviour": 0.1
+      }
+    }
+  },
+  "379": {
+    "id": 379,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0
+      },
+      "B": {
+        "Research Behaviour": 0.5
+      },
+      "C": {
+        "Family Influence": 0.7
+      },
+      "D": {
+        "Research Behaviour": 0.3
+      }
+    }
+  },
+  "380": {
+    "id": 380,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0
+      },
+      "B": {
+        "Research Behaviour": 0.5
+      },
+      "C": {
+        "Research Behaviour": 0.2
+      },
+      "D": {
+        "Research Behaviour": 0.1
+      }
+    }
+  },
+  "381": {
+    "id": 381,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Decision Confidence": 1.0
+      },
+      "B": {
+        "Decision Confidence": 0.6
+      },
+      "C": {
+        "Decision Confidence": 0.3
+      },
+      "D": {
+        "Decision Confidence": 0.1
+      }
+    }
+  },
+  "382": {
+    "id": 382,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Decision Confidence": 1.0,
+        "Research Behaviour": 0.7
+      },
+      "B": {
+        "Decision Confidence": 0.5
+      },
+      "C": {
+        "Risk Appetite": 0.6
+      },
+      "D": {
+        "Security": 0.7
+      }
+    }
+  },
+  "383": {
+    "id": 383,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 1.0
+      },
+      "B": {
+        "Situational Judgement": 0.7
+      },
+      "C": {
+        "Situational Judgement": 0.4
+      },
+      "D": {
+        "Situational Judgement": 0.1
+      }
+    }
+  },
+  "384": {
+    "id": 384,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 0.5
+      },
+      "B": {
+        "Situational Judgement": 0.7,
+        "Social": 0.6
+      },
+      "C": {
+        "Situational Judgement": 1.0
+      },
+      "D": {
+        "Situational Judgement": 0.4,
+        "Social Impact": 0.6
+      }
+    }
+  },
+  "385": {
+    "id": 385,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "386": {
+    "id": 386,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "387": {
+    "id": 387,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "388": {
+    "id": 388,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "389": {
+    "id": 389,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "390": {
+    "id": 390,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "391": {
+    "id": 391,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "392": {
+    "id": 392,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "393": {
+    "id": 393,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "394": {
+    "id": 394,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "395": {
+    "id": 395,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "396": {
+    "id": 396,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "397": {
+    "id": 397,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "398": {
+    "id": 398,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "399": {
+    "id": 399,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "400": {
+    "id": 400,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "401": {
+    "id": 401,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "402": {
+    "id": 402,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Exam Awareness": 1.0
+      },
+      "B": {
+        "Exam Awareness": 0.5
+      },
+      "C": {
+        "Exam Awareness": 0.2
+      },
+      "D": {
+        "Exam Awareness": 0.1
+      }
+    }
+  },
+  "403": {
+    "id": 403,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Exam Awareness": 1.0
+      },
+      "B": {
+        "Exam Awareness": 0.6
+      },
+      "C": {
+        "Exam Awareness": 0.3
+      },
+      "D": {
+        "Exam Awareness": 0.5
+      }
+    }
+  },
+  "404": {
+    "id": 404,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 1.0
+      },
+      "B": {
+        "Learning Style": 0.5
+      },
+      "C": {
+        "Learning Style": 0.7
+      },
+      "D": {
+        "Learning Style": 0.3
+      }
+    }
+  },
+  "405": {
+    "id": 405,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Learning Style": 1.0
+      },
+      "B": {
+        "Learning Style": 0.5
+      },
+      "C": {
+        "Learning Style": 0.7
+      },
+      "D": {
+        "Learning Style": 0.3
+      }
+    }
+  },
+  "406": {
+    "id": 406,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Performance Band": 1.0
+      },
+      "B": {
+        "Performance Band": 0.7
+      },
+      "C": {
+        "Performance Band": 0.5
+      },
+      "D": {
+        "Performance Band": 0.3
+      }
+    }
+  },
+  "407": {
+    "id": 407,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Performance Band": 1.0
+      },
+      "B": {
+        "Performance Band": 0.8
+      },
+      "C": {
+        "Performance Band": 0.5
+      },
+      "D": {
+        "Performance Band": 0.2
+      }
+    }
+  },
+  "408": {
+    "id": 408,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0,
+        "Logical": 0.5
+      },
+      "B": {
+        "Verbal": 1.0
+      },
+      "C": {
+        "Investigative": 0.7
+      },
+      "D": {
+        "Conventional": 0.5,
+        "Enterprising": 0.5
+      }
+    }
+  },
+  "409": {
+    "id": 409,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "410": {
+    "id": 410,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "411": {
+    "id": 411,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Creative": 0.6
+      },
+      "B": {
+        "Creative": 0.1
+      },
+      "C": {
+        "Creative": 1.0
+      },
+      "D": {
+        "Creative": 0.1
+      }
+    }
+  },
+  "412": {
+    "id": 412,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "413": {
+    "id": 413,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 0.0
+      },
+      "B": {
+        "Logical": 0.0
+      },
+      "C": {
+        "Logical": 0.0
+      },
+      "D": {
+        "Logical": 1.0
+      }
+    }
+  },
+  "414": {
+    "id": 414,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Logical": 0.0
+      },
+      "C": {
+        "Logical": 0.0
+      },
+      "D": {
+        "Logical": 0.0
+      }
+    }
+  },
+  "415": {
+    "id": 415,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Logical": 1.0
+      },
+      "B": {
+        "Logical": 0.0
+      },
+      "C": {
+        "Logical": 0.0
+      },
+      "D": {
+        "Logical": 0.0
+      }
+    }
+  },
+  "416": {
+    "id": 416,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Numerical": 0.0
+      },
+      "C": {
+        "Numerical": 0.0
+      },
+      "D": {
+        "Numerical": 0.0
+      }
+    }
+  },
+  "417": {
+    "id": 417,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 0.0
+      },
+      "B": {
+        "Numerical": 0.0
+      },
+      "C": {
+        "Numerical": 1.0
+      },
+      "D": {
+        "Numerical": 0.0
+      }
+    }
+  },
+  "418": {
+    "id": 418,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Numerical": 1.0
+      },
+      "B": {
+        "Numerical": 0.0
+      },
+      "C": {
+        "Numerical": 0.0
+      },
+      "D": {
+        "Numerical": 0.0
+      }
+    }
+  },
+  "419": {
+    "id": 419,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Spatial": 0.0
+      },
+      "B": {
+        "Spatial": 0.0
+      },
+      "C": {
+        "Spatial": 1.0
+      },
+      "D": {
+        "Spatial": 0.0
+      }
+    }
+  },
+  "420": {
+    "id": 420,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Spatial": 0.3
+      },
+      "B": {
+        "Spatial": 1.0
+      },
+      "C": {
+        "Spatial": 0.3
+      },
+      "D": {
+        "Spatial": 0.0
+      }
+    }
+  },
+  "421": {
+    "id": 421,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Spatial": 1.0
+      },
+      "B": {
+        "Spatial": 0.7
+      },
+      "C": {
+        "Spatial": 0.5
+      },
+      "D": {
+        "Spatial": 0.3
+      }
+    }
+  },
+  "422": {
+    "id": 422,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 1.0
+      },
+      "B": {
+        "Verbal": 0.0
+      },
+      "C": {
+        "Verbal": 0.0
+      },
+      "D": {
+        "Verbal": 0.0
+      }
+    }
+  },
+  "423": {
+    "id": 423,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 0.0
+      },
+      "B": {
+        "Verbal": 1.0
+      },
+      "C": {
+        "Verbal": 0.0
+      },
+      "D": {
+        "Verbal": 0.0
+      }
+    }
+  },
+  "424": {
+    "id": 424,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Verbal": 0.0
+      },
+      "B": {
+        "Verbal": 0.0
+      },
+      "C": {
+        "Verbal": 1.0
+      },
+      "D": {
+        "Verbal": 0.0
+      }
+    }
+  },
+  "425": {
+    "id": 425,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Decision Confidence": 0.1
+      },
+      "B": {
+        "Decision Confidence": 0.3
+      },
+      "C": {
+        "Decision Confidence": 0.5
+      },
+      "D": {
+        "Decision Confidence": 0.7
+      },
+      "E": {
+        "Decision Confidence": 1.0
+      }
+    }
+  },
+  "426": {
+    "id": 426,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Decision Confidence": 1.0
+      },
+      "B": {
+        "Decision Confidence": 0.6
+      },
+      "C": {
+        "Decision Confidence": 0.4
+      },
+      "D": {
+        "Decision Confidence": 0.1
+      }
+    }
+  },
+  "427": {
+    "id": 427,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Industry Knowledge": 0.1
+      },
+      "B": {
+        "Industry Knowledge": 0.3
+      },
+      "C": {
+        "Industry Knowledge": 0.5
+      },
+      "D": {
+        "Industry Knowledge": 0.7
+      },
+      "E": {
+        "Industry Knowledge": 1.0
+      }
+    }
+  },
+  "428": {
+    "id": 428,
+    "responseType": "Multi-select",
+    "scoringMap": {
+      "MULTI": {
+        "Industry Knowledge": 1.0
+      }
+    }
+  },
+  "429": {
+    "id": 429,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0
+      },
+      "B": {
+        "Research Behaviour": 0.4
+      },
+      "C": {
+        "Research Behaviour": 0.6
+      },
+      "D": {
+        "Research Behaviour": 0.1
+      }
+    }
+  },
+  "430": {
+    "id": 430,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Research Behaviour": 1.0
+      },
+      "B": {
+        "Research Behaviour": 0.6
+      },
+      "C": {
+        "Research Behaviour": 0.3
+      },
+      "D": {
+        "Research Behaviour": 0.1
+      }
+    }
+  },
+  "431": {
+    "id": 431,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 0.6
+      },
+      "B": {
+        "Situational Judgement": 1.0
+      },
+      "C": {
+        "Situational Judgement": 0.8
+      },
+      "D": {
+        "Situational Judgement": 0.3
+      }
+    }
+  },
+  "432": {
+    "id": 432,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 0.6,
+        "Security": 0.7
+      },
+      "B": {
+        "Situational Judgement": 0.7,
+        "Risk Appetite": 0.8
+      },
+      "C": {
+        "Situational Judgement": 1.0
+      },
+      "D": {
+        "Situational Judgement": 0.8
+      }
+    }
+  },
+  "433": {
+    "id": 433,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Situational Judgement": 0.5
+      },
+      "B": {
+        "Situational Judgement": 0.6
+      },
+      "C": {
+        "Situational Judgement": 0.5
+      },
+      "D": {
+        "Situational Judgement": 1.0
+      }
+    }
+  },
+  "434": {
+    "id": 434,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 0.7
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "435": {
+    "id": 435,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Conventional": 0.7,
+        "Realistic": 0.5
+      }
+    }
+  },
+  "436": {
+    "id": 436,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Artistic": 1.0
+      },
+      "B": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "437": {
+    "id": 437,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Artistic": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "438": {
+    "id": 438,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Conventional": 0.5
+      },
+      "C": {
+        "Social": 0.7,
+        "Enterprising": 0.5
+      },
+      "D": {
+        "Conventional": 0.1
+      }
+    }
+  },
+  "439": {
+    "id": 439,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Conventional": 1.0
+      },
+      "B": {
+        "Social": 0.7,
+        "Enterprising": 0.5
+      }
+    }
+  },
+  "440": {
+    "id": 440,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Artistic": 1.0
+      },
+      "C": {
+        "Investigative": 1.0
+      },
+      "D": {
+        "Social": 1.0
+      }
+    }
+  },
+  "441": {
+    "id": 441,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Enterprising": 0.6
+      },
+      "C": {
+        "Investigative": 0.7
+      },
+      "D": {
+        "Enterprising": 0.1
+      }
+    }
+  },
+  "442": {
+    "id": 442,
+    "responseType": "Ranked Scenario",
+    "scoringMap": {
+      "A": {
+        "Enterprising": 1.0
+      },
+      "B": {
+        "Investigative": 0.7
+      },
+      "C": {
+        "Conventional": 0.6
+      },
+      "D": {
+        "Artistic": 0.7
+      }
+    }
+  },
+  "443": {
+    "id": 443,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Investigative": 0.4
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Enterprising": 1.0
+      }
+    }
+  },
+  "444": {
+    "id": 444,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Investigative": 1.0
+      },
+      "B": {
+        "Investigative": 0.8
+      },
+      "C": {
+        "Social": 0.6,
+        "Investigative": 0.6
+      },
+      "D": {
+        "Realistic": 1.0
+      }
+    }
+  },
+  "445": {
+    "id": 445,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Investigative": 0.1
+      },
+      "B": {
+        "Investigative": 0.3
+      },
+      "C": {
+        "Investigative": 0.5
+      },
+      "D": {
+        "Investigative": 0.7
+      },
+      "E": {
+        "Investigative": 1.0
+      }
+    }
+  },
+  "446": {
+    "id": 446,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Realistic": 0.8
+      },
+      "C": {
+        "Realistic": 0.2
+      },
+      "D": {
+        "Realistic": 0.1
+      }
+    }
+  },
+  "447": {
+    "id": 447,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Realistic": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Social": 1.0
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "448": {
+    "id": 448,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Realistic": 0.1
+      },
+      "B": {
+        "Realistic": 0.3
+      },
+      "C": {
+        "Realistic": 0.5
+      },
+      "D": {
+        "Realistic": 0.7
+      },
+      "E": {
+        "Realistic": 1.0
+      }
+    }
+  },
+  "449": {
+    "id": 449,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Social": 0.6
+      },
+      "C": {
+        "Social": 0.4
+      },
+      "D": {
+        "Social": 0.1
+      }
+    }
+  },
+  "450": {
+    "id": 450,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Investigative": 1.0
+      },
+      "C": {
+        "Artistic": 1.0
+      },
+      "D": {
+        "Conventional": 1.0
+      }
+    }
+  },
+  "451": {
+    "id": 451,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Social": 1.0
+      },
+      "B": {
+        "Social": 0.6,
+        "Investigative": 0.4
+      },
+      "C": {
+        "Social": 0.5
+      },
+      "D": {
+        "Social": 0.2
+      }
+    }
+  },
+  "452": {
+    "id": 452,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 0.1
+      },
+      "B": {
+        "Family Influence": 0.3
+      },
+      "C": {
+        "Family Influence": 0.5
+      },
+      "D": {
+        "Family Influence": 0.8
+      },
+      "E": {
+        "Family Influence": 1.0
+      }
+    }
+  },
+  "453": {
+    "id": 453,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Family Influence": 0.1
+      },
+      "B": {
+        "Family Influence": 0.5
+      },
+      "C": {
+        "Family Influence": 0.8
+      },
+      "D": {
+        "Family Influence": 1.0
+      }
+    }
+  },
+  "454": {
+    "id": 454,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 0.2
+      },
+      "B": {
+        "Financial Constraints": 0.5
+      },
+      "C": {
+        "Financial Constraints": 0.8
+      },
+      "D": {
+        "Financial Constraints": 1.0
+      }
+    }
+  },
+  "455": {
+    "id": 455,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Financial Constraints": 0.1
+      },
+      "B": {
+        "Financial Constraints": 0.3
+      },
+      "C": {
+        "Financial Constraints": 0.5
+      },
+      "D": {
+        "Financial Constraints": 0.8
+      },
+      "E": {
+        "Financial Constraints": 1.0
+      }
+    }
+  },
+  "456": {
+    "id": 456,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.7
+      },
+      "C": {
+        "Location Flexibility": 0.4
+      },
+      "D": {
+        "Location Flexibility": 0.1
+      }
+    }
+  },
+  "457": {
+    "id": 457,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Location Flexibility": 1.0
+      },
+      "B": {
+        "Location Flexibility": 0.7
+      },
+      "C": {
+        "Location Flexibility": 0.5
+      },
+      "D": {
+        "Location Flexibility": 0.3
+      },
+      "E": {
+        "Location Flexibility": 0.1
+      }
+    }
+  },
+  "458": {
+    "id": 458,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 0.1
+      },
+      "B": {
+        "Risk Appetite": 1.0
+      }
+    }
+  },
+  "459": {
+    "id": 459,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Risk Appetite": 1.0
+      },
+      "B": {
+        "Risk Appetite": 0.8
+      },
+      "C": {
+        "Risk Appetite": 0.4
+      },
+      "D": {
+        "Risk Appetite": 0.1
+      }
+    }
+  },
+  "460": {
+    "id": 460,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Work Hours": 1.0
+      },
+      "B": {
+        "Work Hours": 0.5
+      },
+      "C": {
+        "Work Hours": 0.7
+      },
+      "D": {
+        "Work Hours": 0.2
+      }
+    }
+  },
+  "461": {
+    "id": 461,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Work Hours": 0.1
+      },
+      "B": {
+        "Work Hours": 0.3
+      },
+      "C": {
+        "Work Hours": 0.5
+      },
+      "D": {
+        "Work Hours": 0.7
+      },
+      "E": {
+        "Work Hours": 1.0
+      }
+    }
+  },
+  "462": {
+    "id": 462,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "463": {
+    "id": 463,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "464": {
+    "id": 464,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "465": {
+    "id": 465,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "466": {
+    "id": 466,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "467": {
+    "id": 467,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "468": {
+    "id": 468,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "469": {
+    "id": 469,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "470": {
+    "id": 470,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "471": {
+    "id": 471,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "472": {
+    "id": 472,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "473": {
+    "id": 473,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "474": {
+    "id": 474,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "475": {
+    "id": 475,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "476": {
+    "id": 476,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "477": {
+    "id": 477,
+    "responseType": "Open Text",
+    "scoringMap": {
+      "SKIP": "open_text_or_data_only"
+    }
+  },
+  "478": {
+    "id": 478,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0
+      },
+      "B": {
+        "Achievement": 0.6,
+        "Autonomy": 0.5
+      }
+    }
+  },
+  "479": {
+    "id": 479,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Achievement": 0.1
+      },
+      "B": {
+        "Achievement": 0.3
+      },
+      "C": {
+        "Achievement": 0.5
+      },
+      "D": {
+        "Achievement": 0.7
+      },
+      "E": {
+        "Achievement": 1.0
+      }
+    }
+  },
+  "480": {
+    "id": 480,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Achievement": 1.0,
+        "Risk Appetite": 0.7
+      },
+      "B": {
+        "Achievement": 0.5,
+        "Security": 0.7
+      },
+      "C": {
+        "Achievement": 0.7
+      },
+      "D": {
+        "Achievement": 0.4
+      }
+    }
+  },
+  "481": {
+    "id": 481,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Autonomy": 0.2
+      }
+    }
+  },
+  "482": {
+    "id": 482,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Autonomy": 1.0
+      },
+      "B": {
+        "Autonomy": 0.8
+      },
+      "C": {
+        "Autonomy": 0.5
+      },
+      "D": {
+        "Autonomy": 0.2
+      },
+      "E": {
+        "Autonomy": 0.1
+      }
+    }
+  },
+  "483": {
+    "id": 483,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Balance": 1.0
+      },
+      "B": {
+        "Balance": 0.1,
+        "Wealth": 0.8
+      }
+    }
+  },
+  "484": {
+    "id": 484,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Balance": 0.1,
+        "Achievement": 0.8
+      },
+      "B": {
+        "Balance": 0.6
+      },
+      "C": {
+        "Balance": 0.7
+      },
+      "D": {
+        "Balance": 1.0
+      }
+    }
+  },
+  "485": {
+    "id": 485,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Security": 1.0
+      },
+      "B": {
+        "Security": 0.1,
+        "Risk Appetite": 0.8
+      }
+    }
+  },
+  "486": {
+    "id": 486,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Security": 0.1
+      },
+      "B": {
+        "Security": 0.3
+      },
+      "C": {
+        "Security": 0.5
+      },
+      "D": {
+        "Security": 0.7
+      },
+      "E": {
+        "Security": 1.0
+      }
+    }
+  },
+  "487": {
+    "id": 487,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Security": 1.0
+      },
+      "B": {
+        "Security": 0.6
+      },
+      "C": {
+        "Security": 0.1,
+        "Risk Appetite": 0.9
+      },
+      "D": {
+        "Security": 0.5
+      }
+    }
+  },
+  "488": {
+    "id": 488,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 1.0,
+        "Social": 0.7
+      },
+      "B": {
+        "Social Impact": 1.0,
+        "Investigative": 0.5
+      }
+    }
+  },
+  "489": {
+    "id": 489,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Social Impact": 0.1
+      },
+      "B": {
+        "Social Impact": 0.3
+      },
+      "C": {
+        "Social Impact": 0.5
+      },
+      "D": {
+        "Social Impact": 0.8
+      },
+      "E": {
+        "Social Impact": 1.0
+      }
+    }
+  },
+  "490": {
+    "id": 490,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Wealth": 1.0
+      },
+      "B": {
+        "Wealth": 0.1
+      }
+    }
+  },
+  "491": {
+    "id": 491,
+    "responseType": "Likert-5",
+    "scoringMap": {
+      "A": {
+        "Wealth": 0.1
+      },
+      "B": {
+        "Wealth": 0.3
+      },
+      "C": {
+        "Wealth": 0.5
+      },
+      "D": {
+        "Wealth": 0.8
+      },
+      "E": {
+        "Wealth": 1.0
+      }
+    }
+  },
+  "492": {
+    "id": 492,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Leadership": 0.5
+      },
+      "C": {
+        "Leadership": 0.3
+      },
+      "D": {
+        "Leadership": 0.1
+      }
+    }
+  },
+  "493": {
+    "id": 493,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Leadership": 1.0
+      },
+      "B": {
+        "Leadership": 0.7
+      },
+      "C": {
+        "Leadership": 0.2
+      },
+      "D": {
+        "Leadership": 0.1
+      }
+    }
+  },
+  "494": {
+    "id": 494,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Pace": 1.0
+      },
+      "B": {
+        "Pace": 0.1
+      }
+    }
+  },
+  "495": {
+    "id": 495,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Pace": 0.7
+      },
+      "B": {
+        "Pace": 0.3
+      },
+      "C": {
+        "Pace": 0.5
+      },
+      "D": {
+        "Pace": 0.6
+      }
+    }
+  },
+  "496": {
+    "id": 496,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 1.0
+      },
+      "B": {
+        "People vs Task": 0.1
+      }
+    }
+  },
+  "497": {
+    "id": 497,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "People vs Task": 1.0
+      },
+      "B": {
+        "People vs Task": 0.1
+      },
+      "C": {
+        "People vs Task": 0.5
+      },
+      "D": {
+        "People vs Task": 0.5
+      }
+    }
+  },
+  "498": {
+    "id": 498,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 1.0
+      },
+      "B": {
+        "Structure Preference": 0.1,
+        "Autonomy": 0.8
+      }
+    }
+  },
+  "499": {
+    "id": 499,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Structure Preference": 1.0
+      },
+      "B": {
+        "Structure Preference": 0.1,
+        "Autonomy": 0.8
+      },
+      "C": {
+        "Structure Preference": 0.5
+      },
+      "D": {
+        "Structure Preference": 0.4
+      }
+    }
+  },
+  "500": {
+    "id": 500,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 0.1
+      },
+      "B": {
+        "Team Orientation": 0.3
+      },
+      "C": {
+        "Team Orientation": 0.6
+      },
+      "D": {
+        "Team Orientation": 1.0
+      }
+    }
+  },
+  "501": {
+    "id": 501,
+    "responseType": "Forced Choice",
+    "scoringMap": {
+      "A": {
+        "Team Orientation": 0.5
+      },
+      "B": {
+        "Team Orientation": 0.8
+      }
+    }
+  },
+  "502": {
+    "id": 502,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "503": {
+    "id": 503,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "504": {
+    "id": 504,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "505": {
+    "id": 505,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "506": {
+    "id": 506,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "507": {
+    "id": 507,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "508": {
+    "id": 508,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "510": {
+    "id": 510,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "509": {
+    "id": 509,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  },
+  "511": {
+    "id": 511,
+    "responseType": "Scenario MCQ",
+    "scoringMap": {
+      "A": {
+        "ContextualAnchor": 1.0
+      },
+      "B": {
+        "ContextualAnchor": 0.75
+      },
+      "C": {
+        "ContextualAnchor": 0.5
+      },
+      "D": {
+        "ContextualAnchor": 0.25
+      },
+      "E": {
+        "ContextualAnchor": 0.5
+      }
+    }
+  }
+}

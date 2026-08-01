@@ -1,0 +1,486 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getLLMCompletion } from "@/features/simulation/lib/llm";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import questionsData from "@/features/assessment/data/questions.json";
+import scoringMapData from "@/features/assessment/data/scoring_map.json";
+import familyTraitScores from "@/features/assessment/data/family_trait_scores.json";
+import occupationsByFamilyData from "@/features/assessment/data/occupations_by_family.json";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const sessionUid = request.cookies.get("session")?.value || body.profile?.uid || body.uid || "guest";
+    const answers = body.answers || {};
+    const step = body.step || "all";
+    const userProfileDataFromBody = body.profile || {};
+
+    // 4. Score Objective Questions
+    const traitScores: Record<string, number> = {};
+    const traitCounts: Record<string, number> = {};
+    const scoringMap = (scoringMapData as unknown) as Record<string, any>;
+
+    Object.entries(answers).forEach(([qIdStr, answerValue]) => {
+      const rule = scoringMap[qIdStr];
+      if (!rule || (rule.scoringMap && rule.scoringMap.SKIP)) return;
+
+      const respType = rule.responseType;
+      const sm = rule.scoringMap;
+      if (!sm) return;
+
+      const traitsScored = new Set<string>();
+
+      if (respType === "Scenario MCQ" || respType === "Forced Choice") {
+        const choice = String(answerValue).trim();
+        const mappedScores = sm[choice];
+        if (mappedScores) {
+          Object.entries(mappedScores).forEach(([trait, val]) => {
+            traitScores[trait] = (traitScores[trait] || 0) + Number(val);
+            traitsScored.add(trait);
+          });
+        }
+      } else if (respType === "Likert-5") {
+        const rating = Number(answerValue);
+        const likertData = sm.LIKERT;
+        if (!isNaN(rating) && likertData) {
+          const factor = (rating - 1) / 4;
+          Object.entries(likertData).forEach(([trait, weight]) => {
+            traitScores[trait] = (traitScores[trait] || 0) + (factor * Number(weight));
+            traitsScored.add(trait);
+          });
+        }
+      } else if (respType === "Ranked Scenario" || respType === "Ranking") {
+        if (Array.isArray(answerValue)) {
+          const positionWeights = [1.0, 0.67, 0.33, 0.0];
+          answerValue.forEach((choice, idx) => {
+            const mappedScores = sm[choice];
+            if (mappedScores && idx < positionWeights.length) {
+              const pw = positionWeights[idx];
+              Object.entries(mappedScores).forEach(([trait, val]) => {
+                traitScores[trait] = (traitScores[trait] || 0) + (pw * Number(val));
+                traitsScored.add(trait);
+              });
+            }
+          });
+        }
+      } else if (respType === "Multi-select") {
+        const multiData = sm.MULTI;
+        if (Array.isArray(answerValue) && multiData) {
+          Object.entries(multiData).forEach(([trait, val]) => {
+            traitScores[trait] = (traitScores[trait] || 0) + (Number(val) * answerValue.length);
+            traitsScored.add(trait);
+          });
+        }
+      }
+
+      traitsScored.forEach((trait) => {
+        traitCounts[trait] = (traitCounts[trait] || 0) + 1;
+      });
+    });
+
+    // 6. Compute Final Trait Percentages
+    const finalScores: Record<string, number> = {};
+    Object.keys(traitScores).forEach((trait) => {
+      const sum = traitScores[trait];
+      const count = traitCounts[trait] || 1;
+      const raw = Math.round((sum / count) * 100);
+      // Regress to mean (50) slightly if count is low (1)
+      finalScores[trait] = count >= 2 ? raw : Math.round(raw * 0.8 + 10);
+    });
+
+    // Track actually measured traits BEFORE applying 50 default fallbacks
+    const measuredTraits = new Set(Object.keys(finalScores));
+
+    // Ensure all 40 traits have fallback defaults for downstream reporting
+    const sampleFamilyTraits = familyTraitScores[0]?.traits as Record<string, number> || {};
+    Object.keys(sampleFamilyTraits).forEach(t => {
+      if (finalScores[t] === undefined) {
+        finalScores[t] = 50;
+      }
+    });
+
+    // Identify candidate's top 3 superpower traits (highest scores among actually measured traits)
+    const topSuperpowers = Array.from(measuredTraits)
+      .sort((a, b) => (finalScores[b] ?? 50) - (finalScores[a] ?? 50))
+      .slice(0, 3);
+
+    // 7. Math Matching (Hybrid wRMSE + Cosine Similarity + Specialization Boost)
+    const traitWeights: Record<string, number> = {
+      // Tier 1: Core RIASEC Interests (Weight 3.0)
+      Realistic: 3.0, Investigative: 3.0, Artistic: 3.0,
+      Social: 3.0, Enterprising: 3.0, Conventional: 3.0,
+      // Tier 2: Core Cognitive Aptitudes (Weight 2.0)
+      Logical: 2.0, Creative: 2.0, Verbal: 2.0, Spatial: 2.0, Numerical: 2.0,
+      // Tier 3: Work Values & Drivers (Weight 1.5)
+      Autonomy: 1.5, Security: 1.5, Wealth: 1.5, Balance: 1.5,
+      "Social Impact": 1.5, "Decision Confidence": 1.5, "Risk Appetite": 1.5,
+      Achievement: 1.5, Pace: 1.5, "Structure Preference": 1.5,
+      // Tier 4: Contextual & Environmental (Weight 0.5)
+    };
+
+    const familyMatches = familyTraitScores.map((item) => {
+      const familyName = item.family;
+      const fTraits = item.traits as Record<string, number>;
+      
+      let weightedDiffSum = 0;
+      let totalWeight = 0;
+      let gapPenalty = 0;
+      let signatureBonus = 0;
+      
+      // For Cosine Similarity over measured traits
+      let dotProduct = 0;
+      let userMagSq = 0;
+      let careerMagSq = 0;
+
+      Object.entries(fTraits).forEach(([trait, fValue]) => {
+        const userValue = finalScores[trait] !== undefined ? finalScores[trait] : 50;
+        const w = traitWeights[trait] ?? 0.5;
+
+        // CRITICAL FIX 1: Only include actually measured traits in distance and similarity calculations
+        // This eliminates the "50-midpoint anchor" pulling all candidates toward generalist careers!
+        if (measuredTraits.has(trait)) {
+          const effectiveW = (Math.abs(userValue - 50) <= 5 && fValue < 70) ? w * 0.3 : w;
+
+          weightedDiffSum += effectiveW * Math.pow(userValue - fValue, 2);
+          totalWeight += effectiveW;
+
+          // Cosine similarity components (weighted vector space)
+          dotProduct += effectiveW * userValue * fValue;
+          userMagSq += effectiveW * Math.pow(userValue, 2);
+          careerMagSq += effectiveW * Math.pow(fValue, 2);
+        }
+
+        // Check for critical gaps on high-weight traits
+        if (w >= 2.0 && fValue >= 75 && userValue <= 40) {
+          gapPenalty += 12;
+        }
+
+        // Add signature bonus for high-high trait alignment
+        if (userValue >= 75 && fValue >= 75) {
+          signatureBonus += 2.0 * (w / 3.0);
+        }
+      });
+
+      // Calculate wRMSE score (0-100 scale)
+      const wrmse = totalWeight > 0 ? Math.sqrt(weightedDiffSum / totalWeight) : 0;
+      const rmseScore = Math.max(0, 100 - (wrmse * 1.15));
+
+      // CRITICAL FIX 2: Calculate Cosine Similarity (measures shape & direction of trait peaks)
+      const cosSim = (userMagSq > 0 && careerMagSq > 0)
+        ? dotProduct / (Math.sqrt(userMagSq) * Math.sqrt(careerMagSq))
+        : 0;
+      const cosineScore = Math.max(0, Math.min(100, cosSim * 100));
+
+      // CRITICAL FIX 3: Superpower Specialization Boost (rewards careers matching candidate's top 3 traits)
+      let specializationBoost = 0;
+      topSuperpowers.forEach((spTrait) => {
+        if ((fTraits[spTrait] ?? 0) >= 73) {
+          specializationBoost += 3.5;
+        }
+      });
+
+      // Hybrid Blend: 50% Cosine Similarity (shape) + 50% RMSE (distance) + Bonuses - Penalties
+      const blendedBase = (cosineScore * 0.5) + (rmseScore * 0.5);
+      const baseFitScore = Math.max(0, Math.min(100, blendedBase + signatureBonus + specializationBoost));
+      const rawFitScore = Math.max(25, Math.min(99, Math.round(baseFitScore - gapPenalty)));
+      
+      return { familyName, fitScore: rawFitScore };
+    });
+
+    familyMatches.sort((a, b) => b.fitScore - a.fitScore);
+    const rawTop15 = familyMatches.slice(0, 15);
+
+    const top15Clusters = rawTop15.map((f, mathIdx) => ({
+      familyName: f.familyName,
+      mathFitScore: f.fitScore,
+      mathRank: mathIdx + 1
+    }));
+
+    if (step === "math") {
+      return NextResponse.json({ success: true, scores: finalScores });
+    }
+
+    // 8. User Profile from Client Request Payload & Contextual Anchor Answers
+    const userProfileData: any = { ...userProfileDataFromBody };
+
+    const contextualAnswers: Record<string, string> = {};
+    const questionsMap = (questionsData as any[]).reduce((acc, q) => {
+      acc[q.id] = q;
+      return acc;
+    }, {} as Record<number, any>);
+
+    [502, 503, 504, 505, 506, 507, 508, 509, 510, 511].forEach(qid => {
+      const rawAns = answers[qid] || answers[String(qid)];
+      if (rawAns && questionsMap[qid]) {
+        const qObj = questionsMap[qid];
+        const subTrait = qObj.subTrait || `Anchor_${qid}`;
+        contextualAnswers[subTrait] = String(rawAns);
+      }
+    });
+
+    const profileSummary = `
+- Full Name: ${userProfileData.fullName || "Candidate"}
+- Segment: ${userProfileData.segment || "Not specified"} (S1: School 8-10, S2: School 11-12, S3: College, S4: Early Professional)
+- City Tier / Location: ${userProfileData.cityTier || "Not specified"}
+- Academic Stream / Degree: ${userProfileData.stream || userProfileData.degree || userProfileData.specialization || userProfileData.grade || "Not specified"}
+- College / School: ${userProfileData.collegeName || userProfileData.schoolBoard || "Not specified"}
+- Current Role / Industry: ${userProfileData.jobTitle ? `${userProfileData.jobTitle} in ${userProfileData.industry}` : "N/A"}
+`.trim();
+
+    const contextualAnchorsSummary = Object.keys(contextualAnswers).length > 0 
+      ? Object.entries(contextualAnswers).map(([k, v]) => `- ${k}: ${v}`).join("\n")
+      : "Standard Defaults";
+
+    // Extract Top 5 Strengths & Weaknesses for personalized LLM prompts
+    const sortedTraitPairs = Object.entries(finalScores).sort((a, b) => b[1] - a[1]);
+    const topStrengthsStr = sortedTraitPairs.slice(0, 5).map(([t, s]) => `${t} (${s})`).join(", ");
+    const weaknessesStr = sortedTraitPairs.slice(-3).map(([t, s]) => `${t} (${s})`).join(", ");
+
+    const basePrompt = `
+You are a senior vocational psychologist, career coach, and gamification matching engine.
+
+CANDIDATE DEMOGRAPHIC & ACADEMIC PROFILE:
+${profileSummary}
+
+REAL-WORLD CONSTRAINTS & PREFERENCES (CONTEXTUAL ANCHORS):
+${contextualAnchorsSummary}
+
+PSYCHOMETRIC TRAIT EVALUATION:
+${JSON.stringify(finalScores)}
+
+Candidate's TOP STRENGTHS: ${topStrengthsStr}
+Candidate's WEAKEST TRAITS: ${weaknessesStr}
+
+TOP 15 MATHEMATICALLY MATCHED CAREER CLUSTERS (Pre-filtered by 35-trait weighted psychometric model):
+${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: ${f.mathFitScore}%)`).join("\n")}
+`;
+
+    const systemPrompt = "You are a professional vocational matching engine. Return ONLY a valid JSON object matching the requested schema. No markdown wrappers. IMPORTANT: DO NOT include any reasoning, <think> tags, or conversational text. Output ONLY the raw JSON string.";
+
+    let resultPayload: any = {};
+
+    const extractJSON = (text: string) => {
+      const c = text.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/<thought>[\s\S]*?<\/thought>/g, '');
+      const start = c.indexOf('{');
+      const end = c.lastIndexOf('}');
+      return (start !== -1 && end !== -1 && start <= end) ? c.substring(start, end + 1) : c;
+    };
+
+    if (step.startsWith("career_") && step !== "career_extras") {
+      const idx = parseInt(step.split("_")[1]);
+      if (!isNaN(idx) && idx >= 0 && idx < 5) {
+        const calibratedFitScores = [95, 88, 83, 79, 74];
+        const existingTitles: string[] = (body.existingTitles || []).map((t: any) => String(t));
+        const validClusterNames = top15Clusters.map(c => c.familyName);
+        
+        // Available math clusters for selection
+        const availableClusters = top15Clusters.filter(c => !existingTitles.includes(c.familyName));
+        const availableNamesStr = availableClusters.map(c => `"${c.familyName}"`).join(", ");
+        const existingNamesStr = existingTitles.length > 0 ? existingTitles.map((t: string) => `"${t}"`).join(", ") : "None";
+
+        const isHigherEdOrPro = userProfileData.segment === "S3" || userProfileData.segment === "S4";
+        const currentDegree = userProfileData.stream || userProfileData.degree || "undergraduate studies";
+        const defaultAcademicPath = isHigherEdOrPro 
+          ? (userProfileData.segment === "S4" ? "Executive Master's / Specialized Industry Leadership Track" : "Specialized Master's / Postgraduate Diploma Track")
+          : "Relevant Bachelor's Degree Track";
+        const defaultAlternatePathways = isHigherEdOrPro
+          ? ["Advanced Industry Certifications & Portfolio Build Track", "Lateral Industry Transition / Mentorship Bootcamp Track"]
+          : ["BCA / B.Sc / Allied Applied Track (Pragmatic Backup if Competitive Exams Missed)", "Direct Industry Diploma & Portfolio Apprenticeship Track"];
+
+        const p = basePrompt + `
+TASK FOR CAREER RECOMMENDATION #${idx + 1} (RANK #${idx + 1} OF 5):
+From the remaining available math-matched career clusters [${availableNamesStr}], select the SINGLE BEST career cluster for rank position #${idx + 1}.
+
+SELECTION & CONTEXTUAL EVALUATION RULES:
+1. Primary Selection Criterion: Evaluate the candidate's 10 REAL-WORLD CONTEXTUAL ANCHORS:
+   ${contextualAnchorsSummary}
+   (Consider their target salary LPA, relocation willingness, work-life balance preference, family constraints, and personal open text responses).
+2. Trait Alignment: Ensure the selection leverages their top psychometric strengths (${topStrengthsStr}).
+3. Feasibility: Consider their academic background (${currentDegree}) as a supporting feasibility factor.
+
+CRITICAL ANTI-BIAS & PROGRESSION RULES:
+- DO NOT lazily pick standard software/IT roles just because the candidate has an engineering/tech degree if their contextual anchors (work-life, relocation, target salary, personal write-in answers) or trait scores point towards other career clusters in the Top 15 list.
+- EXCLUSION RULE: You MUST NOT select or duplicate any previously assigned titles: [${existingNamesStr}].
+- TITLE MUST BE EXACTLY ONE OF THE AVAILABLE CLUSTER NAMES FROM THE LIST ABOVE.
+- EDUCATIONAL PROGRESSION RULE ("WHAT NEXT TO DO"): DO NOT suggest degrees or qualifications the candidate has already completed or is currently pursuing! Since this candidate is in segment "${userProfileData.segment || "S3"}" (${currentDegree}), you MUST suggest WHAT NEXT TO DO from their exact current stage onwards (e.g., if they are in College (S3) or Working Professionals (S4), suggest Master's/MBAs, PG Diplomas, Executive tracks, or specialized industry certifications—DO NOT suggest a Bachelor's degree!).
+- INDIAN SCHOOL STUDENT ALTERNATIVE PATHWAYS RULE: For School Students (S1/S2), while academicPath (Plan A) should suggest the top primary degree (e.g., B.Tech / MBBS / B.Com Hons), alternatePathways (Plan B and Plan C) MUST provide pragmatic, high-value Indian alternative routes in case they do not clear hyper-competitive entrance exams (like JEE or NEET) or cannot afford expensive private college seats. For example: for tech roles, suggest BCA + MCA, B.Stat, B.Sc Data Science, or industry bootcamps if JEE/private B.Tech is not viable; for medical/healthcare roles, suggest Psychology, B.Sc Nursing, Physiotherapy, Biotech, or Allied Healthcare if NEET/MBBS is not viable!
+
+Provide data for:
+1. "recommendation": Concise career profile for your selected career cluster.
+Required fields (KEEP ALL EXPLANATIONS VERY CONCISE, 1-2 LINES MAX TO MINIMIZE TOKENS):
+- careerId: string (lowercase hyphenated version of title)
+- title: string (MUST BE EXACTLY THE SELECTED CLUSTER NAME FROM AVAILABLE LIST ABOVE)
+- sector: string
+- description: string (short overview of this career cluster)
+- whyRecommended: string (EXACTLY 2 lines explaining why this career ranks at position #${idx + 1} considering candidate's contextual anchors, personal write-in answers, academic background, and trait strengths)
+- topContributingTraits: array of exactly 3 objects with { trait: string, contribution: string } (Identify the top 3 psychometric traits that contributed most to this match and explain in 1 short sentence how each trait powers success in this role)
+- rarity: string ("Legendary", "Epic", "Rare", "Uncommon")
+- salaryTiers: object with { entry: "₹8-12 LPA", senior: "₹35-50 LPA" } (Expected entry-level salary and expected senior-level salary based on current Indian market data)
+- dayInTheLife: string (short, 2-3 sentences max)
+- whatYouWillLove: string (short, 1-2 sentences max)
+- challenges: string (short, 1-2 sentences max)
+- growth: string (short career progression chain, e.g. "Analyst -> Senior -> Lead -> Officer")
+- marketDemand: string (short, e.g. "High - ~1.4M open roles projected by 2027")
+- aiResilienceScore: number (0-100 integer; CRITICAL: You MUST evaluate each career individually and score them differently based on their actual vulnerability to AI automation or their human moat! Do NOT output the same number like 75 or 80 across all recommendations! For example: Routine data/clerical roles should score lower around 40-58; Software/IT/Finance/Marketing/Design should score in the middle around 60-74; Complex Engineering/Law/Management/Architecture should score higher around 76-87; Clinical Surgery/Psychology/Nursing/Physical Therapy should score at the top around 88-96!)
+- aiResilienceExplanation: string (short 1-liner explaining why this specific career has this level of AI resilience or automation risk)
+- academicPath: string (Primary Path A indicating WHAT NEXT TO DO from their current stage onwards, e.g. for School S1/S2: "B.Tech in CS" or "MBBS"; for College S3 / Professionals S4: "MS / M.Tech in AI" or "Executive MBA in Tech Strategy")
+- alternatePathways: array of 2 strings (Plan B and Plan C pragmatic alternate routes; for S1/S2 MUST include high-value backups like BCA/B.Stat if JEE fails or Psychology/Allied Health if NEET fails; for S3/S4 include certifications/bootcamps)
+- exams: array of 1-3 exam acronyms (e.g. ["JEE MAIN", "JEE ADVANCED"])
+- firstThreeMoves: array of exactly 3 short actionable steps (e.g. ["Ship 3 portfolio projects on GitHub", "Master DSA basics", "Build 1 open-source project"])
+- occupations: array of 2-3 specialization roles in this cluster
+
+Respond with ONLY a JSON object containing "recommendation".
+`;
+        try {
+          const completion = await getLLMCompletion(p, systemPrompt, true);
+          const cleaned = extractJSON(completion);
+          const parsed = JSON.parse(cleaned);
+          
+          if (parsed.recommendation) {
+            let selectedTitle = parsed.recommendation.title;
+            // Strict De-duplication & Validation Guard
+            if (!selectedTitle || !validClusterNames.includes(selectedTitle) || existingTitles.includes(selectedTitle)) {
+              const fallbackCluster = availableClusters[0] || top15Clusters[idx];
+              selectedTitle = fallbackCluster ? fallbackCluster.familyName : validClusterNames[idx % validClusterNames.length];
+            }
+
+            parsed.recommendation.title = selectedTitle;
+            parsed.recommendation.careerId = selectedTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            parsed.recommendation.fitScore = calibratedFitScores[idx] || (95 - idx * 5);
+            Object.assign(resultPayload, { recommendations: [parsed.recommendation] });
+          } else {
+            const fallbackCluster = availableClusters[0] || top15Clusters[idx];
+            const fallbackTitle = fallbackCluster ? fallbackCluster.familyName : validClusterNames[idx % validClusterNames.length];
+            Object.assign(resultPayload, {
+              recommendations: [{
+                title: fallbackTitle,
+                careerId: fallbackTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+                fitScore: calibratedFitScores[idx] || (95 - idx * 5),
+                sector: "PROFESSIONAL SERVICES",
+                description: `High-alignment career cluster mapped to candidate's psychometric profile.`,
+                whyRecommended: `Matches candidate contextual preferences and psychometric traits.`,
+                topContributingTraits: [],
+                rarity: "Epic",
+                salaryTiers: { entry: "₹6-10 LPA", senior: "₹25-40 LPA" },
+                dayInTheLife: "Engages in core domain tasks, collaboration, and high-ownership problem solving.",
+                whatYouWillLove: "High autonomy and rapid professional growth.",
+                challenges: "Requires continuous learning and adaptability.",
+                growth: "Junior Specialist -> Senior Professional -> Lead Manager -> Director",
+                marketDemand: "High growth projection",
+                aiResilienceScore: 85,
+                aiResilienceExplanation: "Requires high human situational judgment and strategic oversight.",
+                academicPath: defaultAcademicPath,
+                alternatePathways: defaultAlternatePathways,
+                exams: ["NATIONAL ENTRY EXAM"],
+                firstThreeMoves: ["Build foundational portfolio", "Network with industry mentors", "Apply for internships"],
+                occupations: [fallbackTitle]
+              }]
+            });
+          }
+        } catch (llmErr) {
+          console.warn(`LLM parsing fallback for step ${step}:`, llmErr);
+          const fallbackCluster = availableClusters[0] || top15Clusters[idx];
+          const fallbackTitle = fallbackCluster ? fallbackCluster.familyName : validClusterNames[idx % validClusterNames.length];
+          Object.assign(resultPayload, {
+            recommendations: [{
+              title: fallbackTitle,
+              careerId: fallbackTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+              sector: "PROFESSIONAL SERVICES",
+              description: `High-alignment career matching your measured trait profile in ${fallbackTitle}.`,
+              whyRecommended: `Your top psychometric traits map directly onto the requirement profile for ${fallbackTitle}.`,
+              fitScore: calibratedFitScores[idx] || (95 - idx * 5),
+              salaryTiers: { entry: "₹8-12 LPA", senior: "₹35-50 LPA" },
+              aiResilienceScore: 85,
+              aiResilienceExplanation: "Requires high human situational judgment and strategic oversight.",
+              academicPath: defaultAcademicPath,
+              alternatePathways: defaultAlternatePathways,
+              exams: ["NATIONAL ENTRY EXAM"],
+              firstThreeMoves: ["Build foundational portfolio", "Network with industry mentors", "Apply for internships"],
+              occupations: [fallbackTitle]
+            }]
+          });
+        }
+      }
+    }
+
+    if (step === "career_extras" || step === "all") {
+      const p = basePrompt + `
+Provide data for:
+1. "notRecommended": Array of exactly 3 famous/aspirational careers (e.g. Chartered Accountant, Medical Doctor) that score poorly for this profile. Include title and reason (1 short sentence).
+2. "comparisonMatrix": Array of exactly 5 objects matching the Top 5 careers. Include careerId and scores (1-10 integer for: salary, growth, stress, aiRisk, workLifeBalance, learningCurve).
+
+Respond with ONLY a JSON object containing "notRecommended" and "comparisonMatrix".
+`;
+      try {
+        const completion = await getLLMCompletion(p, systemPrompt, true);
+        const cleaned = extractJSON(completion);
+        const parsed = JSON.parse(cleaned);
+        Object.assign(resultPayload, parsed);
+      } catch (err) {
+        console.warn("LLM fallback for career_extras:", err);
+      }
+    }
+
+    if (step === "personality" || step === "all") {
+      const p = basePrompt + `
+Provide data for:
+1. "archetype": RPG Hero Archetype (e.g. Tech Alchemist). Fields: name, title, description, level, xp, traits.
+2. "deepPersonalityAnalysis": Top 3 hidden strengths and 3 hidden risks. Fields: traitName, advantages, blindSpots.
+3. "counselorAnalysis":
+   - executiveSummary: short overview
+   - why: short 1-2 lines on why profile behaves this way
+   - soWhat: short 1-2 lines on fitting role types
+   - whatItMeans: short 1-2 lines on ceiling and risks
+   - watchOut: short 1-2 lines on warnings
+   - cognitiveStyle: short 1-2 lines
+   - decisionMaking: short 1-2 lines
+   - learningStyle: short 1-2 lines
+   - communicationStyle: short 1-2 lines (e.g. "Precise & written")
+   - collaborationStyle: short 1-2 lines (e.g. "Small-team contributor")
+   - idealEnvironment: short 1-2 lines (e.g. "High-autonomy, high-craft")
+4. "aiCoachNarrative": Concise, warm coaching letter.
+
+Respond with ONLY a JSON object containing "archetype", "deepPersonalityAnalysis", "counselorAnalysis", and "aiCoachNarrative".
+`;
+      try {
+        const completion = await getLLMCompletion(p, systemPrompt, true);
+        const cleaned = extractJSON(completion);
+        Object.assign(resultPayload, JSON.parse(cleaned));
+      } catch (err) {
+        console.warn("LLM fallback for personality:", err);
+      }
+    }
+
+    if (step === "actionPlan" || step === "all") {
+      const p = basePrompt + `
+Provide data for:
+1. "careerMissions": 2 actionable missions. Fields: title, objective, xpReward, difficulty, estimatedTime.
+2. "careerRoadmap": Actionable steps for oneMonth (array), threeMonths (array), sixMonths (array), oneYear (array), threeYears (array).
+3. "parentDashboard": howToHelp (array of 4 short items), discussionQuestions (array of 3 questions).
+4. "achievements": 3 badges. Fields: title, description.
+
+Respond with ONLY a JSON object containing "careerMissions", "careerRoadmap", "parentDashboard", and "achievements".
+`;
+      try {
+        const completion = await getLLMCompletion(p, systemPrompt, true);
+        const cleaned = extractJSON(completion);
+        Object.assign(resultPayload, JSON.parse(cleaned));
+      } catch (err) {
+        console.warn("LLM fallback for actionPlan:", err);
+      }
+    }
+
+    const contextualSummary = {
+      profile: userProfileData,
+      answers: contextualAnswers
+    };
+
+    return NextResponse.json({ success: true, ...resultPayload, scores: finalScores, contextualSummary });
+
+  } catch (error) {
+    console.error("Critical API engine failure:", error);
+    const msg = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
+}
+
