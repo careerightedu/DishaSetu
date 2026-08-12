@@ -28,7 +28,7 @@ export interface UserProfile {
   fullName: string;
   segment: "S1" | "S2" | "S3" | "S4" | "";
   cityTier: "Tier 1" | "Tier 2" | "Tier 3" | "";
-  languagePreference: "English" | "Hindi" | "Hinglish" | "";
+  languagePreference: "English" | "Hindi" | "";
   onboardingCompleted: boolean;
   role?: string;
   
@@ -37,8 +37,8 @@ export interface UserProfile {
   schoolBoard?: string;
   grade?: string;
   stream?: string; // S2 only (Science PCM, Science PCB, Commerce, Humanities)
-  
   // S3 Details
+  backgroundStream?: string; // Broad domain for strict eligibility checks
   collegeName?: string;
   degree?: string;
   specialization?: string;
@@ -47,6 +47,7 @@ export interface UserProfile {
   // S4 Details
   jobTitle?: string;
   industry?: string;
+  otherIndustry?: string;
   yearsOfExperience?: string;
   
   updatedAt?: string;

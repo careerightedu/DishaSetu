@@ -79,7 +79,7 @@ export default function Navbar() {
                   </span>
                   <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 mt-1 border-border/50 bg-popover/95 backdrop-blur-sm">
+                <DropdownMenuContent align="end" className="w-56 mt-1 border-border/50 bg-popover backdrop-blur-sm">
                   <DropdownMenuGroup>
                     <DropdownMenuLabel className="flex flex-col gap-1 p-3">
                       <span className="font-semibold text-foreground text-sm">{profile?.fullName || "User"}</span>

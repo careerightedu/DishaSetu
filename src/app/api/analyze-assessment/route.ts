@@ -6,6 +6,7 @@ import questionsData from "@/features/assessment/data/questions.json";
 import scoringMapData from "@/features/assessment/data/scoring_map.json";
 import familyTraitScores from "@/features/assessment/data/family_trait_scores.json";
 import occupationsByFamilyData from "@/features/assessment/data/occupations_by_family.json";
+import careerEligibilityRules from "@/features/assessment/data/career_eligibility_rules.json";
 
 export async function POST(request: NextRequest) {
   try {
@@ -121,12 +122,12 @@ export async function POST(request: NextRequest) {
     const familyMatches = familyTraitScores.map((item) => {
       const familyName = item.family;
       const fTraits = item.traits as Record<string, number>;
-      
+
       let weightedDiffSum = 0;
       let totalWeight = 0;
       let gapPenalty = 0;
       let signatureBonus = 0;
-      
+
       // For Cosine Similarity over measured traits
       let dotProduct = 0;
       let userMagSq = 0;
@@ -181,10 +182,25 @@ export async function POST(request: NextRequest) {
 
       // Hybrid Blend: 50% Cosine Similarity (shape) + 50% RMSE (distance) + Bonuses - Penalties
       const blendedBase = (cosineScore * 0.5) + (rmseScore * 0.5);
-      const baseFitScore = Math.max(0, Math.min(100, blendedBase + signatureBonus + specializationBoost));
-      const rawFitScore = Math.max(25, Math.min(99, Math.round(baseFitScore - gapPenalty)));
-      
-      return { familyName, fitScore: rawFitScore };
+      let baseFitScore = Math.max(0, Math.min(100, blendedBase + signatureBonus + specializationBoost));
+      let rawFitScore = Math.max(25, Math.min(99, Math.round(baseFitScore - gapPenalty)));
+
+      // Academic Eligibility Filtering (S2 stream / S3/S4 backgroundStream)
+      let isAspirational = false;
+      const userProfileData: any = { ...userProfileDataFromBody };
+      const explicitStream = userProfileData.stream || userProfileData.backgroundStream;
+
+      const rules = (careerEligibilityRules as Record<string, { allowedStreams: string[], strict: boolean }>)[familyName];
+      if (rules && rules.strict && explicitStream) {
+        // Check if user's explicit stream is strictly not in allowed list
+        if (!rules.allowedStreams.includes("ALL") && !rules.allowedStreams.includes(explicitStream)) {
+          // Strict mismatch
+          isAspirational = true;
+          rawFitScore -= 35; // Massive penalty
+        }
+      }
+
+      return { familyName, fitScore: Math.max(10, rawFitScore), isAspirational };
     });
 
     familyMatches.sort((a, b) => b.fitScore - a.fitScore);
@@ -193,7 +209,8 @@ export async function POST(request: NextRequest) {
     const top15Clusters = rawTop15.map((f, mathIdx) => ({
       familyName: f.familyName,
       mathFitScore: f.fitScore,
-      mathRank: mathIdx + 1
+      mathRank: mathIdx + 1,
+      isAspirational: f.isAspirational
     }));
 
     if (step === "math") {
@@ -227,7 +244,7 @@ export async function POST(request: NextRequest) {
 - Current Role / Industry: ${userProfileData.jobTitle ? `${userProfileData.jobTitle} in ${userProfileData.industry}` : "N/A"}
 `.trim();
 
-    const contextualAnchorsSummary = Object.keys(contextualAnswers).length > 0 
+    const contextualAnchorsSummary = Object.keys(contextualAnswers).length > 0
       ? Object.entries(contextualAnswers).map(([k, v]) => `- ${k}: ${v}`).join("\n")
       : "Standard Defaults";
 
@@ -252,10 +269,13 @@ Candidate's TOP STRENGTHS: ${topStrengthsStr}
 Candidate's WEAKEST TRAITS: ${weaknessesStr}
 
 TOP 15 MATHEMATICALLY MATCHED CAREER CLUSTERS (Pre-filtered by 35-trait weighted psychometric model):
-${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: ${f.mathFitScore}%)`).join("\n")}
+${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: ${f.mathFitScore}%${f.isAspirational ? " - ASPIRATIONAL/PIVOT REQUIRED" : ""})`).join("\n")}
 `;
 
-    const systemPrompt = "You are a professional vocational matching engine. Return ONLY a valid JSON object matching the requested schema. No markdown wrappers. IMPORTANT: DO NOT include any reasoning, <think> tags, or conversational text. Output ONLY the raw JSON string.";
+    let systemPrompt = "You are a professional vocational matching engine. Return ONLY a valid JSON object matching the requested schema. No markdown wrappers. IMPORTANT: DO NOT include any reasoning, <think> tags, or conversational text. Output ONLY the raw JSON string.";
+    if (userProfileDataFromBody?.languagePreference === "Hindi") {
+      systemPrompt += " CRITICAL: ALL GENERATED TEXT (titles, descriptions, reasons, etc) MUST BE TRANSLATED TO AND OUTPUT IN HINDI. KEEP JSON KEYS IN ENGLISH.";
+    }
 
     let resultPayload: any = {};
 
@@ -272,7 +292,7 @@ ${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: 
         const calibratedFitScores = [95, 88, 83, 79, 74];
         const existingTitles: string[] = (body.existingTitles || []).map((t: any) => String(t));
         const validClusterNames = top15Clusters.map(c => c.familyName);
-        
+
         // Available math clusters for selection
         const availableClusters = top15Clusters.filter(c => !existingTitles.includes(c.familyName));
         const availableNamesStr = availableClusters.map(c => `"${c.familyName}"`).join(", ");
@@ -280,7 +300,7 @@ ${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: 
 
         const isHigherEdOrPro = userProfileData.segment === "S3" || userProfileData.segment === "S4";
         const currentDegree = userProfileData.stream || userProfileData.degree || "undergraduate studies";
-        const defaultAcademicPath = isHigherEdOrPro 
+        const defaultAcademicPath = isHigherEdOrPro
           ? (userProfileData.segment === "S4" ? "Executive Master's / Specialized Industry Leadership Track" : "Specialized Master's / Postgraduate Diploma Track")
           : "Relevant Bachelor's Degree Track";
         const defaultAlternatePathways = isHigherEdOrPro
@@ -310,6 +330,8 @@ Provide data for:
 Required fields (KEEP ALL EXPLANATIONS VERY CONCISE, 1-2 LINES MAX TO MINIMIZE TOKENS):
 - careerId: string (lowercase hyphenated version of title)
 - title: string (MUST BE EXACTLY THE SELECTED CLUSTER NAME FROM AVAILABLE LIST ABOVE)
+- matchType: string ("Immediate Fit" OR "Aspirational Pivot". Set to Aspirational Pivot if the cluster was marked ASPIRATIONAL/PIVOT REQUIRED above, or if it fundamentally mismatches their current background)
+- pivotPath: string (If matchType is Aspirational Pivot, write 1-2 sentences on EXACTLY what additional education/certifications they need to pivot from their current background. If Immediate Fit, just write "N/A".)
 - sector: string
 - description: string (short overview of this career cluster)
 - whyRecommended: string (EXACTLY 2 lines explaining why this career ranks at position #${idx + 1} considering candidate's contextual anchors, personal write-in answers, academic background, and trait strengths)
@@ -335,7 +357,7 @@ Respond with ONLY a JSON object containing "recommendation".
           const completion = await getLLMCompletion(p, systemPrompt, true);
           const cleaned = extractJSON(completion);
           const parsed = JSON.parse(cleaned);
-          
+
           if (parsed.recommendation) {
             let selectedTitle = parsed.recommendation.title;
             // Strict De-duplication & Validation Guard
@@ -432,12 +454,12 @@ Provide data for:
    - soWhat: short 1-2 lines on fitting role types
    - whatItMeans: short 1-2 lines on ceiling and risks
    - watchOut: short 1-2 lines on warnings
-   - cognitiveStyle: short 1-2 lines
-   - decisionMaking: short 1-2 lines
-   - learningStyle: short 1-2 lines
-   - communicationStyle: short 1-2 lines (e.g. "Precise & written")
-   - collaborationStyle: short 1-2 lines (e.g. "Small-team contributor")
-   - idealEnvironment: short 1-2 lines (e.g. "High-autonomy, high-craft")
+   - cognitiveStyle: short 1-2 lines describing their unique cognitive style based on traits
+   - decisionMaking: short 1-2 lines describing how they uniquely make decisions
+   - learningStyle: short 1-2 lines describing their personalized learning style
+   - communicationStyle: short 1-2 lines describing their communication style based on their traits
+   - collaborationStyle: short 1-2 lines describing their teamwork preferences
+   - idealEnvironment: short 1-2 lines describing their optimal work environment
 4. "aiCoachNarrative": Concise, warm coaching letter.
 
 Respond with ONLY a JSON object containing "archetype", "deepPersonalityAnalysis", "counselorAnalysis", and "aiCoachNarrative".

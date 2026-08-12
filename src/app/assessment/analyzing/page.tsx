@@ -72,29 +72,47 @@ export default function AnalyzingTransition() {
           else if (step === "personality") setStatusText("Generating deep personality profile...");
           else if (step === "actionPlan") setStatusText("Creating actionable roadmaps & missions...");
 
-          const res = await fetch("/api/analyze-assessment", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              profile: profileData,
-              answers: sessionData.answers || {},
-              step,
-              existingTitles: (finalData.recommendations || []).map((r: any) => r.title)
-            })
-          });
-
-          const resText = await res.text();
+          let resText = "";
           let data: any = {};
-          try {
-            data = JSON.parse(resText);
-          } catch (jsonErr) {
-            throw new Error(`Analysis engine returned invalid response format at step "${step}". Details: ${resText.slice(0, 100)}`);
-          }
+          let success = false;
+          let retries = 3;
 
-          if (!res.ok) {
-            throw new Error(data.error || `Analysis API failed at step: ${step}`);
+          while (retries > 0 && !success) {
+            try {
+              const res = await fetch("/api/analyze-assessment", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  profile: profileData,
+                  answers: sessionData.answers || {},
+                  step,
+                  existingTitles: (finalData.recommendations || []).map((r: any) => r.title)
+                })
+              });
+
+              resText = await res.text();
+              try {
+                data = JSON.parse(resText);
+              } catch (jsonErr) {
+                throw new Error(`Analysis engine returned invalid response format. Details: ${resText.slice(0, 100)}`);
+              }
+
+              if (!res.ok) {
+                throw new Error(data.error || `Analysis API failed with status: ${res.status}`);
+              }
+              
+              success = true;
+            } catch (err) {
+              retries--;
+              if (retries === 0) {
+                throw new Error(`Failed at step "${step}" after 3 attempts. Last error: ${err instanceof Error ? err.message : "Network error"}`);
+              }
+              console.warn(`Retry triggered for step "${step}". Attempts left: ${retries}. Error:`, err);
+              setStatusText(`Network glitch detected. Retrying analysis (${retries} attempts left)...`);
+              await new Promise(r => setTimeout(r, 2000)); // 2 second backoff
+            }
           }
           // Merge data from this step into final payload
           Object.keys(data).forEach(key => {
@@ -154,7 +172,7 @@ export default function AnalyzingTransition() {
   }, [router]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 bg-background relative overflow-hidden">
+    <div className="flex min-h-[100dvh] items-center justify-center p-4 bg-background relative overflow-hidden">
       {/* Soft background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[500px] w-[500px] rounded-full bg-primary/5 blur-3xl" />
 
@@ -199,18 +217,6 @@ export default function AnalyzingTransition() {
 
         </CardContent>
       </Card>
-      
-      {/* Inject custom styling animation keys */}
-      <style jsx global>{`
-        @keyframes scan {
-          0% { transform: translateY(0); }
-          50% { transform: translateY(350px); }
-          100% { transform: translateY(0); }
-        }
-        .animate-scan {
-          animation: scan 4s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }

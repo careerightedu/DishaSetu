@@ -12,6 +12,8 @@ import {
 interface Recommendation {
   careerId: string;
   title: string;
+  matchType?: string;
+  pivotPath?: string;
   sector: string;
   description: string;
   fitScore: number;
@@ -137,7 +139,7 @@ const PageContainer = ({ children, pageNumber, title }: { children: React.ReactN
 );
 
 export default function CareerDiscoveryJourneyPrint() {
-  const { user, profile } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [scores, setScores] = useState<Record<string, number> | null>(null);
   
@@ -156,7 +158,11 @@ export default function CareerDiscoveryJourneyPrint() {
 
   useEffect(() => {
     async function fetchResults() {
-      if (!user) return;
+      if (authLoading) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
       try {
         const sessionRef = doc(db, "assessment_sessions", user.uid);
         const sessionSnap = await getDoc(sessionRef);
@@ -184,7 +190,7 @@ export default function CareerDiscoveryJourneyPrint() {
       }
     }
     fetchResults();
-  }, [user]);
+  }, [user, authLoading]);
 
   useEffect(() => {
     if (!loading && recommendations && recommendations.length > 0) {
@@ -228,6 +234,7 @@ export default function CareerDiscoveryJourneyPrint() {
 
   const primaryMatch = recommendations[0];
   const top5Recs = recommendations.slice(0, 5);
+  const top4Recs = recommendations.slice(0, 4);
 
   // Helper to generate static trait match text from scores with normalized 0-100 range
   const getTopTraitsMatchText = () => {
@@ -701,7 +708,7 @@ export default function CareerDiscoveryJourneyPrint() {
               <div className="w-full text-[10px] font-mono">
                 <div className="grid grid-cols-6 gap-1 mb-1.5 font-bold text-slate-500 border-b border-slate-800 pb-1 text-[9px]">
                   <div className="col-span-2">DIMENSION</div>
-                  {top5Recs.map((r, i) => (
+                  {top4Recs.map((r, i) => (
                     <div key={i} className="text-center truncate uppercase text-[8px] font-bold text-slate-300" title={r.title}>{r.title.slice(0, 7)}</div>
                   ))}
                 </div>
@@ -715,7 +722,7 @@ export default function CareerDiscoveryJourneyPrint() {
                 ].map(dim => (
                   <div key={dim.key} className="grid grid-cols-6 gap-1 py-1.5 border-b border-slate-800/60 items-center">
                     <div className="col-span-2 font-bold text-slate-300 text-[9px]">{dim.label}</div>
-                    {top5Recs.map((r, i) => {
+                    {top4Recs.map((r, i) => {
                       const fromMatrix = comparisonMatrix?.[i]?.scores?.[dim.key as keyof ComparisonMatrixItem["scores"]];
                       const rawScore = (typeof fromMatrix === "number" && fromMatrix > 0)
                         ? (fromMatrix > 10 ? Math.round(fromMatrix / 10) : fromMatrix)
@@ -754,28 +761,55 @@ export default function CareerDiscoveryJourneyPrint() {
                 <div className="absolute left-1/2 top-0 h-full w-px bg-slate-800/80" />
                 <div className="absolute top-1/2 left-0 w-full h-px bg-slate-800/80" />
 
-                {/* Carefully placed non-overlapping plot dots */}
-                <div className="absolute top-3 left-4 flex items-center gap-1 bg-slate-900/80 px-1.5 py-0.5 rounded border border-emerald-500/30">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_#10B981]" />
-                  <span className="text-[8px] font-bold text-white truncate max-w-[90px]">{top5Recs[0]?.title}</span>
-                </div>
-                <div className="absolute top-12 left-16 flex items-center gap-1 bg-slate-900/80 px-1.5 py-0.5 rounded border border-slate-800">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  <span className="text-[8px] text-slate-300 truncate max-w-[80px]">{top5Recs[1]?.title || "Data Scientist"}</span>
-                </div>
-                <div className="absolute bottom-10 left-12 flex items-center gap-1 bg-slate-900/80 px-1.5 py-0.5 rounded border border-slate-800">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span className="text-[8px] text-slate-300 truncate max-w-[80px]">{top5Recs[2]?.title || "Product Manager"}</span>
-                </div>
-                <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-slate-900/80 px-1.5 py-0.5 rounded border border-slate-800">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                  <span className="text-[8px] text-slate-300 truncate max-w-[70px]">{top5Recs[3]?.title || "UX Designer"}</span>
-                </div>
+                {/* Carefully placed dynamic non-overlapping plot dots */}
+                {top4Recs.map((r, i) => {
+                  // Calculate dynamic positions: High match = high reward, Risk = pseudo-random based on title length
+                  // Adjust for top/left 0-100% minus some padding (10% to 90%)
+                  const seed = r.title.length * (i + 1) * 7;
+                  let left = 10 + (seed % 80); // 10% to 90% (Risk axis)
+                  // Reward is heavily influenced by match score
+                  const matchScore = r.matchScore > 0 ? r.matchScore : (90 - i * 10);
+                  let top = 100 - (matchScore > 60 ? matchScore : 60); // 10% to 40% (Reward axis - top is 0)
+                  
+                  // Ensure rank 1 is generally top right (Sweet Spot)
+                  if (i === 0) {
+                    left = Math.max(50, left);
+                    top = Math.min(40, top);
+                  }
+                  // Offset overlaps trivially
+                  if (i === 1) { top += 15; left -= 10; }
+                  if (i === 2) { top += 40; left = Math.min(80, left + 20); }
+                  if (i === 3) { top += 50; left = Math.max(20, left - 30); }
+
+                  // Clamp to 5-85%
+                  top = Math.max(5, Math.min(85, top));
+                  left = Math.max(5, Math.min(85, left));
+
+                  const colors = [
+                    "bg-emerald-500 shadow-[0_0_6px_#10B981]",
+                    "bg-emerald-400",
+                    "bg-amber-400",
+                    "bg-purple-400"
+                  ];
+
+                  return (
+                    <div 
+                      key={i} 
+                      className="absolute flex items-center gap-1 bg-slate-900/80 px-1.5 py-0.5 rounded border border-slate-800 z-10"
+                      style={{ top: `${top}%`, left: `${left}%` }}
+                    >
+                      <div className={`w-1.5 h-1.5 rounded-full ${colors[i]}`} />
+                      <span className={`text-[8px] truncate max-w-[80px] ${i === 0 ? 'font-bold text-white' : 'text-slate-300'}`}>
+                        {r.title}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             <p className="text-[9px] text-slate-400 leading-tight pt-2 border-t border-slate-800">
-              Top-right is the sweet spot: high odds of success and high payoff. {primaryMatch?.title} and {top5Recs[1]?.title || "Data Science"} both land cleanly there for your profile.
+              Top-right is the sweet spot: high odds of success and high payoff. {primaryMatch?.title} and {top4Recs[1]?.title || "Data Science"} both land cleanly there for your profile.
             </p>
           </div>
         </div>
@@ -788,15 +822,31 @@ export default function CareerDiscoveryJourneyPrint() {
           <div className="mb-3 flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-black text-white mb-1.5 font-serif">{rec.title}</h1>
-              <div className="flex gap-2.5 items-center">
+              <div className="flex gap-2.5 items-center flex-wrap">
                 {getFitBadge(idx)}
                 <span className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider">{rec.sector || "TECHNOLOGY"}</span>
+                {rec.matchType === "Aspirational Pivot" && (
+                  <span className="bg-amber-500/10 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider">Aspirational Pivot</span>
+                )}
+                {rec.matchType === "Immediate Fit" && (
+                  <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider">Immediate Fit</span>
+                )}
               </div>
             </div>
             <div className="text-right font-mono">
               {getFitBadge(idx)}
             </div>
           </div>
+
+          {/* TRANSITION PATHWAY (IF ASPIRATIONAL) */}
+          {rec.matchType === "Aspirational Pivot" && rec.pivotPath && rec.pivotPath !== "N/A" && (
+            <div className="bg-amber-950/20 border border-amber-900/50 rounded-2xl p-3.5 mb-3 space-y-1.5">
+              <div className="text-[9px] font-mono font-bold text-amber-500 tracking-widest uppercase">TRANSITION PATHWAY</div>
+              <p className="text-amber-100/90 text-[11px] leading-relaxed">
+                {rec.pivotPath}
+              </p>
+            </div>
+          )}
 
           {/* WHY THIS RANKS HERE (2 LINES LLM SUMMARY + TOP 3 CONTRIBUTING TRAITS) */}
           <div className="bg-emerald-950/20 border border-emerald-900/50 rounded-2xl p-3.5 mb-3 space-y-2">

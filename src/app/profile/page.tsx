@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "@/hooks/useTranslations";
 import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
@@ -27,8 +28,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function EditProfilePage() {
-  const { user, profile, updateProfile } = useAuth();
+  const { user, profile, updateProfile, loading: authLoading } = useAuth();
   const router = useRouter();
+  const t = useTranslations();
   const [loading, setLoading] = useState(false);
   const [sessionExists, setSessionExists] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -49,7 +51,9 @@ export default function EditProfilePage() {
     graduationYear: "",
     jobTitle: "",
     industry: "",
-    yearsOfExperience: ""
+    otherIndustry: "",
+    yearsOfExperience: "",
+    backgroundStream: ""
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -57,7 +61,7 @@ export default function EditProfilePage() {
   useEffect(() => {
     if (profile) {
       setFormData({
-        fullName: profile.fullName || "",
+        fullName: profile.fullName || user?.displayName || "",
         segment: profile.segment || "",
         cityTier: profile.cityTier || "",
         languagePreference: profile.languagePreference || "",
@@ -70,7 +74,9 @@ export default function EditProfilePage() {
         graduationYear: profile.graduationYear || "",
         jobTitle: profile.jobTitle || "",
         industry: profile.industry || "",
-        yearsOfExperience: profile.yearsOfExperience || ""
+        otherIndustry: profile.otherIndustry || "",
+        yearsOfExperience: profile.yearsOfExperience || "",
+        backgroundStream: profile.backgroundStream || ""
       });
     }
 
@@ -103,13 +109,16 @@ export default function EditProfilePage() {
       if (!formData.grade) errs.grade = "Grade is required";
       if (!formData.stream) errs.stream = "Academic stream is required";
     } else if (formData.segment === "S3") {
+      if (!formData.backgroundStream) errs.backgroundStream = "Broad academic background is required";
       if (!formData.collegeName?.trim()) errs.collegeName = "College / University name is required";
       if (!formData.degree) errs.degree = "Degree program is required";
       if (!formData.specialization?.trim()) errs.specialization = "Specialization is required";
       if (!formData.graduationYear) errs.graduationYear = "Graduation year is required";
     } else if (formData.segment === "S4") {
+      if (!formData.backgroundStream) errs.backgroundStream = "Broad professional background is required";
       if (!formData.jobTitle?.trim()) errs.jobTitle = "Job title is required";
       if (!formData.industry) errs.industry = "Industry sector is required";
+      if (formData.industry === "Other" && !formData.otherIndustry?.trim()) errs.otherIndustry = "Please specify your industry";
       if (!formData.yearsOfExperience) errs.yearsOfExperience = "Years of experience is required";
     }
 
@@ -147,8 +156,49 @@ export default function EditProfilePage() {
         setSessionExists(false);
       }
 
+      // Clean up irrelevant fields before saving to fix corrupted profiles
+      const cleanedData = { ...formData };
+      if (cleanedData.segment === "S1") {
+        cleanedData.stream = "";
+        cleanedData.backgroundStream = "";
+        cleanedData.collegeName = "";
+        cleanedData.degree = "";
+        cleanedData.specialization = "";
+        cleanedData.graduationYear = "";
+        cleanedData.jobTitle = "";
+        cleanedData.industry = "";
+        cleanedData.otherIndustry = "";
+        cleanedData.yearsOfExperience = "";
+      } else if (cleanedData.segment === "S2") {
+        cleanedData.backgroundStream = "";
+        cleanedData.collegeName = "";
+        cleanedData.degree = "";
+        cleanedData.specialization = "";
+        cleanedData.graduationYear = "";
+        cleanedData.jobTitle = "";
+        cleanedData.industry = "";
+        cleanedData.otherIndustry = "";
+        cleanedData.yearsOfExperience = "";
+      } else if (cleanedData.segment === "S3") {
+        cleanedData.schoolBoard = "";
+        cleanedData.grade = "";
+        cleanedData.stream = "";
+        cleanedData.jobTitle = "";
+        cleanedData.industry = "";
+        cleanedData.otherIndustry = "";
+        cleanedData.yearsOfExperience = "";
+      } else if (cleanedData.segment === "S4") {
+        cleanedData.schoolBoard = "";
+        cleanedData.grade = "";
+        cleanedData.stream = "";
+        cleanedData.collegeName = "";
+        cleanedData.degree = "";
+        cleanedData.specialization = "";
+        cleanedData.graduationYear = "";
+      }
+
       // Update user details in Firestore
-      await updateProfile(formData);
+      await updateProfile(cleanedData);
       setSuccessMessage(segmentChanged ? "Profile saved and career assessment reset successfully!" : "Profile updated successfully!");
       
       // Auto clear success alert
@@ -191,15 +241,26 @@ export default function EditProfilePage() {
     }
   };
 
+  if (authLoading) {
+    return (
+      <div className="min-h-[100dvh] flex items-center justify-center bg-background">
+        <div className="text-center space-y-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto" />
+          <p className="text-xs font-black uppercase tracking-wider text-muted-foreground font-mono">Loading Profile...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-[100dvh] bg-background">
       <Navbar />
 
       <main className="flex-grow max-w-3xl mx-auto px-4 sm:px-6 py-10 w-full space-y-6">
         
         {/* Back Link */}
         <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground font-semibold transition-colors">
-          <ArrowLeft className="h-4 w-4" /> Return to Dashboard
+          <ArrowLeft className="h-4 w-4" /> {t("Profile.returnToDashboard")}
         </Link>
 
         {/* Edit profile Card */}
@@ -208,10 +269,10 @@ export default function EditProfilePage() {
           
           <CardHeader className="space-y-1.5 pb-6">
             <CardTitle className="text-xl font-extrabold flex items-center gap-2">
-              <Settings className="h-5 w-5 text-primary animate-spin-slow" /> Edit Candidate Profile
+              <Settings className="h-5 w-5 text-primary animate-spin-slow" /> {t("Profile.title")}
             </CardTitle>
             <CardDescription className="text-xs">
-              Update your personal credentials, contact options, or current academic/career stage.
+              {t("Profile.subtitle")}
             </CardDescription>
           </CardHeader>
 
@@ -234,12 +295,12 @@ export default function EditProfilePage() {
               {/* SECTION A: BASICS */}
               <div className="space-y-4">
                 <h3 className="text-xs font-black uppercase tracking-wider text-primary border-b border-border/20 pb-1 flex items-center gap-1.5">
-                  <User className="h-4 w-4" /> Basic Details
+                  <User className="h-4 w-4" /> {t("Onboarding.basicDetails")}
                 </h3>
 
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-1">
-                    <Label htmlFor="fullName">Full Name</Label>
+                    <Label htmlFor="fullName">{t("Onboarding.fullName")}</Label>
                     <Input 
                       id="fullName"
                       value={formData.fullName}
@@ -251,36 +312,35 @@ export default function EditProfilePage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <Label htmlFor="cityTier" className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-primary" /> City Tier</Label>
+                      <Label htmlFor="cityTier" className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-primary" /> {t("Onboarding.cityTier")}</Label>
                       <Select 
                         value={formData.cityTier} 
                         onValueChange={(val) => setFormData(prev => ({ ...prev, cityTier: val || "" }))}
                       >
                         <SelectTrigger className={errors.cityTier ? "border-destructive h-10" : "h-10"}>
-                          <SelectValue placeholder="Select City Tier" />
+                          <SelectValue placeholder={t("Onboarding.cityTierPlaceholder")} />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border-border/50">
-                          <SelectItem value="Tier 1">Tier 1 (Metro cities)</SelectItem>
-                          <SelectItem value="Tier 2">Tier 2 (Large regional capitals)</SelectItem>
-                          <SelectItem value="Tier 3">Tier 3 (Smaller towns)</SelectItem>
+                          <SelectItem value="Tier 1">{t("Onboarding.tier1")}</SelectItem>
+                          <SelectItem value="Tier 2">{t("Onboarding.tier2")}</SelectItem>
+                          <SelectItem value="Tier 3">{t("Onboarding.tier3")}</SelectItem>
                         </SelectContent>
                       </Select>
                       {errors.cityTier && <p className="text-xs text-destructive">{errors.cityTier}</p>}
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="language" className="flex items-center gap-1.5"><MessageSquare className="h-3.5 w-3.5 text-primary" /> Preferred Language</Label>
+                      <Label htmlFor="language" className="flex items-center gap-1.5"><MessageSquare className="h-3.5 w-3.5 text-primary" /> {t("Onboarding.language")}</Label>
                       <Select 
                         value={formData.languagePreference} 
                         onValueChange={(val) => setFormData(prev => ({ ...prev, languagePreference: val || "" }))}
                       >
                         <SelectTrigger className={errors.languagePreference ? "border-destructive h-10" : "h-10"}>
-                          <SelectValue placeholder="Select Language" />
+                          <SelectValue placeholder={t("Onboarding.languagePlaceholder")} />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border-border/50">
-                          <SelectItem value="English">English</SelectItem>
-                          <SelectItem value="Hindi">Hindi (हिंदी)</SelectItem>
-                          <SelectItem value="Hinglish">Hinglish</SelectItem>
+                          <SelectItem value="English">{t("Onboarding.english")}</SelectItem>
+                          <SelectItem value="Hindi">{t("Onboarding.hindi")}</SelectItem>
                         </SelectContent>
                       </Select>
                       {errors.languagePreference && <p className="text-xs text-destructive">{errors.languagePreference}</p>}
@@ -300,7 +360,26 @@ export default function EditProfilePage() {
                     <Label htmlFor="segment">Select Your Academic / Professional Stage</Label>
                     <Select 
                       value={formData.segment} 
-                      onValueChange={(val) => setFormData(prev => ({ ...prev, segment: val || "" }))}
+                      onValueChange={(val) => {
+                        const newSegment = val || "";
+                        setFormData(prev => ({
+                          ...prev,
+                          segment: newSegment as any,
+                          ...(newSegment !== prev.segment ? {
+                            schoolBoard: "",
+                            grade: "",
+                            stream: "",
+                            collegeName: "",
+                            degree: "",
+                            specialization: "",
+                            graduationYear: "",
+                            jobTitle: "",
+                            industry: "",
+                            otherIndustry: "",
+                            yearsOfExperience: "",
+                          } : {})
+                        }));
+                      }}
                     >
                       <SelectTrigger className={errors.segment ? "border-destructive h-10" : "h-10"}>
                         <SelectValue placeholder="Select Stage" />
@@ -399,6 +478,25 @@ export default function EditProfilePage() {
                   {formData.segment === "S3" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-border/20 bg-background/20 p-4">
                       <div className="space-y-1 sm:col-span-2">
+                        <Label htmlFor="s3-backgroundStream">Broad Academic Background</Label>
+                        <Select
+                          value={formData.backgroundStream}
+                          onValueChange={(val) => setFormData(prev => ({ ...prev, backgroundStream: val || "" }))}
+                        >
+                          <SelectTrigger className={errors.backgroundStream ? "border-destructive h-10" : "h-10"}>
+                            <SelectValue placeholder="Select Broad Domain" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border-border/50">
+                            <SelectItem value="Science PCM">Science (PCM - Engineering / Tech / Math)</SelectItem>
+                            <SelectItem value="Science PCB">Science (PCB - Medical / Bio / Health)</SelectItem>
+                            <SelectItem value="Commerce">Commerce / Finance / Business</SelectItem>
+                            <SelectItem value="Humanities">Humanities / Arts / Design / Law</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.backgroundStream && <p className="text-xs text-destructive">{errors.backgroundStream}</p>}
+                      </div>
+
+                      <div className="space-y-1 sm:col-span-2">
                         <Label htmlFor="collegeName">College / University Name</Label>
                         <Input 
                           id="collegeName"
@@ -468,7 +566,26 @@ export default function EditProfilePage() {
                   {/* S4 DYNAMIC INPUTS */}
                   {formData.segment === "S4" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-border/20 bg-background/20 p-4">
-                      <div className="space-y-1">
+                      <div className="space-y-1 sm:col-span-2">
+                        <Label htmlFor="s4-backgroundStream">Broad Professional Background</Label>
+                        <Select
+                          value={formData.backgroundStream}
+                          onValueChange={(val) => setFormData(prev => ({ ...prev, backgroundStream: val || "" }))}
+                        >
+                          <SelectTrigger className={errors.backgroundStream ? "border-destructive h-10" : "h-10"}>
+                            <SelectValue placeholder="Select Broad Domain" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border-border/50">
+                            <SelectItem value="Science PCM">Science (PCM - Engineering / Tech / Math)</SelectItem>
+                            <SelectItem value="Science PCB">Science (PCB - Medical / Bio / Health)</SelectItem>
+                            <SelectItem value="Commerce">Commerce / Finance / Business</SelectItem>
+                            <SelectItem value="Humanities">Humanities / Arts / Design / Law</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.backgroundStream && <p className="text-xs text-destructive">{errors.backgroundStream}</p>}
+                      </div>
+
+                      <div className="space-y-1 sm:col-span-2">
                         <Label htmlFor="jobTitle">Job Title</Label>
                         <Input 
                           id="jobTitle"
@@ -501,6 +618,20 @@ export default function EditProfilePage() {
                         </Select>
                         {errors.industry && <p className="text-xs text-destructive">{errors.industry}</p>}
                       </div>
+
+                      {formData.industry === "Other" && (
+                        <div className="space-y-1 sm:col-span-2">
+                          <Label htmlFor="otherIndustry">Please specify your industry</Label>
+                          <Input 
+                            id="otherIndustry"
+                            placeholder="e.g. Retail, Real Estate, E-commerce"
+                            value={formData.otherIndustry}
+                            onChange={(e) => setFormData(prev => ({ ...prev, otherIndustry: e.target.value }))}
+                            className={errors.otherIndustry ? "border-destructive h-10" : "h-10"}
+                          />
+                          {errors.otherIndustry && <p className="text-xs text-destructive">{errors.otherIndustry}</p>}
+                        </div>
+                      )}
 
                       <div className="space-y-1 sm:col-span-2">
                         <Label htmlFor="experience">Years of Professional Experience</Label>
@@ -535,7 +666,7 @@ export default function EditProfilePage() {
                 onClick={() => router.push("/")}
                 className="font-bold text-muted-foreground hover:text-foreground h-10 px-5"
               >
-                Cancel
+                {t("Common.cancel")}
               </Button>
               <div className="flex items-center gap-3">
                 {sessionExists && (
@@ -546,7 +677,7 @@ export default function EditProfilePage() {
                     onClick={handleResetSession}
                     className="font-bold flex items-center gap-1.5 h-10 px-4 bg-red-600/90 hover:bg-red-700 text-white shadow-md"
                   >
-                    <Trash2 className="h-4 w-4" /> Reset Assessment
+                    <Trash2 className="h-4 w-4" /> {t("Common.resetAssessment")}
                   </Button>
                 )}
                 <Button 
@@ -554,7 +685,7 @@ export default function EditProfilePage() {
                   disabled={loading}
                   className="font-bold flex items-center gap-1.5 h-10 px-6 shadow-md shadow-primary/20"
                 >
-                  <Save className="h-4 w-4" /> {loading ? "Saving Changes..." : "Save Details"}
+                  <Save className="h-4 w-4" /> {loading ? t("Common.loading") : t("Common.saveDetails")}
                 </Button>
               </div>
             </CardFooter>

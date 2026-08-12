@@ -163,7 +163,7 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col min-h-[100dvh] bg-background">
         <Navbar />
         <main className="flex-grow flex items-center justify-center">
           <div className="flex flex-col items-center space-y-4">
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
 
   if (!user) {
     return (
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col min-h-[100dvh] bg-background">
         <Navbar />
         <main className="flex-grow flex items-center justify-center p-4">
           <Card className="w-full max-w-sm border-border/40 bg-card/65 backdrop-blur-md shadow-2xl p-6 text-center">
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
 
   if (!isAdmin) {
     return (
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col min-h-[100dvh] bg-background">
         <Navbar />
         <main className="flex-grow flex items-center justify-center p-4">
           <Card className="w-full max-w-md border-border/40 bg-card/65 backdrop-blur-md shadow-2xl p-8 text-center space-y-4">
@@ -281,7 +281,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-[100dvh] bg-background">
       <Navbar />
 
       <main className="flex-grow max-w-6xl mx-auto px-4 sm:px-6 py-8 w-full space-y-8">

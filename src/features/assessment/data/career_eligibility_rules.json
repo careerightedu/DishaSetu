@@ -1,0 +1,836 @@
+{
+  "Software & Application Development": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "IT Systems, Networks & Infrastructure": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "System Analysis & Database Management": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "ICT Sales & Training": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Civil Engineering": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Mechanical Engineering": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Electrical Engineering": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Electronics & Telecom Engineering": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Chemical Engineering": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Environmental Engineering & Protection": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Mining Engineering & Management": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Construction Management & Supervision": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Manufacturing Management & Supervision": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Industrial & Production Engineering": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Accounting & Finance": {
+    "allowedStreams": [
+      "Commerce",
+      "Science PCM",
+      "Science PCB"
+    ],
+    "strict": false
+  },
+  "Banking & Financial Services": {
+    "allowedStreams": [
+      "Commerce",
+      "Science PCM",
+      "Science PCB"
+    ],
+    "strict": false
+  },
+  "Securities, Investment & Financial Advisory": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Insurance": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Advertising, Marketing & Sales Management": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Public Relations & Professional Sales": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Retail Sales & Shop Work": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Street Vending": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Hotel & Hospitality Management": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Travel & Tourism": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Cooking & Culinary": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Food & Beverage Service": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Doctors & Medicine": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Nursing & Midwifery": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Dental Care": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Physiotherapy & Rehabilitation": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Medical Lab & Diagnostic Technicians": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Pharmacy": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Medical Assistants & Paramedical": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Veterinary": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Social Work & Counselling": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Primary & Secondary Teaching": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Higher & Vocational Education Teaching": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Lawyers & Legal Professionals": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Police & Law Enforcement": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Government Administration & Policy": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "HR & Training": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Management Consulting & Business Analysis": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Supply Chain & Logistics Management": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "General Office Administration": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Payroll & Back-Office Clerks": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Real Estate": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Architecture & Urban Planning": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Interior & Product Design": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Graphic Design & Multimedia": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Film, TV & Media Production": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Journalism & Writing": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Performing Arts": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Visual Arts & Photography": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Sports & Athletics": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Agriculture — Crop Farming": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Agriculture — Livestock & Dairy": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Agriculture — Management & Advisory": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Forestry & Horticulture": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Fisheries & Aquaculture": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Building Construction Trades": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Carpentry & Woodwork": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Electrical Installation & Wiring": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Plumbing & HVAC": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Painting & Surface Finishing": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Welding & Metalwork": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Metal Processing & Machine Operations": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Auto & Machinery Repair": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Electronic Repair & Servicing": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Printing & Publishing Trades": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Textile & Garment Manufacturing": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Leather & Footwear": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Glass, Ceramics & Stone": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Jewellery": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Chemical & Materials Plant Operations": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Food Processing": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Paper & Pulp Operations": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Assembly Line Workers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Heavy Equipment & Plant Operators": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Power & Utilities Plant Operations": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Driving & Transport": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Maritime & Shipping": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Aviation": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Railway Operations": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Mining & Quarrying Labour": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Cleaning & Housekeeping": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Laundry": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Packing, Delivery & Manual Labour": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Personal Care & Beauty": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Security & Safety": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Contact Centre & Inquiry Clerks": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Debt & Money Services": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Healthcare Support & Home Care": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Medical Prosthetics & Optics": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Building Construction Labour": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Handicraft & Artisan Work": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Astrologers, Fortune Tellers and Related Workers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Audiologists and Speech Therapists": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Bookmakers, Croupiers and Related Gaming Workers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Buyers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Cartographers and Surveyors": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Chemists": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Child Care Workers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Data Entry Clerks": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Dieticians and Nutritionists": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Driving Instructors": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Early Childhood Educators": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Economists": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Education Managers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Engineering Professionals Not Elsewhere Classified": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Fashion and Other Models": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Finance Managers": {
+    "allowedStreams": [
+      "Commerce",
+      "Science PCM",
+      "Science PCB"
+    ],
+    "strict": false
+  },
+  "Biologists, Botanists, Zoologists and Related Professionals": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Geologists and Geophysicists": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Health Professionals Not Elsewhere Classified": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Hunters and Trappers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Judges": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Librarians and Related Information Professionals": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Library Clerks": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Life Science Technicians (Excluding Medical)": {
+    "allowedStreams": [
+      "Science PCB"
+    ],
+    "strict": true
+  },
+  "Managing Directors and Chief Executives": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Mathematicians, Actuaries and Statisticians": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Meteorologists": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Office Supervisors": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Philosophers, Historians and Political Scientists": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Physicists and Astronomers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Photographic Products Machine Operators": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Physical and Engineering Science Technicians Not Elsewhere Classified": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Product Graders and Testers (Excluding Food and Beverages)": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Psychologists": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Religious Professionals": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Research and Development Managers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Sociologists, Anthropologists and Related Professionals": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Statistical, Mathematical and Related Associate Professionals": {
+    "allowedStreams": [
+      "Science PCM"
+    ],
+    "strict": true
+  },
+  "Archivists and Curators": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Service Station Attendants": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Underwater Divers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Undertakers and Embalmers": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  },
+  "Elementary Workers Not Elsewhere Classified": {
+    "allowedStreams": [
+      "ALL"
+    ],
+    "strict": false
+  }
+}

@@ -93,7 +93,7 @@ export default function SimulationPage({ params }: { params: { careerId: string 
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col font-sans selection:bg-primary/30">
+    <div className="min-h-[100dvh] bg-slate-950 flex flex-col font-sans selection:bg-primary/30">
       <Navbar />
 
       <main className="flex-1 flex flex-col max-w-4xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-16">

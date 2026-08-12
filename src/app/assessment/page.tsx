@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
+import { useTranslations } from "@/hooks/useTranslations";
 import { 
   ClipboardList, 
   Clock, 
@@ -28,6 +29,7 @@ export default function AssessmentHome() {
   const router = useRouter();
   
   const [sessionExists, setSessionExists] = useState(false);
+  const t = useTranslations("Assessment");
   const [sessionProgress, setSessionProgress] = useState({ answered: 0, total: 80 });
   const [checkingSession, setCheckingSession] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -105,7 +107,7 @@ export default function AssessmentHome() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-[100dvh] bg-background">
       <Navbar />
 
       <main className="flex-grow max-w-3xl mx-auto px-4 sm:px-6 py-10 w-full flex items-center justify-center">
@@ -190,12 +192,12 @@ export default function AssessmentHome() {
               {/* Instructions Callout */}
               <div className="rounded-xl bg-muted/30 p-5 border border-border/30 space-y-3">
                 <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <AlertCircle className="h-4.5 w-4.5 text-primary shrink-0" /> Important Guidelines
+                  <AlertCircle className="h-4.5 w-4.5 text-primary shrink-0" /> {t("guidelinesTitle")}
                 </div>
                 <ul className="list-disc list-inside space-y-2 text-xs text-muted-foreground leading-relaxed pl-1">
-                  <li><strong>Take your time:</strong> Do not rush. Average completion is ~45 minutes, but you have no time limits.</li>
-                  <li><strong>Answer instinctively:</strong> There are no right or wrong answers. Choose options that genuinely represent you, not how you think you &quot;should&quot; answer.</li>
-                  <li><strong>Assessment Structure:</strong> 70 are trait based questions and 10 are contextual.</li>
+                  <li><strong>{t("guideline1Title")}</strong> {t("guideline1Desc")}</li>
+                  <li><strong>{t("guideline2Title")}</strong> {t("guideline2Desc")}</li>
+                  <li><strong>{t("guideline3Title")}</strong> {t("guideline3Desc")}</li>
                   <li><strong>Autosave:</strong> Your progress is saved in the cloud. You can safely exit at any time and resume right where you left off.</li>
                 </ul>
               </div>

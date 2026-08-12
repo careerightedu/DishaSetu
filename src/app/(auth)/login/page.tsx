@@ -20,7 +20,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await loginWithGoogle();
-      router.push("/");
+      window.location.href = "/";
     } catch (err) {
       console.error(err);
       const message = err instanceof Error ? err.message : "Failed to log in with Google.";
@@ -31,7 +31,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4 relative overflow-hidden bg-background">
+    <div className="flex min-h-[100dvh] flex-col items-center justify-center p-4 relative overflow-hidden bg-background">
       {/* Dynamic Background Accent Orbs */}
       <div className="absolute top-1/4 left-1/4 -z-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 -z-10 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />

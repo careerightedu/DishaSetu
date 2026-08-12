@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "@/hooks/useTranslations";
 import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
@@ -43,6 +44,8 @@ interface ScoreReport {
 interface Recommendation {
   careerId: string;
   title: string;
+  matchType?: string;
+  pivotPath?: string;
   sector: string;
   fitScore: number;
   description: string;
@@ -139,6 +142,8 @@ export default function ResultsDashboard() {
   
   const [expandedCareer, setExpandedCareer] = useState<string | null>(null);
   const [resetting, setResetting] = useState(false);
+  const [hasCorruptedSession, setHasCorruptedSession] = useState(false);
+  const t = useTranslations("Results");
   const [activeTab, setActiveTab] = useState<"matching" | "archetype" | "counselor" | "quests">("matching");
   
   // Local state to track checked quests
@@ -152,17 +157,21 @@ export default function ResultsDashboard() {
         const sessionSnap = await getDoc(sessionRef);
         if (sessionSnap.exists()) {
           const data = sessionSnap.data();
-          if (data.status === "completed" && data.scores && data.recommendations) {
-            setScores(data.scores);
-            setRecommendations(data.recommendations);
-            setArchetype(data.archetype || null);
-            setCounselorAnalysis(data.counselorAnalysis || null);
-            setCareerMissions(data.careerMissions || null);
-            setAchievements(data.achievements || null);
-            
-            // Initialize completed quests status
-            if (data.completedQuests) {
-              setCompletedQuests(data.completedQuests);
+          if (data.status === "completed") {
+            if (data.scores && data.recommendations) {
+              setScores(data.scores);
+              setRecommendations(data.recommendations);
+              setArchetype(data.archetype || null);
+              setCounselorAnalysis(data.counselorAnalysis || null);
+              setCareerMissions(data.careerMissions || null);
+              setAchievements(data.achievements || null);
+              
+              // Initialize completed quests status
+              if (data.completedQuests) {
+                setCompletedQuests(data.completedQuests);
+              }
+            } else {
+              setHasCorruptedSession(true);
             }
           }
         }
@@ -177,7 +186,7 @@ export default function ResultsDashboard() {
 
   const handleStartOver = async () => {
     if (!user) return;
-    if (!window.confirm("Are you sure you want to discard your current results and start a new assessment? This action cannot be undone.")) return;
+    if (!window.confirm(t("retakeConfirm"))) return;
     
     setResetting(true);
     try {
@@ -210,12 +219,12 @@ export default function ResultsDashboard() {
 
   if (loading) {
     return (
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col min-h-[100dvh] bg-background">
         <Navbar />
         <main className="flex-grow flex items-center justify-center">
           <div className="flex flex-col items-center space-y-4">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-            <p className="text-sm font-semibold text-muted-foreground">Retrieving profile diagnostics...</p>
+            <p className="text-sm font-semibold text-muted-foreground">{t("retrieving")}</p>
           </div>
         </main>
       </div>
@@ -224,21 +233,36 @@ export default function ResultsDashboard() {
 
   if (!scores || !recommendations) {
     return (
-      <div className="flex flex-col min-h-screen bg-background">
+      <div className="flex flex-col min-h-[100dvh] bg-background">
         <Navbar />
         <main className="flex-grow flex items-center justify-center p-4">
           <Card className="w-full max-w-md border-border/40 bg-card/65 backdrop-blur-md shadow-2xl text-center p-8">
             <CardHeader className="space-y-2">
               <BadgeAlert className="mx-auto h-12 w-12 text-primary" />
-              <CardTitle className="text-xl font-extrabold text-foreground">No Results Available</CardTitle>
+              <CardTitle className="text-xl font-extrabold text-foreground">
+                {hasCorruptedSession ? "Analysis Interrupted" : t("noResults")}
+              </CardTitle>
               <CardDescription className="text-xs text-muted-foreground">
-                You have not completed the Career Assessment session yet.
+                {hasCorruptedSession 
+                  ? "Your assessment was submitted but the AI analysis was interrupted. You can try analyzing it again, or start over."
+                  : t("notCompleted")}
               </CardDescription>
             </CardHeader>
-            <CardFooter className="justify-center pt-4">
-              <Link href="/assessment" className="font-extrabold bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 rounded-md flex items-center justify-center gap-1.5 shadow-md">
-                Start Assessment <ArrowRight className="h-4 w-4" />
-              </Link>
+            <CardFooter className="flex-col gap-3 pt-4">
+              {hasCorruptedSession ? (
+                <>
+                  <Link href="/assessment/analyzing" className="w-full font-extrabold bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 rounded-md flex items-center justify-center gap-1.5 shadow-md">
+                    Retry Analysis <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Button variant="outline" onClick={handleStartOver} disabled={resetting} className="w-full">
+                    {resetting ? "Resetting..." : "Start Over"}
+                  </Button>
+                </>
+              ) : (
+                <Link href="/assessment" className="w-full font-extrabold bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 rounded-md flex items-center justify-center gap-1.5 shadow-md">
+                  {t("startAssessment")} <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
             </CardFooter>
           </Card>
         </main>
@@ -261,7 +285,7 @@ export default function ResultsDashboard() {
   // Extract all unique skills mentioned in gaps to populate Locked Branch of Skill Tree
   const lockedSkillsFromGaps = Array.from(new Set(recommendations.flatMap(rec => rec.skillGaps || [])));
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-primary/20">
+    <div className="flex flex-col min-h-[100dvh] bg-background text-foreground selection:bg-primary/20">
       <Navbar />
 
       <main className="flex-grow flex items-center justify-center max-w-4xl mx-auto px-4 sm:px-6 py-12 w-full">
@@ -318,7 +342,7 @@ export default function ResultsDashboard() {
               size="lg"
               className="w-full sm:w-auto font-bold text-sm border-border/50 bg-background/50 hover:bg-background flex items-center justify-center gap-2 h-12 px-6 text-muted-foreground hover:text-foreground transition-all"
             >
-              <RotateCcw className="h-4 w-4" /> Retake Assessment
+              <RotateCcw className="h-4 w-4" /> {t("retakeAssessment")}
             </Button>
           </div>
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
+import { useTranslations } from "@/hooks/useTranslations";
 import { 
   ClipboardList, 
   MapPin, 
@@ -33,6 +34,7 @@ export default function Dashboard() {
   const [sessionExists, setSessionExists] = useState(false);
   const [sessionProgress, setSessionProgress] = useState({ answered: 0, total: 80 });
   const [checkingSession, setCheckingSession] = useState(true);
+  const t = useTranslations("Dashboard");
 
   useEffect(() => {
     async function checkActiveSession() {
@@ -68,7 +70,7 @@ export default function Dashboard() {
       case "S2": return "School Student (Class 11–12)";
       case "S3": return "College Student";
       case "S4": return "Early Professional / Pivot";
-      default: return "Not Selected";
+      default: return t("notSelected");
     }
   };
 
@@ -83,7 +85,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-[100dvh] bg-background">
       <Navbar />
 
       {/* Hero Section */}
@@ -93,11 +95,11 @@ export default function Dashboard() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 rounded-2xl border border-primary/10 relative overflow-hidden">
           <div className="absolute right-0 top-0 -z-10 h-32 w-32 rounded-full bg-primary/10 blur-2xl" />
           <div className="space-y-1">
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Hello, <span className="text-primary">{profile?.fullName || user?.displayName || "Explorer"}</span>!
+            <h1 className="text-2xl sm:text-3xl font-heading font-extrabold tracking-wide">
+              {t("hello")}, <span className="text-primary">{profile?.fullName || user?.displayName || t("explorer")}</span>!
             </h1>
             <p className="text-sm text-muted-foreground">
-              Welcome to your CareeRight Career assessment dashboard. Let&apos;s build your roadmap.
+              {t("welcomeTitle")}
             </p>
           </div>
         </div>
@@ -113,13 +115,13 @@ export default function Dashboard() {
               
               <CardHeader className="pl-8 pr-6 sm:pl-10 sm:pr-8 pt-6 sm:pt-8">
                 <div className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary border border-primary/20 mb-2">
-                  Primary Task
+                  {t("primaryTask")}
                 </div>
                 <CardTitle className="text-2xl font-bold flex items-center gap-2">
-                  <ClipboardList className="h-6 w-6 text-primary" /> Core Career Assessment
+                  <ClipboardList className="h-6 w-6 text-primary" /> {t("coreAssessment")}
                 </CardTitle>
                 <CardDescription>
-                  Scientifically grounded interest, values, and work preferences mapping.
+                  {t("coreDesc")}
                 </CardDescription>
               </CardHeader>
               
@@ -129,25 +131,25 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="rounded-xl border border-border/40 bg-background/30 p-4 space-y-1">
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Clock className="h-4 w-4 text-primary" /> Time Required
+                      <Clock className="h-4 w-4 text-primary" /> {t("timeRequired")}
                     </div>
-                    <p className="text-lg font-bold">~ 45 Mins</p>
-                    <p className="text-[10px] text-muted-foreground">Save & resume anytime</p>
+                    <p className="text-lg font-bold">{t("time45m")}</p>
+                    <p className="text-[10px] text-muted-foreground">{t("saveResume")}</p>
                   </div>
 
                   <div className="rounded-xl border border-border/40 bg-background/30 p-4 space-y-1">
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <HelpCircle className="h-4 w-4 text-primary" /> Question Count
+                      <HelpCircle className="h-4 w-4 text-primary" /> {t("questionCount")}
                     </div>
-                    <p className="text-lg font-bold">80 Questions</p>
-                    <p className="text-[10px] text-muted-foreground">Customized for your stage</p>
+                    <p className="text-lg font-bold">{t("q80")}</p>
+                    <p className="text-[10px] text-muted-foreground">{t("customizedStage")}</p>
                   </div>
 
                   <div className="rounded-xl border border-border/40 bg-background/30 p-4 space-y-1">
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Compass className="h-4 w-4 text-primary" /> Method Type
+                      <Compass className="h-4 w-4 text-primary" /> {t("methodType")}
                     </div>
-                    <p className="text-base font-bold text-foreground">Mathematical &amp; AI Based</p>
+                    <p className="text-base font-bold text-foreground">{t("mathAiBased")}</p>
                     <p className="text-[10px] text-muted-foreground">Grounded Indian framework</p>
                   </div>
                 </div>
@@ -156,11 +158,11 @@ export default function Dashboard() {
                 <div className="rounded-lg bg-primary/5 p-4 border border-primary/10 flex gap-3 text-sm text-foreground">
                   <AlertCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                    <p className="font-semibold text-primary">Instructions before you begin:</p>
+                    <p className="font-semibold text-primary">{t("instructionsTitle")}</p>
                     <ul className="list-disc list-inside space-y-1 text-xs text-muted-foreground">
-                      <li>Answer honestly based on your preferences, not what others expect.</li>
-                      <li>There are no &quot;right&quot; or &quot;wrong&quot; answers.</li>
-                      <li>70 are trait based questions and 10 are contextual.</li>
+                      <li>{t("instruction1")}</li>
+                      <li>{t("instruction2")}</li>
+                      <li>{t("instruction3")}</li>
                     </ul>
                   </div>
                 </div>
@@ -207,7 +209,7 @@ export default function Dashboard() {
                       "font-bold shadow-md shadow-primary/20 w-full sm:w-auto flex items-center justify-center gap-1.5"
                     )}
                   >
-                    Resume Assessment
+                    {t("resumeAssessment")}
                     <ChevronRight className="h-5 w-5" />
                   </Link>
                 ) : (

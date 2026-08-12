@@ -1,0 +1,67 @@
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+
+# Environment variables and secrets.
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyBwR0vhd_0G7HkLYVz2robWKljIBOY-Qn8
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: dishasetu-9b11f.firebaseapp.com
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: dishasetu-9b11f
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: dishasetu-9b11f.firebasestorage.app
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: 817868554162
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: 1:817868554162:web:59dbe556e599634acdaeab
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_SUPABASE_URL
+    value: https://titewxdqazeoriezdefw.supabase.co
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFub24iLCJpYXQiOjE3ODQ5NzcyMDAsImV4cCI6MjEwMDU1MzIwMH0.83zIIraSxSx7s3H-csc6hexCdZPyyoOP7iKdYCc7lFQ
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: SUPABASE_SERVICE_ROLE_KEY
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpdGV3eGRxYXplb3JpZXpkZWZ3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDk3NzIwMCwiZXhwIjoyMTAwNTUzMjAwfQ.81-qZ47Y5P1e493viQw6xNlQ8V7PKJksGDY8lO632gQ
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: LLM_PROVIDER
+    value: google
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: GOOGLE_API_KEY
+
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: GOOGLE_MODEL
+    value: gemma-4-31b-it
+    availability:
+      - BUILD
+      - RUNTIME

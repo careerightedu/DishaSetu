@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "@/hooks/useTranslations";
 import { useAuth, UserProfile } from "@/features/auth/context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -25,6 +26,7 @@ import { Card, CardContent } from "@/components/ui/card";
 export default function OnboardingPage() {
   const { user, profile, updateProfile } = useAuth();
   const router = useRouter();
+  const t = useTranslations("Onboarding");
 
   // Onboarding wizard steps: 1: Basics, 2: Segment Select, 3: Segment Details, 4: Success
   const [step, setStep] = useState(1);
@@ -39,12 +41,14 @@ export default function OnboardingPage() {
     schoolBoard: "",
     grade: "",
     stream: "",
+    backgroundStream: "",
     collegeName: "",
     degree: "",
     specialization: "",
     graduationYear: "",
     jobTitle: "",
     industry: "",
+    otherIndustry: "",
     yearsOfExperience: "",
   });
 
@@ -67,13 +71,16 @@ export default function OnboardingPage() {
         if (!formData.grade) errs.grade = "Grade is required";
         if (!formData.stream) errs.stream = "Stream selection is required";
       } else if (formData.segment === "S3") {
+        if (!formData.backgroundStream) errs.backgroundStream = "Broad academic background is required";
         if (!formData.collegeName?.trim()) errs.collegeName = "College/University name is required";
         if (!formData.degree) errs.degree = "Degree is required";
         if (!formData.specialization?.trim()) errs.specialization = "Specialization is required";
         if (!formData.graduationYear) errs.graduationYear = "Graduation year is required";
       } else if (formData.segment === "S4") {
+        if (!formData.backgroundStream) errs.backgroundStream = "Broad professional background is required";
         if (!formData.jobTitle?.trim()) errs.jobTitle = "Job title is required";
         if (!formData.industry) errs.industry = "Industry is required";
+        if (formData.industry === "Other" && !formData.otherIndustry?.trim()) errs.otherIndustry = "Please specify your industry";
         if (!formData.yearsOfExperience) errs.yearsOfExperience = "Years of experience is required";
       }
     }
@@ -101,12 +108,14 @@ export default function OnboardingPage() {
       schoolBoard: "",
       grade: "",
       stream: "",
+      backgroundStream: "",
       collegeName: "",
       degree: "",
       specialization: "",
       graduationYear: "",
       jobTitle: "",
       industry: "",
+      otherIndustry: "",
       yearsOfExperience: "",
     }));
   };
@@ -142,7 +151,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4 relative overflow-hidden bg-background">
+    <div className="flex min-h-[100dvh] flex-col items-center justify-center p-4 relative overflow-hidden bg-background">
       {/* Background blobs */}
       <div className="absolute top-1/4 left-1/4 -z-10 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 -z-10 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
@@ -153,11 +162,11 @@ export default function OnboardingPage() {
         {step < 4 && (
           <div className="flex flex-col items-center text-center space-y-3">
             <div className="flex items-center gap-1.5 text-primary text-xs font-bold uppercase tracking-wider">
-              <Compass className="h-4 w-4" /> Profile Builder
+              <Compass className="h-4 w-4" /> {t("profileBuilder")}
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Let&apos;s build your profile</h1>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{t("buildTitle")}</h1>
             <p className="text-sm text-muted-foreground max-w-md">
-              We personalize your assessment corpus and recommendations based on these details
+              {t("buildDesc")}
             </p>
 
             {/* Step Progress Tracker */}
@@ -199,15 +208,15 @@ export default function OnboardingPage() {
                   className="space-y-6"
                 >
                   <h2 className="text-lg font-bold flex items-center gap-2 border-b border-border/40 pb-2">
-                    <UserIcon className="h-5 w-5 text-primary" /> Personal Information
+                    <UserIcon className="h-5 w-5 text-primary" /> {t("personalInfo")}
                   </h2>
 
                   <div className="grid grid-cols-1 gap-5">
                     <div className="space-y-2.5">
-                      <Label htmlFor="fullName">Full Name</Label>
+                      <Label htmlFor="fullName">{t("fullNameLabel")}</Label>
                       <Input
                         id="fullName"
-                        placeholder="Enter your full name"
+                        placeholder={t("fullNamePlaceholder")}
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                         className={`bg-background/40 focus-visible:ring-primary h-10 ${errors.fullName ? "border-destructive" : ""}`}
@@ -217,36 +226,35 @@ export default function OnboardingPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div className="space-y-2.5">
-                        <Label htmlFor="cityTier">Where do you live? (City Tier)</Label>
+                        <Label htmlFor="cityTier">{t("cityTierLabel")}</Label>
                         <Select
                           value={formData.cityTier}
                           onValueChange={(val) => setFormData({ ...formData, cityTier: val || "" })}
                         >
                           <SelectTrigger className={`bg-background/40 focus:ring-primary h-10 ${errors.cityTier ? "border-destructive" : ""}`}>
-                            <SelectValue placeholder="Select City Tier" />
+                            <SelectValue placeholder={t("cityTierPlaceholder")} />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95 border-border/50">
-                            <SelectItem value="Tier 1">Tier 1 (Metros: Delhi, Mumbai, Bengaluru, etc.)</SelectItem>
-                            <SelectItem value="Tier 2">Tier 2 (Capitals & Large Cities: Pune, Jaipur, etc.)</SelectItem>
-                            <SelectItem value="Tier 3">Tier 3 (Smaller Towns / District Headquarters)</SelectItem>
+                          <SelectContent className="bg-popover border-border/50">
+                            <SelectItem value="Tier 1">{t("tier1")}</SelectItem>
+                            <SelectItem value="Tier 2">{t("tier2")}</SelectItem>
+                            <SelectItem value="Tier 3">{t("tier3")}</SelectItem>
                           </SelectContent>
                         </Select>
                         {errors.cityTier && <p className="text-xs text-destructive">{errors.cityTier}</p>}
                       </div>
 
                       <div className="space-y-2.5">
-                        <Label htmlFor="languagePreference">Preferred Language for Assessment</Label>
+                        <Label htmlFor="languagePreference">{t("langLabel")}</Label>
                         <Select
                           value={formData.languagePreference}
                           onValueChange={(val) => setFormData({ ...formData, languagePreference: val || "" })}
                         >
                           <SelectTrigger className={`bg-background/40 focus:ring-primary h-10 ${errors.languagePreference ? "border-destructive" : ""}`}>
-                            <SelectValue placeholder="Select Language" />
+                            <SelectValue placeholder={t("langPlaceholder")} />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95 border-border/50">
+                          <SelectContent className="bg-popover border-border/50">
                             <SelectItem value="English">English</SelectItem>
                             <SelectItem value="Hindi">Hindi (हिंदी)</SelectItem>
-                            <SelectItem value="Hinglish">Hinglish (Hindi written in English)</SelectItem>
                           </SelectContent>
                         </Select>
                         {errors.languagePreference && <p className="text-xs text-destructive">{errors.languagePreference}</p>}
@@ -267,7 +275,7 @@ export default function OnboardingPage() {
                   className="space-y-6"
                 >
                   <h2 className="text-lg font-bold flex items-center gap-2 border-b border-border/40 pb-2">
-                    <Layers className="h-5 w-5 text-primary" /> Select Your Current Stage
+                    <Layers className="h-5 w-5 text-primary" /> {t("selectStage")}
                   </h2>
                   
                   {errors.segment && (
@@ -288,9 +296,9 @@ export default function OnboardingPage() {
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
                           <GraduationCap className="h-5 w-5" />
                         </div>
-                        <h3 className="font-bold text-foreground text-sm">School (Class 8–10)</h3>
+                        <h3 className="font-bold text-foreground text-sm">{t("s1Title")}</h3>
                         <p className="text-xs text-muted-foreground line-clamp-2">
-                          Explore stream preferences (Science, Commerce, Humanities) & identify interests.
+                          {t("s1Desc")}
                         </p>
                       </div>
                     </div>
@@ -328,7 +336,7 @@ export default function OnboardingPage() {
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
                           <BookOpen className="h-5 w-5" />
                         </div>
-                        <h3 className="font-bold text-foreground text-sm">College Student</h3>
+                        <h3 className="font-bold text-foreground text-sm">{t("s3Title")}</h3>
                         <p className="text-xs text-muted-foreground line-clamp-2">
                           Align placements, specializations, Masters/MBA tracks, GATE/CAT exams, or pivots.
                         </p>
@@ -376,7 +384,7 @@ export default function OnboardingPage() {
                   {formData.segment === "S1" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div className="space-y-2.5">
-                        <Label htmlFor="schoolBoard">School Board</Label>
+                        <Label htmlFor="schoolBoard">{t("boardLabel")}</Label>
                         <Select
                           value={formData.schoolBoard}
                           onValueChange={(val) => setFormData({ ...formData, schoolBoard: val || "" })}
@@ -384,7 +392,7 @@ export default function OnboardingPage() {
                           <SelectTrigger className={`h-10 ${errors.schoolBoard ? "border-destructive" : ""}`}>
                             <SelectValue placeholder="Select Board" />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="CBSE">CBSE</SelectItem>
                             <SelectItem value="ICSE">ICSE</SelectItem>
                             <SelectItem value="State Board">State Board</SelectItem>
@@ -402,9 +410,9 @@ export default function OnboardingPage() {
                           onValueChange={(val) => setFormData({ ...formData, grade: val || "" })}
                         >
                           <SelectTrigger className={`h-10 ${errors.grade ? "border-destructive" : ""}`}>
-                            <SelectValue placeholder="Select Grade" />
+                            <SelectValue placeholder={t("gradePlaceholder")} />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="Class 8">Class 8</SelectItem>
                             <SelectItem value="Class 9">Class 9</SelectItem>
                             <SelectItem value="Class 10">Class 10</SelectItem>
@@ -427,7 +435,7 @@ export default function OnboardingPage() {
                           <SelectTrigger className={`h-10 ${errors.schoolBoard ? "border-destructive" : ""}`}>
                             <SelectValue placeholder="Select Board" />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="CBSE">CBSE</SelectItem>
                             <SelectItem value="ICSE / ISC">ISC (ICSE)</SelectItem>
                             <SelectItem value="State Board">State Board</SelectItem>
@@ -439,7 +447,7 @@ export default function OnboardingPage() {
                       </div>
 
                       <div className="space-y-2.5">
-                        <Label htmlFor="grade">Current Grade</Label>
+                        <Label htmlFor="grade">{t("gradeLabel")}</Label>
                         <Select
                           value={formData.grade}
                           onValueChange={(val) => setFormData({ ...formData, grade: val || "" })}
@@ -447,7 +455,7 @@ export default function OnboardingPage() {
                           <SelectTrigger className={`h-10 ${errors.grade ? "border-destructive" : ""}`}>
                             <SelectValue placeholder="Select Grade" />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="Class 11">Class 11</SelectItem>
                             <SelectItem value="Class 12">Class 12</SelectItem>
                           </SelectContent>
@@ -462,9 +470,9 @@ export default function OnboardingPage() {
                           onValueChange={(val) => setFormData({ ...formData, stream: val || "" })}
                         >
                           <SelectTrigger className={`h-10 ${errors.stream ? "border-destructive" : ""}`}>
-                            <SelectValue placeholder="Select Stream" />
+                            <SelectValue placeholder={t("streamPlaceholder")} />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="Science PCM">Science (PCM - Engineering)</SelectItem>
                             <SelectItem value="Science PCB">Science (PCB - Medical)</SelectItem>
                             <SelectItem value="Commerce">Commerce</SelectItem>
@@ -479,8 +487,27 @@ export default function OnboardingPage() {
                   {/* S3 Form: College Student */}
                   {formData.segment === "S3" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      <div className="space-y-2.5 sm:col-span-2">
+                        <Label htmlFor="s3-backgroundStream">Broad Academic Background</Label>
+                        <Select
+                          value={formData.backgroundStream}
+                          onValueChange={(val) => setFormData({ ...formData, backgroundStream: val || "" })}
+                        >
+                          <SelectTrigger className={`h-10 ${errors.backgroundStream ? "border-destructive" : ""}`}>
+                            <SelectValue placeholder="Select Broad Domain" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover">
+                            <SelectItem value="Science PCM">Science (PCM - Engineering / Tech / Math)</SelectItem>
+                            <SelectItem value="Science PCB">Science (PCB - Medical / Bio / Health)</SelectItem>
+                            <SelectItem value="Commerce">Commerce / Finance / Business</SelectItem>
+                            <SelectItem value="Humanities">Humanities / Arts / Design / Law</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.backgroundStream && <p className="text-xs text-destructive">{errors.backgroundStream}</p>}
+                      </div>
+
                       <div className="space-y-2.5">
-                        <Label htmlFor="collegeName">College / University Name</Label>
+                        <Label htmlFor="collegeName">{t("collegeLabel")}</Label>
                         <Input
                           id="collegeName"
                           placeholder="e.g. SRCC, IIT Delhi, DU"
@@ -500,7 +527,7 @@ export default function OnboardingPage() {
                           <SelectTrigger className={`h-10 ${errors.degree ? "border-destructive" : ""}`}>
                             <SelectValue placeholder="Select Degree" />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="B.Tech / B.E.">B.Tech / B.E.</SelectItem>
                             <SelectItem value="B.Sc.">B.Sc.</SelectItem>
                             <SelectItem value="B.Com.">B.Com.</SelectItem>
@@ -527,15 +554,15 @@ export default function OnboardingPage() {
                       </div>
 
                       <div className="space-y-2.5">
-                        <Label htmlFor="graduationYear">Expected Graduation Year</Label>
+                        <Label htmlFor="graduationYear">{t("gradYearLabel")}</Label>
                         <Select
                           value={formData.graduationYear}
                           onValueChange={(val) => setFormData({ ...formData, graduationYear: val || "" })}
                         >
                           <SelectTrigger className={`h-10 ${errors.graduationYear ? "border-destructive" : ""}`}>
-                            <SelectValue placeholder="Select Year" />
+                            <SelectValue placeholder={t("gradYearPlaceholder")} />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="2026">2026</SelectItem>
                             <SelectItem value="2027">2027</SelectItem>
                             <SelectItem value="2028">2028</SelectItem>
@@ -551,6 +578,25 @@ export default function OnboardingPage() {
                   {/* S4 Form: Early Professional */}
                   {formData.segment === "S4" && (
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                      <div className="space-y-2.5 sm:col-span-3">
+                        <Label htmlFor="s4-backgroundStream">Broad Professional Background</Label>
+                        <Select
+                          value={formData.backgroundStream}
+                          onValueChange={(val) => setFormData({ ...formData, backgroundStream: val || "" })}
+                        >
+                          <SelectTrigger className={`h-10 ${errors.backgroundStream ? "border-destructive" : ""}`}>
+                            <SelectValue placeholder="Select Broad Domain" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover">
+                            <SelectItem value="Science PCM">Science (PCM - Engineering / Tech / Math)</SelectItem>
+                            <SelectItem value="Science PCB">Science (PCB - Medical / Bio / Health)</SelectItem>
+                            <SelectItem value="Commerce">Commerce / Finance / Business</SelectItem>
+                            <SelectItem value="Humanities">Humanities / Arts / Design / Law</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.backgroundStream && <p className="text-xs text-destructive">{errors.backgroundStream}</p>}
+                      </div>
+
                       <div className="space-y-2.5">
                         <Label htmlFor="jobTitle">Current Job Title / Role</Label>
                         <Input
@@ -570,9 +616,9 @@ export default function OnboardingPage() {
                           onValueChange={(val) => setFormData({ ...formData, industry: val || "" })}
                         >
                           <SelectTrigger className={`h-10 ${errors.industry ? "border-destructive" : ""}`}>
-                            <SelectValue placeholder="Select Industry" />
+                            <SelectValue placeholder={t("industryPlaceholder")} />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="IT / Software / Tech">IT, Software & Tech</SelectItem>
                             <SelectItem value="Banking / Finance / Consulting">Banking, Finance & Consulting</SelectItem>
                             <SelectItem value="Education / EdTech">Education & EdTech</SelectItem>
@@ -585,16 +631,30 @@ export default function OnboardingPage() {
                         {errors.industry && <p className="text-xs text-destructive">{errors.industry}</p>}
                       </div>
 
+                      {formData.industry === "Other" && (
+                        <div className="space-y-2.5 sm:col-span-3">
+                          <Label htmlFor="otherIndustry">{t("industryOtherLabel")}</Label>
+                          <Input
+                            id="otherIndustry"
+                            placeholder={t("industryOtherPlaceholder")}
+                            value={formData.otherIndustry}
+                            onChange={(e) => setFormData({ ...formData, otherIndustry: e.target.value })}
+                            className={`h-10 ${errors.otherIndustry ? "border-destructive" : ""}`}
+                          />
+                          {errors.otherIndustry && <p className="text-xs text-destructive">{errors.otherIndustry}</p>}
+                        </div>
+                      )}
+
                       <div className="space-y-2.5">
-                        <Label htmlFor="yearsOfExperience">Years of Work Experience</Label>
+                        <Label htmlFor="yearsOfExperience">{t("expLabel")}</Label>
                         <Select
                           value={formData.yearsOfExperience}
                           onValueChange={(val) => setFormData({ ...formData, yearsOfExperience: val || "" })}
                         >
                           <SelectTrigger className={`h-10 ${errors.yearsOfExperience ? "border-destructive" : ""}`}>
-                            <SelectValue placeholder="Select Experience" />
+                            <SelectValue placeholder={t("expPlaceholder")} />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover/95">
+                          <SelectContent className="bg-popover">
                             <SelectItem value="Less than 1 Year">Less than 1 Year</SelectItem>
                             <SelectItem value="1 to 3 Years">1 to 3 Years</SelectItem>
                             <SelectItem value="3 to 5 Years">3 to 5 Years</SelectItem>
@@ -625,15 +685,15 @@ export default function OnboardingPage() {
                     <CheckCircle className="h-10 w-10 animate-bounce" />
                   </div>
                   <div className="space-y-2.5">
-                    <h2 className="text-2xl font-bold text-foreground">Profile Completed!</h2>
+                    <h2 className="text-2xl font-bold text-foreground">{t("successTitle")}</h2>
                     <p className="text-sm text-muted-foreground max-w-sm">
-                      Your career assessment is now customized. You will be served 80 tailored questions mapped to your segment.
+                      {t("successDesc")}
                     </p>
                   </div>
                   
                   <div className="w-full max-w-sm rounded-xl border border-border/45 bg-background/40 p-5 text-left space-y-2.5 text-xs">
                     <div className="flex justify-between border-b border-border/30 pb-2 font-semibold text-foreground">
-                      <span>PROFILE SUMMARY</span>
+                      <span>{t("profileSummary")}</span>
                       <span className="text-primary font-bold">{formData.segment === "S1" || formData.segment === "S2" ? "School" : formData.segment === "S3" ? "College" : "Professional"}</span>
                     </div>
                     <div className="flex justify-between">
@@ -651,7 +711,7 @@ export default function OnboardingPage() {
                   </div>
 
                   <Button onClick={handleStartApp} className="w-full max-w-xs font-semibold shadow-sm h-10">
-                    Enter Dashboard
+                    {t("enterDashboard")}
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 </motion.div>
@@ -668,17 +728,17 @@ export default function OnboardingPage() {
                 disabled={step === 1 || loading}
                 className="font-medium h-10"
               >
-                <ChevronLeft className="mr-2 h-4 w-4" /> Back
+                <ChevronLeft className="mr-2 h-4 w-4" /> {t("back")}
               </Button>
 
               {step < 3 ? (
                 <Button onClick={handleNext} className="font-semibold shadow-sm h-10">
-                  Continue
+                  {t("continue")}
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               ) : (
                 <Button onClick={handleSubmit} disabled={loading} className="font-semibold shadow-sm h-10">
-                  {loading ? "Saving..." : "Finish Setup"}
+                  {loading ? t("saving") : t("finishSetup")}
                   {!loading && <CheckCircle className="ml-2 h-4 w-4" />}
                 </Button>
               )}

@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "@/features/auth/context/AuthContext";
+
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-heading",
 });
@@ -25,10 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable, plusJakartaSans.variable)}>
-      <body className="antialiased bg-background text-foreground min-h-screen flex flex-col">
+    <html lang="en" className={cn("font-sans", inter.variable, playfair.variable)}>
+      <body className="antialiased bg-background text-foreground min-h-[100dvh] flex flex-col">
         <AuthContextProvider>
-          {children}
+            {children}
         </AuthContextProvider>
       </body>
     </html>
