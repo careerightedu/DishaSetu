@@ -56,10 +56,7 @@ env:
       - BUILD
       - RUNTIME
   - variable: GOOGLE_API_KEY
-
-    availability:
-      - BUILD
-      - RUNTIME
+    secret: google-api-key
   - variable: GOOGLE_MODEL
     value: gemma-4-31b-it
     availability:
