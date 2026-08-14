@@ -216,7 +216,6 @@ export async function POST(request: NextRequest) {
     }
 
     // 8. User Profile from Client Request Payload & Contextual Anchor Answers
-    const userProfileData: any = { ...userProfileDataFromBody };
 
     const contextualAnswers: Record<string, string> = {};
     const questionsMap = (questionsData as any[]).reduce((acc, q) => {
