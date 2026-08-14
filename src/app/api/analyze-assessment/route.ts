@@ -8,6 +8,8 @@ import familyTraitScores from "@/features/assessment/data/family_trait_scores.js
 import occupationsByFamilyData from "@/features/assessment/data/occupations_by_family.json";
 import careerEligibilityRules from "@/features/assessment/data/career_eligibility_rules.json";
 
+export const maxDuration = 60; // Extend serverless function timeout to 60 seconds
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
