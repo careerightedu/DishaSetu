@@ -119,7 +119,21 @@ export async function POST(request: NextRequest) {
       // Tier 4: Contextual & Environmental (Weight 0.5)
     };
 
-    const familyMatches = familyTraitScores.map((item) => {
+    const userProfileData: any = { ...userProfileDataFromBody };
+    const explicitStream = userProfileData.stream || userProfileData.backgroundStream;
+
+    // Filter out ineligible careers BEFORE doing any heavy mathematical matching
+    const eligibleFamilyTraitScores = familyTraitScores.filter((item) => {
+      const rules = (careerEligibilityRules as Record<string, { allowedStreams: string[], strict: boolean }>)[item.family];
+      if (rules && rules.strict && explicitStream) {
+        if (!rules.allowedStreams.includes("ALL") && !rules.allowedStreams.includes(explicitStream)) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    const familyMatches = eligibleFamilyTraitScores.map((item) => {
       const familyName = item.family;
       const fTraits = item.traits as Record<string, number>;
 
@@ -185,22 +199,7 @@ export async function POST(request: NextRequest) {
       let baseFitScore = Math.max(0, Math.min(100, blendedBase + signatureBonus + specializationBoost));
       let rawFitScore = Math.max(25, Math.min(99, Math.round(baseFitScore - gapPenalty)));
 
-      // Academic Eligibility Filtering (S2 stream / S3/S4 backgroundStream)
-      let isAspirational = false;
-      const userProfileData: any = { ...userProfileDataFromBody };
-      const explicitStream = userProfileData.stream || userProfileData.backgroundStream;
-
-      const rules = (careerEligibilityRules as Record<string, { allowedStreams: string[], strict: boolean }>)[familyName];
-      if (rules && rules.strict && explicitStream) {
-        // Check if user's explicit stream is strictly not in allowed list
-        if (!rules.allowedStreams.includes("ALL") && !rules.allowedStreams.includes(explicitStream)) {
-          // Strict mismatch
-          isAspirational = true;
-          rawFitScore -= 35; // Massive penalty
-        }
-      }
-
-      return { familyName, fitScore: Math.max(10, rawFitScore), isAspirational };
+      return { familyName, fitScore: Math.max(10, rawFitScore) };
     });
 
     familyMatches.sort((a, b) => b.fitScore - a.fitScore);
@@ -209,8 +208,7 @@ export async function POST(request: NextRequest) {
     const top15Clusters = rawTop15.map((f, mathIdx) => ({
       familyName: f.familyName,
       mathFitScore: f.fitScore,
-      mathRank: mathIdx + 1,
-      isAspirational: f.isAspirational
+      mathRank: mathIdx + 1
     }));
 
     if (step === "math") {
@@ -268,8 +266,8 @@ ${JSON.stringify(finalScores)}
 Candidate's TOP STRENGTHS: ${topStrengthsStr}
 Candidate's WEAKEST TRAITS: ${weaknessesStr}
 
-TOP 15 MATHEMATICALLY MATCHED CAREER CLUSTERS (Pre-filtered by 35-trait weighted psychometric model):
-${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: ${f.mathFitScore}%${f.isAspirational ? " - ASPIRATIONAL/PIVOT REQUIRED" : ""})`).join("\n")}
+TOP 15 MATHEMATICALLY MATCHED CAREER CLUSTERS (Pre-filtered by academic eligibility & 35-trait weighted psychometric model):
+${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: ${f.mathFitScore}%)`).join("\n")}
 `;
 
     let systemPrompt = "You are a professional vocational matching engine. Return ONLY a valid JSON object matching the requested schema. No markdown wrappers. IMPORTANT: DO NOT include any reasoning, <think> tags, or conversational text. Output ONLY the raw JSON string.";
