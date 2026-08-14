@@ -209,7 +209,7 @@
   },
   "Social Work & Counselling": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
@@ -227,7 +227,7 @@
   },
   "Lawyers & Legal Professionals": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
@@ -305,19 +305,19 @@
   },
   "Journalism & Writing": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
   "Performing Arts": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
   "Visual Arts & Photography": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
@@ -747,7 +747,7 @@
   },
   "Philosophers, Historians and Political Scientists": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
@@ -777,13 +777,14 @@
   },
   "Psychologists": {
     "allowedStreams": [
+      "Humanities",
       "Science PCB"
     ],
-    "strict": true
+    "strict": false
   },
   "Religious Professionals": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
@@ -795,7 +796,7 @@
   },
   "Sociologists, Anthropologists and Related Professionals": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
@@ -807,7 +808,7 @@
   },
   "Archivists and Curators": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
