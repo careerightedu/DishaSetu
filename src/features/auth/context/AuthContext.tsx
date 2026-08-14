@@ -50,6 +50,9 @@ export interface UserProfile {
   otherIndustry?: string;
   yearsOfExperience?: string;
   
+  // Gamification
+  totalXp?: number;
+  
   updatedAt?: string;
 }
 

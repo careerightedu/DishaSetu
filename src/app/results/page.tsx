@@ -8,7 +8,8 @@ import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { 
   Sparkles, 
   TrendingUp, 
@@ -146,6 +147,10 @@ export default function ResultsDashboard() {
   const t = useTranslations("Results");
   const [activeTab, setActiveTab] = useState<"matching" | "archetype" | "counselor" | "quests">("matching");
   
+  // Gamification States
+  const [revealedCount, setRevealedCount] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  
   // Local state to track checked quests
   const [completedQuests, setCompletedQuests] = useState<Record<string, boolean>>({});
 
@@ -206,7 +211,6 @@ export default function ResultsDashboard() {
   const toggleQuest = (questTitle: string) => {
     setCompletedQuests(prev => {
       const updated = { ...prev, [questTitle]: !prev[questTitle] };
-      // Save local check state
       if (user) {
         const sessionRef = doc(db, "assessment_sessions", user.uid);
         import("firebase/firestore").then(({ updateDoc }) => {
@@ -215,6 +219,21 @@ export default function ResultsDashboard() {
       }
       return updated;
     });
+  };
+
+  const handleReveal = (index: number) => {
+    if (index === revealedCount) {
+      import('@/lib/audio').then(({ sfx }) => {
+        if (index === 2) {
+          sfx.playDing();
+          setShowConfetti(true);
+          setTimeout(() => setShowConfetti(false), 5000);
+        } else {
+          sfx.playSwoosh();
+        }
+      });
+      setRevealedCount(prev => prev + 1);
+    }
   };
 
   if (loading) {
@@ -284,75 +303,219 @@ export default function ResultsDashboard() {
 
   // Extract all unique skills mentioned in gaps to populate Locked Branch of Skill Tree
   const lockedSkillsFromGaps = Array.from(new Set(recommendations.flatMap(rec => rec.skillGaps || [])));
+
+  // Calculate Top 5 traits for Radar Chart
+  const topTraits = Object.entries(scores || {})
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  const renderRadarChart = () => {
+    if (topTraits.length < 3) return null;
+    const numPoints = topTraits.length;
+    const radius = 100;
+    const cx = 150;
+    const cy = 150;
+    const angleStep = (Math.PI * 2) / numPoints;
+
+    const points = topTraits.map(([, score], i) => {
+      const r = (score / 100) * radius;
+      const x = cx + r * Math.sin(i * angleStep);
+      const y = cy - r * Math.cos(i * angleStep);
+      return `${x},${y}`;
+    }).join(" ");
+
+    const webPoints = [20, 40, 60, 80, 100].map(level => {
+      return Array.from({ length: numPoints }).map((_, i) => {
+        const x = cx + level * Math.sin(i * angleStep);
+        const y = cy - level * Math.cos(i * angleStep);
+        return `${x},${y}`;
+      }).join(" ");
+    });
+
+    return (
+      <div className="w-full flex flex-col items-center justify-center bg-slate-900/40 rounded-3xl p-6 border border-slate-800 shadow-xl relative overflow-hidden">
+        <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-6">Trait Signature</h3>
+        <svg width="400" height="350" className="overflow-visible max-w-full">
+          {webPoints.map((pts, i) => (
+            <polygon key={i} points={pts} fill="none" stroke="#334155" strokeWidth="1" />
+          ))}
+          {Array.from({ length: numPoints }).map((_, i) => (
+            <line 
+              key={i} 
+              x1={cx} y1={cy} 
+              x2={cx + radius * Math.sin(i * angleStep)} 
+              y2={cy - radius * Math.cos(i * angleStep)} 
+              stroke="#334155" 
+              strokeWidth="1" 
+            />
+          ))}
+          
+          <motion.polygon
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
+            points={points}
+            fill="rgba(16, 185, 129, 0.2)"
+            stroke="#10b981"
+            strokeWidth="2"
+            style={{ transformOrigin: "150px 150px" }}
+          />
+          
+          {topTraits.map(([trait], i) => {
+            const r = radius + 35;
+            const x = cx + r * Math.sin(i * angleStep);
+            const y = cy - r * Math.cos(i * angleStep);
+            
+            // Split trait name into max 2 lines for better layout
+            const words = trait.split(" ");
+            const line1 = words.slice(0, Math.ceil(words.length / 2)).join(" ");
+            const line2 = words.slice(Math.ceil(words.length / 2)).join(" ");
+
+            return (
+              <text key={i} x={x} y={y} fontSize="11" fill="#94a3b8" textAnchor="middle" dominantBaseline="middle" className="font-bold tracking-wider">
+                <tspan x={x} dy={line2 ? "-0.6em" : "0"}>{line1.toUpperCase()}</tspan>
+                {line2 && <tspan x={x} dy="1.2em">{line2.toUpperCase()}</tspan>}
+              </text>
+            );
+          })}
+        </svg>
+      </div>
+    );
+  };
+
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-background text-foreground selection:bg-primary/20">
+    <div className="flex flex-col min-h-[100dvh] bg-background text-foreground selection:bg-primary/20 overflow-x-hidden relative">
       <Navbar />
 
-      <main className="flex-grow flex items-center justify-center max-w-4xl mx-auto px-4 sm:px-6 py-12 w-full">
-        <Card className="w-full border-border/40 bg-gradient-to-br from-card/90 via-card/70 to-card/50 backdrop-blur-xl shadow-2xl p-8 sm:p-12 relative overflow-hidden text-center space-y-8">
-          
-          {/* Subtle top glow bar */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-primary to-emerald-400" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[350px] w-[350px] rounded-full bg-primary/10 blur-3xl" />
+      {showConfetti && (
+        <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center overflow-hidden">
+          {/* Confetti placeholders - in a real app you'd use react-confetti */}
+          <div className="absolute top-10 left-1/4 w-3 h-3 bg-primary rotate-45 animate-ping" />
+          <div className="absolute top-20 right-1/4 w-3 h-3 bg-emerald-500 rotate-12 animate-ping" style={{ animationDelay: '0.2s' }} />
+          <div className="absolute top-1/3 left-1/3 w-3 h-3 bg-amber-500 rotate-90 animate-ping" style={{ animationDelay: '0.4s' }} />
+          <div className="absolute top-1/4 right-1/3 w-3 h-3 bg-rose-500 rotate-45 animate-ping" style={{ animationDelay: '0.1s' }} />
+        </div>
+      )}
 
-          {/* Success Icon */}
-          <div className="flex items-center justify-center">
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 border border-primary/30 shadow-[0_0_25px_rgba(var(--primary),0.2)]">
-              <CheckCircle2 className="h-10 w-10 text-primary animate-pulse" />
-              <Sparkles className="h-5 w-5 text-emerald-400 absolute -top-1 -right-1" />
+      <main className="flex-grow flex flex-col items-center max-w-5xl mx-auto px-4 sm:px-6 py-12 w-full space-y-12">
+        
+        {/* Header Section */}
+        <div className="text-center space-y-4 max-w-2xl mx-auto">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+            <CheckCircle2 className="h-3.5 w-3.5" /> Assessment Complete
+          </span>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-foreground">
+            Your Future is <span className="text-primary">Unlocking</span>
+          </h1>
+          <p className="text-muted-foreground text-sm sm:text-base">
+            We've analyzed your psychometric profile. Click on the locked cards below to reveal your top 3 scientifically-backed career recommendations!
+          </p>
+        </div>
+
+        {/* Radar Chart */}
+        {renderRadarChart()}
+
+        {/* Dynamic Archetype Banner (Identity Gamification) */}
+        {archetype && (
+          <div className="w-full max-w-3xl border border-primary/30 bg-primary/5 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 shadow-xl relative overflow-hidden">
+            <div className="absolute -right-10 -top-10 h-40 w-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="h-24 w-24 shrink-0 rounded-2xl bg-gradient-to-br from-primary to-primary/50 flex items-center justify-center shadow-lg shadow-primary/20 border border-primary/20 rotate-3 transition-transform hover:rotate-6">
+              <Sparkles className="h-10 w-10 text-primary-foreground" />
+            </div>
+            <div className="flex-1 text-center sm:text-left space-y-2 z-10">
+              <div className="text-xs font-black uppercase tracking-widest text-primary">Your Core Archetype</div>
+              <h2 className="text-2xl sm:text-3xl font-black text-foreground">{archetype.title}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">{archetype.description}</p>
             </div>
           </div>
+        )}
 
-          {/* Main Title & Description */}
-          <div className="space-y-3 max-w-xl mx-auto">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-              <CheckCircle2 className="h-3.5 w-3.5" /> Assessment Complete
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground">
-              Your CareeRight Report is Ready!
-            </h1>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Our AI Decision Intelligence Engine has successfully compiled your official career report. All recommendations, personality archetypes, entrance exams, and actionable roadmaps have been formatted into your official PDF document.
-            </p>
-          </div>
+        {/* Gacha Reveal Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full relative z-10">
+          {recommendations.slice(0, 3).map((rec, index) => {
+            const isRevealed = revealedCount > index;
+            const isNextToReveal = revealedCount === index;
+            
+            return (
+              <div 
+                key={rec.careerId} 
+                onClick={() => handleReveal(index)}
+                className={cn(
+                  "relative h-[280px] w-full rounded-3xl border-2 transition-all duration-700 preserve-3d cursor-pointer flex flex-col items-center justify-center p-6 text-center shadow-xl group",
+                  isRevealed 
+                    ? "bg-card border-primary/30 shadow-primary/10 rotate-y-180" 
+                    : isNextToReveal 
+                      ? "bg-slate-900 border-primary shadow-[0_0_30px_rgba(var(--primary),0.3)] animate-pulse hover:scale-105" 
+                      : "bg-slate-900 border-border/40 opacity-70 cursor-not-allowed"
+                )}
+              >
+                {/* Unrevealed State (Front of card) */}
+                <div className={cn("absolute inset-0 flex flex-col items-center justify-center backface-hidden", isRevealed ? "hidden" : "flex")}>
+                  {isNextToReveal ? (
+                    <>
+                      <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <Unlock className="h-8 w-8 text-primary" />
+                      </div>
+                      <h3 className="font-black text-lg text-primary uppercase tracking-widest">Tap to Reveal</h3>
+                      <p className="text-xs text-muted-foreground mt-2 font-bold uppercase">Match #{index + 1}</p>
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="h-10 w-10 text-muted-foreground/50 mb-4" />
+                      <h3 className="font-bold text-sm text-muted-foreground/70 uppercase tracking-widest">Locked</h3>
+                      <p className="text-xs text-muted-foreground/50 mt-2 font-bold uppercase">Reveal #{index} first</p>
+                    </>
+                  )}
+                </div>
 
-          {/* Candidate Info Pill */}
-          <div className="inline-flex flex-wrap items-center justify-center gap-4 bg-background/50 border border-border/30 rounded-2xl px-6 py-3 text-xs text-muted-foreground font-medium shadow-inner">
-            <span><strong>Candidate:</strong> {profile?.fullName || "Student"}</span>
-            <span>•</span>
-            <span><strong>Report Type:</strong> Official CareeRight Report</span>
-            <span>•</span>
-            <span><strong>Status:</strong> <span className="text-emerald-500 font-bold">Generated</span></span>
-          </div>
+                {/* Revealed State (Back of card - mentally rotate it back) */}
+                <div className={cn("absolute inset-0 flex flex-col items-center justify-center p-6 space-y-4 rounded-3xl bg-card border border-border/50", isRevealed ? "flex rotate-y-180" : "hidden")}>
+                  <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Match #{index + 1}</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded-full border border-emerald-500/20">{rec.fitScore}% Fit</span>
+                  </div>
+                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/20 mt-4">
+                    <Briefcase className="h-7 w-7 text-primary" />
+                  </div>
+                  <div className="space-y-1 w-full">
+                    <h3 className="font-black text-lg text-foreground leading-tight">{rec.title}</h3>
+                    <p className="text-xs text-primary font-bold">{rec.sector}</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground line-clamp-3 leading-relaxed w-full">
+                    {rec.whyRecommended}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+        {/* Download PDF CTA - Only shows when all 3 are revealed */}
+        <div className={cn("transition-all duration-1000 transform max-w-md w-full", revealedCount === 3 ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none")}>
+          <Card className="border-border/40 bg-gradient-to-br from-card/90 via-card/70 to-card/50 backdrop-blur-xl shadow-2xl p-8 relative overflow-hidden text-center space-y-6">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-primary to-emerald-400" />
+            
+            <div className="text-center space-y-4">
+              <h3 className="font-black text-xl">Get Your Full 15-Page Report</h3>
+              <p className="text-muted-foreground text-sm max-w-md mx-auto">
+                Unlock the deep-dive analysis of your psychometric traits, detailed roadmaps, entrance exams, and salary trajectories for all 15 career matches.
+              </p>
+            </div>
+
             <Button 
               onClick={handleDownloadPDF} 
               size="lg"
-              className="w-full sm:w-auto font-black text-sm uppercase tracking-wider shadow-xl shadow-primary/20 flex items-center justify-center gap-2.5 h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground transition-all hover:scale-105"
+              className="w-full font-black text-sm uppercase tracking-wider shadow-xl shadow-primary/20 flex items-center justify-center gap-2.5 h-12 bg-primary hover:bg-primary/90 text-primary-foreground transition-all hover:scale-105"
             >
-              <Download className="h-5 w-5" /> Download CareeRight Report (PDF)
+              <Download className="h-5 w-5" /> Download Full PDF Report
             </Button>
+            
+            <button onClick={handleStartOver} disabled={resetting} className="text-xs text-muted-foreground hover:text-foreground font-semibold flex items-center justify-center gap-1.5 w-full mx-auto transition-colors">
+              <RotateCcw className="h-3.5 w-3.5" /> {resetting ? "Resetting..." : "Start over and retake assessment"}
+            </button>
+          </Card>
+        </div>
 
-              <Button 
-              onClick={handleStartOver} 
-              variant="outline"
-              disabled={resetting}
-              size="lg"
-              className="w-full sm:w-auto font-bold text-sm border-border/50 bg-background/50 hover:bg-background flex items-center justify-center gap-2 h-12 px-6 text-muted-foreground hover:text-foreground transition-all"
-            >
-              <RotateCcw className="h-4 w-4" /> {t("retakeAssessment")}
-            </Button>
-          </div>
-
-          {/* Footer note */}
-          <div className="pt-4 border-t border-border/20 text-[11px] text-muted-foreground flex items-center justify-center gap-2">
-            <FileText className="h-3.5 w-3.5 text-primary" />
-            <span>Confidential &amp; Verified • Powered by CareeRight AI Engine</span>
-          </div>
-
-        </Card>
       </main>
     </div>
   );

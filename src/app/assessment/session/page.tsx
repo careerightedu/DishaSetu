@@ -24,8 +24,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, increment } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { sfx } from "@/lib/audio";
 
 import questionsDataEn from "@/features/assessment/data/questions.json";
 import questionsDataHi from "@/features/assessment/data/questions_hi.json";
@@ -51,7 +52,7 @@ const DIMENSION_COLORS: Record<string, string> = {
   "Analytical Thinking": "from-blue-900/40 to-blue-950/20 border-blue-800/40",
   "Social Orientation": "from-purple-900/40 to-purple-950/20 border-purple-800/40",
   "Creative Drive": "from-amber-900/40 to-amber-950/20 border-amber-800/40",
-  "Contextual Anchor": "from-emerald-900/40 to-emerald-950/20 border-emerald-800/40",
+  "Contextual Anchor": "from-red-900/50 to-rose-950/40 border-red-800/60 ring-1 ring-red-500/20",
   default: "from-slate-900/60 to-slate-950/30 border-slate-700/40",
 };
 
@@ -74,16 +75,42 @@ export default function AssessmentSession() {
 
   // Gamification
   const [xp, setXp] = useState(0);
+  const [lastStreakTrigger, setLastStreakTrigger] = useState(0);
+
   const [streak, setStreak] = useState(0);
+  const [showGodlikeFocus, setShowGodlikeFocus] = useState(false);
+  const [showHalfway, setShowHalfway] = useState(false);
+  
+  useEffect(() => {
+    if (streak > 0 && streak % 10 === 0 && !showHalfway) {
+      setShowGodlikeFocus(true);
+      sfx.playDing();
+      setTimeout(() => setShowGodlikeFocus(false), 4000);
+    }
+  }, [streak, showHalfway]);
+
+  useEffect(() => {
+    if (showHalfway) {
+      sfx.playDing();
+      setTimeout(() => setShowHalfway(false), 4000);
+    }
+  }, [showHalfway]);
+
   const [showXpPop, setShowXpPop] = useState(false);
   const [xpPopKey, setXpPopKey] = useState(0);
+  const ENCOURAGEMENT_WORDS = ["Superb!", "Rapid pace!", "Genius!", "Flawless!", "Incredible!", "Brilliant!"];
+  const [floatingTexts, setFloatingTexts] = useState<{ id: number, text: string, x: number, y: number }[]>([]);
+
   const [milestone, setMilestone] = useState<{ emoji: string; msg: string } | null>(null);
   const [milestoneSeen, setMilestoneSeen] = useState<Set<number>>(new Set());
   const [justAnswered, setJustAnswered] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showShake, setShowShake] = useState(false);
+  const [activeMultiplier, setActiveMultiplier] = useState(1);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [activeSeconds, setActiveSeconds] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
 
   const parseOption = (opt: string) => {
     const match = opt.match(/^([A-D]|[1-5])\)\s*(.*)/);
@@ -195,31 +222,77 @@ export default function AssessmentSession() {
   }, [questions, currentIdx, timeSpent, activeSeconds]);
 
   const awardXP = useCallback(() => {
-    setXp((prev) => prev + 10);
+    let earnedXp = 10;
+    let isSpeedBonus = false;
+    let isCombo = false;
+
+    if (activeSeconds <= 10) {
+      earnedXp += 5; // Speed Bonus
+      isSpeedBonus = true;
+    }
+
+    setStreak((s) => {
+      if (!isSpeedBonus) return 0; // break streak if slow
+      const newStreak = s + 1;
+      if (newStreak >= 3) {
+        isCombo = true;
+        earnedXp = Math.floor(earnedXp * 1.5); // Combo Multiplier
+      }
+      return newStreak;
+    });
+
+    if (isCombo || isSpeedBonus) {
+      sfx.playDing();
+      if (isSpeedBonus) {
+        const word = ENCOURAGEMENT_WORDS[Math.floor(Math.random() * ENCOURAGEMENT_WORDS.length)];
+        const id = Date.now() + Math.random();
+        // Spawns somewhere in the top center/right area
+        setFloatingTexts(prev => [...prev, { id, text: word, x: 60 + Math.random() * 30, y: 15 + Math.random() * 15 }]);
+        setTimeout(() => {
+          setFloatingTexts(prev => prev.filter(t => t.id !== id));
+        }, 1500);
+      }
+    } else {
+      sfx.playPop();
+    }
+
+    setActiveMultiplier(isCombo ? 1.5 : 1);
+
+    setXp((prev) => prev + earnedXp);
     setXpPopKey((k) => k + 1);
     setShowXpPop(true);
     setJustAnswered(true);
     setTimeout(() => setShowXpPop(false), 1200);
     setTimeout(() => setJustAnswered(false), 600);
-  }, []);
+  }, [activeSeconds]);
 
   const checkMilestone = useCallback((nextIdx: number, total: number) => {
     const pct = Math.round(((nextIdx + 1) / total) * 100);
     for (const m of [25, 50, 75]) {
       if (pct >= m && !milestoneSeen.has(m)) {
         setMilestoneSeen((s) => new Set([...s, m]));
-        setMilestone(MILESTONES[m]);
-        setTimeout(() => setMilestone(null), 2800);
+        if (m === 50) {
+          setShowHalfway(true);
+        } else {
+          setMilestone(MILESTONES[m]);
+          setTimeout(() => setMilestone(null), 2800);
+        }
         break;
       }
     }
-    setStreak((s) => s + 1);
   }, [milestoneSeen]);
 
   const handleAnswerChange = useCallback((qId: number, value: string | number | string[]) => {
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(50);
+    }
     const hadAnswer = answers[qId] !== undefined;
     setAnswers((prev) => ({ ...prev, [qId]: value }));
-    if (!hadAnswer) awardXP();
+    if (!hadAnswer) {
+      awardXP();
+    } else {
+      sfx.playPop();
+    }
 
     // Satisfying Auto-advance for single selection to reduce clicks
     if (typeof value === "number" || (typeof value === "string" && !value.startsWith("Other:"))) {
@@ -233,16 +306,46 @@ export default function AssessmentSession() {
     }
   }, [answers, awardXP]);
 
+  const isQuestionAnswered = () => {
+    const q = questions[currentIdx];
+    if (!q) return false;
+    const ans = answers[q.id];
+    switch (q.responseType) {
+      case "Scenario MCQ": case "Forced Choice": return typeof ans === "string" && ans.length > 0;
+      case "Likert-5": return typeof ans === "number" || (typeof ans === "string" && ans.length > 0);
+      case "Multi-select": return Array.isArray(ans) && ans.length > 0;
+      case "Ranking": case "Ranked Scenario": return Array.isArray(ans) && ans.length > 0;
+      case "Open Text":
+        if (!ans || typeof ans !== "string") return false;
+        return ans.trim().split(/\s+/).filter(Boolean).length >= 15;
+      default: return false;
+    }
+  };
+
   const handleNext = async () => {
+    if (!isQuestionAnswered()) {
+      setShowShake(true);
+      sfx.playError();
+      setTimeout(() => setShowShake(false), 400);
+      return;
+    }
+    sfx.playSwoosh();
+
     if (currentIdx >= questions.length - 1) {
       setSaving(true);
       setShowConfetti(true);
       setMilestone(MILESTONES[100]);
       try {
         const finalTimeSpent = accumTimeSpent();
+        // Save total XP to Firestore
         await setDoc(doc(db, "assessment_sessions", user!.uid), {
-          answers, timeSpent: finalTimeSpent, status: "completed", updatedAt: new Date().toISOString(),
+          answers, timeSpent: finalTimeSpent, status: "completed", updatedAt: new Date().toISOString(), totalXp: xp,
         }, { merge: true });
+        
+        await setDoc(doc(db, "users", user!.uid), {
+          totalXp: increment(xp)
+        }, { merge: true });
+
         setTimeout(() => router.push("/assessment/analyzing"), 2200);
       } catch (err) {
         console.error("Submission failed:", err);
@@ -264,6 +367,7 @@ export default function AssessmentSession() {
 
   const handleBack = async () => {
     if (currentIdx <= 0) return;
+    sfx.playPop();
     setSlideDirection(-1);
     const prevIdx = currentIdx - 1;
     const finalTimeSpent = accumTimeSpent();
@@ -281,22 +385,6 @@ export default function AssessmentSession() {
     } catch {
       setError("Failed to save. Please try again.");
       setSaving(false);
-    }
-  };
-
-  const isQuestionAnswered = () => {
-    const q = questions[currentIdx];
-    if (!q) return false;
-    const ans = answers[q.id];
-    switch (q.responseType) {
-      case "Scenario MCQ": case "Forced Choice": return typeof ans === "string" && ans.length > 0;
-      case "Likert-5": return typeof ans === "number" || (typeof ans === "string" && ans.length > 0);
-      case "Multi-select": return Array.isArray(ans) && ans.length > 0;
-      case "Ranking": case "Ranked Scenario": return Array.isArray(ans) && ans.length > 0;
-      case "Open Text":
-        if (!ans || typeof ans !== "string") return false;
-        return ans.trim().split(/\s+/).filter(Boolean).length >= 15;
-      default: return false;
     }
   };
 
@@ -355,15 +443,35 @@ export default function AssessmentSession() {
 
   const activeQuestion = questions[currentIdx];
   const progressPercent = Math.round(((currentIdx + 1) / questions.length) * 100);
-  const dimColor = getDimColor(activeQuestion.dimension);
+  const isBossFight = activeQuestion?.dimension === "Contextual Anchor";
+  const dimColor = getDimColor(activeQuestion?.dimension || "default");
   const answered = isQuestionAnswered();
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-background relative overflow-hidden">
-      {/* Ambient glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-emerald-500/4 blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-purple-500/4 blur-[100px]" />
+    <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden", isBossFight ? "bg-slate-950" : "bg-background")}>
+      {/* Ambient glow (Evolving Core) */}
+      <div className="pointer-events-none fixed inset-0 -z-10 flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute rounded-full blur-[100px] transition-all duration-1000 ease-out" 
+          style={{ 
+            width: `${300 + progressPercent * 2}px`, 
+            height: `${300 + progressPercent * 2}px`,
+            background: isBossFight 
+              ? `radial-gradient(circle, hsla(350, 84%, 39%, 0.25) 0%, hsla(0, 80%, 40%, 0.1) 100%)`
+              : `radial-gradient(circle, hsla(${160 + progressPercent}, 84%, 39%, 0.15) 0%, hsla(${220 + progressPercent}, 80%, 40%, 0.05) 100%)`,
+            transform: `scale(${answered ? 1.05 : 1})`,
+            opacity: activeMultiplier > 1 ? 1 : 0.6
+          }} 
+        />
+        <div 
+          className="absolute rounded-full blur-[80px] transition-all duration-[3000ms] ease-in-out" 
+          style={{ 
+            width: `${200 + progressPercent}px`, 
+            height: `${200 + progressPercent}px`,
+            backgroundColor: isBossFight ? `hsla(0, 84%, 39%, 0.2)` : `hsla(${160 + progressPercent}, 84%, 39%, 0.1)`,
+            transform: `rotate(${progressPercent * 3.6}deg) translate(${Math.sin(progressPercent) * 20}px, ${Math.cos(progressPercent) * 20}px)`
+          }} 
+        />
       </div>
 
       <Navbar />
@@ -389,7 +497,87 @@ export default function AssessmentSession() {
         )}
       </AnimatePresence>
 
+      {/* Godlike Focus Easter Egg */}
+      <AnimatePresence>
+        {showGodlikeFocus && !showHalfway && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.5, y: -50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 1.5, filter: "blur(10px)" }}
+            transition={{ type: "spring", damping: 12, stiffness: 100 }}
+            className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none"
+          >
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-6xl mb-2">🔥</div>
+              <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.8)]">
+                Godlike Focus!
+              </h2>
+              <p className="text-white font-bold mt-2 text-lg bg-black/50 px-4 py-1 rounded-full backdrop-blur-md border border-white/10">
+                10x Speed Streak!
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Halfway Milestone Banner */}
+      <AnimatePresence>
+        {showHalfway && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.5, y: -50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 1.5, filter: "blur(10px)" }}
+            transition={{ type: "spring", damping: 12, stiffness: 100 }}
+            className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none"
+          >
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-6xl mb-2">⚡</div>
+              <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)]">
+                Halfway There!
+              </h2>
+              <p className="text-white font-bold mt-2 text-lg bg-black/50 px-4 py-1 rounded-full backdrop-blur-md border border-white/10">
+                You're making great progress. Keep it up!
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Encouragement Texts */}
+      <AnimatePresence>
+        {floatingTexts.map(ft => (
+          <motion.div
+            key={ft.id}
+            initial={{ opacity: 0, y: ft.y + 10, x: `${ft.x}vw`, scale: 0.5 }}
+            animate={{ opacity: 1, y: ft.y - 10, scale: 1.2 }}
+            exit={{ opacity: 0, y: ft.y - 20, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="fixed z-50 pointer-events-none text-xl md:text-2xl font-black text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.8)] rotate-[-5deg]"
+            style={{ top: `${ft.y}vh` }}
+          >
+            {ft.text}
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
       <main className="flex-grow max-w-2xl mx-auto px-4 sm:px-6 py-5 sm:py-8 w-full flex flex-col gap-5">
+        
+        {/* Boss Fight Banner */}
+        <AnimatePresence>
+          {isBossFight && currentIdx === questions.length - 10 && (
+             <motion.div
+               initial={{ opacity: 0, height: 0 }}
+               animate={{ opacity: 1, height: "auto" }}
+               exit={{ opacity: 0, height: 0 }}
+               className="w-full bg-red-500/10 border border-red-500/30 rounded-xl p-3 flex items-center justify-center gap-3 overflow-hidden"
+             >
+               <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+               <span className="text-sm font-bold text-red-400 uppercase tracking-widest">
+                 Final Phase: Real-World Constraints
+               </span>
+             </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* HUD HEADER */}
         <div className="space-y-3">
@@ -461,8 +649,8 @@ export default function AssessmentSession() {
 
                 <div className="pt-1">
 
-                  {/* MCQ / FORCED CHOICE */}
-                  {(activeQuestion.responseType === "Scenario MCQ" || activeQuestion.responseType === "Forced Choice") && (
+                  {/* SCENARIO MCQ */}
+                  {activeQuestion.responseType === "Scenario MCQ" && (
                     <div className="grid grid-cols-1 gap-3">
                       {activeQuestion.options.map((opt, i) => {
                         const { value, text } = parseOption(opt);
@@ -541,6 +729,66 @@ export default function AssessmentSession() {
                       })}
                     </div>
                   )}
+
+                  {/* TINDER-STYLE FORCED CHOICE */}
+                  {activeQuestion.responseType === "Forced Choice" && activeQuestion.options.length >= 2 && (() => {
+                    const optA = parseOption(activeQuestion.options[0]);
+                    const optB = parseOption(activeQuestion.options[1]);
+                    const currentAns = String(answers[activeQuestion.id] || "");
+                    const isSelectedA = currentAns === optA.value;
+                    const isSelectedB = currentAns === optB.value;
+
+                    return (
+                      <div className="relative w-full h-[300px] flex items-center justify-center overflow-hidden">
+                        {/* Swipe Indicators */}
+                        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none z-0">
+                          <div className={cn("flex flex-col items-start transition-opacity duration-200", dragOffset < -20 ? "opacity-100" : "opacity-30")}>
+                            <span className="text-4xl">👈</span>
+                            <span className="text-xs font-bold text-slate-400 mt-2">{optA.value}</span>
+                          </div>
+                          <div className={cn("flex flex-col items-end transition-opacity duration-200", dragOffset > 20 ? "opacity-100" : "opacity-30")}>
+                            <span className="text-4xl">👉</span>
+                            <span className="text-xs font-bold text-slate-400 mt-2">{optB.value}</span>
+                          </div>
+                        </div>
+
+                        {/* Draggable Card */}
+                        <motion.div
+                          drag="x"
+                          dragConstraints={{ left: 0, right: 0 }}
+                          onDrag={(e, info) => setDragOffset(info.offset.x)}
+                          onDragEnd={(e, info) => {
+                            if (info.offset.x < -80) {
+                              handleAnswerChange(activeQuestion.id, optA.value);
+                            } else if (info.offset.x > 80) {
+                              handleAnswerChange(activeQuestion.id, optB.value);
+                            }
+                            setDragOffset(0);
+                          }}
+                          whileDrag={{ scale: 1.05, cursor: "grabbing" }}
+                          animate={{ 
+                            x: dragOffset === 0 ? (isSelectedA ? -200 : isSelectedB ? 200 : 0) : undefined,
+                            opacity: (isSelectedA || isSelectedB) && dragOffset === 0 ? 0 : 1,
+                            rotate: dragOffset * 0.1
+                          }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                          className="absolute z-10 w-full max-w-[280px] aspect-[3/4] bg-slate-800 border-2 border-slate-700 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-6 text-center cursor-grab touch-none"
+                        >
+                          <div className="text-emerald-400 mb-4 opacity-50">
+                            <Zap className="h-8 w-8" />
+                          </div>
+                          <h3 className="text-lg font-bold text-white mb-2">Swipe to Choose</h3>
+                          <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                            <span className="text-rose-400 font-bold">{optA.value}:</span> {optA.text}
+                          </p>
+                          <div className="w-8 h-px bg-slate-700 my-4" />
+                          <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                            <span className="text-emerald-400 font-bold">{optB.value}:</span> {optB.text}
+                          </p>
+                        </motion.div>
+                      </div>
+                    );
+                  })()}
 
                   {/* LIKERT-5 — Emoji tiles */}
                   {activeQuestion.responseType === "Likert-5" && (() => {
@@ -739,12 +987,13 @@ export default function AssessmentSession() {
             <Button
               ref={nextBtnRef}
               onClick={handleNext}
-              disabled={!answered || saving}
+              disabled={saving}
               className={cn(
                 "flex-1 h-12 font-bold text-sm shadow-lg transition-all duration-300",
-                answered
+                showShake ? "bg-red-900/60 text-red-400 border border-red-500/50" : "",
+                !showShake && answered
                   ? "bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/30 btn-pulse-active"
-                  : "bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700"
+                  : (!showShake && !answered) ? "bg-slate-800 text-slate-500 border border-slate-700" : ""
               )}
             >
               {saving ? (

@@ -281,7 +281,7 @@
   },
   "Architecture & Urban Planning": {
     "allowedStreams": [
-      "Science PCM"
+      "ALL"
     ],
     "strict": true
   },
@@ -698,7 +698,7 @@
   },
   "Judges": {
     "allowedStreams": [
-      "ALL"
+      "Humanities"
     ],
     "strict": false
   },
