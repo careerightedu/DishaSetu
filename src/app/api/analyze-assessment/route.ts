@@ -194,9 +194,16 @@ export async function POST(request: NextRequest) {
         }
       });
 
+      // NEW: Stream Affinity Boost
+      let streamAffinityBoost = 0;
+      const rules = (careerEligibilityRules as Record<string, { allowedStreams: string[], strict: boolean }>)[familyName];
+      if (explicitStream && rules && rules.allowedStreams.includes(explicitStream)) {
+        streamAffinityBoost = 5; // Give a 5-point home-court advantage
+      }
+
       // Hybrid Blend: 50% Cosine Similarity (shape) + 50% RMSE (distance) + Bonuses - Penalties
       const blendedBase = (cosineScore * 0.5) + (rmseScore * 0.5);
-      let baseFitScore = Math.max(0, Math.min(100, blendedBase + signatureBonus + specializationBoost));
+      let baseFitScore = Math.max(0, Math.min(100, blendedBase + signatureBonus + specializationBoost + streamAffinityBoost));
       let rawFitScore = Math.max(25, Math.min(99, Math.round(baseFitScore - gapPenalty)));
 
       return { familyName, fitScore: Math.max(10, rawFitScore) };
