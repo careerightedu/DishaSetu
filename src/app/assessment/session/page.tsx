@@ -301,7 +301,7 @@ export default function AssessmentSession() {
           if (nextBtnRef.current && !nextBtnRef.current.disabled) {
             nextBtnRef.current.click();
           }
-        }, 400); // 400ms delay to enjoy the UI animation
+        }, 150); // Reduced from 400ms for snappier mobile feel
       }
     }
   }, [answers, awardXP]);
@@ -405,9 +405,9 @@ export default function AssessmentSession() {
   };
 
   const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 80 : -80, opacity: 0, scale: 0.97 }),
-    center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" as const } },
-    exit: (dir: number) => ({ x: dir > 0 ? -80 : 80, opacity: 0, scale: 0.97, transition: { duration: 0.2, ease: "easeIn" as const } }),
+    enter: (dir: number) => ({ x: dir > 0 ? 50 : -50, opacity: 0, scale: 0.98 }),
+    center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.25, ease: "easeOut" as const } },
+    exit: (dir: number) => ({ x: dir > 0 ? -50 : 50, opacity: 0, scale: 0.98, transition: { duration: 0.15, ease: "easeIn" as const } }),
   };
 
   if (loading) {
@@ -739,16 +739,14 @@ export default function AssessmentSession() {
                     const isSelectedB = currentAns === optB.value;
 
                     return (
-                      <div className="relative w-full h-[300px] flex items-center justify-center overflow-hidden">
-                        {/* Swipe Indicators */}
-                        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none z-0">
-                          <div className={cn("flex flex-col items-start transition-opacity duration-200", dragOffset < -20 ? "opacity-100" : "opacity-30")}>
-                            <span className="text-4xl">👈</span>
-                            <span className="text-xs font-bold text-slate-400 mt-2">{optA.value}</span>
+                      <div className="relative w-full h-[320px] flex items-center justify-center overflow-hidden">
+                        {/* Swipe Indicators Background (Fallback) */}
+                        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 pointer-events-none z-0">
+                          <div className={cn("flex flex-col items-start transition-opacity duration-200", dragOffset < -20 ? "opacity-100" : "opacity-20")}>
+                            <span className="text-3xl">👈</span>
                           </div>
-                          <div className={cn("flex flex-col items-end transition-opacity duration-200", dragOffset > 20 ? "opacity-100" : "opacity-30")}>
-                            <span className="text-4xl">👉</span>
-                            <span className="text-xs font-bold text-slate-400 mt-2">{optB.value}</span>
+                          <div className={cn("flex flex-col items-end transition-opacity duration-200", dragOffset > 20 ? "opacity-100" : "opacity-20")}>
+                            <span className="text-3xl">👉</span>
                           </div>
                         </div>
 
@@ -774,17 +772,30 @@ export default function AssessmentSession() {
                           transition={{ type: "spring", stiffness: 300, damping: 20 }}
                           className="absolute z-10 w-full max-w-[280px] aspect-[3/4] bg-slate-800 border-2 border-slate-700 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-6 text-center cursor-grab touch-none"
                         >
-                          <div className="text-emerald-400 mb-4 opacity-50">
-                            <Zap className="h-8 w-8" />
+                          <div className="text-emerald-400 mb-2 opacity-50">
+                            <Zap className="h-6 w-6" />
                           </div>
-                          <h3 className="text-lg font-bold text-white mb-2">Swipe to Choose</h3>
-                          <p className="text-sm text-slate-400 font-medium leading-relaxed">
-                            <span className="text-rose-400 font-bold">{optA.value}:</span> {optA.text}
-                          </p>
-                          <div className="w-8 h-px bg-slate-700 my-4" />
-                          <p className="text-sm text-slate-400 font-medium leading-relaxed">
-                            <span className="text-emerald-400 font-bold">{optB.value}:</span> {optB.text}
-                          </p>
+                          <h3 className="text-base font-bold text-white mb-4 flex items-center justify-center gap-2 w-full">
+                            <span className="text-slate-400 text-lg animate-[pulse_1.5s_infinite]">👈</span>
+                            Swipe
+                            <span className="text-slate-400 text-lg animate-[pulse_1.5s_infinite]">👉</span>
+                          </h3>
+                          
+                          <div className="w-full flex items-start gap-3">
+                            <span className="text-xl opacity-60 shrink-0 mt-1">👈</span>
+                            <p className="flex-1 text-[13px] text-slate-300 font-medium leading-snug text-left">
+                              <span className="text-rose-400 font-bold block mb-0.5">{optA.value}:</span> {optA.text}
+                            </p>
+                          </div>
+                          
+                          <div className="w-12 h-px bg-slate-700 my-4 opacity-50 mx-auto" />
+                          
+                          <div className="w-full flex items-start gap-3">
+                            <p className="flex-1 text-[13px] text-slate-300 font-medium leading-snug text-right">
+                              <span className="text-emerald-400 font-bold block mb-0.5">{optB.value}:</span> {optB.text}
+                            </p>
+                            <span className="text-xl opacity-60 shrink-0 mt-1">👉</span>
+                          </div>
                         </motion.div>
                       </div>
                     );
