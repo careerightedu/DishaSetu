@@ -483,7 +483,7 @@ export default function AssessmentSession() {
   };
 
   return (
-    <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden", getBgClass())}>
+    <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden select-none", getBgClass())}>
       {/* Particle Effect Layer */}
       <AnimatePresence>
         {particles.map(p => (
@@ -834,7 +834,7 @@ export default function AssessmentSession() {
                                     const val = e.target.value;
                                     setAnswers((prev) => ({ ...prev, [activeQuestion.id]: val ? `Other: ${val}` : "E" }));
                                   }}
-                                  className="w-full px-3.5 py-2 rounded-lg bg-slate-800 border border-emerald-500/40 text-sm font-medium text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                                  className="w-full px-3.5 py-2 rounded-lg bg-slate-800 border border-emerald-500/40 text-sm font-medium text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 select-text"
                                   autoFocus
                                 />
                               </div>
@@ -1070,7 +1070,7 @@ export default function AssessmentSession() {
                         placeholder="Write your response here..."
                         value={(answers[activeQuestion.id] as string) || ""}
                         onChange={(e) => handleAnswerChange(activeQuestion.id, e.target.value)}
-                        className="bg-slate-900/60 border-slate-700/60 focus-visible:ring-emerald-500/50 text-sm leading-relaxed p-4 text-white placeholder:text-slate-600 resize-none rounded-xl"
+                        className="bg-slate-900/60 border-slate-700/60 focus-visible:ring-emerald-500/50 text-sm leading-relaxed p-4 text-white placeholder:text-slate-600 resize-none rounded-xl select-text"
                       />
                       <div className="flex justify-between items-center text-xs font-semibold px-1">
                         <span className={answered ? "text-emerald-400" : "text-slate-500"}>

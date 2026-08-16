@@ -167,7 +167,7 @@ export default function Dashboard() {
                 
 
                 {/* Winding Journey Path */}
-                {!checkingSession && sessionExists && !sessionCompleted && (
+                {!checkingSession && !sessionCompleted && (
                   <div className="rounded-xl border border-primary/20 bg-slate-950/80 p-4 sm:p-8 mt-6 shadow-inner relative overflow-hidden">
                     {/* Background Grid */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b98105_1px,transparent_1px),linear-gradient(to_bottom,#10b98105_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
