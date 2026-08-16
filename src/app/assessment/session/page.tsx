@@ -166,7 +166,7 @@ export default function AssessmentSession() {
   const [dragOffset, setDragOffset] = useState(0);
 
   const parseOption = (opt: string) => {
-    const match = opt.match(/^([A-D]|[1-5])\)\s*(.*)/);
+    const match = opt.match(/^([A-E]|[1-5])\)\s*(.*)/);
     if (match) return { value: match[1], text: match[2] };
     const likertMatch = opt.match(/^([1-5])\s*=\s*(.*)/);
     if (likertMatch) return { value: likertMatch[1], text: likertMatch[2] };
