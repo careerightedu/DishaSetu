@@ -880,12 +880,14 @@ export default function AssessmentSession() {
                           }}
                           whileDrag={{ scale: 1.05, cursor: "grabbing" }}
                           animate={{ 
-                            x: dragOffset === 0 ? (isSelectedA ? -200 : isSelectedB ? 200 : 0) : undefined,
-                            opacity: (isSelectedA || isSelectedB) && dragOffset === 0 ? 0 : 1,
-                            rotate: dragOffset * 0.1
+                            x: dragOffset === 0 ? (isSelectedA ? -20 : isSelectedB ? 20 : 0) : undefined,
+                            rotate: dragOffset === 0 ? (isSelectedA ? -2 : isSelectedB ? 2 : 0) : dragOffset * 0.1,
                           }}
                           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                          className="absolute z-10 w-full max-w-[280px] aspect-[3/4] bg-slate-800 border-2 border-slate-700 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-6 text-center cursor-grab touch-none"
+                          className={cn(
+                            "absolute z-10 w-full max-w-[280px] aspect-[3/4] rounded-3xl shadow-2xl flex flex-col items-center justify-center p-6 text-center cursor-grab touch-none border-2 transition-colors duration-300",
+                            isSelectedA ? "bg-rose-950/40 border-rose-500/50" : isSelectedB ? "bg-emerald-950/40 border-emerald-500/50" : "bg-slate-800 border-slate-700"
+                          )}
                         >
                           <div className="text-emerald-400 mb-2 opacity-50">
                             <Zap className="h-6 w-6" />
@@ -896,17 +898,17 @@ export default function AssessmentSession() {
                             <span className="text-slate-400 text-lg animate-[pulse_1.5s_infinite]">👉</span>
                           </h3>
                           
-                          <div className="w-full flex items-start gap-3">
+                          <div className={cn("w-full flex items-start gap-3 rounded-xl p-2 transition-colors", isSelectedA ? "bg-rose-500/20" : "")}>
                             <span className="text-xl opacity-60 shrink-0 mt-1">👈</span>
-                            <p className="flex-1 text-[13px] text-slate-300 font-medium leading-snug text-left">
+                            <p className={cn("flex-1 text-[13px] font-medium leading-snug text-left", isSelectedA ? "text-white" : "text-slate-300")}>
                               <span className="text-rose-400 font-bold block mb-0.5">{optA.value}:</span> {optA.text}
                             </p>
                           </div>
                           
-                          <div className="w-12 h-px bg-slate-700 my-4 opacity-50 mx-auto" />
+                          <div className="w-12 h-px bg-slate-700 my-2 opacity-50 mx-auto" />
                           
-                          <div className="w-full flex items-start gap-3">
-                            <p className="flex-1 text-[13px] text-slate-300 font-medium leading-snug text-right">
+                          <div className={cn("w-full flex items-start gap-3 rounded-xl p-2 transition-colors", isSelectedB ? "bg-emerald-500/20" : "")}>
+                            <p className={cn("flex-1 text-[13px] font-medium leading-snug text-right", isSelectedB ? "text-white" : "text-slate-300")}>
                               <span className="text-emerald-400 font-bold block mb-0.5">{optB.value}:</span> {optB.text}
                             </p>
                             <span className="text-xl opacity-60 shrink-0 mt-1">👉</span>
