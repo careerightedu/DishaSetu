@@ -6,10 +6,7 @@ runConfig:
 # Environment variables and secrets.
 env:
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
-    value: AIzaSyBwR0vhd_0G7HkLYVz2robWKljIBOY-Qn8
-    availability:
-      - BUILD
-      - RUNTIME
+    secret: next-public-firebase-api-key
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
     value: dishasetu-9b11f.firebaseapp.com
     availability:
@@ -41,15 +38,9 @@ env:
       - BUILD
       - RUNTIME
   - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFub24iLCJpYXQiOjE3ODQ5NzcyMDAsImV4cCI6MjEwMDU1MzIwMH0.83zIIraSxSx7s3H-csc6hexCdZPyyoOP7iKdYCc7lFQ
-    availability:
-      - BUILD
-      - RUNTIME
+    secret: next-public-supabase-anon-key
   - variable: SUPABASE_SERVICE_ROLE_KEY
-    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpdGV3eGRxYXplb3JpZXpkZWZ3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDk3NzIwMCwiZXhwIjoyMTAwNTUzMjAwfQ.81-qZ47Y5P1e493viQw6xNlQ8V7PKJksGDY8lO632gQ
-    availability:
-      - BUILD
-      - RUNTIME
+    secret: supabase-service-role-key
   - variable: LLM_PROVIDER
     value: google
     availability:
