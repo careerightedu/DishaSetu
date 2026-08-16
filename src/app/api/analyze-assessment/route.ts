@@ -292,17 +292,59 @@ ${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: 
       return (start !== -1 && end !== -1 && start <= end) ? c.substring(start, end + 1) : c;
     };
 
+    if (step === "career_scoring") {
+      const scoringPrompt = basePrompt + `
+TASK: Evaluate the contextual feasibility of the 15 mathematically-matched career clusters.
+Based STRICTLY on the candidate's contextual anchors (salary, location, work-life balance, family constraints, open-text answers) and their academic background.
+DO NOT evaluate their psychometric trait fit (that is already accounted for in the Math Score).
+
+Provide data for:
+1. "scores": Array of exactly 15 objects. Each object must have:
+   - title: string (Must exactly match the career cluster name from the Top 15 list)
+   - contextScore: number (0-100 integer. 0 = impossible/fundamentally mismatched given their degree/constraints. 100 = perfect contextual fit).
+   - reason: string (1 short sentence explaining why this context score was given).
+
+Respond with ONLY a JSON object containing "scores".
+`;
+      try {
+        const completion = await getLLMCompletion(scoringPrompt, systemPrompt, true);
+        const cleaned = extractJSON(completion);
+        const parsed = JSON.parse(cleaned);
+
+        const llmScores = parsed.scores || [];
+        const top5Careers = top15Clusters.map(cluster => {
+          const llmEval = llmScores.find((s: any) => s.title === cluster.familyName) || {};
+          const contextScore = typeof llmEval.contextScore === 'number' ? llmEval.contextScore : 50;
+          // Final Score = 70% Math + 30% Context
+          const finalScore = Math.round((cluster.mathFitScore * 0.7) + (contextScore * 0.3));
+          return {
+            title: cluster.familyName,
+            mathScore: cluster.mathFitScore,
+            contextScore,
+            finalScore,
+            reason: llmEval.reason || "Default fallback contextual score."
+          };
+        }).sort((a, b) => b.finalScore - a.finalScore).slice(0, 5);
+
+        Object.assign(resultPayload, { top5Careers });
+      } catch (err) {
+        console.warn("LLM fallback for career_scoring:", err);
+        const top5Careers = top15Clusters.slice(0, 5).map(c => ({
+          title: c.familyName,
+          mathScore: c.mathFitScore,
+          contextScore: 50,
+          finalScore: c.mathFitScore,
+          reason: "Fallback due to LLM error"
+        }));
+        Object.assign(resultPayload, { top5Careers });
+      }
+    }
+
     if (step.startsWith("career_") && step !== "career_extras") {
       const idx = parseInt(step.split("_")[1]);
       if (!isNaN(idx) && idx >= 0 && idx < 5) {
         const calibratedFitScores = [95, 88, 83, 79, 74];
-        const existingTitles: string[] = (body.existingTitles || []).map((t: any) => String(t));
-        const validClusterNames = top15Clusters.map(c => c.familyName);
-
-        // Available math clusters for selection
-        const availableClusters = top15Clusters.filter(c => !existingTitles.includes(c.familyName));
-        const availableNamesStr = availableClusters.map(c => `"${c.familyName}"`).join(", ");
-        const existingNamesStr = existingTitles.length > 0 ? existingTitles.map((t: string) => `"${t}"`).join(", ") : "None";
+        const selectedCareerTitle = body.selectedCareerTitle || top15Clusters[idx]?.familyName || "Business Operations & General Management";
 
         const isHigherEdOrPro = userProfileData.segment === "S3" || userProfileData.segment === "S4";
         const currentDegree = userProfileData.stream || userProfileData.degree || "undergraduate studies";
@@ -315,28 +357,25 @@ ${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: 
 
         const p = basePrompt + `
 TASK FOR CAREER RECOMMENDATION #${idx + 1} (RANK #${idx + 1} OF 5):
-From the remaining available math-matched career clusters [${availableNamesStr}], select the SINGLE BEST career cluster for rank position #${idx + 1}.
+Your task is to generate a comprehensive career profile for the specific career: "${selectedCareerTitle}".
+This career has already been selected by our mathematical matching engine as a Top 5 fit for this candidate.
 
 SELECTION & CONTEXTUAL EVALUATION RULES:
-1. Primary Selection Criterion: Evaluate the candidate's 10 REAL-WORLD CONTEXTUAL ANCHORS:
+1. Contextualize the profile: Relate this career ("${selectedCareerTitle}") to the candidate's 10 REAL-WORLD CONTEXTUAL ANCHORS:
    ${contextualAnchorsSummary}
-   (Consider their target salary LPA, relocation willingness, work-life balance preference, family constraints, and personal open text responses).
-2. Trait Alignment: Ensure the selection leverages their top psychometric strengths (${topStrengthsStr}).
-3. Feasibility: Consider their academic background (${currentDegree}) as a supporting feasibility factor.
+2. Trait Alignment: Highlight how this career leverages their top psychometric strengths (${topStrengthsStr}).
+3. Feasibility: Suggest progression pathways that make sense for their academic background (${currentDegree}).
 
-CRITICAL ANTI-BIAS & PROGRESSION RULES:
-- DO NOT lazily pick standard software/IT roles just because the candidate has an engineering/tech degree if their contextual anchors (work-life, relocation, target salary, personal write-in answers) or trait scores point towards other career clusters in the Top 15 list.
-- EXCLUSION RULE: You MUST NOT select or duplicate any previously assigned titles: [${existingNamesStr}].
-- TITLE MUST BE EXACTLY ONE OF THE AVAILABLE CLUSTER NAMES FROM THE LIST ABOVE.
+CRITICAL PROGRESSION RULES:
 - EDUCATIONAL PROGRESSION RULE ("WHAT NEXT TO DO"): DO NOT suggest degrees or qualifications the candidate has already completed or is currently pursuing! Since this candidate is in segment "${userProfileData.segment || "S3"}" (${currentDegree}), you MUST suggest WHAT NEXT TO DO from their exact current stage onwards (e.g., if they are in College (S3) or Working Professionals (S4), suggest Master's/MBAs, PG Diplomas, Executive tracks, or specialized industry certifications—DO NOT suggest a Bachelor's degree!).
-- INDIAN SCHOOL STUDENT ALTERNATIVE PATHWAYS RULE: For School Students (S1/S2), while academicPath (Plan A) should suggest the top primary degree (e.g., B.Tech / MBBS / B.Com Hons), alternatePathways (Plan B and Plan C) MUST provide pragmatic, high-value Indian alternative routes in case they do not clear hyper-competitive entrance exams (like JEE or NEET) or cannot afford expensive private college seats. For example: for tech roles, suggest BCA + MCA, B.Stat, B.Sc Data Science, or industry bootcamps if JEE/private B.Tech is not viable; for medical/healthcare roles, suggest Psychology, B.Sc Nursing, Physiotherapy, Biotech, or Allied Healthcare if NEET/MBBS is not viable!
+- INDIAN SCHOOL STUDENT ALTERNATIVE PATHWAYS RULE: For School Students (S1/S2), while academicPath (Plan A) should suggest the top primary degree (e.g., B.Tech / MBBS / B.Com Hons), alternatePathways (Plan B and Plan C) MUST provide pragmatic, high-value Indian alternative routes in case they do not clear hyper-competitive entrance exams (like JEE or NEET) or cannot afford expensive private college seats.
 
 Provide data for:
-1. "recommendation": Concise career profile for your selected career cluster.
+1. "recommendation": Concise career profile for "${selectedCareerTitle}".
 Required fields (KEEP ALL EXPLANATIONS VERY CONCISE, 1-2 LINES MAX TO MINIMIZE TOKENS):
 - careerId: string (lowercase hyphenated version of title)
-- title: string (MUST BE EXACTLY THE SELECTED CLUSTER NAME FROM AVAILABLE LIST ABOVE)
-- matchType: string ("Immediate Fit" OR "Aspirational Pivot". Set to Aspirational Pivot if the cluster was marked ASPIRATIONAL/PIVOT REQUIRED above, or if it fundamentally mismatches their current background)
+- title: string (MUST BE EXACTLY "${selectedCareerTitle}")
+- matchType: string ("Immediate Fit" OR "Aspirational Pivot". Set to Aspirational Pivot if the cluster fundamentally mismatches their current background)
 - pivotPath: string (If matchType is Aspirational Pivot, write 1-2 sentences on EXACTLY what additional education/certifications they need to pivot from their current background. If Immediate Fit, just write "N/A".)
 - sector: string
 - description: string (short overview of this career cluster)
@@ -349,12 +388,14 @@ Required fields (KEEP ALL EXPLANATIONS VERY CONCISE, 1-2 LINES MAX TO MINIMIZE T
 - challenges: string (short, 1-2 sentences max)
 - growth: string (short career progression chain, e.g. "Analyst -> Senior -> Lead -> Officer")
 - marketDemand: string (short, e.g. "High - ~1.4M open roles projected by 2027")
-- aiResilienceScore: number (0-100 integer; CRITICAL: You MUST evaluate each career individually and score them differently based on their actual vulnerability to AI automation or their human moat! Do NOT output the same number like 75 or 80 across all recommendations! For example: Routine data/clerical roles should score lower around 40-58; Software/IT/Finance/Marketing/Design should score in the middle around 60-74; Complex Engineering/Law/Management/Architecture should score higher around 76-87; Clinical Surgery/Psychology/Nursing/Physical Therapy should score at the top around 88-96!)
+- aiResilienceScore: number (0-100 integer; CRITICAL: Evaluate "${selectedCareerTitle}" individually and score it based on its actual vulnerability to AI automation or its human moat!)
 - aiResilienceExplanation: string (short 1-liner explaining why this specific career has this level of AI resilience or automation risk)
 - academicPath: string (Primary Path A indicating WHAT NEXT TO DO from their current stage onwards, e.g. for School S1/S2: "B.Tech in CS" or "MBBS"; for College S3 / Professionals S4: "MS / M.Tech in AI" or "Executive MBA in Tech Strategy")
 - alternatePathways: array of 2 strings (Plan B and Plan C pragmatic alternate routes; for S1/S2 MUST include high-value backups like BCA/B.Stat if JEE fails or Psychology/Allied Health if NEET fails; for S3/S4 include certifications/bootcamps)
 - exams: array of 1-3 exam acronyms (e.g. ["JEE MAIN", "JEE ADVANCED"])
 - firstThreeMoves: array of exactly 3 short actionable steps (e.g. ["Ship 3 portfolio projects on GitHub", "Master DSA basics", "Build 1 open-source project"])
+- skillGaps: array of 3-5 short strings representing skills they lack (e.g. ["Python", "System Design", "Cloud Architecture"])
+- skillGapsDescription: short 1-2 sentences explaining what the primary gaps are for this user to enter this field based on their profile
 - occupations: array of 2-3 specialization roles in this cluster
 
 Respond with ONLY a JSON object containing "recommendation".
@@ -365,25 +406,16 @@ Respond with ONLY a JSON object containing "recommendation".
           const parsed = JSON.parse(cleaned);
 
           if (parsed.recommendation) {
-            let selectedTitle = parsed.recommendation.title;
-            // Strict De-duplication & Validation Guard
-            if (!selectedTitle || !validClusterNames.includes(selectedTitle) || existingTitles.includes(selectedTitle)) {
-              const fallbackCluster = availableClusters[0] || top15Clusters[idx];
-              selectedTitle = fallbackCluster ? fallbackCluster.familyName : validClusterNames[idx % validClusterNames.length];
-            }
-
-            parsed.recommendation.title = selectedTitle;
-            parsed.recommendation.careerId = selectedTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            parsed.recommendation.fitScore = calibratedFitScores[idx] || (95 - idx * 5);
+            parsed.recommendation.title = selectedCareerTitle; // strictly enforce
+            parsed.recommendation.careerId = selectedCareerTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            parsed.recommendation.fitScore = body.selectedFinalScore || calibratedFitScores[idx] || (95 - idx * 5);
             Object.assign(resultPayload, { recommendations: [parsed.recommendation] });
           } else {
-            const fallbackCluster = availableClusters[0] || top15Clusters[idx];
-            const fallbackTitle = fallbackCluster ? fallbackCluster.familyName : validClusterNames[idx % validClusterNames.length];
             Object.assign(resultPayload, {
               recommendations: [{
-                title: fallbackTitle,
-                careerId: fallbackTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-                fitScore: calibratedFitScores[idx] || (95 - idx * 5),
+                title: selectedCareerTitle,
+                careerId: selectedCareerTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+                fitScore: body.selectedFinalScore || calibratedFitScores[idx] || (95 - idx * 5),
                 sector: "PROFESSIONAL SERVICES",
                 description: `High-alignment career cluster mapped to candidate's psychometric profile.`,
                 whyRecommended: `Matches candidate contextual preferences and psychometric traits.`,
@@ -401,22 +433,20 @@ Respond with ONLY a JSON object containing "recommendation".
                 alternatePathways: defaultAlternatePathways,
                 exams: ["NATIONAL ENTRY EXAM"],
                 firstThreeMoves: ["Build foundational portfolio", "Network with industry mentors", "Apply for internships"],
-                occupations: [fallbackTitle]
+                occupations: [selectedCareerTitle]
               }]
             });
           }
         } catch (llmErr) {
           console.warn(`LLM parsing fallback for step ${step}:`, llmErr);
-          const fallbackCluster = availableClusters[0] || top15Clusters[idx];
-          const fallbackTitle = fallbackCluster ? fallbackCluster.familyName : validClusterNames[idx % validClusterNames.length];
           Object.assign(resultPayload, {
             recommendations: [{
-              title: fallbackTitle,
-              careerId: fallbackTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+              title: selectedCareerTitle,
+              careerId: selectedCareerTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
               sector: "PROFESSIONAL SERVICES",
-              description: `High-alignment career matching your measured trait profile in ${fallbackTitle}.`,
-              whyRecommended: `Your top psychometric traits map directly onto the requirement profile for ${fallbackTitle}.`,
-              fitScore: calibratedFitScores[idx] || (95 - idx * 5),
+              description: `High-alignment career matching your measured trait profile in ${selectedCareerTitle}.`,
+              whyRecommended: `Your top psychometric traits map directly onto the requirement profile for ${selectedCareerTitle}.`,
+              fitScore: body.selectedFinalScore || calibratedFitScores[idx] || (95 - idx * 5),
               salaryTiers: { entry: "₹8-12 LPA", senior: "₹35-50 LPA" },
               aiResilienceScore: 85,
               aiResilienceExplanation: "Requires high human situational judgment and strategic oversight.",
@@ -424,7 +454,7 @@ Respond with ONLY a JSON object containing "recommendation".
               alternatePathways: defaultAlternatePathways,
               exams: ["NATIONAL ENTRY EXAM"],
               firstThreeMoves: ["Build foundational portfolio", "Network with industry mentors", "Apply for internships"],
-              occupations: [fallbackTitle]
+              occupations: [selectedCareerTitle]
             }]
           });
         }
@@ -453,18 +483,24 @@ Respond with ONLY a JSON object containing "notRecommended" and "comparisonMatri
       const p = basePrompt + `
 Provide data for:
 1. "archetype": RPG Hero Archetype (e.g. Tech Alchemist). Fields: name, title, description, level, xp, traits.
-2. "deepPersonalityAnalysis": Top 3 hidden strengths and 3 hidden risks. Fields: traitName, advantages, blindSpots.
+2. "deepPersonalityAnalysis": Object containing "strengths" (array of exactly 3 objects: traitName, advantages) and "risks" (array of exactly 3 objects: traitName, blindSpots).
 3. "counselorAnalysis":
    - executiveSummary: short overview
    - why: short 1-2 lines on why profile behaves this way
    - soWhat: short 1-2 lines on fitting role types
    - whatItMeans: short 1-2 lines on ceiling and risks
    - watchOut: short 1-2 lines on warnings
+   - cognitiveStyleTitle: short 1-3 words summarizing their cognitive style (e.g. "Analytical-Divergent")
    - cognitiveStyle: short 1-2 lines describing their unique cognitive style based on traits
+   - decisionMakingTitle: short 1-3 words summarizing how they make decisions (e.g. "Evidence-first")
    - decisionMaking: short 1-2 lines describing how they uniquely make decisions
+   - learningStyleTitle: short 1-3 words summarizing their learning style (e.g. "Build-to-learn")
    - learningStyle: short 1-2 lines describing their personalized learning style
+   - communicationStyleTitle: short 1-3 words summarizing their communication style (e.g. "Precise & written")
    - communicationStyle: short 1-2 lines describing their communication style based on their traits
+   - collaborationStyleTitle: short 1-3 words summarizing their teamwork style (e.g. "Small-team contributor")
    - collaborationStyle: short 1-2 lines describing their teamwork preferences
+   - idealEnvironmentTitle: short 1-3 words summarizing their optimal environment (e.g. "High-autonomy, high-craft")
    - idealEnvironment: short 1-2 lines describing their optimal work environment
 4. "aiCoachNarrative": Concise, warm coaching letter.
 

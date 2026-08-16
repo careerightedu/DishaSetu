@@ -530,17 +530,17 @@ export default function CareerDiscoveryJourneyPrint() {
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
              <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-1">COGNITIVE STYLE</div>
-             <h4 className="text-xs font-bold text-white mb-1">Analytical–Divergent</h4>
+             <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.cognitiveStyleTitle || "Analytical–Divergent"}</h4>
              <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.cognitiveStyle || "You break problems into parts, then recombine them unusually. Strong at both convergent and divergent thinking."}</p>
           </div>
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
              <div className="text-[9px] font-mono font-bold text-amber-500 tracking-widest uppercase mb-1">DECISION-MAKING</div>
-             <h4 className="text-xs font-bold text-white mb-1">Evidence-first</h4>
+             <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.decisionMakingTitle || "Evidence-first"}</h4>
              <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.decisionMaking || "You decide from data, not consensus. Fast once you have facts, slow without them."}</p>
           </div>
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
              <div className="text-[9px] font-mono font-bold text-purple-500 tracking-widest uppercase mb-1">LEARNING STYLE</div>
-             <h4 className="text-xs font-bold text-white mb-1">Build-to-learn</h4>
+             <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.learningStyleTitle || "Build-to-learn"}</h4>
              <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.learningStyle || "You retain by making, not reading. Prefer projects over lectures. Pick courses with a shipped artifact."}</p>
           </div>
         </div>
@@ -657,17 +657,17 @@ export default function CareerDiscoveryJourneyPrint() {
         <div className="grid grid-cols-3 gap-4">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
             <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-1">COMMUNICATION STYLE</div>
-            <h4 className="text-xs font-bold text-white mb-1">Precise &amp; written</h4>
+            <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.communicationStyleTitle || "Precise & written"}</h4>
             <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.communicationStyle || "Clearest in writing and diagrams; less in improvised group talk. Async-first teams suit you best."}</p>
           </div>
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
             <div className="text-[9px] font-mono font-bold text-amber-500 tracking-widest uppercase mb-1">COLLABORATION STYLE</div>
-            <h4 className="text-xs font-bold text-white mb-1">Small-team contributor</h4>
+            <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.collaborationStyleTitle || "Small-team contributor"}</h4>
             <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.collaborationStyle || "Best in 2–5 person pods with clear ownership. Large committees dull your natural output."}</p>
           </div>
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
             <div className="text-[9px] font-mono font-bold text-purple-500 tracking-widest uppercase mb-1">IDEAL ENVIRONMENT</div>
-            <h4 className="text-xs font-bold text-white mb-1">High-autonomy, high-craft</h4>
+            <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.idealEnvironmentTitle || "High-autonomy, high-craft"}</h4>
             <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.idealEnvironment || "Product-led startups, R&D teams, or focused engineering orgs. Avoid rigid bureaucracies."}</p>
           </div>
         </div>
@@ -687,7 +687,7 @@ export default function CareerDiscoveryJourneyPrint() {
             <span className="bg-emerald-950 text-emerald-400 border border-emerald-900 px-2 py-0.5 rounded text-[9px] font-mono font-bold">ACTIONABLE</span>
           </div>
           <p className="text-xs text-slate-300 leading-snug">
-            Based on your trait profile and contextual background, the primary gaps to focus on for entry into this field are: real-world domain exposure, advanced domain-specific tools, and relevant internships or certifications.
+            {primaryMatch?.skillGapsDescription || "Based on your trait profile and contextual background, the primary gaps to focus on for entry into this field are: real-world domain exposure, advanced domain-specific tools, and relevant internships or certifications."}
           </p>
           {primaryMatch?.skillGaps && primaryMatch.skillGaps.length > 0 && (
             <div className="flex flex-wrap gap-1.5 pt-1">
@@ -768,7 +768,7 @@ export default function CareerDiscoveryJourneyPrint() {
                   const seed = r.title.length * (i + 1) * 7;
                   let left = 10 + (seed % 80); // 10% to 90% (Risk axis)
                   // Reward is heavily influenced by match score
-                  const matchScore = r.matchScore > 0 ? r.matchScore : (90 - i * 10);
+                  const matchScore = (r as any).matchScore > 0 ? (r as any).matchScore : (90 - i * 10);
                   let top = 100 - (matchScore > 60 ? matchScore : 60); // 10% to 40% (Reward axis - top is 0)
                   
                   // Ensure rank 1 is generally top right (Sweet Spot)

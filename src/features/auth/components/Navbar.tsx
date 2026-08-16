@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/features/auth/context/AuthContext";
+import { usePathname } from "next/navigation";
 import { 
   LogOut, 
   User, 
@@ -28,6 +29,11 @@ import { cn } from "@/lib/utils";
 export default function Navbar() {
   const { user, profile, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  React.useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   // Helper to map segment code to readable text
   const getSegmentName = (seg: string) => {
@@ -55,8 +61,8 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:gap-6">
+        {/* Desktop Navigation (Hidden in favor of unified hamburger menu) */}
+        <div className="hidden">
           {user ? (
             <>
               <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5">
@@ -91,13 +97,13 @@ export default function Navbar() {
                       )}
                     </DropdownMenuLabel>
                   </DropdownMenuGroup>
-                  <DropdownMenuItem className="focus:bg-muted/60 cursor-pointer p-0">
+                  <DropdownMenuItem asChild className="focus:bg-muted/60 cursor-pointer p-0">
                     <Link href="/profile" className="flex items-center gap-2 w-full px-2.5 py-1.5">
                       <User className="h-4 w-4 text-muted-foreground" />
                       <span>Edit Profile</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="focus:bg-muted/60 cursor-pointer p-0">
+                  <DropdownMenuItem asChild className="focus:bg-muted/60 cursor-pointer p-0">
                     <Link href="/admin" className="flex items-center gap-2 w-full px-2.5 py-1.5">
                       <ClipboardList className="h-4 w-4 text-muted-foreground" />
                       <span>Admin Panel</span>
@@ -129,8 +135,8 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile menu toggle */}
-        <div className="flex md:hidden">
+        {/* Menu toggle (Always visible) */}
+        <div className="flex">
           <Button
             variant="ghost"
             size="icon"
@@ -146,7 +152,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Panel */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border/40 bg-background/95 backdrop-blur-md px-4 pt-2 pb-4 space-y-3 transition-all duration-200">
+        <div className="border-b border-border/40 bg-background/95 backdrop-blur-md px-4 pt-2 pb-4 space-y-3 transition-all duration-200">
           {user ? (
             <>
               <div className="px-3 py-2 border-b border-border/30 flex items-center gap-3">
@@ -165,28 +171,24 @@ export default function Navbar() {
               </div>
               <Link
                 href="/"
-                onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
               >
                 Dashboard
               </Link>
               <Link
                 href="/assessment"
-                onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
               >
                 Take Assessment
               </Link>
               <Link
                 href="/profile"
-                onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
               >
                 Edit Profile
               </Link>
               <Link
                 href="/admin"
-                onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
               >
                 Admin Panel

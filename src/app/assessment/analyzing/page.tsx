@@ -56,6 +56,7 @@ export default function AnalyzingTransition() {
 
         const steps = [
           "math",
+          "career_scoring",
           "career_0", "career_1", "career_2", "career_3", "career_4",
           "career_extras",
           "personality",
@@ -67,7 +68,8 @@ export default function AnalyzingTransition() {
           const step = steps[i];
 
           if (step === "math") setStatusText("Calculating initial psychometric scores...");
-          else if (step.startsWith("career_")) setStatusText(`Analyzing Career Match ${parseInt(step.split("_")[1]) + 1} of 5...`);
+          else if (step === "career_scoring") setStatusText("Evaluating contextual feasibility for Top 15 careers...");
+          else if (step.match(/^career_\d+$/)) setStatusText(`Analyzing Career Match ${parseInt(step.split("_")[1]) + 1} of 5...`);
           else if (step === "career_extras") setStatusText("Formulating career comparison matrix...");
           else if (step === "personality") setStatusText("Generating deep personality profile...");
           else if (step === "actionPlan") setStatusText("Creating actionable roadmaps & missions...");
@@ -79,6 +81,16 @@ export default function AnalyzingTransition() {
 
           while (retries > 0 && !success) {
             try {
+              let selectedCareerTitle = "";
+              let selectedFinalScore = 0;
+              if (step.startsWith("career_") && step !== "career_scoring" && step !== "career_extras") {
+                const idx = parseInt(step.split("_")[1]);
+                if (finalData.top5Careers && finalData.top5Careers[idx]) {
+                  selectedCareerTitle = finalData.top5Careers[idx].title;
+                  selectedFinalScore = finalData.top5Careers[idx].finalScore;
+                }
+              }
+
               const res = await fetch("/api/analyze-assessment", {
                 method: "POST",
                 headers: {
@@ -88,6 +100,8 @@ export default function AnalyzingTransition() {
                   profile: profileData,
                   answers: sessionData.answers || {},
                   step,
+                  selectedCareerTitle,
+                  selectedFinalScore,
                   existingTitles: (finalData.recommendations || []).map((r: any) => r.title)
                 })
               });
@@ -172,51 +186,49 @@ export default function AnalyzingTransition() {
   }, [router]);
 
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center p-4 bg-background relative overflow-hidden">
-      {/* Soft background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-[500px] w-[500px] rounded-full bg-primary/5 blur-3xl" />
+    <div className="flex min-h-[100dvh] items-center justify-center p-4 bg-slate-950 relative overflow-hidden font-mono">
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b9811a_1px,transparent_1px),linear-gradient(to_bottom,#10b9811a_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
 
-      <Card className="w-full max-w-md border-border/40 bg-card/65 backdrop-blur-md shadow-2xl p-8 sm:p-10 relative overflow-hidden">
+      {/* Engine Core */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[100px] animate-pulse" />
+
+      <div className="z-10 w-full max-w-lg bg-slate-900/80 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8 sm:p-12 shadow-[0_0_50px_rgba(16,185,129,0.15)] flex flex-col items-center text-center">
         
-        {/* Visual scanning overlay */}
-        <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent animate-scan" />
-
-        <CardContent className="flex flex-col items-center text-center space-y-6 pt-6">
-          
-          {/* Animated circular scanner */}
-          <div className="relative flex h-24 w-24 items-center justify-center">
-            
-            {/* Spinning background circles */}
-            <div className="absolute inset-0 rounded-full border-2 border-dashed border-primary/20 animate-[spin_15s_linear_infinite]" />
-            <div className="absolute inset-2 rounded-full border border-primary/40 animate-[spin_8s_linear_infinite_reverse]" />
-            
-            {/* Pulsing inner core */}
-            <div className="absolute h-14 w-14 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center animate-pulse">
-              <Compass className="h-7 w-7 text-primary animate-[spin_12s_ease-in-out_infinite]" />
-            </div>
-            
-            {/* Scanning radar sweep */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/0 via-primary/5 to-primary/20 border-r-2 border-primary/30 animate-[spin_3s_linear_infinite]" />
+        {/* Core spinner */}
+        <div className="relative flex h-28 w-28 items-center justify-center mb-8">
+          <div className="absolute inset-0 rounded-full border-4 border-dashed border-emerald-500/30 animate-[spin_10s_linear_infinite]" />
+          <div className="absolute inset-4 rounded-full border-2 border-emerald-400/50 animate-[spin_5s_linear_infinite_reverse]" />
+          <div className="absolute h-14 w-14 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center animate-pulse shadow-[0_0_20px_rgba(16,185,129,0.5)]">
+            <Sparkles className="h-6 w-6 text-emerald-400 animate-[spin_8s_ease-in-out_infinite]" />
           </div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-500/0 via-emerald-500/10 to-emerald-500/30 border-r-2 border-emerald-400/50 animate-[spin_3s_linear_infinite]" />
+        </div>
 
-          <div className="space-y-2.5">
-            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground flex items-center justify-center gap-1.5">
-              Analyzing Responses <Sparkles className="h-5 w-5 text-primary animate-bounce" />
-            </h1>
-            <p className="text-xs text-muted-foreground max-w-xs leading-relaxed">
-              Our Decision Intelligence Engine is scoring your profile across 35 traits and matching them with our Career Registry.
-            </p>
+        <h1 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-widest mb-2 drop-shadow-lg">
+          System Booting
+        </h1>
+        <p className="text-emerald-400/80 text-xs sm:text-sm mb-10 tracking-widest uppercase font-bold">
+          Decision Intelligence Engine
+        </p>
+
+        {/* Terminal Window */}
+        <div className="w-full bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-left relative overflow-hidden shadow-inner">
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-emerald-500/50 animate-scan" />
+          <div className="flex items-center gap-2 mb-3 text-slate-500 text-xs border-b border-slate-800 pb-2">
+            <div className="w-2 h-2 rounded-full bg-red-500/50" />
+            <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
+            <div className="w-2 h-2 rounded-full bg-green-500/50" />
+            <span className="ml-2 font-semibold tracking-wider">root@career-engine:~</span>
           </div>
+          <p className="text-emerald-400 text-sm sm:text-base transition-all duration-300">
+            <span className="text-emerald-600 mr-2">$</span>
+            {statusText}
+            <span className="inline-block w-2.5 h-4 bg-emerald-400 ml-1.5 align-middle animate-ping" />
+          </p>
+        </div>
 
-          {/* Status text */}
-          <div className="w-full bg-background/50 rounded-xl border border-border/30 px-4 py-3 h-12 flex items-center justify-center shadow-inner">
-            <p className="text-xs font-semibold text-primary transition-all duration-300 animate-pulse text-center">
-              {statusText}
-            </p>
-          </div>
-
-        </CardContent>
-      </Card>
+      </div>
     </div>
   );
 }

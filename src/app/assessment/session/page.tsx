@@ -80,9 +80,23 @@ export default function AssessmentSession() {
   const [streak, setStreak] = useState(0);
   const [showGodlikeFocus, setShowGodlikeFocus] = useState(false);
   const [showHalfway, setShowHalfway] = useState(false);
+  const [showChapterCard, setShowChapterCard] = useState(false);
+  const isBackingRef = useRef(false);
   
   useEffect(() => {
-    if (streak > 0 && streak % 10 === 0 && !showHalfway) {
+    isBackingRef.current = slideDirection === -1;
+  }, [slideDirection]);
+
+  useEffect(() => {
+    // Show Chapter roadmap every 20 questions, but only when moving forward
+    if (currentIdx > 0 && currentIdx % 20 === 0 && !isBackingRef.current) {
+      setShowChapterCard(true);
+      sfx.playDing();
+      setTimeout(() => setShowChapterCard(false), 4000);
+    }
+  }, [currentIdx]);
+  useEffect(() => {
+    if (streak > 0 && streak % 15 === 0 && !showHalfway) {
       setShowGodlikeFocus(true);
       sfx.playDing();
       setTimeout(() => setShowGodlikeFocus(false), 4000);
@@ -98,7 +112,11 @@ export default function AssessmentSession() {
 
   const [showXpPop, setShowXpPop] = useState(false);
   const [xpPopKey, setXpPopKey] = useState(0);
-  const ENCOURAGEMENT_WORDS = ["Superb!", "Rapid pace!", "Genius!", "Flawless!", "Incredible!", "Brilliant!"];
+  const ENCOURAGEMENT_WORDS = [
+    "Superb!", "Genius!", "Flawless!", "Incredible!", "Brilliant!", 
+    "Outstanding!", "Spot On!", "Excellent!", "Perfect!", 
+    "Great Insight!", "Sharp!", "Awesome!", "Nailed it!", "Fantastic!"
+  ];
   const [floatingTexts, setFloatingTexts] = useState<{ id: number, text: string, x: number, y: number }[]>([]);
 
   const [milestone, setMilestone] = useState<{ emoji: string; msg: string } | null>(null);
@@ -107,6 +125,32 @@ export default function AssessmentSession() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showShake, setShowShake] = useState(false);
   const [activeMultiplier, setActiveMultiplier] = useState(1);
+  
+  const [particles, setParticles] = useState<{ id: number, x: number, y: number, color: string }[]>([]);
+
+  const spawnParticles = (e: React.MouseEvent | React.TouchEvent, colorHex: string) => {
+    let clientX = 0;
+    let clientY = 0;
+    if ('touches' in e) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = (e as React.MouseEvent).clientX;
+      clientY = (e as React.MouseEvent).clientY;
+    }
+
+    const newParticles = Array.from({ length: 6 }).map(() => ({
+      id: Date.now() + Math.random(),
+      x: clientX + (Math.random() - 0.5) * 60,
+      y: clientY + (Math.random() - 0.5) * 60,
+      color: colorHex
+    }));
+    
+    setParticles(prev => [...prev, ...newParticles]);
+    setTimeout(() => {
+      setParticles(prev => prev.filter(p => !newParticles.find(n => n.id === p.id)));
+    }, 800);
+  };
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [activeSeconds, setActiveSeconds] = useState(0);
@@ -222,41 +266,25 @@ export default function AssessmentSession() {
   }, [questions, currentIdx, timeSpent, activeSeconds]);
 
   const awardXP = useCallback(() => {
-    let earnedXp = 10;
-    let isSpeedBonus = false;
-    let isCombo = false;
+    const earnedXp = 10;
+    const nextStreak = streak + 1;
+    
+    // Always increment streak
+    setStreak(nextStreak);
+    setActiveMultiplier(1);
 
-    if (activeSeconds <= 10) {
-      earnedXp += 5; // Speed Bonus
-      isSpeedBonus = true;
+    // Always play ding
+    sfx.playDing();
+    
+    // Only show encouragement word if Godlike Focus banner is NOT about to appear
+    if (nextStreak % 15 !== 0) {
+      const word = ENCOURAGEMENT_WORDS[Math.floor(Math.random() * ENCOURAGEMENT_WORDS.length)];
+      const id = Date.now() + Math.random();
+      setFloatingTexts(prev => [...prev, { id, text: word, x: 60 + Math.random() * 30, y: 15 + Math.random() * 15 }]);
+      setTimeout(() => {
+        setFloatingTexts(prev => prev.filter(t => t.id !== id));
+      }, 1500);
     }
-
-    setStreak((s) => {
-      if (!isSpeedBonus) return 0; // break streak if slow
-      const newStreak = s + 1;
-      if (newStreak >= 3) {
-        isCombo = true;
-        earnedXp = Math.floor(earnedXp * 1.5); // Combo Multiplier
-      }
-      return newStreak;
-    });
-
-    if (isCombo || isSpeedBonus) {
-      sfx.playDing();
-      if (isSpeedBonus) {
-        const word = ENCOURAGEMENT_WORDS[Math.floor(Math.random() * ENCOURAGEMENT_WORDS.length)];
-        const id = Date.now() + Math.random();
-        // Spawns somewhere in the top center/right area
-        setFloatingTexts(prev => [...prev, { id, text: word, x: 60 + Math.random() * 30, y: 15 + Math.random() * 15 }]);
-        setTimeout(() => {
-          setFloatingTexts(prev => prev.filter(t => t.id !== id));
-        }, 1500);
-      }
-    } else {
-      sfx.playPop();
-    }
-
-    setActiveMultiplier(isCombo ? 1.5 : 1);
 
     setXp((prev) => prev + earnedXp);
     setXpPopKey((k) => k + 1);
@@ -264,13 +292,13 @@ export default function AssessmentSession() {
     setJustAnswered(true);
     setTimeout(() => setShowXpPop(false), 1200);
     setTimeout(() => setJustAnswered(false), 600);
-  }, [activeSeconds]);
+  }, [streak]);
 
   const checkMilestone = useCallback((nextIdx: number, total: number) => {
     const pct = Math.round(((nextIdx + 1) / total) * 100);
     for (const m of [25, 50, 75]) {
       if (pct >= m && !milestoneSeen.has(m)) {
-        setMilestoneSeen((s) => new Set([...s, m]));
+        setMilestoneSeen((s) => new Set(Array.from(s).concat([m])));
         if (m === 50) {
           setShowHalfway(true);
         } else {
@@ -447,8 +475,90 @@ export default function AssessmentSession() {
   const dimColor = getDimColor(activeQuestion?.dimension || "default");
   const answered = isQuestionAnswered();
 
+  const getBgClass = () => {
+    if (currentIdx >= 60) return "bg-slate-950"; 
+    if (currentIdx >= 40) return "bg-[#0b132b]"; 
+    if (currentIdx >= 20) return "bg-[#1c2541]"; 
+    return "bg-slate-900"; 
+  };
+
   return (
-    <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden", isBossFight ? "bg-slate-950" : "bg-background")}>
+    <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden", getBgClass())}>
+      {/* Particle Effect Layer */}
+      <AnimatePresence>
+        {particles.map(p => (
+          <motion.div
+            key={p.id}
+            initial={{ opacity: 1, x: p.x, y: p.y, scale: 0.5 }}
+            animate={{ opacity: 0, x: p.x + (Math.random() - 0.5) * 100, y: p.y + (Math.random() - 0.5) * 100, scale: 1.5 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="fixed z-[60] w-3 h-3 rounded-full pointer-events-none blur-[1px]"
+            style={{ backgroundColor: p.color, boxShadow: `0 0 10px ${p.color}` }}
+          />
+        ))}
+      </AnimatePresence>
+
+      {/* Chapter Journey Roadmap Interstitial */}
+      <AnimatePresence>
+        {showChapterCard && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950/90 backdrop-blur-xl"
+          >
+            <div className="w-full max-w-lg px-6 flex flex-col items-center">
+              <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-widest mb-16">
+                Journey Progress
+              </h2>
+              
+              {/* Timeline Track */}
+              <div className="w-full relative h-2 bg-slate-800 rounded-full mb-8">
+                {/* Active Track */}
+                <motion.div 
+                  className="absolute top-0 left-0 h-full bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"
+                  initial={{ width: `${Math.max(0, currentIdx - 20) / questions.length * 100}%` }}
+                  animate={{ width: `${(currentIdx / questions.length) * 100}%` }}
+                  transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
+                />
+                
+                {/* Ship Icon */}
+                <motion.div 
+                  className="absolute top-1/2 -translate-y-1/2 text-4xl sm:text-5xl drop-shadow-[0_0_15px_rgba(16,185,129,0.8)] z-10"
+                  initial={{ left: `calc(${Math.max(0, currentIdx - 20) / questions.length * 100}% - 24px)` }}
+                  animate={{ left: `calc(${(currentIdx / questions.length) * 100}% - 24px)` }}
+                  transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
+                >
+                  🚀
+                </motion.div>
+                
+                {/* Nodes */}
+                {[0, 20, 40, 60, 80].map((node) => (
+                  <div 
+                    key={node} 
+                    className={cn(
+                      "absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-slate-950 transition-colors duration-500 z-0",
+                      currentIdx >= node ? "bg-emerald-400" : "bg-slate-700"
+                    )}
+                    style={{ left: `calc(${(node / 80) * 100}% - 8px)` }}
+                  />
+                ))}
+              </div>
+
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.8 }}
+                className="text-emerald-400 font-mono font-bold tracking-widest mt-8"
+              >
+                {currentIdx} / {questions.length} Checkpoint Reached
+              </motion.p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Ambient glow (Evolving Core) */}
       <div className="pointer-events-none fixed inset-0 -z-10 flex items-center justify-center overflow-hidden">
         <div 
@@ -501,20 +611,22 @@ export default function AssessmentSession() {
       <AnimatePresence>
         {showGodlikeFocus && !showHalfway && (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.5, y: -50 }}
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 1.5, filter: "blur(10px)" }}
-            transition={{ type: "spring", damping: 12, stiffness: 100 }}
-            className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none"
+            exit={{ opacity: 0, scale: 0.8, filter: "blur(5px)" }}
+            transition={{ type: "spring", damping: 14, stiffness: 120 }}
+            className="fixed top-6 sm:top-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
           >
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-6xl mb-2">🔥</div>
-              <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.8)]">
-                Godlike Focus!
-              </h2>
-              <p className="text-white font-bold mt-2 text-lg bg-black/50 px-4 py-1 rounded-full backdrop-blur-md border border-white/10">
-                10x Speed Streak!
-              </p>
+            <div className="flex items-center gap-3 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+              <span className="text-2xl sm:text-3xl">🔥</span>
+              <div className="flex flex-col">
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+                  Godlike Focus!
+                </h2>
+                <p className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-widest">
+                  Unstoppable Momentum
+                </p>
+              </div>
             </div>
           </motion.div>
         )}
@@ -524,20 +636,22 @@ export default function AssessmentSession() {
       <AnimatePresence>
         {showHalfway && (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.5, y: -50 }}
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 1.5, filter: "blur(10px)" }}
-            transition={{ type: "spring", damping: 12, stiffness: 100 }}
-            className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none"
+            exit={{ opacity: 0, scale: 0.8, filter: "blur(5px)" }}
+            transition={{ type: "spring", damping: 14, stiffness: 120 }}
+            className="fixed top-6 sm:top-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
           >
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-6xl mb-2">⚡</div>
-              <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)]">
-                Halfway There!
-              </h2>
-              <p className="text-white font-bold mt-2 text-lg bg-black/50 px-4 py-1 rounded-full backdrop-blur-md border border-white/10">
-                You're making great progress. Keep it up!
-              </p>
+            <div className="flex items-center gap-3 bg-slate-900/80 backdrop-blur-md border border-emerald-500/30 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+              <span className="text-2xl sm:text-3xl">⚡</span>
+              <div className="flex flex-col">
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
+                  Halfway There!
+                </h2>
+                <p className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-widest">
+                  Great Progress
+                </p>
+              </div>
             </div>
           </motion.div>
         )}
@@ -666,7 +780,8 @@ export default function AssessmentSession() {
                             key={i}
                             animate={isSelected ? { scale: [1, 1.025, 0.995, 1] } : { scale: 1 }}
                             transition={{ duration: 0.35 }}
-                            onClick={() => {
+                            onClick={(e) => {
+                              spawnParticles(e, '#34d399');
                               if (isOtherOption) {
                                 handleAnswerChange(activeQuestion.id, currentAnsStr.startsWith("Other:") ? currentAnsStr : "E");
                               } else {
@@ -815,7 +930,10 @@ export default function AssessmentSession() {
                               <motion.button
                                 key={i}
                                 type="button"
-                                onClick={() => handleAnswerChange(activeQuestion.id, numVal)}
+                                onClick={(e) => {
+                                  spawnParticles(e, '#34d399');
+                                  handleAnswerChange(activeQuestion.id, numVal);
+                                }}
                                 whileTap={{ scale: 0.88 }}
                                 className={cn(
                                   "flex-1 flex flex-col items-center gap-1.5 rounded-xl border py-3 px-1 transition-all duration-200 min-h-[72px] cursor-pointer",
