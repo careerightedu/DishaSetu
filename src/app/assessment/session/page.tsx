@@ -79,6 +79,7 @@ export default function AssessmentSession() {
 
   const [streak, setStreak] = useState(0);
   const [showGodlikeFocus, setShowGodlikeFocus] = useState(false);
+  const [streakMessage, setStreakMessage] = useState({ title: "", subtitle: "" });
   const [showHalfway, setShowHalfway] = useState(false);
   const [showChapterCard, setShowChapterCard] = useState(false);
   const isBackingRef = useRef(false);
@@ -97,6 +98,14 @@ export default function AssessmentSession() {
   }, [currentIdx]);
   useEffect(() => {
     if (streak > 0 && streak % 15 === 0 && !showHalfway) {
+      const messages = [
+        { title: "Godlike Focus!", subtitle: "Unstoppable Momentum" },
+        { title: "On Fire!", subtitle: "You are crushing it" },
+        { title: "Unbreakable!", subtitle: "Laser-sharp precision" },
+        { title: "Zone Entered!", subtitle: "Flow state activated" },
+        { title: "Mastermind!", subtitle: "Incredible consistency" }
+      ];
+      setStreakMessage(messages[((streak / 15) - 1) % messages.length]);
       setShowGodlikeFocus(true);
       sfx.playDing();
       setTimeout(() => setShowGodlikeFocus(false), 4000);
@@ -621,10 +630,10 @@ export default function AssessmentSession() {
               <span className="text-2xl sm:text-3xl">🔥</span>
               <div className="flex flex-col">
                 <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
-                  Godlike Focus!
+                  {streakMessage.title || "Godlike Focus!"}
                 </h2>
                 <p className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-widest">
-                  Unstoppable Momentum
+                  {streakMessage.subtitle || "Unstoppable Momentum"}
                 </p>
               </div>
             </div>
