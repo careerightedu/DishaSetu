@@ -854,7 +854,7 @@ export default function AssessmentSession() {
                     const isSelectedB = currentAns === optB.value;
 
                     return (
-                      <div className="relative w-full h-[320px] flex items-center justify-center overflow-hidden">
+                      <div className="relative w-full h-[320px] flex items-center justify-center overflow-hidden select-none">
                         {/* Swipe Indicators Background (Fallback) */}
                         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 pointer-events-none z-0">
                           <div className={cn("flex flex-col items-start transition-opacity duration-200", dragOffset < -20 ? "opacity-100" : "opacity-20")}>
