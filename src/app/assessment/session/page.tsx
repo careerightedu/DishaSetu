@@ -433,9 +433,9 @@ export default function AssessmentSession() {
   };
 
   const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 50 : -50, opacity: 0, scale: 0.98 }),
-    center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.25, ease: "easeOut" as const } },
-    exit: (dir: number) => ({ x: dir > 0 ? -50 : 50, opacity: 0, scale: 0.98, transition: { duration: 0.15, ease: "easeIn" as const } }),
+    enter: (dir: number) => ({ x: dir > 0 ? 30 : -30, opacity: 0, scale: 0.98 }),
+    center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.15, ease: "easeOut" as const } },
+    exit: (dir: number) => ({ x: dir > 0 ? -30 : 30, opacity: 0, scale: 0.98, transition: { duration: 0.1, ease: "easeIn" as const } }),
   };
 
   if (loading) {
@@ -562,23 +562,23 @@ export default function AssessmentSession() {
       {/* Ambient glow (Evolving Core) */}
       <div className="pointer-events-none fixed inset-0 -z-10 flex items-center justify-center overflow-hidden">
         <div 
-          className="absolute rounded-full blur-[100px] transition-all duration-1000 ease-out" 
+          className="absolute rounded-full transition-all duration-1000 ease-out" 
           style={{ 
             width: `${300 + progressPercent * 2}px`, 
             height: `${300 + progressPercent * 2}px`,
             background: isBossFight 
-              ? `radial-gradient(circle, hsla(350, 84%, 39%, 0.25) 0%, hsla(0, 80%, 40%, 0.1) 100%)`
-              : `radial-gradient(circle, hsla(${160 + progressPercent}, 84%, 39%, 0.15) 0%, hsla(${220 + progressPercent}, 80%, 40%, 0.05) 100%)`,
+              ? `radial-gradient(circle, hsla(350, 84%, 39%, 0.25) 0%, hsla(0, 80%, 40%, 0) 70%)`
+              : `radial-gradient(circle, hsla(${160 + progressPercent}, 84%, 39%, 0.15) 0%, hsla(${220 + progressPercent}, 80%, 40%, 0) 70%)`,
             transform: `scale(${answered ? 1.05 : 1})`,
             opacity: activeMultiplier > 1 ? 1 : 0.6
           }} 
         />
         <div 
-          className="absolute rounded-full blur-[80px] transition-all duration-[3000ms] ease-in-out" 
+          className="absolute rounded-full transition-all duration-[3000ms] ease-in-out" 
           style={{ 
             width: `${200 + progressPercent}px`, 
             height: `${200 + progressPercent}px`,
-            backgroundColor: isBossFight ? `hsla(0, 84%, 39%, 0.2)` : `hsla(${160 + progressPercent}, 84%, 39%, 0.1)`,
+            background: isBossFight ? `radial-gradient(circle, hsla(0, 84%, 39%, 0.2) 0%, hsla(0, 84%, 39%, 0) 70%)` : `radial-gradient(circle, hsla(${160 + progressPercent}, 84%, 39%, 0.1) 0%, hsla(${160 + progressPercent}, 84%, 39%, 0) 70%)`,
             transform: `rotate(${progressPercent * 3.6}deg) translate(${Math.sin(progressPercent) * 20}px, ${Math.cos(progressPercent) * 20}px)`
           }} 
         />
@@ -746,7 +746,7 @@ export default function AssessmentSession() {
 
         {/* QUESTION CARD */}
         <div className="flex-grow">
-          <div className={cn("w-full rounded-2xl border bg-gradient-to-br backdrop-blur-xl shadow-2xl overflow-hidden", dimColor)}>
+          <div className={cn("w-full rounded-2xl border bg-gradient-to-br backdrop-blur-sm sm:backdrop-blur-md shadow-2xl overflow-hidden", dimColor)}>
             <AnimatePresence mode="wait" custom={slideDirection}>
               <motion.div
                 key={activeQuestion.id}
