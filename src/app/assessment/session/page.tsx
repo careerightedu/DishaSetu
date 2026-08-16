@@ -280,7 +280,7 @@ export default function AssessmentSession() {
     if (nextStreak % 15 !== 0) {
       const word = ENCOURAGEMENT_WORDS[Math.floor(Math.random() * ENCOURAGEMENT_WORDS.length)];
       const id = Date.now() + Math.random();
-      setFloatingTexts(prev => [...prev, { id, text: word, x: 60 + Math.random() * 30, y: 15 + Math.random() * 15 }]);
+      setFloatingTexts(prev => [...prev, { id, text: word, x: 20 + Math.random() * 40, y: 15 + Math.random() * 15 }]);
       setTimeout(() => {
         setFloatingTexts(prev => prev.filter(t => t.id !== id));
       }, 1500);
