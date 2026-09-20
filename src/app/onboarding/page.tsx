@@ -219,7 +219,7 @@ export default function OnboardingPage() {
                         placeholder={t("fullNamePlaceholder")}
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        className={`bg-background/40 focus-visible:ring-primary h-10 ${errors.fullName ? "border-destructive" : ""}`}
+                        className={`bg-slate-900/40 focus-visible:ring-primary h-10 ${errors.fullName ? "border-destructive" : ""}`}
                       />
                       {errors.fullName && <p className="text-xs text-destructive">{errors.fullName}</p>}
                     </div>
@@ -231,7 +231,7 @@ export default function OnboardingPage() {
                           value={formData.cityTier}
                           onValueChange={(val) => setFormData({ ...formData, cityTier: val || "" })}
                         >
-                          <SelectTrigger className={`bg-background/40 focus:ring-primary h-10 ${errors.cityTier ? "border-destructive" : ""}`}>
+                          <SelectTrigger className={`bg-slate-900/40 focus:ring-primary h-10 ${errors.cityTier ? "border-destructive" : ""}`}>
                             <SelectValue placeholder={t("cityTierPlaceholder")} />
                           </SelectTrigger>
                           <SelectContent className="bg-popover border-border/50">
@@ -249,7 +249,7 @@ export default function OnboardingPage() {
                           value={formData.languagePreference}
                           onValueChange={(val) => setFormData({ ...formData, languagePreference: val || "" })}
                         >
-                          <SelectTrigger className={`bg-background/40 focus:ring-primary h-10 ${errors.languagePreference ? "border-destructive" : ""}`}>
+                          <SelectTrigger className={`bg-slate-900/40 focus:ring-primary h-10 ${errors.languagePreference ? "border-destructive" : ""}`}>
                             <SelectValue placeholder={t("langPlaceholder")} />
                           </SelectTrigger>
                           <SelectContent className="bg-popover border-border/50">

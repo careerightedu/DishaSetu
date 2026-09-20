@@ -24,12 +24,13 @@ import {
   Terminal,
   CheckCircle2,
   Lock,
-  User
+  User,
+  History
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, orderBy, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export default function Dashboard() {
@@ -39,12 +40,14 @@ export default function Dashboard() {
   const [sessionExists, setSessionExists] = useState(false);
   const [sessionProgress, setSessionProgress] = useState({ answered: 0, total: 80 });
   const [checkingSession, setCheckingSession] = useState(true);
+  const [reports, setReports] = useState<any[]>([]);
   const t = useTranslations("Dashboard");
 
   useEffect(() => {
-    async function checkActiveSession() {
+    async function checkActiveSessionAndReports() {
       if (!user) return;
       try {
+        // 1. Check Active Session
         const sessionRef = doc(db, "assessment_sessions", user.uid);
         const sessionSnap = await getDoc(sessionRef);
         
@@ -59,13 +62,24 @@ export default function Dashboard() {
             setSessionProgress({ answered: answersCount, total: totalCount });
           }
         }
+
+        // 2. Fetch Past Reports
+        const reportsRef = collection(db, "users", user.uid, "reports");
+        const q = query(reportsRef, orderBy("archivedAt", "desc"));
+        const snapshot = await getDocs(q);
+        const fetchedReports = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setReports(fetchedReports);
+
       } catch (err) {
-        console.error("Error checking active session:", err);
+        console.error("Error checking active session and reports:", err);
       } finally {
         setCheckingSession(false);
       }
     }
-    checkActiveSession();
+    checkActiveSessionAndReports();
   }, [user]);
 
   // Helper to map segment codes to readable text
@@ -90,7 +104,7 @@ export default function Dashboard() {
   };
 
   const getBgClass = () => {
-    if (!sessionExists) return "bg-background";
+    if (!sessionExists && reports.length === 0) return "bg-background";
     const answered = sessionProgress.answered;
     if (answered >= 60) return "bg-slate-950"; 
     if (answered >= 40) return "bg-[#0b132b]"; 
@@ -129,7 +143,7 @@ export default function Dashboard() {
         {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* Left Column: Assessment Flow Start */}
+          {/* Left Column: Assessment Flow Start & History */}
           <div className="lg:col-span-2 space-y-6">
             <Card className="border-primary/20 bg-card/60 backdrop-blur-md shadow-lg overflow-hidden relative">
               {/* Highlight ribbon */}
@@ -165,7 +179,6 @@ export default function Dashboard() {
               
               <CardContent className="pl-8 pr-6 sm:pl-10 sm:pr-8 pb-6 sm:pb-8 space-y-6">
                 
-
                 {/* Winding Journey Path */}
                 {!checkingSession && !sessionCompleted && (
                   <div className="rounded-xl border border-primary/20 bg-slate-950/80 p-4 sm:p-8 mt-6 shadow-inner relative overflow-hidden">
@@ -268,7 +281,7 @@ export default function Dashboard() {
 
               </CardContent>
 
-              <CardFooter className="pl-8 pr-6 sm:pl-10 sm:pr-8 pb-6 sm:pb-8 pt-0 flex flex-col sm:flex-row gap-3">
+              <CardFooter className="pl-8 pr-6 sm:pl-10 sm:pr-8 pb-6 sm:pb-8 pt-6 sm:pt-8 flex flex-col sm:flex-row gap-3">
                 {checkingSession ? (
                   <div className="h-11 w-44 rounded-lg bg-muted animate-pulse" />
                 ) : sessionCompleted ? (
@@ -279,7 +292,7 @@ export default function Dashboard() {
                       "font-bold shadow-md shadow-primary/20 bg-emerald-600 hover:bg-emerald-500 text-white w-full sm:w-auto flex items-center justify-center gap-1.5"
                     )}
                   >
-                    <FileText className="h-5 w-5" /> Download / View CareeRight Report
+                    <FileText className="h-5 w-5" /> Download / View WhatAfter Report
                     <ChevronRight className="h-5 w-5" />
                   </Link>
                 ) : sessionExists ? (
@@ -307,6 +320,43 @@ export default function Dashboard() {
                 )}
               </CardFooter>
             </Card>
+
+            {/* Previous Reports (If any) */}
+            {reports.length > 0 && (
+              <Card className="border-border/30 bg-card/40 backdrop-blur-md shadow-lg overflow-hidden relative mt-6">
+                <CardHeader className="p-6 pb-4 border-b border-border/20">
+                  <CardTitle className="text-lg font-bold flex items-center gap-2">
+                    <History className="h-5 w-5 text-primary" /> Past Assessment Reports
+                  </CardTitle>
+                  <CardDescription>
+                    Your historical career reports. You can review past recommendations anytime.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="divide-y divide-border/20">
+                    {reports.map((report) => (
+                      <Link href={`/report/${report.id}`} key={report.id} className="p-4 hover:bg-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors">
+                        <div>
+                          <p className="font-semibold text-sm hover:underline">WhatAfter Career Intelligence Report</p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Archived on: {new Date(report.archivedAt).toLocaleDateString("en-IN", {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </p>
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-semibold border border-emerald-500/20 w-fit">
+                          <CheckCircle2 className="h-3 w-3" /> View Report
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
           </div>
 

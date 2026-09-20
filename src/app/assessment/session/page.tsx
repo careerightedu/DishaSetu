@@ -182,6 +182,13 @@ export default function AssessmentSession() {
 
   useEffect(() => {
     if (!user || !profile) return;
+    
+    // Enforce Payment Gate
+    if (!profile.hasPaid) {
+      router.push("/assessment");
+      return;
+    }
+
     const uid = user.uid;
     const userSegment = profile.segment || "S3";
 

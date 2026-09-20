@@ -86,6 +86,9 @@ export async function getLLMCompletion(
       }
 
       const data = await response.json();
+      console.log(`\n======================================`);
+      console.log(`✅ Tokens Used -> INPUT: ${data.usage?.prompt_tokens} | OUTPUT: ${data.usage?.completion_tokens} | TOTAL: ${data.usage?.total_tokens}`);
+      console.log(`======================================\n`);
       const content = data?.choices?.[0]?.message?.content || "";
       return content.trim();
     } catch (err) {

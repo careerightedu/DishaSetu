@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "CareeRight - Advanced Career Assessment & Intelligence Platform",
+  title: "WhatAfter - AI Enabled Career Discovery Platform",
   description: "Identify your ideal career stream, colleges, exams, and skill gaps with scientifically grounded, AI-assisted psychometric analysis.",
 };
 

@@ -7,7 +7,7 @@
     "error": "An error occurred. Please try again."
   },
   "Onboarding": {
-    "title": "Welcome to CareeRight",
+    "title": "Welcome to WhatAfter",
     "subtitle": "Let's set up your profile to personalize your assessment.",
     "basicDetails": "BASIC DETAILS",
     "fullName": "Full Name",
@@ -145,7 +145,7 @@
     "noResults": "No Results Available",
     "notCompleted": "You have not completed the Career Assessment session yet.",
     "startAssessment": "Start Assessment",
-    "retakeConfirm": "Are you sure you want to discard your current results and start a new assessment? This action cannot be undone.",
+    "retakeConfirm": "This report will be saved to your dashboard and you will have to pay again to start a new assessment. This action cannot be undone. Are you sure?",
     "topMatches": "Top Career Matches",
     "whyFit": "Why it's a fit",
     "growth": "Growth & Impact",
@@ -166,7 +166,7 @@
   "Dashboard": {
     "hello": "Hello",
     "explorer": "Explorer",
-    "welcomeTitle": "Welcome to your CareeRight Career assessment dashboard. Let's build your roadmap.",
+    "welcomeTitle": "Welcome to your WhatAfter Career assessment dashboard. Let's build your roadmap.",
     "primaryTask": "Primary Task",
     "coreAssessment": "Core Career Assessment",
     "coreDesc": "Scientifically grounded interest, values, and work preferences mapping.",

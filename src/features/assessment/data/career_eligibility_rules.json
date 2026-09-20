@@ -728,8 +728,7 @@
   },
   "Mathematicians, Actuaries and Statisticians": {
     "allowedStreams": [
-      "Science PCM",
-      "Commerce"
+      "Science PCM"
     ],
     "strict": true
   },

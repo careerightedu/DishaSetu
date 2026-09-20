@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -129,7 +130,7 @@ const PageContainer = ({ children, pageNumber, title }: { children: React.ReactN
     {/* Footer */}
     <div className="w-full flex justify-between items-center pt-3 border-t border-slate-800/80 mt-auto shrink-0">
       <div className="text-emerald-500 font-mono text-[9px] tracking-widest uppercase font-semibold">
-        CareeRight • Career Intelligence Report
+        WhatAfter • Career Intelligence Report
       </div>
       <div className="text-slate-500 font-mono text-[9px] tracking-widest uppercase font-semibold">
         {pageNumber ? String(pageNumber).padStart(2, '0') : "01"}
@@ -138,7 +139,7 @@ const PageContainer = ({ children, pageNumber, title }: { children: React.ReactN
   </section>
 );
 
-export default function CareerDiscoveryJourneyPrint() {
+function CareerDiscoveryJourneyPrintInner() {
   const { user, profile, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [scores, setScores] = useState<Record<string, number> | null>(null);
@@ -156,6 +157,9 @@ export default function CareerDiscoveryJourneyPrint() {
   const [parentDashboard, setParentDashboard] = useState<ParentDashboard | null>(null);
   const [contextualSummary, setContextualSummary] = useState<any>(null);
 
+  const searchParams = useSearchParams();
+  const reportId = searchParams.get("reportId");
+
   useEffect(() => {
     async function fetchResults() {
       if (authLoading) return;
@@ -164,7 +168,13 @@ export default function CareerDiscoveryJourneyPrint() {
         return;
       }
       try {
-        const sessionRef = doc(db, "assessment_sessions", user.uid);
+        let sessionRef;
+        if (reportId) {
+          sessionRef = doc(db, "users", user.uid, "reports", reportId);
+        } else {
+          sessionRef = doc(db, "assessment_sessions", user.uid);
+        }
+        
         const sessionSnap = await getDoc(sessionRef);
         if (sessionSnap.exists()) {
           const data = sessionSnap.data();
@@ -190,7 +200,7 @@ export default function CareerDiscoveryJourneyPrint() {
       }
     }
     fetchResults();
-  }, [user, authLoading]);
+  }, [user, authLoading, reportId]);
 
   useEffect(() => {
     if (!loading && recommendations && recommendations.length > 0) {
@@ -205,7 +215,7 @@ export default function CareerDiscoveryJourneyPrint() {
       <div className="flex h-screen items-center justify-center bg-[#0B1120] text-white">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
-          <p className="text-xs font-black uppercase tracking-wider text-slate-400 font-mono">Compiling Official 15-Page CareeRight PDF...</p>
+          <p className="text-xs font-black uppercase tracking-wider text-slate-400 font-mono">Compiling Official 15-Page WhatAfter PDF...</p>
         </div>
       </div>
     );
@@ -293,7 +303,7 @@ export default function CareerDiscoveryJourneyPrint() {
 
           <div className="mt-3 pt-3 border-t border-slate-800/80 bg-slate-900/60 rounded-xl p-3 text-[9px] text-slate-400 font-mono leading-relaxed">
             <span className="text-amber-400 font-bold uppercase tracking-wider block mb-0.5">DISCLAIMER</span>
-            This report is generated using Careeright&apos;s proprietary assessment model and career mapping methodology. It is intended to provide career guidance based on your responses and should not be considered the sole basis for making career decisions. Please combine these insights with your interests, academic performance, discussions with mentors, and independent research before choosing a career path.
+            This report is generated using WhatAfter&apos;s proprietary assessment model and career mapping methodology. It is intended to provide career guidance based on your responses and should not be considered the sole basis for making career decisions. Please combine these insights with your interests, academic performance, discussions with mentors, and independent research before choosing a career path.
           </div>
         </div>
       </PageContainer>
@@ -1280,5 +1290,17 @@ export default function CareerDiscoveryJourneyPrint() {
         }
       `}} />
     </div>
+  );
+}
+
+export default function CareerDiscoveryJourneyPrint() {
+  return (
+    <Suspense fallback={
+      <div className="flex h-screen items-center justify-center bg-[#0B1120] text-white">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+      </div>
+    }>
+      <CareerDiscoveryJourneyPrintInner />
+    </Suspense>
   );
 }

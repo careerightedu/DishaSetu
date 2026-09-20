@@ -7,7 +7,7 @@
     "error": "एक त्रुटि हुई। कृपया पुनः प्रयास करें।"
   },
   "Onboarding": {
-    "title": "CareeRight में आपका स्वागत है",
+    "title": "WhatAfter में आपका स्वागत है",
     "subtitle": "आइए आपके असेसमेंट को वैयक्तिकृत करने के लिए आपका प्रोफ़ाइल सेट करें।",
     "basicDetails": "बुनियादी विवरण",
     "fullName": "पूरा नाम",
@@ -145,7 +145,7 @@
     "noResults": "No Results Available",
     "notCompleted": "You have not completed the Career Assessment session yet.",
     "startAssessment": "Start Assessment",
-    "retakeConfirm": "Are you sure you want to discard your current results and start a new assessment? This action cannot be undone.",
+    "retakeConfirm": "This report will be saved to your dashboard and you will have to pay again to start a new assessment. This action cannot be undone. Are you sure?",
     "topMatches": "Top Career Matches",
     "whyFit": "Why it's a fit",
     "growth": "Growth & Impact",
@@ -166,7 +166,7 @@
   "Dashboard": {
     "hello": "नमस्ते",
     "explorer": "एक्सप्लोरर",
-    "welcomeTitle": "आपके CareeRight करियर असेसमेंट डैशबोर्ड में आपका स्वागत है। चलिए आपका रोडमैप बनाते हैं।",
+    "welcomeTitle": "आपके WhatAfter करियर असेसमेंट डैशबोर्ड में आपका स्वागत है। चलिए आपका रोडमैप बनाते हैं।",
     "primaryTask": "प्राथमिक कार्य",
     "coreAssessment": "मुख्य करियर मूल्यांकन",
     "coreDesc": "वैज्ञानिक रूप से आधारित रुचि, मूल्य, और कार्य प्राथमिकताओं की मैपिंग।",

@@ -16,7 +16,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { syncUserProfileToSupabase } from "@/lib/supabase";
 
-export interface CareeRightUser {
+export interface WhatAfterUser {
   uid: string;
   email: string | null;
   displayName: string | null;
@@ -53,16 +53,20 @@ export interface UserProfile {
   // Gamification
   totalXp?: number;
   
+  // Payment Status
+  hasPaid?: boolean;
+  usedCoupons?: string[];
+  
   updatedAt?: string;
 }
 
 interface AuthContextType {
-  user: CareeRightUser | null;
+  user: WhatAfterUser | null;
   profile: UserProfile | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<CareeRightUser>;
-  signup: (email: string, password: string, fullName: string) => Promise<CareeRightUser>;
-  loginWithGoogle: () => Promise<CareeRightUser>;
+  login: (email: string, password: string) => Promise<WhatAfterUser>;
+  signup: (email: string, password: string, fullName: string) => Promise<WhatAfterUser>;
+  loginWithGoogle: () => Promise<WhatAfterUser>;
   logout: () => Promise<void>;
   updateProfile: (profileData: Partial<UserProfile>) => Promise<void>;
 }
@@ -82,12 +86,12 @@ function deleteCookie(name: string) {
 }
 
 export function AuthContextProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<CareeRightUser | null>(null);
+  const [user, setUser] = useState<WhatAfterUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Sync cookies with user and profile states
-  const syncCookies = (currentUser: CareeRightUser | null, currentProfile: UserProfile | null) => {
+  const syncCookies = (currentUser: WhatAfterUser | null, currentProfile: UserProfile | null) => {
     if (currentUser) {
       setCookie("session", currentUser.uid);
       if (currentProfile?.onboardingCompleted) {
@@ -101,8 +105,8 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     }
   };
 
-  // Helper to map Firebase User to CareeRightUser
-  const mapFirebaseUser = (fbUser: FirebaseUser): CareeRightUser => {
+  // Helper to map Firebase User to WhatAfterUser
+  const mapFirebaseUser = (fbUser: FirebaseUser): WhatAfterUser => {
     return {
       uid: fbUser.uid,
       email: fbUser.email,
@@ -144,7 +148,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
   }, []);
 
   // Action methods
-  const login = async (email: string, password: string): Promise<CareeRightUser> => {
+  const login = async (email: string, password: string): Promise<WhatAfterUser> => {
     setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -181,7 +185,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     }
   };
 
-  const signup = async (email: string, password: string, fullName: string): Promise<CareeRightUser> => {
+  const signup = async (email: string, password: string, fullName: string): Promise<WhatAfterUser> => {
     setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -202,7 +206,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     }
   };
 
-  const loginWithGoogle = async (): Promise<CareeRightUser> => {
+  const loginWithGoogle = async (): Promise<WhatAfterUser> => {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
@@ -241,6 +245,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
       setUser(null);
       setProfile(null);
       syncCookies(null, null);
+      window.location.href = "/login";
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {

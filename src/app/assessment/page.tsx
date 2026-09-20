@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Script from "next/script";
 import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { useTranslations } from "@/hooks/useTranslations";
@@ -11,19 +12,20 @@ import {
   Clock, 
   HelpCircle, 
   Compass, 
-  AlertCircle, 
   Play, 
   RotateCcw,
-  Settings,
   ChevronRight,
   ArrowLeft,
   Brain,
   Terminal,
   CheckCircle2,
-  Layers
+  Layers,
+  CreditCard,
+  Tag
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -37,6 +39,13 @@ export default function AssessmentHome() {
   const [sessionProgress, setSessionProgress] = useState({ answered: 0, total: 80 });
   const [checkingSession, setCheckingSession] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  // Payment states
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [checkingCoupon, setCheckingCoupon] = useState(false);
+  const [couponMessage, setCouponMessage] = useState({ type: "", text: "" });
+  const [paying, setPaying] = useState(false);
 
   // Helper to map segment codes to readable text
   const getSegmentTitle = (seg?: string) => {
@@ -76,7 +85,7 @@ export default function AssessmentHome() {
       }
     }
     checkActiveSession();
-  }, [user]);
+  }, [user, router]);
 
   const handleRestartAssessment = async () => {
     if (!user) return;
@@ -98,6 +107,130 @@ export default function AssessmentHome() {
     }
   };
 
+  const handleApplyCoupon = async () => {
+    if (!couponCode) return;
+    setCheckingCoupon(true);
+    setCouponMessage({ type: "", text: "" });
+    try {
+      const { collection, getDoc, doc } = await import("firebase/firestore");
+      const normalizedCode = couponCode.toUpperCase();
+
+      if (profile?.usedCoupons?.includes(normalizedCode)) {
+        setCouponMessage({ type: "error", text: "You have already used this coupon." });
+        setCheckingCoupon(false);
+        return;
+      }
+
+      const couponSnap = await getDoc(doc(db, "coupons", normalizedCode));
+      
+      if (couponSnap.exists() && couponSnap.data().active) {
+        const data = couponSnap.data();
+        setDiscount(data.discountPercentage || 0);
+        setCouponMessage({ type: "success", text: `${data.discountPercentage}% discount applied!` });
+      } else {
+        setDiscount(0);
+        setCouponMessage({ type: "error", text: "Invalid or expired coupon" });
+      }
+    } catch (err) {
+      console.error(err);
+      setCouponMessage({ type: "error", text: "Failed to verify coupon" });
+    } finally {
+      setCheckingCoupon(false);
+    }
+  };
+
+  const handlePayment = async () => {
+    if (!user) return;
+    setPaying(true);
+
+    try {
+      // Short-circuit for 100% free coupons
+      if (discount === 100) {
+        const unlockRes = await fetch("/api/assessment/free-unlock", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ couponCode, uid: user.uid })
+        });
+        
+        const unlockData = await unlockRes.json();
+        if (unlockData.success) {
+          await updateProfile({ hasPaid: true });
+          router.push("/assessment/session");
+          return;
+        } else {
+          throw new Error(unlockData.error || "Failed to unlock securely");
+        }
+      }
+
+      // 1. Create order on backend
+      const res = await fetch("/api/razorpay/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: 99900, couponCode: couponCode, uid: user.uid }) // ₹999 base price
+      });
+      const data = await res.json();
+
+      if (data.amount === 0) {
+        // Fallback catch if backend returned amount 0 for some other reason
+        await updateProfile({ hasPaid: true });
+        router.push("/assessment/session");
+        return;
+      }
+
+      if (!data.orderId) throw new Error("Failed to create order");
+
+      // 2. Initialize Razorpay Checkout
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Use NEXT_PUBLIC variable for client
+        amount: data.amount,
+        currency: data.currency,
+        name: "WhatAfter",
+        description: "Career Intelligence Assessment",
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          // 3. Verify Payment Signature on Backend
+          const verifyRes = await fetch("/api/razorpay/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              uid: user.uid,
+              couponCode: couponCode ? couponCode.toUpperCase() : undefined
+            })
+          });
+          const verifyData = await verifyRes.json();
+          if (verifyData.success) {
+            await updateProfile({ hasPaid: true });
+            router.push("/assessment/session");
+          } else {
+            alert("Payment verification failed. Please contact support.");
+          }
+        },
+        prefill: {
+          name: profile?.fullName || "",
+          email: user.email || "",
+        },
+        theme: {
+          color: "#10b981"
+        }
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on("payment.failed", function (response: any) {
+        alert("Payment Failed: " + response.error.description);
+      });
+      rzp.open();
+
+    } catch (err) {
+      console.error("Payment error:", err);
+      alert("Something went wrong initiating the payment.");
+    } finally {
+      setPaying(false);
+    }
+  };
+
   const getBgClass = () => {
     if (!sessionExists) return "bg-background";
     const answered = sessionProgress.answered;
@@ -109,6 +242,7 @@ export default function AssessmentHome() {
 
   return (
     <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden", getBgClass())}>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       {/* Grid Parallax */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       <Navbar />
@@ -250,43 +384,100 @@ export default function AssessmentHome() {
                 </div>
               </div>
 
-
-
             </CardContent>
 
-            <CardFooter className="p-6 sm:p-8 pt-4 pb-8 border-t border-border/20 bg-background/25 flex flex-col sm:flex-row gap-3 sm:justify-end">
+            <CardFooter className="p-6 sm:p-8 pt-4 pb-8 border-t border-border/20 bg-background/25 flex flex-col gap-4">
               {checkingSession ? (
-                <div className="h-10 w-32 rounded-lg bg-muted animate-pulse" />
-              ) : sessionExists ? (
-                <>
-                  <Button 
-                    variant="ghost" 
-                    onClick={handleRestartAssessment}
-                    disabled={loading}
-                    className="font-semibold text-xs border border-border/40 hover:bg-destructive/10 hover:text-destructive h-10 gap-1.5"
-                  >
-                    <RotateCcw className="h-4 w-4" /> Start Over
-                  </Button>
-                  <Link
-                    href="/assessment/session"
-                    className={cn(
-                      buttonVariants({ variant: "default", size: "default" }),
-                      "font-bold shadow-md shadow-primary/20 h-10 px-6 gap-1.5 flex items-center justify-center"
-                    )}
-                  >
-                    Resume Assessment <Play className="h-4 w-4 fill-primary-foreground" />
-                  </Link>
-                </>
-              ) : (
-                <Link
-                  href="/assessment/session"
-                  className={cn(
-                    buttonVariants({ variant: "default", size: "default" }),
-                    "font-bold shadow-md shadow-primary/20 h-10 px-6 gap-1.5 flex items-center justify-center w-full sm:w-auto"
+                <div className="h-10 w-full rounded-lg bg-muted animate-pulse" />
+              ) : profile?.hasPaid ? (
+                // PAID STATE -> Normal Flow
+                <div className="flex flex-col sm:flex-row gap-3 sm:justify-end w-full">
+                  {sessionExists ? (
+                    <>
+                      <Button 
+                        variant="ghost" 
+                        onClick={handleRestartAssessment}
+                        disabled={loading}
+                        className="font-semibold text-xs border border-border/40 hover:bg-destructive/10 hover:text-destructive h-10 gap-1.5"
+                      >
+                        <RotateCcw className="h-4 w-4" /> Start Over
+                      </Button>
+                      <Link
+                        href="/assessment/session"
+                        className={cn(
+                          buttonVariants({ variant: "default", size: "default" }),
+                          "font-bold shadow-md shadow-primary/20 h-10 px-6 gap-1.5 flex items-center justify-center"
+                        )}
+                      >
+                        Resume Assessment <Play className="h-4 w-4 fill-primary-foreground" />
+                      </Link>
+                    </>
+                  ) : (
+                    <Link
+                      href="/assessment/session"
+                      className={cn(
+                        buttonVariants({ variant: "default", size: "default" }),
+                        "font-bold shadow-md shadow-primary/20 h-10 px-6 gap-1.5 flex items-center justify-center w-full sm:w-auto"
+                      )}
+                    >
+                      Start Assessment <ChevronRight className="h-4.5 w-4.5" />
+                    </Link>
                   )}
-                >
-                  Start Assessment <ChevronRight className="h-4.5 w-4.5" />
-                </Link>
+                </div>
+              ) : (
+                // UNPAID STATE -> Checkout Flow
+                <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5">
+                  <div className="flex flex-col gap-1 w-full md:w-1/2">
+                    <p className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <CreditCard className="h-4 w-4 text-primary" /> Unlock Assessment
+                    </p>
+                    <p className="text-xs text-muted-foreground">Access your comprehensive 80-question career mapping assessment.</p>
+                  </div>
+                  <div className="flex flex-col w-full md:w-auto items-end gap-2">
+                    <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+                      <div className="relative w-full sm:w-48">
+                        <Tag className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+                        <Input
+                          type="text"
+                          placeholder="Coupon Code"
+                          className="pl-9 h-10 bg-slate-900 border-slate-700 text-slate-100 text-sm uppercase placeholder:text-slate-500"
+                          value={couponCode}
+                          onChange={(e) => {
+                            setCouponCode(e.target.value);
+                            if (couponMessage.text) setCouponMessage({ type: "", text: "" });
+                          }}
+                        />
+                      </div>
+                      <Button 
+                        variant="secondary" 
+                        className="h-10 px-4 whitespace-nowrap text-xs border border-border/50" 
+                        onClick={handleApplyCoupon}
+                        disabled={checkingCoupon || !couponCode}
+                      >
+                        {checkingCoupon ? "Checking..." : "Apply"}
+                      </Button>
+                      <Button 
+                        onClick={handlePayment} 
+                        disabled={paying}
+                        className="w-full sm:w-auto h-10 px-6 font-bold shadow-lg shadow-primary/20 gap-2"
+                      >
+                        {paying ? (
+                          <div className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                        ) : discount === 100 ? (
+                          <Play className="h-4 w-4 fill-current" />
+                        ) : (
+                          <CreditCard className="h-4 w-4" />
+                        )}
+                        {discount === 100 ? "Start for Free" : `Pay ₹${(999 - (999 * discount / 100)).toFixed(2).replace(/\.00$/, '')} to Start`}
+                      </Button>
+                    </div>
+                    {couponMessage.text && (
+                      <p className={`text-[10px] font-bold uppercase tracking-wider px-1 ${couponMessage.type === "success" ? "text-emerald-500" : "text-red-500"}`}>
+                        {couponMessage.text}
+                      </p>
+                    )}
+                  </div>
+                </div>
               )}
             </CardFooter>
           </Card>

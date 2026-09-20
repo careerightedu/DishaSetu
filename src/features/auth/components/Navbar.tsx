@@ -54,10 +54,10 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5 transition-transform hover:scale-102">
           <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-primary shadow-md shadow-primary/20 p-1.5">
             {/* Logo image cropped from user screenshot */}
-            <Image src="/logo_transparent.png" alt="CareeRight Logo" width={24} height={24} className="object-contain" />
+            <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={24} height={24} className="object-contain" />
           </div>
           <span className="text-xl font-bold tracking-tight">
-            Caree<span className="text-primary font-extrabold">Right</span>
+            What<span className="text-primary font-extrabold">After</span>
           </span>
         </Link>
 

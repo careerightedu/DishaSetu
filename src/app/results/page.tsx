@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "@/hooks/useTranslations";
 import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
-import { doc, getDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, deleteDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -132,7 +132,7 @@ interface Achievement {
 
 export default function ResultsDashboard() {
   const router = useRouter();
-  const { user, profile } = useAuth();
+  const { user, profile, updateProfile } = useAuth();
   const [loading, setLoading] = useState(true);
   const [scores, setScores] = useState<ScoreReport | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[] | null>(null);
@@ -195,9 +195,25 @@ export default function ResultsDashboard() {
     
     setResetting(true);
     try {
+      // 1. Archive the current report
       const sessionRef = doc(db, "assessment_sessions", user.uid);
+      const sessionSnap = await getDoc(sessionRef);
+      if (sessionSnap.exists()) {
+        const reportData = sessionSnap.data();
+        await addDoc(collection(db, "users", user.uid, "reports"), {
+          ...reportData,
+          archivedAt: new Date().toISOString()
+        });
+      }
+
+      // 2. Reset payment status
+      await updateProfile({ hasPaid: false });
+
+      // 3. Delete active session
       await deleteDoc(sessionRef);
-      router.push("/assessment");
+      
+      // 4. Redirect to dashboard
+      router.push("/");
     } catch (err) {
       console.error("Failed to delete active session:", err);
       setResetting(false);

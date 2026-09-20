@@ -48,10 +48,10 @@ export default function ForgotPasswordPage() {
         <div className="flex flex-col items-center text-center space-y-2">
           <Link href="/" className="flex items-center gap-2.5">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20 p-2">
-              <Image src="/logo_transparent.png" alt="CareeRight Logo" width={28} height={28} className="object-contain" />
+              <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={28} height={28} className="object-contain" />
             </div>
             <span className="text-2xl font-bold tracking-tight">
-              Caree<span className="text-primary font-extrabold">Right</span>
+              What<span className="text-primary font-extrabold">After</span>
             </span>
           </Link>
           <h1 className="text-2xl font-bold tracking-tight text-foreground mt-4">Reset password</h1>
