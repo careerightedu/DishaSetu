@@ -53,3 +53,15 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  - variable: RAZORPAY_KEY_SECRET
+    secret: razorpay-key-secret
+  - variable: RAZORPAY_KEY_ID
+    value: rzp_live_TeBckwtgEixfHi
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_RAZORPAY_KEY_ID
+    value: rzp_live_TeBckwtgEixfHi
+    availability:
+      - BUILD
+      - RUNTIME
