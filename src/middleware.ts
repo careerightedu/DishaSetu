@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
 
   const isPublicRoute = ["/api"].some((route) =>
     pathname.startsWith(route)
-  );
+  ) || pathname === "/";
 
   // Exclude static files and next assets
   const isStaticAsset =
@@ -20,6 +20,16 @@ export function middleware(request: NextRequest) {
     pathname.includes(".");
 
   if (isStaticAsset || isPublicRoute) {
+    // Read auth cookies for public route redirect
+    const sessionToken = request.cookies.get("session")?.value;
+    const onboardingCompleted = request.cookies.get("onboarding_completed")?.value === "true";
+
+    // If a logged-in user visits the public landing page, redirect them to the dashboard
+    if (pathname === "/" && sessionToken && onboardingCompleted) {
+       return NextResponse.redirect(new URL("/dashboard", request.url));
+    } else if (pathname === "/" && sessionToken && !onboardingCompleted) {
+       return NextResponse.redirect(new URL("/onboarding", request.url));
+    }
     return NextResponse.next();
   }
 
@@ -41,7 +51,7 @@ export function middleware(request: NextRequest) {
       if (!onboardingCompleted) {
         return NextResponse.redirect(new URL("/onboarding", request.url));
       }
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
 
     // Redirect to onboarding if not completed and not already there
@@ -51,7 +61,7 @@ export function middleware(request: NextRequest) {
 
     // Redirect home if onboarding is done and user tries to access /onboarding
     if (onboardingCompleted && pathname === "/onboarding") {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   }
 

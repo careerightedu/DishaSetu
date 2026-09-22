@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,19 +8,33 @@ import { useAuth } from "@/features/auth/context/AuthContext";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function LoginPage() {
   const { loginWithGoogle } = useAuth();
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) - 0.5,
+        y: (e.clientY / window.innerHeight) - 0.5,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const handleGoogleSignIn = async () => {
     setError("");
     setLoading(true);
     try {
       await loginWithGoogle();
-      window.location.href = "/";
+      window.location.href = "/dashboard";
     } catch (err) {
       console.error(err);
       const message = err instanceof Error ? err.message : "Failed to log in with Google.";
@@ -31,40 +45,72 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center justify-center p-4 relative overflow-hidden bg-background">
-      {/* Dynamic Background Accent Orbs */}
-      <div className="absolute top-1/4 left-1/4 -z-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 -z-10 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
+    <div className="flex min-h-[100dvh] flex-col items-center justify-center p-4 relative overflow-hidden bg-background text-foreground">
+      {/* Dynamic Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        {/* Animated Grid */}
+        <div 
+          className="absolute inset-0 bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:3rem_3rem]"
+          style={{
+            transform: `perspective(1000px) rotateX(60deg) translateY(-50px) translateZ(-200px)`,
+            transformOrigin: "top center",
+          }}
+        />
+        
+        {/* Glow Orbs */}
+        <motion.div 
+          className="absolute top-[10%] left-[10%] w-[40%] h-[40%] rounded-full bg-emerald-600/20 blur-[120px]"
+          animate={{
+            x: mousePosition.x * 30,
+            y: mousePosition.y * 30,
+          }}
+          transition={{ type: "spring", damping: 50, stiffness: 10 }}
+        />
+        <motion.div 
+          className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] rounded-full bg-blue-600/15 blur-[120px]"
+          animate={{
+            x: mousePosition.x * -30,
+            y: mousePosition.y * -30,
+          }}
+          transition={{ type: "spring", damping: 50, stiffness: 10 }}
+        />
+      </div>
 
       {/* Main Container */}
-      <div className="w-full max-w-md space-y-6">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-full max-w-md space-y-6 relative z-10"
+      >
         
         {/* Brand / Logo */}
         <div className="flex flex-col items-center text-center space-y-2">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20 p-2">
-              <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={28} height={28} className="object-contain" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg shadow-emerald-500/10 p-2 transition-transform group-hover:scale-105">
+              <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={32} height={32} className="object-contain" />
             </div>
-            <span className="text-2xl font-bold tracking-tight">
-              What<span className="text-primary font-extrabold">After</span>
+            <span className="text-3xl font-bold tracking-tight text-white">
+              What<span className="text-emerald-400 font-extrabold">After</span>
             </span>
           </Link>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground mt-4">Welcome back</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="text-2xl font-bold tracking-tight text-white mt-6">Welcome back</h1>
+          <p className="text-sm text-slate-400">
             Sign in to resume your career assessment and report
           </p>
         </div>
 
         {/* Card Form */}
-        <Card className="border-border/40 bg-card/60 backdrop-blur-md shadow-xl">
-          <CardHeader className="p-6 sm:p-8 pb-4 space-y-1 text-center">
-            <CardTitle className="text-xl font-bold">Log In</CardTitle>
-            <CardDescription>Continue with your Google account</CardDescription>
+        <Card className="border-white/10 bg-slate-900/40 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 pointer-events-none" />
+          <CardHeader className="p-6 sm:p-8 pb-4 space-y-1 text-center relative z-10">
+            <CardTitle className="text-xl font-bold text-white">Log In</CardTitle>
+            <CardDescription className="text-slate-400">Continue with your Google account</CardDescription>
           </CardHeader>
           
-          <CardContent className="p-6 sm:p-8 pt-0 space-y-6 text-center">
+          <CardContent className="p-6 sm:p-8 pt-0 space-y-6 text-center relative z-10">
             {error && (
-              <div className="flex items-start gap-2.5 rounded-lg bg-destructive/10 p-3 text-sm text-destructive border border-destructive/20 animate-in fade-in slide-in-from-top-1 text-left">
+              <div className="flex items-start gap-2.5 rounded-lg bg-red-500/10 p-3 text-sm text-red-400 border border-red-500/20 animate-in fade-in slide-in-from-top-1 text-left">
                 <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -73,12 +119,13 @@ export default function LoginPage() {
             <Button
               variant="outline"
               type="button"
-              className="w-full font-semibold border-border/60 bg-background/40 hover:bg-muted/50 h-12 text-base"
+              className="group relative w-full font-semibold transition-all duration-300 border-white/10 bg-white/5 hover:bg-emerald-500/10 hover:border-emerald-500/30 overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.02)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] hover:-translate-y-1 h-12 text-base text-white"
               onClick={handleGoogleSignIn}
               disabled={loading}
             >
+              <div className="absolute inset-0 w-full h-full -ml-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
               {/* Google SVG Icon */}
-              <svg className="mr-3 h-5 w-5" viewBox="0 0 24 24">
+              <svg className="relative z-10 mr-3 h-5 w-5" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                   fill="#4285F4"
@@ -96,21 +143,21 @@ export default function LoginPage() {
                   fill="#EA4335"
                 />
               </svg>
-              {loading ? "Signing in..." : "Continue with Google"}
+              <span className="relative z-10">{loading ? "Signing in..." : "Continue with Google"}</span>
             </Button>
           </CardContent>
 
-          <CardFooter className="justify-center border-t border-border/20 p-6 sm:p-8 pt-4 pb-6 sm:pb-8">
-            <p className="text-sm text-muted-foreground">
+          <CardFooter className="justify-center border-t border-white/5 p-6 sm:p-8 pt-4 pb-6 sm:pb-8 relative z-10 bg-black/10">
+            <p className="text-sm text-slate-400">
               Don&apos;t have an account?{" "}
-              <Link href="/signup" className="font-semibold text-primary hover:underline">
+              <Link href="/signup" className="font-semibold text-emerald-400 hover:text-emerald-300 hover:underline">
                 Sign up
               </Link>
             </p>
           </CardFooter>
         </Card>
 
-      </div>
+      </motion.div>
     </div>
   );
 }

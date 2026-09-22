@@ -51,7 +51,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2.5 transition-transform hover:scale-102">
+        <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2.5 transition-transform hover:scale-102">
           <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-primary shadow-md shadow-primary/20 p-1.5">
             {/* Logo image cropped from user screenshot */}
             <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={24} height={24} className="object-contain" />
@@ -65,7 +65,7 @@ export default function Navbar() {
         <div className="hidden">
           {user ? (
             <>
-              <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5">
+              <Link href="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5">
                 <LayoutDashboard className="h-4 w-4" /> Dashboard
               </Link>
               <Link href="/assessment" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5">
@@ -170,7 +170,7 @@ export default function Navbar() {
                 </div>
               </div>
               <Link
-                href="/"
+                href="/dashboard"
                 className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
               >
                 Dashboard
