@@ -194,15 +194,15 @@ export default function LandingPage() {
           >
             <div className="relative rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-2xl p-2 shadow-2xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
-              <div className="rounded-xl overflow-hidden border border-white/5 bg-background relative aspect-[16/9] flex items-center justify-center">
+              <div className="rounded-xl overflow-hidden border border-white/5 bg-background relative min-h-[650px] md:min-h-0 md:aspect-[16/9] flex flex-col items-stretch justify-center">
                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-30 mix-blend-overlay" />
                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/40 via-background/80 to-background" />
                  
                  {/* Mock UI Elements - Career Assessment Theme */}
-                 <div className="relative z-10 w-full h-full p-6 md:p-10 flex flex-col justify-between text-slate-200">
+                 <div className="relative z-10 w-full h-full p-5 sm:p-6 md:p-10 flex flex-col justify-between text-slate-200 overflow-y-auto">
                     
                     {/* Header */}
-                    <div className="flex justify-between items-start mb-6">
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
                        <div>
                           <div className="text-emerald-400 font-bold text-sm tracking-wider uppercase mb-1 flex items-center gap-2">
                              <Sparkles className="w-4 h-4" /> Assessment Complete
@@ -216,7 +216,7 @@ export default function LandingPage() {
                     </div>
                     
                     {/* Main Content Area */}
-                    <div className="flex-1 flex gap-6">
+                    <div className="flex-1 flex flex-col md:flex-row gap-4 md:gap-6">
                        {/* Left Column: Top Matches */}
                        <div className="flex-[2] bg-white/5 border border-white/10 rounded-xl p-6 flex flex-col backdrop-blur-sm relative overflow-hidden">
                           <h4 className="text-sm font-semibold text-slate-400 mb-4 uppercase tracking-wider">Top Career Matches</h4>
@@ -383,7 +383,7 @@ export default function LandingPage() {
                         {/* Right Column: Traits */}
                         <div className="flex-1 flex flex-col gap-4">
                            <div 
-                              className="relative h-full min-h-[300px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5"
+                              className="relative h-56 md:h-full md:min-h-[300px] overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-5"
                               style={{ WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)' }}
                            >
                               <motion.div 
