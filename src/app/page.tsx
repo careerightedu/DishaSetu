@@ -634,7 +634,12 @@ export default function LandingPage() {
                   WhatAfter
                 </span>
              </div>
-             <p className="text-slate-500 text-sm">© {new Date().getFullYear()} WhatAfter.in. All rights reserved.</p>
+             <div className="flex items-center gap-6">
+                <Link href="/privacy" className="text-slate-400 hover:text-emerald-400 text-sm transition-colors">
+                  Privacy Policy
+                </Link>
+                <p className="text-slate-500 text-sm">© {new Date().getFullYear()} WhatAfter.in. All rights reserved.</p>
+             </div>
           </div>
         </footer>
       </div>
