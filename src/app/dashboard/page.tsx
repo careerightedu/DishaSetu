@@ -6,7 +6,6 @@ import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { useTranslations } from "@/hooks/useTranslations";
 import { 
-  ClipboardList, 
   MapPin, 
   Globe, 
   Layers, 
@@ -14,24 +13,25 @@ import {
   Briefcase, 
   Compass, 
   FileText, 
-  Clock, 
-  AlertCircle,
-  HelpCircle,
   ChevronRight,
   Building,
   Calendar,
-  Brain,
-  Terminal,
   CheckCircle2,
-  Lock,
   User,
-  History
+  History,
+  PenSquare
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { doc, getDoc, collection, query, orderBy, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+
+interface PastReport {
+  id: string;
+  archivedAt?: string | number | Date;
+  [key: string]: unknown;
+}
 
 export default function Dashboard() {
   const { user, profile } = useAuth();
@@ -40,7 +40,7 @@ export default function Dashboard() {
   const [sessionExists, setSessionExists] = useState(false);
   const [sessionProgress, setSessionProgress] = useState({ answered: 0, total: 80 });
   const [checkingSession, setCheckingSession] = useState(true);
-  const [reports, setReports] = useState<any[]>([]);
+  const [reports, setReports] = useState<PastReport[]>([]);
   const t = useTranslations("Dashboard");
 
   useEffect(() => {
@@ -357,6 +357,88 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
             )}
+
+            {/* WhatAfter Journal Card (Read & Write Blogs) */}
+            <Card className="border-border/30 bg-card/40 backdrop-blur-md shadow-lg overflow-hidden relative mt-6">
+              <CardHeader className="p-6 pb-4 border-b border-border/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-wider mb-2 border border-emerald-500/20">
+                    <BookOpen className="h-3 w-3" /> Community Insights
+                  </div>
+                  <CardTitle className="text-lg font-bold text-white flex items-center gap-2">
+                    WhatAfter Journal
+                  </CardTitle>
+                  <CardDescription>
+                    Explore career frameworks and stream guides, or share your own personal transition story.
+                  </CardDescription>
+                </div>
+                
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <Link
+                    href="/blog"
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "sm" }),
+                      "text-xs font-semibold hover:border-emerald-500/40"
+                    )}
+                  >
+                    <BookOpen className="mr-1.5 h-3.5 w-3.5 text-primary" /> Read Blogs
+                  </Link>
+                  <Link
+                    href="/blog/new"
+                    className={cn(
+                      buttonVariants({ variant: "default", size: "sm" }),
+                      "text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20"
+                    )}
+                  >
+                    <PenSquare className="mr-1.5 h-3.5 w-3.5" /> Write a Blog
+                  </Link>
+                </div>
+              </CardHeader>
+
+              <CardContent className="p-6">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Link
+                    href="/blog"
+                    className="p-4 rounded-xl bg-slate-900/50 border border-border/20 hover:border-emerald-500/30 hover:bg-slate-900/80 transition-all group flex flex-col justify-between"
+                  >
+                    <div>
+                      <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold tracking-wider block mb-1">
+                        Explore Articles
+                      </span>
+                      <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors mb-1.5">
+                        Stream &amp; Degree Selection Guides
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        Read deep dives on science vs commerce, AI career resilience, and parental alignment frameworks.
+                      </p>
+                    </div>
+                    <span className="mt-4 text-xs font-semibold text-emerald-400 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                      Browse Journal <ChevronRight className="h-3.5 w-3.5" />
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="/blog/new"
+                    className="p-4 rounded-xl bg-slate-900/50 border border-border/20 hover:border-emerald-500/30 hover:bg-slate-900/80 transition-all group flex flex-col justify-between"
+                  >
+                    <div>
+                      <span className="text-[10px] font-mono uppercase text-primary font-bold tracking-wider block mb-1">
+                        Share Your Perspective
+                      </span>
+                      <h4 className="text-sm font-bold text-white group-hover:text-primary transition-colors mb-1.5">
+                        Author an Article
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        Share your own lessons, college experiences, or mentorship tips to help fellow students and parents.
+                      </p>
+                    </div>
+                    <span className="mt-4 text-xs font-semibold text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                      Open Editor <PenSquare className="h-3.5 w-3.5" />
+                    </span>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
 
           </div>
 

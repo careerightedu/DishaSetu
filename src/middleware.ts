@@ -9,9 +9,10 @@ export function middleware(request: NextRequest) {
     pathname.startsWith(route)
   );
 
-  const isPublicRoute = ["/api", "/privacy"].some((route) =>
-    pathname.startsWith(route)
-  ) || pathname === "/";
+  const isPublicRoute =
+    ["/api", "/privacy"].some((route) => pathname.startsWith(route)) ||
+    (pathname.startsWith("/blog") && pathname !== "/blog/new") ||
+    pathname === "/";
 
   // Exclude static files and next assets
   const isStaticAsset =
