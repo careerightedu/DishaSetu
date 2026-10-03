@@ -49,17 +49,17 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-border/40 bg-white/80 dark:bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Brand Logo */}
         <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2.5 transition-transform hover:scale-102">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-primary shadow-md shadow-primary/20 p-1.5">
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500 shadow-md shadow-emerald-500/20 p-1.5">
             {/* Logo image cropped from user screenshot */}
             <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={24} height={24} className="object-contain" />
           </div>
-          <span className="text-xl font-bold tracking-tight">
-            What<span className="text-primary font-extrabold">After</span>
+          <span className="text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+            What<span className="text-emerald-600 dark:text-emerald-400 font-extrabold">After</span>
           </span>
         </Link>
 

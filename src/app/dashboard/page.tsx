@@ -104,37 +104,36 @@ export default function Dashboard() {
   };
 
   const getBgClass = () => {
-    if (!sessionExists && reports.length === 0) return "bg-background";
     const answered = sessionProgress.answered;
-    if (answered >= 60) return "bg-slate-950"; 
-    if (answered >= 40) return "bg-[#0b132b]"; 
-    if (answered >= 20) return "bg-[#1c2541]"; 
-    return "bg-slate-900"; 
+    if (answered >= 60) return "bg-slate-50 dark:bg-slate-950"; 
+    if (answered >= 40) return "bg-slate-50 dark:bg-[#0b132b]"; 
+    if (answered >= 20) return "bg-slate-50 dark:bg-[#1c2541]"; 
+    return "bg-slate-50 dark:bg-slate-900"; 
   };
 
   return (
-    <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-x-hidden", getBgClass())}>
+    <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-x-hidden text-slate-900 dark:text-foreground", getBgClass())}>
       {/* Grid Parallax */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       <Navbar />
 
       {/* Hero Section */}
       <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
         
         {/* Welcome Greeting */}
-        <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-md p-6 sm:p-8 shadow-[0_0_30px_rgba(16,185,129,0.05)] group">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-50" />
-          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/20 blur-3xl transition-transform duration-1000 group-hover:scale-150" />
-          <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-primary via-emerald-400 to-transparent" />
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-primary/20 bg-white/95 dark:bg-card/40 backdrop-blur-md p-6 sm:p-8 shadow-sm dark:shadow-[0_0_30px_rgba(16,185,129,0.05)] group">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-50" />
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-emerald-500/10 dark:bg-primary/20 blur-3xl transition-transform duration-1000 group-hover:scale-150" />
+          <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-emerald-500 via-emerald-400 to-transparent" />
           
           <div className="relative z-10 space-y-2">
             <h1 className="text-3xl sm:text-4xl font-heading font-black tracking-tight flex items-center flex-wrap gap-x-2 gap-y-1">
-              <span className="text-foreground">{t("hello")},</span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-emerald-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+              <span className="text-slate-900 dark:text-foreground">{t("hello")},</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-primary dark:to-emerald-400 drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
                 {profile?.fullName || user?.displayName || t("explorer")}
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-muted-foreground max-w-2xl leading-relaxed">
               {t("welcomeTitle")}
             </p>
           </div>
@@ -145,32 +144,32 @@ export default function Dashboard() {
           
           {/* Left Column: Assessment Flow Start & History */}
           <div className="lg:col-span-2 space-y-6">
-            <Card className="border-primary/20 bg-card/60 backdrop-blur-md shadow-lg overflow-hidden relative">
+            <Card className="border border-slate-200 dark:border-primary/20 bg-white/95 dark:bg-card/60 backdrop-blur-md shadow-md dark:shadow-lg overflow-hidden relative">
               {/* Highlight ribbon */}
-              <div className="absolute left-0 top-0 h-full w-1.5 bg-primary" />
+              <div className="absolute left-0 top-0 h-full w-1.5 bg-emerald-500 dark:bg-primary" />
               
               <CardHeader className="pl-8 pr-6 sm:pl-10 sm:pr-8 pt-6 sm:pt-8 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left relative z-10">
                 {/* Holographic Core */}
                 <div className="relative flex h-20 w-20 sm:h-24 sm:w-24 shrink-0 items-center justify-center mt-2 sm:mt-0">
                   <div className={cn(
                     "absolute inset-0 rounded-full border-4 border-dashed animate-[spin_10s_linear_infinite]",
-                    sessionCompleted ? "border-emerald-500/50" : (sessionProgress.answered > 0 ? "border-primary/40" : "border-slate-500/20")
+                    sessionCompleted ? "border-emerald-500/50" : (sessionProgress.answered > 0 ? "border-emerald-500/40 dark:border-primary/40" : "border-slate-300 dark:border-slate-500/20")
                   )} />
                   <div className={cn(
                     "absolute inset-3 rounded-full border-2 animate-[spin_5s_linear_infinite_reverse]",
-                    sessionCompleted ? "border-emerald-400/60" : (sessionProgress.answered > 0 ? "border-primary/50" : "border-slate-500/30")
+                    sessionCompleted ? "border-emerald-500/60" : (sessionProgress.answered > 0 ? "border-emerald-500/50 dark:border-primary/50" : "border-slate-300 dark:border-slate-500/30")
                   )} />
                   <div className={cn(
                     "absolute h-10 w-10 sm:h-12 sm:w-12 rounded-full flex items-center justify-center animate-pulse",
-                    sessionCompleted ? "bg-emerald-500/30 border border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.5)]" : (sessionProgress.answered > 0 ? "bg-primary/20 border border-primary/50 shadow-[0_0_20px_rgba(var(--primary),0.3)]" : "bg-slate-800 border border-slate-600")
+                    sessionCompleted ? "bg-emerald-500/20 border border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.5)]" : (sessionProgress.answered > 0 ? "bg-emerald-50 dark:bg-primary/20 border border-emerald-500/50 shadow-md" : "bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600")
                   )}>
-                    <Compass className={cn("h-5 w-5 sm:h-6 sm:w-6", sessionCompleted ? "text-emerald-400" : (sessionProgress.answered > 0 ? "text-primary animate-[spin_12s_ease-in-out_infinite]" : "text-slate-500"))} />
+                    <Compass className={cn("h-5 w-5 sm:h-6 sm:w-6", sessionCompleted ? "text-emerald-600 dark:text-emerald-400" : (sessionProgress.answered > 0 ? "text-emerald-600 dark:text-primary animate-[spin_12s_ease-in-out_infinite]" : "text-slate-400 dark:text-slate-500"))} />
                   </div>
                 </div>
 
                 <div className="flex-grow flex flex-col justify-center py-2">
                   <CardTitle className="text-3xl sm:text-5xl font-black tracking-tighter flex items-center justify-center md:justify-start gap-3 uppercase">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-emerald-400 to-primary/80 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 dark:from-primary dark:via-emerald-400 dark:to-primary/80 drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
                       Assessment Journey
                     </span>
                   </CardTitle>
@@ -181,24 +180,24 @@ export default function Dashboard() {
                 
                 {/* Winding Journey Path */}
                 {!checkingSession && !sessionCompleted && (
-                  <div className="rounded-xl border border-primary/20 bg-slate-950/80 p-4 sm:p-8 mt-6 shadow-inner relative overflow-hidden">
+                  <div className="rounded-xl border border-slate-200 dark:border-primary/20 bg-slate-50/80 dark:bg-slate-950/80 p-4 sm:p-8 mt-6 shadow-inner relative overflow-hidden">
                     {/* Background Grid */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b98105_1px,transparent_1px),linear-gradient(to_bottom,#10b98105_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#10b98105_1px,transparent_1px),linear-gradient(to_bottom,#10b98105_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
 
                     <div className="relative py-4">
                       {/* The Track Container */}
-                      <div className="absolute top-4 bottom-4 left-9 md:left-1/2 w-4 -translate-x-1/2 bg-slate-900 rounded-full border-2 border-slate-800 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)] z-0" />
+                      <div className="absolute top-4 bottom-4 left-9 md:left-1/2 w-4 -translate-x-1/2 bg-slate-200 dark:bg-slate-900 rounded-full border-2 border-slate-300 dark:border-slate-800 shadow-inner z-0" />
                       
                       {/* The Active Filled Track */}
                       <div 
-                        className="absolute top-4 left-9 md:left-1/2 w-4 -translate-x-1/2 bg-gradient-to-b from-primary via-emerald-400 to-emerald-500 rounded-full z-0 transition-all duration-1000 shadow-[0_0_20px_rgba(16,185,129,0.4)]"
+                        className="absolute top-4 left-9 md:left-1/2 w-4 -translate-x-1/2 bg-gradient-to-b from-emerald-500 via-emerald-400 to-emerald-600 rounded-full z-0 transition-all duration-1000 shadow-[0_0_20px_rgba(16,185,129,0.4)]"
                         style={{ height: `calc(${(sessionProgress.answered / 80) * 100}% - 2rem)`, minHeight: '2rem' }}
                       >
                          {/* The Ship (Leading Edge of the Progress) */}
                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30">
-                            <div className="w-10 h-10 bg-slate-900 border-2 border-emerald-400 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.8)]">
+                            <div className="w-10 h-10 bg-white dark:bg-slate-900 border-2 border-emerald-500 rounded-full flex items-center justify-center shadow-lg dark:shadow-[0_0_30px_rgba(16,185,129,0.8)]">
                                <div className="w-4 h-4 bg-emerald-400 rounded-full animate-ping absolute" />
-                               <Compass className="h-6 w-6 text-emerald-400 animate-[spin_3s_linear_infinite]" />
+                               <Compass className="h-6 w-6 text-emerald-600 dark:text-emerald-400 animate-[spin_3s_linear_infinite]" />
                             </div>
                          </div>
                       </div>
@@ -221,52 +220,54 @@ export default function Dashboard() {
                               <div className={cn(
                                 "hidden md:block absolute top-1/2 -translate-y-1/2 w-16 h-1 z-0 transition-colors duration-1000",
                                 idx % 2 === 0 ? "left-1/2" : "right-1/2",
-                                isUnlocked ? "bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]" : "bg-slate-800"
+                                isUnlocked ? "bg-emerald-500 dark:bg-primary shadow-[0_0_10px_rgba(16,185,129,0.5)]" : "bg-slate-200 dark:bg-slate-800"
                               )} />
                               
                               <div className={cn(
                                 "md:hidden absolute top-1/2 -translate-y-1/2 left-9 w-[52px] h-1 z-0 transition-colors duration-1000",
-                                isUnlocked ? "bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]" : "bg-slate-800"
+                                isUnlocked ? "bg-emerald-500 dark:bg-primary shadow-[0_0_10px_rgba(16,185,129,0.5)]" : "bg-slate-200 dark:bg-slate-800"
                               )} />
 
                               {/* Waypoint Marker */}
                               <div className={cn(
-                                "flex items-center justify-center w-12 h-12 rounded-full border-4 shadow-xl absolute left-9 md:left-1/2 -translate-x-1/2 z-20 transition-all duration-700",
-                                isUnlocked ? "bg-slate-900 border-primary" : "bg-slate-800 border-slate-700",
-                                isCurrent && "scale-125 border-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.5)] bg-slate-950"
+                                "flex items-center justify-center w-12 h-12 rounded-full border-4 shadow-md absolute left-9 md:left-1/2 -translate-x-1/2 z-20 transition-all duration-700",
+                                isUnlocked ? "bg-white dark:bg-slate-900 border-emerald-500 text-emerald-600 dark:text-emerald-400" : "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700",
+                                isCurrent && "scale-125 border-emerald-500 shadow-xl dark:shadow-[0_0_30px_rgba(16,185,129,0.5)] bg-emerald-50 dark:bg-slate-950"
                               )}>
-                                {isUnlocked ? <span className="text-xl drop-shadow-md">{badge.icon}</span> : <div className="h-4 w-4 rounded-full bg-slate-600" />}
+                                {isUnlocked ? <span className="text-xl drop-shadow-sm">{badge.icon}</span> : <div className="h-4 w-4 rounded-full bg-slate-300 dark:bg-slate-600" />}
                               </div>
                               
                               {/* Station Card */}
                               <div className={cn(
                                 "w-[calc(100%-5.5rem)] ml-auto md:ml-0 md:w-[calc(50%-4rem)] p-5 sm:p-6 rounded-2xl border transition-all duration-500 relative overflow-hidden",
                                 isUnlocked 
-                                  ? (isCurrent ? "bg-primary/10 border-primary shadow-[inset_0_0_20px_rgba(var(--primary),0.15),0_0_20px_rgba(var(--primary),0.2)] backdrop-blur-md" : "bg-primary/5 border-primary/30 opacity-80 backdrop-blur-sm") 
-                                  : "bg-slate-900/50 border-slate-800 grayscale"
+                                  ? (isCurrent 
+                                      ? "bg-white dark:bg-primary/10 border-emerald-500 shadow-lg shadow-emerald-500/10 dark:shadow-[inset_0_0_20px_rgba(var(--primary),0.15),0_0_20px_rgba(var(--primary),0.2)] backdrop-blur-md" 
+                                      : "bg-white/90 dark:bg-primary/5 border-slate-200 dark:border-primary/30 shadow-sm opacity-90 backdrop-blur-sm") 
+                                  : "bg-slate-100/70 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 opacity-60 grayscale"
                               )}>
                                 {/* Tech overlay pattern */}
                                 {isUnlocked && (
-                                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/20 to-transparent opacity-50" />
+                                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-emerald-500/10 dark:from-primary/20 to-transparent opacity-50" />
                                 )}
                                 
                                 <div className="flex justify-between items-start mb-3 relative z-10">
                                   <div>
-                                    <h4 className={cn("font-bold text-sm sm:text-base uppercase tracking-wider", isUnlocked ? "text-primary drop-shadow-sm" : "text-slate-500")}>
+                                    <h4 className={cn("font-bold text-sm sm:text-base uppercase tracking-wider", isUnlocked ? "text-emerald-700 dark:text-primary drop-shadow-sm" : "text-slate-400 dark:text-slate-500")}>
                                       Phase {idx + 1}: {badge.title}
                                     </h4>
-                                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">{badge.desc}</p>
+                                    <p className="text-xs sm:text-sm text-slate-600 dark:text-muted-foreground mt-1">{badge.desc}</p>
                                   </div>
                                   {isUnlocked && (
-                                    <span className="text-[10px] font-mono font-black text-slate-900 bg-primary px-2.5 py-1 rounded-md shadow-md h-fit whitespace-nowrap">
+                                    <span className="text-[10px] font-mono font-black text-emerald-800 dark:text-slate-900 bg-emerald-100 dark:bg-primary border border-emerald-300 dark:border-transparent px-2.5 py-1 rounded-md shadow-sm h-fit whitespace-nowrap">
                                       {progressInBadge} / 20
                                     </span>
                                   )}
                                 </div>
                                 {/* Inner progress bar */}
-                                <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden mt-3 border border-slate-800 relative z-10 shadow-inner">
+                                <div className="w-full h-2 bg-slate-200 dark:bg-slate-900 rounded-full overflow-hidden mt-3 border border-slate-300 dark:border-slate-800 relative z-10 shadow-inner">
                                   <div 
-                                    className={cn("h-full transition-all duration-1000", isCurrent ? "bg-gradient-to-r from-primary to-emerald-400 glow-pulse" : "bg-primary/50")}
+                                    className={cn("h-full transition-all duration-1000", isCurrent ? "bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-primary dark:to-emerald-400 glow-pulse" : "bg-emerald-500/70 dark:bg-primary/50")}
                                     style={{ width: `${(progressInBadge / 20) * 100}%` }}
                                   />
                                 </div>
@@ -323,22 +324,22 @@ export default function Dashboard() {
 
             {/* Previous Reports (If any) */}
             {reports.length > 0 && (
-              <Card className="border-border/30 bg-card/40 backdrop-blur-md shadow-lg overflow-hidden relative mt-6">
-                <CardHeader className="p-6 pb-4 border-b border-border/20">
-                  <CardTitle className="text-lg font-bold flex items-center gap-2">
-                    <History className="h-5 w-5 text-primary" /> Past Assessment Reports
+              <Card className="border border-slate-200 dark:border-border/30 bg-white/95 dark:bg-card/40 backdrop-blur-md shadow-md dark:shadow-lg overflow-hidden relative mt-6">
+                <CardHeader className="p-6 pb-4 border-b border-slate-200 dark:border-border/20">
+                  <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <History className="h-5 w-5 text-emerald-600 dark:text-primary" /> Past Assessment Reports
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-slate-600 dark:text-muted-foreground">
                     Your historical career reports. You can review past recommendations anytime.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="divide-y divide-border/20">
+                  <div className="divide-y divide-slate-100 dark:divide-border/20">
                     {reports.map((report) => (
-                      <Link href={`/report/${report.id}`} key={report.id} className="p-4 hover:bg-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors">
+                      <Link href={`/report/${report.id}`} key={report.id} className="p-4 hover:bg-slate-50 dark:hover:bg-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors">
                         <div>
-                          <p className="font-semibold text-sm hover:underline">WhatAfter Career Intelligence Report</p>
-                          <p className="text-xs text-muted-foreground mt-1">
+                          <p className="font-semibold text-sm text-slate-900 dark:text-white hover:underline">WhatAfter Career Intelligence Report</p>
+                          <p className="text-xs text-slate-500 dark:text-muted-foreground mt-1">
                             Archived on: {new Date(report.archivedAt || Date.now()).toLocaleDateString("en-IN", {
                               day: 'numeric',
                               month: 'long',
@@ -348,7 +349,7 @@ export default function Dashboard() {
                             })}
                           </p>
                         </div>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-semibold border border-emerald-500/20 w-fit">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 text-xs font-semibold border border-emerald-200 dark:border-emerald-500/20 w-fit">
                           <CheckCircle2 className="h-3 w-3" /> View Report
                         </span>
                       </Link>
@@ -359,16 +360,16 @@ export default function Dashboard() {
             )}
 
             {/* WhatAfter Journal Card (Read & Write Blogs) */}
-            <Card className="border-border/30 bg-card/40 backdrop-blur-md shadow-lg overflow-hidden relative mt-6">
-              <CardHeader className="p-6 pb-4 border-b border-border/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <Card className="border border-slate-200 dark:border-border/30 bg-white/95 dark:bg-card/40 backdrop-blur-md shadow-md dark:shadow-lg overflow-hidden relative mt-6">
+              <CardHeader className="p-6 pb-4 border-b border-slate-200 dark:border-border/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-wider mb-2 border border-emerald-500/20">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-wider mb-2 border border-emerald-200 dark:border-emerald-500/20">
                     <BookOpen className="h-3 w-3" /> Community Insights
                   </div>
-                  <CardTitle className="text-lg font-bold text-white flex items-center gap-2">
+                  <CardTitle className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     WhatAfter Journal
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-slate-600 dark:text-muted-foreground">
                     Explore career frameworks and stream guides, or share your own personal transition story.
                   </CardDescription>
                 </div>
@@ -378,16 +379,16 @@ export default function Dashboard() {
                     href="/blog"
                     className={cn(
                       buttonVariants({ variant: "outline", size: "sm" }),
-                      "text-xs font-semibold hover:border-emerald-500/40"
+                      "text-xs font-semibold bg-white dark:bg-transparent border-slate-200 dark:border-input hover:border-emerald-500/40 text-slate-800 dark:text-white shadow-sm"
                     )}
                   >
-                    <BookOpen className="mr-1.5 h-3.5 w-3.5 text-primary" /> Read Blogs
+                    <BookOpen className="mr-1.5 h-3.5 w-3.5 text-emerald-600 dark:text-primary" /> Read Blogs
                   </Link>
                   <Link
                     href="/blog/new"
                     className={cn(
                       buttonVariants({ variant: "default", size: "sm" }),
-                      "text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20"
+                      "text-xs font-bold bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-slate-950 shadow-md shadow-emerald-500/20"
                     )}
                   >
                     <PenSquare className="mr-1.5 h-3.5 w-3.5" /> Write a Blog
@@ -399,40 +400,40 @@ export default function Dashboard() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Link
                     href="/blog"
-                    className="p-4 rounded-xl bg-slate-900/50 border border-border/20 hover:border-emerald-500/30 hover:bg-slate-900/80 transition-all group flex flex-col justify-between"
+                    className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-border/20 hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 transition-all group flex flex-col justify-between shadow-sm"
                   >
                     <div>
-                      <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold tracking-wider block mb-1">
+                      <span className="text-[10px] font-mono uppercase text-emerald-700 dark:text-emerald-400 font-bold tracking-wider block mb-1">
                         Explore Articles
                       </span>
-                      <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors mb-1.5">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors mb-1.5">
                         Stream &amp; Degree Selection Guides
                       </h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
+                      <p className="text-xs text-slate-600 dark:text-muted-foreground leading-relaxed">
                         Read deep dives on science vs commerce, AI career resilience, and parental alignment frameworks.
                       </p>
                     </div>
-                    <span className="mt-4 text-xs font-semibold text-emerald-400 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    <span className="mt-4 text-xs font-semibold text-emerald-700 dark:text-emerald-400 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
                       Browse Journal <ChevronRight className="h-3.5 w-3.5" />
                     </span>
                   </Link>
 
                   <Link
                     href="/blog/new"
-                    className="p-4 rounded-xl bg-slate-900/50 border border-border/20 hover:border-emerald-500/30 hover:bg-slate-900/80 transition-all group flex flex-col justify-between"
+                    className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-border/20 hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 transition-all group flex flex-col justify-between shadow-sm"
                   >
                     <div>
-                      <span className="text-[10px] font-mono uppercase text-primary font-bold tracking-wider block mb-1">
+                      <span className="text-[10px] font-mono uppercase text-emerald-700 dark:text-primary font-bold tracking-wider block mb-1">
                         Share Your Perspective
                       </span>
-                      <h4 className="text-sm font-bold text-white group-hover:text-primary transition-colors mb-1.5">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-primary transition-colors mb-1.5">
                         Author an Article
                       </h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
+                      <p className="text-xs text-slate-600 dark:text-muted-foreground leading-relaxed">
                         Share your own lessons, college experiences, or mentorship tips to help fellow students and parents.
                       </p>
                     </div>
-                    <span className="mt-4 text-xs font-semibold text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    <span className="mt-4 text-xs font-semibold text-emerald-700 dark:text-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
                       Open Editor <PenSquare className="h-3.5 w-3.5" />
                     </span>
                   </Link>
@@ -445,29 +446,29 @@ export default function Dashboard() {
           {/* Right Column: Profile details & segment */}
           <div className="space-y-6">
             {/* Player ID Badge (Profile Card) */}
-             <Card className="border-primary/20 bg-black/40 backdrop-blur-md shadow-xl overflow-hidden relative group">
-               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-50" />
-               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
+             <Card className="border border-slate-200 dark:border-primary/20 bg-white/95 dark:bg-black/40 backdrop-blur-md shadow-md dark:shadow-xl overflow-hidden relative group">
+               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/5 dark:from-primary/10 via-transparent to-transparent opacity-50" />
+               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 dark:bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
                
                <CardHeader className="p-6 sm:p-8 pb-0 relative z-10 text-center">
-                 <div className="mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-slate-950 border border-primary/40 shadow-[0_0_30px_rgba(var(--primary),0.3)] flex items-center justify-center mb-6 relative group z-20">
+                 <div className="mx-auto w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-emerald-50 dark:bg-slate-950 border-2 border-emerald-500/30 dark:border-primary/40 shadow-lg dark:shadow-[0_0_30px_rgba(var(--primary),0.3)] flex items-center justify-center mb-6 relative group z-20">
                    {/* Orbiting rings */}
-                   <div className="absolute inset-[-6px] rounded-full border-2 border-dashed border-primary/30 animate-[spin_10s_linear_infinite]" />
-                   <div className="absolute inset-[-14px] rounded-full border border-primary/10 animate-[spin_15s_linear_infinite_reverse]" />
+                   <div className="absolute inset-[-6px] rounded-full border-2 border-dashed border-emerald-500/30 dark:border-primary/30 animate-[spin_10s_linear_infinite]" />
+                   <div className="absolute inset-[-14px] rounded-full border border-emerald-500/20 dark:border-primary/10 animate-[spin_15s_linear_infinite_reverse]" />
                    
                    {/* Inner glow */}
-                   <div className="absolute inset-0 rounded-full bg-gradient-to-b from-primary/20 to-transparent opacity-50" />
+                   <div className="absolute inset-0 rounded-full bg-gradient-to-b from-emerald-500/15 dark:from-primary/20 to-transparent opacity-50" />
                    
                    {/* Icon */}
-                   <User className="h-10 w-10 sm:h-12 sm:w-12 text-primary drop-shadow-[0_0_10px_rgba(var(--primary),0.8)] z-10" />
+                   <User className="h-10 w-10 sm:h-12 sm:w-12 text-emerald-600 dark:text-primary drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(var(--primary),0.8)] z-10" />
                  </div>
-                 <div className="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-mono text-primary font-bold uppercase tracking-widest mb-2 shadow-[0_0_10px_rgba(var(--primary),0.2)]">
+                 <div className="inline-block px-3 py-1 rounded-full bg-emerald-50 dark:bg-primary/10 border border-emerald-200 dark:border-primary/20 text-[10px] font-mono text-emerald-700 dark:text-primary font-bold uppercase tracking-widest mb-2 shadow-sm">
                    Player ID
                  </div>
-                 <CardTitle className="text-xl font-black text-white tracking-tight">
+                 <CardTitle className="text-xl font-black text-slate-950 dark:text-white tracking-tight">
                    {getSegmentTitle(profile?.segment)}
                  </CardTitle>
-                 <CardDescription className="text-xs text-primary/70 mt-1">
+                 <CardDescription className="text-xs text-slate-600 dark:text-primary/70 mt-1">
                    {getSegmentDesc(profile?.segment)}
                  </CardDescription>
                </CardHeader>
@@ -476,57 +477,57 @@ export default function Dashboard() {
                  
                  {/* Equipped Loadout Stats */}
                  <div className="space-y-4">
-                   <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest text-center border-b border-border/20 pb-2 mb-3">Equipped Loadout</h4>
+                   <h4 className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-widest text-center border-b border-slate-200 dark:border-border/20 pb-2 mb-3 font-bold">Equipped Loadout</h4>
                    
                    <div className="grid grid-cols-2 gap-3 text-xs">
-                     <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                       <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><MapPin className="h-3 w-3" /> Base</span>
-                       <span className="font-bold text-white truncate" title={profile?.cityTier}>{profile?.cityTier || "Not set"}</span>
+                     <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                       <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><MapPin className="h-3 w-3" /> Base</span>
+                       <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.cityTier}>{profile?.cityTier || "Not set"}</span>
                      </div>
-                     <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                       <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Globe className="h-3 w-3" /> Comm</span>
-                       <span className="font-bold text-white truncate" title={profile?.languagePreference}>{profile?.languagePreference || "Not set"}</span>
+                     <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                       <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Globe className="h-3 w-3" /> Comm</span>
+                       <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.languagePreference}>{profile?.languagePreference || "Not set"}</span>
                      </div>
                      
                      {/* S1 & S2 */}
                      {(profile?.segment === "S1" || profile?.segment === "S2") && (
                        <>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><FileText className="h-3 w-3" /> Faction</span>
-                           <span className="font-bold text-white truncate" title={profile?.schoolBoard}>{profile?.schoolBoard || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><FileText className="h-3 w-3" /> Faction</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.schoolBoard}>{profile?.schoolBoard || "Not set"}</span>
                          </div>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Layers className="h-3 w-3" /> Level</span>
-                           <span className="font-bold text-white truncate" title={profile?.grade}>{profile?.grade || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Layers className="h-3 w-3" /> Level</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.grade}>{profile?.grade || "Not set"}</span>
                          </div>
                        </>
                      )}
                      
                      {profile?.segment === "S2" && (
-                       <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80 col-span-2">
-                         <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Compass className="h-3 w-3" /> Spec</span>
-                         <span className="font-bold text-primary truncate" title={profile?.stream}>{profile?.stream || "Not set"}</span>
+                       <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 col-span-2 shadow-sm">
+                         <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Compass className="h-3 w-3" /> Spec</span>
+                         <span className="font-bold text-emerald-700 dark:text-primary truncate" title={profile?.stream}>{profile?.stream || "Not set"}</span>
                        </div>
                      )}
 
                      {/* S3 */}
                      {profile?.segment === "S3" && (
                        <>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80 col-span-2">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Building className="h-3 w-3" /> Academy</span>
-                           <span className="font-bold text-white truncate" title={profile?.collegeName}>{profile?.collegeName || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 col-span-2 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Building className="h-3 w-3" /> Academy</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.collegeName}>{profile?.collegeName || "Not set"}</span>
                          </div>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><BookOpen className="h-3 w-3" /> Rank</span>
-                           <span className="font-bold text-white truncate" title={profile?.degree}>{profile?.degree || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><BookOpen className="h-3 w-3" /> Rank</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.degree}>{profile?.degree || "Not set"}</span>
                          </div>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Calendar className="h-3 w-3" /> Exfil</span>
-                           <span className="font-bold text-white truncate" title={profile?.graduationYear}>{profile?.graduationYear || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Calendar className="h-3 w-3" /> Exfil</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.graduationYear}>{profile?.graduationYear || "Not set"}</span>
                          </div>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80 col-span-2">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Compass className="h-3 w-3" /> Mastery</span>
-                           <span className="font-bold text-primary truncate" title={profile?.specialization}>{profile?.specialization || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 col-span-2 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Compass className="h-3 w-3" /> Mastery</span>
+                           <span className="font-bold text-emerald-700 dark:text-primary truncate" title={profile?.specialization}>{profile?.specialization || "Not set"}</span>
                          </div>
                        </>
                      )}
@@ -534,17 +535,17 @@ export default function Dashboard() {
                      {/* S4 */}
                      {profile?.segment === "S4" && (
                        <>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80 col-span-2">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Briefcase className="h-3 w-3" /> Designation</span>
-                           <span className="font-bold text-white truncate" title={profile?.jobTitle}>{profile?.jobTitle || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 col-span-2 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Briefcase className="h-3 w-3" /> Designation</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.jobTitle}>{profile?.jobTitle || "Not set"}</span>
                          </div>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Building className="h-3 w-3" /> Sector</span>
-                           <span className="font-bold text-white truncate" title={profile?.industry}>{profile?.industry || "Not set"}</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Building className="h-3 w-3" /> Sector</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.industry}>{profile?.industry || "Not set"}</span>
                          </div>
-                         <div className="bg-slate-900/60 border border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-primary/40 hover:bg-slate-900/80">
-                           <span className="text-[9px] text-muted-foreground uppercase flex items-center gap-1"><Layers className="h-3 w-3" /> XP</span>
-                           <span className="font-bold text-white truncate" title={profile?.yearsOfExperience}>{profile?.yearsOfExperience || "0"} Yrs</span>
+                         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-border/30 rounded-lg p-2.5 flex flex-col gap-1 transition-colors hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900/80 shadow-sm">
+                           <span className="text-[9px] text-slate-500 dark:text-muted-foreground uppercase flex items-center gap-1 font-semibold"><Layers className="h-3 w-3" /> XP</span>
+                           <span className="font-bold text-slate-900 dark:text-white truncate" title={profile?.yearsOfExperience}>{profile?.yearsOfExperience || "0"} Yrs</span>
                          </div>
                        </>
                      )}
