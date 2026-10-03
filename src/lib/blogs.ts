@@ -14,6 +14,12 @@ export interface BlogPost {
   createdAt: string; // ISO date string
   coverGradient?: string;
   featured?: boolean;
+  // SEO & Social Metadata
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
+  ogImage?: string;
+  canonicalUrl?: string;
 }
 
 export const INITIAL_BLOG_POSTS: BlogPost[] = [
@@ -29,6 +35,9 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
     createdAt: "2026-09-25T10:00:00Z",
     coverGradient: "from-emerald-900/40 via-[#0b1723] to-[#061019]",
     featured: true,
+    metaTitle: "Science (PCM) vs Commerce After Class 10 in the Age of AI | WhatAfter",
+    metaDescription: "Why traditional advice on stream selection often leads to regret, and how mapping cognitive traits de-risks your high school journey.",
+    metaKeywords: ["stream selection", "Class 10", "PCM vs Commerce", "cognitive assessment", "career guidance"],
     content: `Choosing a stream after Class 10 remains one of the highest-friction decisions in Indian education. For decades, the default formula has been simple: high marks mean Science PCM, average marks mean Commerce, and Humanities is an afterthought.
 
 ### The Problem With the Default Formula
@@ -62,6 +71,9 @@ Career clarity is not about predicting the next 30 years—it is about choosing 
     createdAt: "2026-09-20T14:30:00Z",
     coverGradient: "from-teal-900/40 via-[#0b1723] to-[#061019]",
     featured: true,
+    metaTitle: "The AI-Resilience Score: Which Careers Have a Genuine Human Moat? | WhatAfter",
+    metaDescription: "A deep dive into how WhatAfter measures automation vulnerability across technical engineering, design, medicine, and management.",
+    metaKeywords: ["AI resilience", "automation safe careers", "future of work", "human moat", "system architecture"],
     content: `Every week, students ask: "Will my chosen career still exist by the time I graduate?"
 
 The honest answer is: the job title will probably exist, but the daily tasks will look radically different. This is why WhatAfter generates an AI-Resilience Score (0–100) for every career match in your report.
@@ -99,6 +111,9 @@ If you are pursuing software engineering, don't just learn syntax—master syste
     createdAt: "2026-09-15T09:15:00Z",
     coverGradient: "from-amber-900/40 via-[#0b1723] to-[#061019]",
     featured: false,
+    metaTitle: "How to Talk to Your Parents About Non-Traditional Careers | WhatAfter",
+    metaDescription: "Practical scripts and data frameworks to transform anxious dinner-table arguments into constructive family career decisions.",
+    metaKeywords: ["parent conversations", "career guidance", "non-traditional careers", "salary trajectories", "student advice"],
     content: `When students tell their parents they want to pursue UI/UX Design, Sports Management, or Sustainable Architecture instead of traditional Medicine or Software Engineering, parental pushback is almost never about control—it is about fear of financial instability.
 
 Parents grew up in an economic era where only three paths offered predictable financial security: Engineering, Medicine, and Government/Banking examinations.
@@ -174,8 +189,15 @@ export async function saveBlogPost(postData: {
   authorName: string;
   authorRole?: string;
   readTime?: string;
+  customSlug?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
+  ogImage?: string;
+  canonicalUrl?: string;
 }): Promise<BlogPost> {
-  const slug = slugify(postData.title);
+  const rawSlug = postData.customSlug?.trim() || postData.title;
+  const slug = slugify(rawSlug);
   const now = new Date().toISOString();
   
   // Calculate approximate read time if not provided
@@ -191,10 +213,15 @@ export async function saveBlogPost(postData: {
     category: postData.category,
     readTime,
     authorName: postData.authorName || "Anonymous Contributor",
-    authorRole: postData.authorRole || "WhatAfter Contributor",
+    authorRole: postData.authorRole || undefined,
     createdAt: now,
     featured: false,
-    coverGradient: "from-emerald-950/40 via-[#0b1723] to-[#061019]"
+    coverGradient: "from-emerald-950/40 via-[#0b1723] to-[#061019]",
+    metaTitle: postData.metaTitle?.trim() || `${postData.title} | WhatAfter`,
+    metaDescription: postData.metaDescription?.trim() || postData.excerpt,
+    metaKeywords: postData.metaKeywords && postData.metaKeywords.length > 0 ? postData.metaKeywords : undefined,
+    ogImage: postData.ogImage?.trim() || undefined,
+    canonicalUrl: postData.canonicalUrl?.trim() || undefined,
   };
 
   try {
@@ -202,7 +229,6 @@ export async function saveBlogPost(postData: {
     await setDoc(postRef, newPost);
   } catch (err) {
     console.error("Error saving blog post to Firestore:", err);
-    // Even if remote write fails, return object so client can handle state gracefully
   }
 
   return newPost;

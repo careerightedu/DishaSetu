@@ -8,22 +8,38 @@ import {
   PenSquare, 
   Send, 
   Lock, 
-  AlertCircle
+  AlertCircle,
+  Search,
+  ChevronDown,
+  ChevronUp,
+  Globe,
+  Tag,
+  Share2
 } from "lucide-react";
 import Navbar from "@/features/auth/components/Navbar";
 import { useAuth } from "@/features/auth/context/AuthContext";
-import { saveBlogPost, BlogPost } from "@/lib/blogs";
+import { saveBlogPost, BlogPost, slugify } from "@/lib/blogs";
 
 export default function WriteBlogPage() {
   const { user } = useAuth();
   const router = useRouter();
 
+  // Basic article fields
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState<BlogPost["category"]>("Stream Selection");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [authorRole, setAuthorRole] = useState("");
+
+  // SEO & Social Metadata fields
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [customSlug, setCustomSlug] = useState("");
+  const [metaKeywords, setMetaKeywords] = useState("");
+  const [ogImage, setOgImage] = useState("");
+  const [isSeoExpanded, setIsSeoExpanded] = useState(true);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,7 +66,18 @@ export default function WriteBlogPage() {
         content: content.trim(),
         category,
         authorName: authorName.trim(),
-        authorRole: authorRole.trim()
+        authorRole: authorRole.trim(),
+        customSlug: customSlug.trim() || undefined,
+        metaTitle: metaTitle.trim() || undefined,
+        metaDescription: metaDescription.trim() || undefined,
+        metaKeywords: metaKeywords
+          .split(",")
+          .map((k) => k.trim())
+          .filter(Boolean),
+        ogImage: ogImage.trim() || undefined,
+        canonicalUrl: customSlug.trim()
+          ? `https://whatafter.in/blog/${slugify(customSlug.trim())}`
+          : undefined,
       });
 
       router.push(`/blog/${created.slug}`);
@@ -101,34 +128,50 @@ export default function WriteBlogPage() {
             </Link>
           </div>
         </main>
+
+        <footer className="border-t border-white/10 bg-[#040b12] py-8 text-center text-xs text-[#5e717f]">
+          <span>© {new Date().getFullYear()} WhatAfter (Careeright). All rights reserved.</span>
+        </footer>
       </div>
     );
   }
+
+  // Current active preview values for the live Google SERP snippet
+  const activeSlug = customSlug.trim()
+    ? slugify(customSlug.trim())
+    : title.trim()
+    ? slugify(title.trim())
+    : "your-article-slug";
+  const activeDisplayTitle =
+    metaTitle.trim() ||
+    (title.trim() ? `${title.trim()} | WhatAfter` : "Article Meta Title Preview | WhatAfter");
+  const activeDisplayDescription =
+    metaDescription.trim() ||
+    excerpt.trim() ||
+    "Add a meta description or summary excerpt to see how this article snippet will appear when searched on Google, Bing, and social channels.";
 
   return (
     <div className="min-h-screen bg-[#061019] text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
       <Navbar />
 
-      <main className="max-w-[850px] mx-auto px-6 py-12">
+      <main className="max-w-[860px] mx-auto px-6 py-12">
         
-        {/* Navigation Breadcrumb */}
-        <div className="mb-8">
-          <Link 
-            href="/blog" 
-            className="inline-flex items-center gap-2 text-xs font-medium text-[#7c8f9d] hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" /> Back to Journal
-          </Link>
-        </div>
+        {/* Back Link */}
+        <Link 
+          href="/blog" 
+          className="inline-flex items-center gap-2 text-xs font-medium text-[#7c8f9d] hover:text-white transition-colors mb-8"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to Journal
+        </Link>
 
         {/* Page Header */}
-        <div className="mb-10 pb-6 border-b border-white/10">
+        <div className="pb-8 border-b border-white/10 mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
             <PenSquare className="w-3.5 h-3.5" />
-            Author an Article
+            Article Studio
           </div>
           <h1 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-2">
-            Share Your Experience &amp; Insights
+            Write an Article for WhatAfter
           </h1>
           <p className="text-sm text-[#9cb0be]">
             Contribute essays on stream decisions, college transitions, skill building, or parental guidance.
@@ -143,7 +186,7 @@ export default function WriteBlogPage() {
         )}
 
         {/* Blog Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-7">
           
           {/* Title */}
           <div>
@@ -160,7 +203,7 @@ export default function WriteBlogPage() {
             />
           </div>
 
-          {/* Category & Read Time */}
+          {/* Category & Author Name in 2 columns */}
           <div className="grid sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#98abb9] mb-2">
@@ -244,10 +287,200 @@ export default function WriteBlogPage() {
             />
           </div>
 
+          {/* ========================================================= */}
+          {/* SEO & Social Metadata Configuration Card                   */}
+          {/* ========================================================= */}
+          <div className="rounded-2xl bg-[#091522] border border-emerald-500/25 p-5 sm:p-7 space-y-6 shadow-xl relative overflow-hidden">
+            {/* Ambient subtle glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Section Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                  <Search className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base sm:text-lg font-serif font-bold text-white">
+                      Search Engine Optimization (SEO) &amp; Social Meta
+                    </h3>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                      Google &amp; Social
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#8ca0af]">
+                    Control how this article appears on Google search results, WhatsApp, LinkedIn, and Twitter/X.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsSeoExpanded(!isSeoExpanded)}
+                className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-semibold self-start sm:self-center px-3 py-1.5 rounded-lg bg-white/5 border border-white/10"
+              >
+                {isSeoExpanded ? (
+                  <>Collapse <ChevronUp className="w-3.5 h-3.5" /></>
+                ) : (
+                  <>Expand SEO Options <ChevronDown className="w-3.5 h-3.5" /></>
+                )}
+              </button>
+            </div>
+
+            {isSeoExpanded && (
+              <div className="space-y-6 pt-1">
+                {/* Live Google Search Snippet Preview */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#98abb9] flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                      Live Google Search Snippet Preview
+                    </label>
+                    <span className="text-[11px] text-[#6e8290]">Real-time preview</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#050c13] border border-white/10 space-y-1.5 font-sans">
+                    <div className="flex items-center gap-2 text-xs text-[#9aa0a6]">
+                      <div className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px]">W</div>
+                      <span className="truncate">
+                        https://whatafter.in › blog › {activeSlug}
+                      </span>
+                    </div>
+                    <div className="text-base sm:text-lg text-[#8ab4f8] font-medium hover:underline cursor-pointer truncate">
+                      {activeDisplayTitle}
+                    </div>
+                    <div className="text-xs sm:text-sm text-[#bdc1c6] line-clamp-2 leading-relaxed">
+                      {activeDisplayDescription}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Meta Title Input */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#98abb9]">
+                      Meta Title (SEO Title)
+                    </label>
+                    <span className={`text-[11px] font-mono ${metaTitle.length > 60 ? "text-amber-400" : "text-[#708492]"}`}>
+                      {metaTitle.length} / 60 chars {metaTitle.length >= 50 && metaTitle.length <= 60 && "✓ Optimal"}
+                    </span>
+                  </div>
+                  <input 
+                    type="text" 
+                    value={metaTitle}
+                    onChange={(e) => setMetaTitle(e.target.value)}
+                    placeholder={title.trim() ? `${title.trim()} | WhatAfter` : "e.g. Science vs Commerce After 10th: Which Stream Fits You? | WhatAfter"} 
+                    className="w-full px-4 py-3 rounded-xl bg-[#0b1723] border border-white/10 text-white placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none"
+                  />
+                  <span className="block text-[11px] text-[#6b7e8d] mt-1.5">
+                    Leave empty to automatically use your article title. Recommended: 50–60 characters for optimal display on search engines.
+                  </span>
+                </div>
+
+                {/* Meta Description Input */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#98abb9]">
+                      Meta Description (Search &amp; Social Snippet)
+                    </label>
+                    <span className={`text-[11px] font-mono ${metaDescription.length > 160 ? "text-amber-400" : "text-[#708492]"}`}>
+                      {metaDescription.length} / 160 chars {metaDescription.length >= 140 && metaDescription.length <= 160 && "✓ Optimal"}
+                    </span>
+                  </div>
+                  <textarea 
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                    rows={3}
+                    placeholder={excerpt.trim() || "e.g. Compare PCM and Commerce in 2026. Discover how cognitive traits, salary trajectories, and automation risk guide your stream choice."} 
+                    className="w-full px-4 py-3 rounded-xl bg-[#0b1723] border border-white/10 text-white placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none resize-none"
+                  />
+                  <span className="block text-[11px] text-[#6b7e8d] mt-1.5">
+                    Leave empty to automatically use your summary excerpt. Recommended: 140–160 characters.
+                  </span>
+                </div>
+
+                {/* Custom URL Slug & Social Image in 2 Columns */}
+                <div className="grid sm:grid-cols-2 gap-6">
+                  {/* Custom Slug */}
+                  <div>
+                    <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#98abb9] mb-2">
+                      Custom URL Slug (Optional)
+                    </label>
+                    <div className="flex items-center rounded-xl bg-[#0b1723] border border-white/10 px-3.5 focus-within:border-emerald-500/50">
+                      <span className="text-xs text-[#5f7484] select-none shrink-0 font-mono">/blog/</span>
+                      <input 
+                        type="text" 
+                        value={customSlug}
+                        onChange={(e) => setCustomSlug(e.target.value)}
+                        placeholder={title.trim() ? slugify(title.trim()) : "custom-slug"} 
+                        className="w-full py-3 pl-1 bg-transparent text-white placeholder-[#506371] text-sm outline-none font-mono"
+                      />
+                    </div>
+                    <span className="block text-[11px] text-[#6b7e8d] mt-1.5">
+                      Overrides the auto-generated URL slug.
+                    </span>
+                  </div>
+
+                  {/* Social OG Image */}
+                  <div>
+                    <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#98abb9] mb-2 flex items-center gap-1.5">
+                      <Share2 className="w-3.5 h-3.5 text-emerald-400" />
+                      Social Share Image URL (Optional)
+                    </label>
+                    <input 
+                      type="url" 
+                      value={ogImage}
+                      onChange={(e) => setOgImage(e.target.value)}
+                      placeholder="https://whatafter.in/report/career-deep-dive.png" 
+                      className="w-full px-4 py-3 rounded-xl bg-[#0b1723] border border-white/10 text-white placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none"
+                    />
+                    <span className="block text-[11px] text-[#6b7e8d] mt-1.5">
+                      Image displayed on WhatsApp, LinkedIn, and Twitter/X cards.
+                    </span>
+                  </div>
+                </div>
+
+                {/* Keywords / Tags */}
+                <div>
+                  <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#98abb9] mb-2 flex items-center gap-1.5">
+                    <Tag className="w-3.5 h-3.5 text-emerald-400" />
+                    Focus Keywords / Meta Tags (Optional)
+                  </label>
+                  <input 
+                    type="text" 
+                    value={metaKeywords}
+                    onChange={(e) => setMetaKeywords(e.target.value)}
+                    placeholder="e.g. stream selection, class 10, PCM vs Commerce, cognitive assessment" 
+                    className="w-full px-4 py-3 rounded-xl bg-[#0b1723] border border-white/10 text-white placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none"
+                  />
+                  <span className="block text-[11px] text-[#6b7e8d] mt-1.5">
+                    Separate keywords with commas. Used in meta keyword tags and internal search.
+                  </span>
+
+                  {/* Keywords Badges Preview */}
+                  {metaKeywords.trim() && (
+                    <div className="flex flex-wrap gap-1.5 mt-2.5">
+                      {metaKeywords.split(",").map((tag, idx) => {
+                        const clean = tag.trim();
+                        if (!clean) return null;
+                        return (
+                          <span key={idx} className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs text-emerald-300 font-mono">
+                            #{clean}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            )}
+          </div>
+
           {/* Submit Actions */}
           <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
             <span className="text-xs text-[#708492]">
-              Published articles are immediately visible to all WhatAfter visitors.
+              Published articles are immediately indexed and visible to all WhatAfter visitors.
             </span>
 
             <div className="flex items-center gap-3 w-full sm:w-auto">
