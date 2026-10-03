@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-border/40 bg-white/80 dark:bg-background/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/85 dark:bg-slate-950/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Brand Logo */}
@@ -144,7 +144,7 @@ export default function Navbar() {
             variant="ghost"
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-foreground hover:bg-muted/50"
+            className="text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -155,7 +155,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Panel */}
       {mobileMenuOpen && (
-        <div className="border-b border-border/40 bg-background/95 backdrop-blur-md px-4 pt-2 pb-4 space-y-3 transition-all duration-200">
+        <div className="border-b border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 pt-2 pb-4 space-y-3 transition-all duration-200">
           {user ? (
             <>
               <div className="px-3 py-2 border-b border-border/30 flex items-center gap-3">
