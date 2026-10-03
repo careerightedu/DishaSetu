@@ -27,23 +27,29 @@ export async function POST(req: Request) {
     const userSnap = await userRef.get();
     const userData = userSnap.data();
     
-    const normalizedCode = couponCode.toUpperCase();
-    if (userData?.usedCoupons?.includes(normalizedCode)) {
-      return NextResponse.json({ error: "Coupon already used" }, { status: 400 });
+    const normalizedCode = couponCode.trim().toUpperCase();
+    const existingUsed: string[] = userData?.usedCoupons || [];
+    if (existingUsed.includes(normalizedCode)) {
+      return NextResponse.json({ error: "This coupon code has already been used by your account. Each coupon can only be used once." }, { status: 400 });
     }
 
-    // Securely update the user's profile to bypass database security rules
-    const usedCoupons = userData?.usedCoupons || [];
-    usedCoupons.push(normalizedCode);
+    // Securely update the user's profile to bypass database security rules using atomic arrayUnion
+    const { FieldValue } = await import("firebase-admin/firestore");
 
     await userRef.set({
       hasPaid: true,
       paidAt: new Date().toISOString(),
       orderId: `free_${normalizedCode}_${Date.now()}`,
-      usedCoupons
+      usedCoupons: FieldValue.arrayUnion(normalizedCode)
     }, { merge: true });
 
-    return NextResponse.json({ success: true, message: "Assessment unlocked successfully" });
+    const updatedUsedCoupons = Array.from(new Set([...existingUsed, normalizedCode]));
+
+    return NextResponse.json({ 
+      success: true, 
+      message: "Assessment unlocked successfully",
+      usedCoupons: updatedUsedCoupons
+    });
 
   } catch (error) {
     console.error("Error processing free unlock:", error);

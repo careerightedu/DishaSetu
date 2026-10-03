@@ -69,6 +69,7 @@ interface AuthContextType {
   loginWithGoogle: () => Promise<WhatAfterUser>;
   logout: () => Promise<void>;
   updateProfile: (profileData: Partial<UserProfile>) => Promise<void>;
+  refreshProfile?: () => Promise<UserProfile | null>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -253,8 +254,37 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     }
   };
 
+  const refreshProfile = async (): Promise<UserProfile | null> => {
+    if (!user) return null;
+    try {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const currentProfile = docSnap.data() as UserProfile;
+        setProfile(currentProfile);
+        syncCookies(user, currentProfile);
+        return currentProfile;
+      }
+    } catch (e) {
+      console.error("Error refreshing profile from Firestore:", e);
+    }
+    return null;
+  };
+
   const updateProfile = async (profileData: Partial<UserProfile>) => {
     if (!user) throw new Error("No authenticated user found");
+
+    // Fetch fresh profile from Firestore to prevent overwriting server-side updates (like usedCoupons)
+    let freshData: Partial<UserProfile> = {};
+    try {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        freshData = docSnap.data() as UserProfile;
+      }
+    } catch (e) {
+      console.warn("Could not fetch fresh user profile before update:", e);
+    }
 
     const updatedProfile: UserProfile = {
       ...(profile || {
@@ -264,7 +294,12 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
         languagePreference: "",
         onboardingCompleted: false
       }),
+      ...freshData,
       ...profileData,
+      // CRITICAL: Ensure usedCoupons is NEVER erased or emptied unless explicitly passed
+      usedCoupons: profileData.usedCoupons !== undefined
+        ? profileData.usedCoupons
+        : (freshData.usedCoupons || profile?.usedCoupons || []),
       updatedAt: new Date().toISOString()
     };
 
@@ -286,7 +321,8 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
       signup,
       loginWithGoogle,
       logout,
-      updateProfile
+      updateProfile,
+      refreshProfile
     }}>
       {children}
     </AuthContext.Provider>

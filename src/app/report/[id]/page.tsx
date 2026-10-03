@@ -59,6 +59,8 @@ export default function ArchivedReportDashboard() {
   // Gamification States
   const [revealedCount, setRevealedCount] = useState(3); // Fully revealed for archived report
   
+  const rawDataRef = React.useRef<any>(null);
+
   useEffect(() => {
     async function fetchResults() {
       if (!user || !id) return;
@@ -67,6 +69,11 @@ export default function ArchivedReportDashboard() {
         const sessionSnap = await getDoc(reportRef);
         if (sessionSnap.exists()) {
           const data = sessionSnap.data();
+          rawDataRef.current = data;
+          try {
+            localStorage.setItem(`whatafter_report_${id}`, JSON.stringify(data));
+          } catch (e) {}
+
           if (data.status === "completed") {
             if (data.scores && data.recommendations) {
               setScores(data.scores);
@@ -87,6 +94,11 @@ export default function ArchivedReportDashboard() {
   }, [user, id]);
 
   const handleDownloadPDF = () => {
+    if (rawDataRef.current) {
+      try {
+        localStorage.setItem(`whatafter_report_${id}`, JSON.stringify(rawDataRef.current));
+      } catch (e) {}
+    }
     window.open(`/results/print?reportId=${id}`, "_blank");
   };
 
@@ -159,11 +171,11 @@ export default function ArchivedReportDashboard() {
     });
 
     return (
-      <div className="w-full flex flex-col items-center justify-center bg-slate-900/40 rounded-3xl p-6 border border-slate-800 shadow-xl relative overflow-hidden">
-        <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-6">Trait Signature</h3>
+      <div className="w-full flex flex-col items-center justify-center bg-white dark:bg-slate-900/60 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-2xl relative overflow-hidden">
+        <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-6">Trait Signature</h3>
         <svg width="400" height="350" className="overflow-visible max-w-full">
           {webPoints.map((pts, i) => (
-            <polygon key={i} points={pts} fill="none" stroke="#334155" strokeWidth="1" />
+            <polygon key={i} points={pts} fill="none" className="stroke-slate-200 dark:stroke-slate-700/80" strokeWidth="1" />
           ))}
           {Array.from({ length: numPoints }).map((_, i) => (
             <line 
@@ -171,7 +183,7 @@ export default function ArchivedReportDashboard() {
               x1={cx} y1={cy} 
               x2={cx + radius * Math.sin(i * angleStep)} 
               y2={cy - radius * Math.cos(i * angleStep)} 
-              stroke="#334155" 
+              className="stroke-slate-200 dark:stroke-slate-700/80" 
               strokeWidth="1" 
             />
           ))}
@@ -181,9 +193,9 @@ export default function ArchivedReportDashboard() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
             points={points}
-            fill="rgba(16, 185, 129, 0.2)"
+            fill="rgba(16, 185, 129, 0.25)"
             stroke="#10b981"
-            strokeWidth="2"
+            strokeWidth="2.5"
             style={{ transformOrigin: "150px 150px" }}
           />
           
@@ -197,7 +209,7 @@ export default function ArchivedReportDashboard() {
             const line2 = words.slice(Math.ceil(words.length / 2)).join(" ");
 
             return (
-              <text key={i} x={x} y={y} fontSize="11" fill="#94a3b8" textAnchor="middle" dominantBaseline="middle" className="font-bold tracking-wider">
+              <text key={i} x={x} y={y} fontSize="11" textAnchor="middle" dominantBaseline="middle" className="font-bold tracking-wider fill-slate-700 dark:fill-slate-300">
                 <tspan x={x} dy={line2 ? "-0.6em" : "0"}>{line1.toUpperCase()}</tspan>
                 {line2 && <tspan x={x} dy="1.2em">{line2.toUpperCase()}</tspan>}
               </text>

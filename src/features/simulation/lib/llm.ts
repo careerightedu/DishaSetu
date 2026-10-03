@@ -53,7 +53,7 @@ export async function getLLMCompletion(
   }
   messages.push({ role: "user", content: prompt });
 
-  const makeRequest = async (targetModel: string) => {
+  const makeRequest = async (targetModel: string, attempt: number = 1): Promise<string> => {
     const body = {
       model: targetModel,
       messages,
@@ -63,7 +63,7 @@ export async function getLLMCompletion(
     };
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 900000);
+    const timeoutId = setTimeout(() => controller.abort(), 90000);
 
     try {
       const response = await fetch(url, {
@@ -77,17 +77,39 @@ export async function getLLMCompletion(
 
       if (!response.ok) {
         const errorText = await response.text();
+        console.warn(`[LLM] Model ${targetModel} responded with HTTP ${response.status}: ${errorText.slice(0, 200)}`);
+
+        // Handle rate limit (429) or transient server busy (503) with backoff
+        if ((response.status === 429 || response.status === 503) && attempt <= 2) {
+          const delay = 2500 * attempt;
+          console.warn(`[LLM] Pausing for ${delay}ms before retrying ${targetModel} (attempt ${attempt}/2)...`);
+          await new Promise(r => setTimeout(r, delay));
+          return await makeRequest(targetModel, attempt + 1);
+        }
+
+        // Fallback cascade for Google endpoint
+        if (url.includes("googleapis.com")) {
+          if (targetModel !== "gemini-2.0-flash" && targetModel !== "gemini-1.5-flash") {
+            console.warn(`[LLM] Falling back from ${targetModel} to gemini-2.0-flash...`);
+            return await makeRequest("gemini-2.0-flash", 1);
+          } else if (targetModel === "gemini-2.0-flash") {
+            console.warn(`[LLM] Falling back from gemini-2.0-flash to gemini-1.5-flash...`);
+            return await makeRequest("gemini-1.5-flash", 1);
+          }
+        }
+
         // If 503 or 429 occurs on gemma-4-31b-it, fallback to gemma-4-26b-a4b-it
         if ((response.status === 503 || response.status === 429) && targetModel === "gemma-4-31b-it") {
           console.warn(`Model ${targetModel} returned ${response.status}. Falling back to gemma-4-26b-a4b-it...`);
-          return await makeRequest("gemma-4-26b-a4b-it");
+          return await makeRequest("gemma-4-26b-a4b-it", 1);
         }
+
         throw new Error(`LLM API returned status ${response.status}: ${errorText}`);
       }
 
       const data = await response.json();
       console.log(`\n======================================`);
-      console.log(`✅ Tokens Used -> INPUT: ${data.usage?.prompt_tokens} | OUTPUT: ${data.usage?.completion_tokens} | TOTAL: ${data.usage?.total_tokens}`);
+      console.log(`✅ [${targetModel}] Tokens Used -> INPUT: ${data.usage?.prompt_tokens} | OUTPUT: ${data.usage?.completion_tokens} | TOTAL: ${data.usage?.total_tokens}`);
       console.log(`======================================\n`);
       const content = data?.choices?.[0]?.message?.content || "";
       return content.trim();

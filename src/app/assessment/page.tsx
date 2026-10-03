@@ -31,7 +31,7 @@ import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export default function AssessmentHome() {
-  const { user, profile, updateProfile } = useAuth();
+  const { user, profile, updateProfile, refreshProfile } = useAuth();
   const router = useRouter();
   
   const [sessionExists, setSessionExists] = useState(false);
@@ -62,6 +62,8 @@ export default function AssessmentHome() {
     async function checkActiveSession() {
       if (!user) return;
       try {
+        if (refreshProfile) refreshProfile();
+
         const sessionRef = doc(db, "assessment_sessions", user.uid);
         const sessionSnap = await getDoc(sessionRef);
         
@@ -112,13 +114,23 @@ export default function AssessmentHome() {
     setCheckingCoupon(true);
     setCouponMessage({ type: "", text: "" });
     try {
-      const { collection, getDoc, doc } = await import("firebase/firestore");
-      const normalizedCode = couponCode.toUpperCase();
+      const { getDoc, doc } = await import("firebase/firestore");
+      const normalizedCode = couponCode.trim().toUpperCase();
 
-      if (profile?.usedCoupons?.includes(normalizedCode)) {
-        setCouponMessage({ type: "error", text: "You have already used this coupon." });
-        setCheckingCoupon(false);
-        return;
+      // 1. Live Firestore check: prevent coupon reuse even across browser sessions or after retaking
+      if (user) {
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        const userData = userSnap.data();
+        const liveUsedCoupons: string[] = userData?.usedCoupons || profile?.usedCoupons || [];
+        if (liveUsedCoupons.includes(normalizedCode)) {
+          setCouponMessage({ 
+            type: "error", 
+            text: "This coupon code has already been used by your account. Each coupon can only be used once." 
+          });
+          setDiscount(0);
+          setCheckingCoupon(false);
+          return;
+        }
       }
 
       const couponSnap = await getDoc(doc(db, "coupons", normalizedCode));
@@ -144,17 +156,37 @@ export default function AssessmentHome() {
     setPaying(true);
 
     try {
+      const normalizedCode = couponCode.trim().toUpperCase();
+
+      // Pre-check coupon usage directly against live Firestore data
+      if (normalizedCode) {
+        const { getDoc, doc } = await import("firebase/firestore");
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        const userData = userSnap.data();
+        const liveUsedCoupons: string[] = userData?.usedCoupons || profile?.usedCoupons || [];
+        if (liveUsedCoupons.includes(normalizedCode)) {
+          alert("This coupon code has already been used by your account. Each coupon can only be used once.");
+          setDiscount(0);
+          setPaying(false);
+          return;
+        }
+      }
+
       // Short-circuit for 100% free coupons
       if (discount === 100) {
         const unlockRes = await fetch("/api/assessment/free-unlock", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ couponCode, uid: user.uid })
+          body: JSON.stringify({ couponCode: normalizedCode, uid: user.uid })
         });
         
         const unlockData = await unlockRes.json();
         if (unlockData.success) {
-          await updateProfile({ hasPaid: true });
+          const updatedUsed = unlockData.usedCoupons || [
+            ...(profile?.usedCoupons || []),
+            normalizedCode
+          ];
+          await updateProfile({ hasPaid: true, usedCoupons: updatedUsed });
           router.push("/assessment/session");
           return;
         } else {
@@ -166,13 +198,20 @@ export default function AssessmentHome() {
       const res = await fetch("/api/razorpay/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 99900, couponCode: couponCode, uid: user.uid }) // ₹999 base price
+        body: JSON.stringify({ amount: 99900, couponCode: normalizedCode || undefined, uid: user.uid }) // ₹999 base price
       });
       const data = await res.json();
 
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to create order");
+      }
+
       if (data.amount === 0) {
-        // Fallback catch if backend returned amount 0 for some other reason
-        await updateProfile({ hasPaid: true });
+        // Fallback catch if backend returned amount 0 for 100% coupon
+        const updatedUsed = normalizedCode 
+          ? Array.from(new Set([...(profile?.usedCoupons || []), normalizedCode]))
+          : (profile?.usedCoupons || []);
+        await updateProfile({ hasPaid: true, usedCoupons: updatedUsed });
         router.push("/assessment/session");
         return;
       }
@@ -197,12 +236,15 @@ export default function AssessmentHome() {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
               uid: user.uid,
-              couponCode: couponCode ? couponCode.toUpperCase() : undefined
+              couponCode: normalizedCode || undefined
             })
           });
           const verifyData = await verifyRes.json();
           if (verifyData.success) {
-            await updateProfile({ hasPaid: true });
+            const updatedUsed = normalizedCode 
+              ? Array.from(new Set([...(profile?.usedCoupons || []), normalizedCode]))
+              : (profile?.usedCoupons || []);
+            await updateProfile({ hasPaid: true, usedCoupons: updatedUsed });
             router.push("/assessment/session");
           } else {
             alert("Payment verification failed. Please contact support.");
@@ -232,19 +274,19 @@ export default function AssessmentHome() {
   };
 
   const getBgClass = () => {
-    if (!sessionExists) return "bg-background";
+    if (!sessionExists) return "bg-slate-50 dark:bg-slate-900";
     const answered = sessionProgress.answered;
-    if (answered >= 60) return "bg-slate-950"; 
-    if (answered >= 40) return "bg-[#0b132b]"; 
-    if (answered >= 20) return "bg-[#1c2541]"; 
-    return "bg-slate-900"; 
+    if (answered >= 60) return "bg-slate-50 dark:bg-slate-950"; 
+    if (answered >= 40) return "bg-slate-50 dark:bg-[#0b132b]"; 
+    if (answered >= 20) return "bg-slate-50 dark:bg-[#1c2541]"; 
+    return "bg-slate-50 dark:bg-slate-900"; 
   };
 
   return (
     <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden", getBgClass())}>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       {/* Grid Parallax */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       <Navbar />
 
       <main className="flex-grow max-w-3xl mx-auto px-4 sm:px-6 py-10 w-full flex items-center justify-center">
@@ -259,37 +301,37 @@ export default function AssessmentHome() {
             Back to Dashboard
           </Link>
 
-          <Card className="border-border/40 bg-card/60 backdrop-blur-md shadow-xl overflow-hidden relative">
+          <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 backdrop-blur-md shadow-xl overflow-hidden relative">
             {/* Top highlight bar */}
-            <div className="absolute top-0 left-0 w-full h-1.5 bg-primary" />
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500" />
             
             <CardHeader className="p-6 sm:p-8 pb-4 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left relative z-10">
               {/* Holographic Core */}
               <div className="relative flex h-20 w-20 sm:h-24 sm:w-24 shrink-0 items-center justify-center mt-2 sm:mt-0">
                 <div className={cn(
                   "absolute inset-0 rounded-full border-4 border-dashed animate-[spin_10s_linear_infinite]",
-                  sessionProgress.answered > 0 ? "border-primary/40" : "border-slate-500/20"
+                  sessionProgress.answered > 0 ? "border-emerald-500/40" : "border-slate-300 dark:border-slate-700/40"
                 )} />
                 <div className={cn(
                   "absolute inset-3 rounded-full border-2 animate-[spin_5s_linear_infinite_reverse]",
-                  sessionProgress.answered > 0 ? "border-primary/50" : "border-slate-500/30"
+                  sessionProgress.answered > 0 ? "border-emerald-500/50" : "border-slate-300 dark:border-slate-700/60"
                 )} />
                 <div className={cn(
                   "absolute h-10 w-10 sm:h-12 sm:w-12 rounded-full flex items-center justify-center animate-pulse",
-                  sessionProgress.answered > 0 ? "bg-primary/20 border border-primary/50 shadow-[0_0_20px_rgba(var(--primary),0.3)]" : "bg-slate-800 border border-slate-600"
+                  sessionProgress.answered > 0 ? "bg-emerald-500/20 border border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.3)]" : "bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600"
                 )}>
-                  <Compass className={cn("h-5 w-5 sm:h-6 sm:w-6", sessionProgress.answered > 0 ? "text-primary animate-[spin_12s_ease-in-out_infinite]" : "text-slate-500")} />
+                  <Compass className={cn("h-5 w-5 sm:h-6 sm:w-6", sessionProgress.answered > 0 ? "text-emerald-500 animate-[spin_12s_ease-in-out_infinite]" : "text-slate-400 dark:text-slate-500")} />
                 </div>
               </div>
 
               <div className="space-y-2 flex-grow">
-                <div className="flex items-center justify-center md:justify-start gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+                <div className="flex items-center justify-center md:justify-start gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider">
                   <ClipboardList className="h-4.5 w-4.5" /> Career mapping session
                 </div>
-                <CardTitle className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <CardTitle className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                   Core Career Assessment
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-slate-600 dark:text-slate-400">
                   A comprehensive questionnaire designed to map your core personality traits, cognitive aptitudes, workflow values, and career alignment vectors.
                 </CardDescription>
               </div>
@@ -298,13 +340,13 @@ export default function AssessmentHome() {
             <CardContent className="p-6 sm:p-8 pt-0 space-y-6">
               
               {/* Confirmed Stage Alert */}
-              <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-50/50 dark:bg-slate-950/60 dark:border-emerald-500/30 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] text-primary font-bold uppercase tracking-wider">Target Academic/Career Stage</span>
-                  <h3 className="font-extrabold text-foreground text-base">
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">Target Academic/Career Stage</span>
+                  <h3 className="font-extrabold text-slate-900 dark:text-white text-base">
                     {getSegmentTitle(profile?.segment)}
                   </h3>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     Your assessment questions are custom-tailored for this specific stage.
                   </p>
                 </div>
@@ -312,73 +354,73 @@ export default function AssessmentHome() {
 
               {/* Mission Parameters (Metric Grid) */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="group relative rounded-xl border border-primary/20 bg-black/20 p-5 overflow-hidden transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]">
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Clock className="h-16 w-16 text-primary" />
+                    <Clock className="h-16 w-16 text-emerald-500" />
                   </div>
                   <div className="relative z-10 space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary/20 text-primary border border-primary/30 mb-1">
+                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 mb-1">
                       <Clock className="h-4 w-4" />
                     </div>
-                    <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Duration</div>
-                    <p className="text-2xl font-black text-foreground tracking-tight">~ 45 Mins</p>
-                    <p className="text-[10px] text-muted-foreground">Pause & resume dynamically</p>
+                    <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Duration</div>
+                    <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">~ 45 Mins</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400">Pause & resume dynamically</p>
                   </div>
                 </div>
 
-                <div className="group relative rounded-xl border border-primary/20 bg-black/20 p-5 overflow-hidden transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]">
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <HelpCircle className="h-16 w-16 text-primary" />
+                    <HelpCircle className="h-16 w-16 text-emerald-500" />
                   </div>
                   <div className="relative z-10 space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary/20 text-primary border border-primary/30 mb-1">
+                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 mb-1">
                       <HelpCircle className="h-4 w-4" />
                     </div>
-                    <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Questions</div>
-                    <p className="text-2xl font-black text-foreground tracking-tight">80 Questions</p>
-                    <p className="text-[10px] text-muted-foreground">80 Scored (Stratified)</p>
+                    <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Questions</div>
+                    <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">80 Questions</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400">80 Scored (Stratified)</p>
                   </div>
                 </div>
 
-                <div className="group relative rounded-xl border border-primary/20 bg-black/20 p-5 overflow-hidden transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]">
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Compass className="h-16 w-16 text-primary" />
+                    <Compass className="h-16 w-16 text-emerald-500" />
                   </div>
                   <div className="relative z-10 space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary/20 text-primary border border-primary/30 mb-1">
+                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 mb-1">
                       <Compass className="h-4 w-4" />
                     </div>
-                    <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Methodology</div>
-                    <p className="text-lg leading-tight font-black text-foreground tracking-tight">Mathematical + AI</p>
-                    <p className="text-[10px] text-muted-foreground">Grounded Indian framework</p>
+                    <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Methodology</div>
+                    <p className="text-lg leading-tight font-black text-slate-900 dark:text-white tracking-tight">Mathematical + AI</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400">Grounded Indian framework</p>
                   </div>
                 </div>
               </div>
 
               {/* Mission Briefing Terminal */}
-              <div className="rounded-xl bg-[#0b132b]/80 p-6 border-l-4 border-l-primary border-y border-r border-border/30 relative overflow-hidden group hover:border-l-primary/80 transition-colors">
-                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(var(--primary),0.03)_100%)] pointer-events-none" />
+              <div className="rounded-xl bg-slate-50 dark:bg-slate-950/60 p-6 border-l-4 border-l-emerald-500 border-y border-r border-slate-200 dark:border-slate-800 relative overflow-hidden group hover:border-l-emerald-400 transition-colors shadow-sm">
+                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(16,185,129,0.03)_100%)] pointer-events-none" />
                 <div className="relative z-10 space-y-4">
-                  <div className="flex items-center gap-2 text-primary">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
                     <Terminal className="h-5 w-5 animate-pulse" />
                     <p className="font-mono text-sm font-bold tracking-wider uppercase">{t("guidelinesTitle") || "Mission Briefing"}</p>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-1">
-                    <div className="flex items-start gap-3 bg-black/30 p-3 rounded-lg border border-white/5 hover:bg-black/50 transition-colors">
-                      <div className="mt-0.5 text-primary"><Clock className="h-4 w-4" /></div>
-                      <p className="text-xs text-muted-foreground leading-relaxed"><strong className="text-slate-300">{t("guideline1Title")}</strong> {t("guideline1Desc")}</p>
+                    <div className="flex items-start gap-3 bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors shadow-sm">
+                      <div className="mt-0.5 text-emerald-600 dark:text-emerald-400"><Clock className="h-4 w-4" /></div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"><strong className="text-slate-800 dark:text-slate-200">{t("guideline1Title")}</strong> {t("guideline1Desc")}</p>
                     </div>
-                    <div className="flex items-start gap-3 bg-black/30 p-3 rounded-lg border border-white/5 hover:bg-black/50 transition-colors">
-                      <div className="mt-0.5 text-emerald-400"><Brain className="h-4 w-4" /></div>
-                      <p className="text-xs text-muted-foreground leading-relaxed"><strong className="text-slate-300">{t("guideline2Title")}</strong> {t("guideline2Desc")}</p>
+                    <div className="flex items-start gap-3 bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors shadow-sm">
+                      <div className="mt-0.5 text-emerald-500 dark:text-emerald-400"><Brain className="h-4 w-4" /></div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"><strong className="text-slate-800 dark:text-slate-200">{t("guideline2Title")}</strong> {t("guideline2Desc")}</p>
                     </div>
-                    <div className="flex items-start gap-3 bg-black/30 p-3 rounded-lg border border-white/5 hover:bg-black/50 transition-colors">
-                      <div className="mt-0.5 text-blue-400"><Layers className="h-4 w-4" /></div>
-                      <p className="text-xs text-muted-foreground leading-relaxed"><strong className="text-slate-300">{t("guideline3Title")}</strong> {t("guideline3Desc")}</p>
+                    <div className="flex items-start gap-3 bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors shadow-sm">
+                      <div className="mt-0.5 text-blue-500 dark:text-blue-400"><Layers className="h-4 w-4" /></div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"><strong className="text-slate-800 dark:text-slate-200">{t("guideline3Title")}</strong> {t("guideline3Desc")}</p>
                     </div>
-                    <div className="flex items-start gap-3 bg-black/30 p-3 rounded-lg border border-white/5 hover:bg-black/50 transition-colors">
-                      <div className="mt-0.5 text-amber-400"><CheckCircle2 className="h-4 w-4" /></div>
-                      <p className="text-xs text-muted-foreground leading-relaxed"><strong className="text-slate-300">Autosave:</strong> Your progress is saved in the cloud. You can safely exit at any time and resume right where you left off.</p>
+                    <div className="flex items-start gap-3 bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors shadow-sm">
+                      <div className="mt-0.5 text-amber-500 dark:text-amber-400"><CheckCircle2 className="h-4 w-4" /></div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"><strong className="text-slate-800 dark:text-slate-200">Autosave:</strong> Your progress is saved in the cloud. You can safely exit at any time and resume right where you left off.</p>
                     </div>
                   </div>
                 </div>
@@ -386,9 +428,9 @@ export default function AssessmentHome() {
 
             </CardContent>
 
-            <CardFooter className="p-6 sm:p-8 pt-4 pb-8 border-t border-border/20 bg-background/25 flex flex-col gap-4">
+            <CardFooter className="p-6 sm:p-8 pt-4 pb-8 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-950/60 flex flex-col gap-4">
               {checkingSession ? (
-                <div className="h-10 w-full rounded-lg bg-muted animate-pulse" />
+                <div className="h-10 w-full rounded-lg bg-slate-200 dark:bg-slate-800 animate-pulse" />
               ) : profile?.hasPaid ? (
                 // PAID STATE -> Normal Flow
                 <div className="flex flex-col sm:flex-row gap-3 sm:justify-end w-full">
@@ -398,7 +440,7 @@ export default function AssessmentHome() {
                         variant="ghost" 
                         onClick={handleRestartAssessment}
                         disabled={loading}
-                        className="font-semibold text-xs border border-border/40 hover:bg-destructive/10 hover:text-destructive h-10 gap-1.5"
+                        className="font-semibold text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/40 dark:hover:text-red-400 h-10 gap-1.5 shadow-sm"
                       >
                         <RotateCcw className="h-4 w-4" /> Start Over
                       </Button>
@@ -406,10 +448,10 @@ export default function AssessmentHome() {
                         href="/assessment/session"
                         className={cn(
                           buttonVariants({ variant: "default", size: "default" }),
-                          "font-bold shadow-md shadow-primary/20 h-10 px-6 gap-1.5 flex items-center justify-center"
+                          "font-bold shadow-md shadow-emerald-500/20 bg-emerald-500 hover:bg-emerald-600 text-white h-10 px-6 gap-1.5 flex items-center justify-center"
                         )}
                       >
-                        Resume Assessment <Play className="h-4 w-4 fill-primary-foreground" />
+                        Resume Assessment <Play className="h-4 w-4 fill-white" />
                       </Link>
                     </>
                   ) : (
@@ -417,7 +459,7 @@ export default function AssessmentHome() {
                       href="/assessment/session"
                       className={cn(
                         buttonVariants({ variant: "default", size: "default" }),
-                        "font-bold shadow-md shadow-primary/20 h-10 px-6 gap-1.5 flex items-center justify-center w-full sm:w-auto"
+                        "font-bold shadow-md shadow-emerald-500/20 bg-emerald-500 hover:bg-emerald-600 text-white h-10 px-6 gap-1.5 flex items-center justify-center w-full sm:w-auto"
                       )}
                     >
                       Start Assessment <ChevronRight className="h-4.5 w-4.5" />
@@ -426,21 +468,21 @@ export default function AssessmentHome() {
                 </div>
               ) : (
                 // UNPAID STATE -> Checkout Flow
-                <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5">
+                <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4 p-4 rounded-xl border border-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-950/30 dark:border-emerald-500/30">
                   <div className="flex flex-col gap-1 w-full md:w-1/2">
-                    <p className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <CreditCard className="h-4 w-4 text-primary" /> Unlock Assessment
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                      <CreditCard className="h-4 w-4 text-emerald-600 dark:text-emerald-400" /> Unlock Assessment
                     </p>
-                    <p className="text-xs text-muted-foreground">Access your comprehensive 80-question career mapping assessment.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Access your comprehensive 80-question career mapping assessment.</p>
                   </div>
                   <div className="flex flex-col w-full md:w-auto items-end gap-2">
                     <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
                       <div className="relative w-full sm:w-48">
-                        <Tag className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+                        <Tag className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                         <Input
                           type="text"
                           placeholder="Coupon Code"
-                          className="pl-9 h-10 bg-slate-900 border-slate-700 text-slate-100 text-sm uppercase placeholder:text-slate-500"
+                          className="pl-9 h-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-sm uppercase placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-sm"
                           value={couponCode}
                           onChange={(e) => {
                             setCouponCode(e.target.value);
@@ -450,7 +492,7 @@ export default function AssessmentHome() {
                       </div>
                       <Button 
                         variant="secondary" 
-                        className="h-10 px-4 whitespace-nowrap text-xs border border-border/50" 
+                        className="h-10 px-4 whitespace-nowrap text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200" 
                         onClick={handleApplyCoupon}
                         disabled={checkingCoupon || !couponCode}
                       >
@@ -459,10 +501,10 @@ export default function AssessmentHome() {
                       <Button 
                         onClick={handlePayment} 
                         disabled={paying}
-                        className="w-full sm:w-auto h-10 px-6 font-bold shadow-lg shadow-primary/20 gap-2"
+                        className="w-full sm:w-auto h-10 px-6 font-bold shadow-lg shadow-emerald-500/20 bg-emerald-500 hover:bg-emerald-600 text-white gap-2"
                       >
                         {paying ? (
-                          <div className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                          <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : discount === 100 ? (
                           <Play className="h-4 w-4 fill-current" />
                         ) : (

@@ -165,6 +165,26 @@ export default function AnalyzingTransition() {
 
         await updateDoc(sessionRef, sessionPayload);
 
+        // Immediate Local Storage sync so Results and Print view render instantaneously
+        try {
+          localStorage.setItem("whatafter_active_report", JSON.stringify(sessionPayload));
+          localStorage.setItem("whatafter_print_data", JSON.stringify(sessionPayload));
+        } catch (e) {}
+
+        // Auto-archive report to user's reports collection so it is permanently saved in history
+        try {
+          const { collection, addDoc } = await import("firebase/firestore");
+          const archiveSnap = await addDoc(collection(db, "users", user.uid, "reports"), {
+            ...sessionPayload,
+            archivedAt: new Date().toISOString()
+          });
+          if (archiveSnap?.id) {
+            await updateDoc(sessionRef, { archivedReportId: archiveSnap.id });
+          }
+        } catch (archiveErr) {
+          console.warn("Could not auto-archive report:", archiveErr);
+        }
+
         // Async secondary database mirror to Supabase
         syncAssessmentSessionToSupabase(user.uid, sessionPayload);
 

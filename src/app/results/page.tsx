@@ -153,6 +153,7 @@ export default function ResultsDashboard() {
   
   // Local state to track checked quests
   const [completedQuests, setCompletedQuests] = useState<Record<string, boolean>>({});
+  const sessionDataRef = React.useRef<any>(null);
 
   useEffect(() => {
     async function fetchResults() {
@@ -162,6 +163,12 @@ export default function ResultsDashboard() {
         const sessionSnap = await getDoc(sessionRef);
         if (sessionSnap.exists()) {
           const data = sessionSnap.data();
+          sessionDataRef.current = data;
+          try {
+            localStorage.setItem("whatafter_print_data", JSON.stringify(data));
+            localStorage.setItem("whatafter_active_report", JSON.stringify(data));
+          } catch (e) {}
+
           if (data.status === "completed") {
             if (data.scores && data.recommendations) {
               setScores(data.scores);
@@ -195,24 +202,34 @@ export default function ResultsDashboard() {
     
     setResetting(true);
     try {
-      // 1. Archive the current report
+      // 1. Archive the current report if not already archived
       const sessionRef = doc(db, "assessment_sessions", user.uid);
       const sessionSnap = await getDoc(sessionRef);
       if (sessionSnap.exists()) {
         const reportData = sessionSnap.data();
-        await addDoc(collection(db, "users", user.uid, "reports"), {
-          ...reportData,
-          archivedAt: new Date().toISOString()
-        });
+        if (!reportData.archivedReportId) {
+          await addDoc(collection(db, "users", user.uid, "reports"), {
+            ...reportData,
+            archivedAt: new Date().toISOString()
+          });
+        }
       }
 
       // 2. Reset payment status
       await updateProfile({ hasPaid: false });
 
-      // 3. Delete active session
+      // 3. Clear active report local caches
+      try {
+        localStorage.removeItem("whatafter_active_report");
+        localStorage.removeItem("whatafter_print_data");
+        sessionStorage.removeItem("whatafter_active_report");
+        sessionStorage.removeItem("whatafter_print_data");
+      } catch (e) {}
+
+      // 4. Delete active session
       await deleteDoc(sessionRef);
       
-      // 4. Redirect to dashboard
+      // 5. Redirect to dashboard
       router.push("/");
     } catch (err) {
       console.error("Failed to delete active session:", err);
@@ -221,6 +238,12 @@ export default function ResultsDashboard() {
   };
 
   const handleDownloadPDF = () => {
+    try {
+      if (sessionDataRef.current) {
+        localStorage.setItem("whatafter_active_report", JSON.stringify(sessionDataRef.current));
+        localStorage.setItem("whatafter_print_data", JSON.stringify(sessionDataRef.current));
+      }
+    } catch (e) {}
     window.open("/results/print", "_blank");
   };
 
@@ -349,11 +372,11 @@ export default function ResultsDashboard() {
     });
 
     return (
-      <div className="w-full flex flex-col items-center justify-center bg-slate-900/40 rounded-3xl p-6 border border-slate-800 shadow-xl relative overflow-hidden">
-        <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-6">Trait Signature</h3>
+      <div className="w-full flex flex-col items-center justify-center bg-white dark:bg-slate-900/60 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-2xl relative overflow-hidden">
+        <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-6">Trait Signature</h3>
         <svg width="400" height="350" className="overflow-visible max-w-full">
           {webPoints.map((pts, i) => (
-            <polygon key={i} points={pts} fill="none" stroke="#334155" strokeWidth="1" />
+            <polygon key={i} points={pts} fill="none" className="stroke-slate-200 dark:stroke-slate-700/80" strokeWidth="1" />
           ))}
           {Array.from({ length: numPoints }).map((_, i) => (
             <line 
@@ -361,7 +384,7 @@ export default function ResultsDashboard() {
               x1={cx} y1={cy} 
               x2={cx + radius * Math.sin(i * angleStep)} 
               y2={cy - radius * Math.cos(i * angleStep)} 
-              stroke="#334155" 
+              className="stroke-slate-200 dark:stroke-slate-700/80" 
               strokeWidth="1" 
             />
           ))}
@@ -371,9 +394,9 @@ export default function ResultsDashboard() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
             points={points}
-            fill="rgba(16, 185, 129, 0.2)"
+            fill="rgba(16, 185, 129, 0.25)"
             stroke="#10b981"
-            strokeWidth="2"
+            strokeWidth="2.5"
             style={{ transformOrigin: "150px 150px" }}
           />
           
@@ -388,7 +411,7 @@ export default function ResultsDashboard() {
             const line2 = words.slice(Math.ceil(words.length / 2)).join(" ");
 
             return (
-              <text key={i} x={x} y={y} fontSize="11" fill="#94a3b8" textAnchor="middle" dominantBaseline="middle" className="font-bold tracking-wider">
+              <text key={i} x={x} y={y} fontSize="11" textAnchor="middle" dominantBaseline="middle" className="font-bold tracking-wider fill-slate-700 dark:fill-slate-300">
                 <tspan x={x} dy={line2 ? "-0.6em" : "0"}>{line1.toUpperCase()}</tspan>
                 {line2 && <tspan x={x} dy="1.2em">{line2.toUpperCase()}</tspan>}
               </text>
@@ -417,13 +440,13 @@ export default function ResultsDashboard() {
         
         {/* Header Section */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
             <CheckCircle2 className="h-3.5 w-3.5" /> Assessment Complete
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-foreground">
-            Your Future is <span className="text-primary">Unlocking</span>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
+            Your Future is <span className="text-emerald-600 dark:text-emerald-400">Unlocking</span>
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
             We've analyzed your psychometric profile. Click on the locked cards below to reveal your top 3 scientifically-backed career recommendations!
           </p>
         </div>
@@ -433,15 +456,15 @@ export default function ResultsDashboard() {
 
         {/* Dynamic Archetype Banner (Identity Gamification) */}
         {archetype && (
-          <div className="w-full max-w-3xl border border-primary/30 bg-primary/5 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 shadow-xl relative overflow-hidden">
-            <div className="absolute -right-10 -top-10 h-40 w-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="h-24 w-24 shrink-0 rounded-2xl bg-gradient-to-br from-primary to-primary/50 flex items-center justify-center shadow-lg shadow-primary/20 border border-primary/20 rotate-3 transition-transform hover:rotate-6">
-              <Sparkles className="h-10 w-10 text-primary-foreground" />
+          <div className="w-full max-w-3xl border border-emerald-500/30 bg-emerald-50/60 dark:bg-emerald-950/20 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 shadow-xl shadow-emerald-500/5 relative overflow-hidden">
+            <div className="absolute -right-10 -top-10 h-40 w-40 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="h-24 w-24 shrink-0 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 border border-emerald-400/30 rotate-3 transition-transform hover:rotate-6">
+              <Sparkles className="h-10 w-10 text-white" />
             </div>
             <div className="flex-1 text-center sm:text-left space-y-2 z-10">
-              <div className="text-xs font-black uppercase tracking-widest text-primary">Your Core Archetype</div>
-              <h2 className="text-2xl sm:text-3xl font-black text-foreground">{archetype.title}</h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">{archetype.description}</p>
+              <div className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Your Core Archetype</div>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">{archetype.title}</h2>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{archetype.description}</p>
             </div>
           </div>
         )}
@@ -459,45 +482,45 @@ export default function ResultsDashboard() {
                 className={cn(
                   "relative h-[280px] w-full rounded-3xl border-2 transition-all duration-700 preserve-3d cursor-pointer flex flex-col items-center justify-center p-6 text-center shadow-xl group",
                   isRevealed 
-                    ? "bg-card border-primary/30 shadow-primary/10 rotate-y-180" 
+                    ? "bg-white dark:bg-slate-900 border-emerald-500/30 shadow-emerald-500/10 rotate-y-180" 
                     : isNextToReveal 
-                      ? "bg-slate-900 border-primary shadow-[0_0_30px_rgba(var(--primary),0.3)] animate-pulse hover:scale-105" 
-                      : "bg-slate-900 border-border/40 opacity-70 cursor-not-allowed"
+                      ? "bg-emerald-50/70 dark:bg-slate-900 border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.2)] animate-pulse hover:scale-105" 
+                      : "bg-slate-100/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 opacity-70 cursor-not-allowed"
                 )}
               >
                 {/* Unrevealed State (Front of card) */}
                 <div className={cn("absolute inset-0 flex flex-col items-center justify-center backface-hidden", isRevealed ? "hidden" : "flex")}>
                   {isNextToReveal ? (
                     <>
-                      <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <Unlock className="h-8 w-8 text-primary" />
+                      <div className="h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <Unlock className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
                       </div>
-                      <h3 className="font-black text-lg text-primary uppercase tracking-widest">Tap to Reveal</h3>
-                      <p className="text-xs text-muted-foreground mt-2 font-bold uppercase">Match #{index + 1}</p>
+                      <h3 className="font-black text-lg text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Tap to Reveal</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 font-bold uppercase">Match #{index + 1}</p>
                     </>
                   ) : (
                     <>
-                      <Lock className="h-10 w-10 text-muted-foreground/50 mb-4" />
-                      <h3 className="font-bold text-sm text-muted-foreground/70 uppercase tracking-widest">Locked</h3>
-                      <p className="text-xs text-muted-foreground/50 mt-2 font-bold uppercase">Reveal #{index} first</p>
+                      <Lock className="h-10 w-10 text-slate-400 dark:text-slate-500 mb-4" />
+                      <h3 className="font-bold text-sm text-slate-500 dark:text-slate-400 uppercase tracking-widest">Locked</h3>
+                      <p className="text-xs text-slate-400 dark:text-slate-500 mt-2 font-bold uppercase">Reveal #{index} first</p>
                     </>
                   )}
                 </div>
 
                 {/* Revealed State (Back of card - mentally rotate it back) */}
-                <div className={cn("absolute inset-0 flex flex-col items-center justify-center p-6 space-y-4 rounded-3xl bg-card border border-border/50", isRevealed ? "flex rotate-y-180" : "hidden")}>
+                <div className={cn("absolute inset-0 flex flex-col items-center justify-center p-6 space-y-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800", isRevealed ? "flex rotate-y-180" : "hidden")}>
                   <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Match #{index + 1}</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded-full border border-emerald-500/20">{rec.fitScore}% Fit</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Match #{index + 1}</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20">{rec.fitScore}% Fit</span>
                   </div>
-                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/20 mt-4">
-                    <Briefcase className="h-7 w-7 text-primary" />
+                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 flex items-center justify-center border border-emerald-500/20 mt-4">
+                    <Briefcase className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div className="space-y-1 w-full">
-                    <h3 className="font-black text-lg text-foreground leading-tight">{rec.title}</h3>
-                    <p className="text-xs text-primary font-bold">{rec.sector}</p>
+                    <h3 className="font-black text-lg text-slate-900 dark:text-white leading-tight">{rec.title}</h3>
+                    <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">{rec.sector}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground line-clamp-3 leading-relaxed w-full">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed w-full">
                     {rec.whyRecommended}
                   </p>
                 </div>
@@ -508,12 +531,12 @@ export default function ResultsDashboard() {
 
         {/* Download PDF CTA - Only shows when all 3 are revealed */}
         <div className={cn("transition-all duration-1000 transform max-w-md w-full", revealedCount === 3 ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none")}>
-          <Card className="border-border/40 bg-gradient-to-br from-card/90 via-card/70 to-card/50 backdrop-blur-xl shadow-2xl p-8 relative overflow-hidden text-center space-y-6">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-primary to-emerald-400" />
+          <Card className="border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl p-8 relative overflow-hidden text-center space-y-6">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400" />
             
             <div className="text-center space-y-4">
-              <h3 className="font-black text-xl">Get Your Full 15-Page Report</h3>
-              <p className="text-muted-foreground text-sm max-w-md mx-auto">
+              <h3 className="font-black text-xl text-slate-900 dark:text-white">Get Your Full 15-Page Report</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-sm max-w-md mx-auto">
                 Unlock the deep-dive analysis of your psychometric traits, detailed roadmaps, entrance exams, and salary trajectories for all 15 career matches.
               </p>
             </div>
@@ -521,12 +544,12 @@ export default function ResultsDashboard() {
             <Button 
               onClick={handleDownloadPDF} 
               size="lg"
-              className="w-full font-black text-sm uppercase tracking-wider shadow-xl shadow-primary/20 flex items-center justify-center gap-2.5 h-12 bg-primary hover:bg-primary/90 text-primary-foreground transition-all hover:scale-105"
+              className="w-full font-black text-sm uppercase tracking-wider shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2.5 h-12 bg-emerald-500 hover:bg-emerald-600 text-white transition-all hover:scale-105"
             >
               <Download className="h-5 w-5" /> Download Full PDF Report
             </Button>
             
-            <button onClick={handleStartOver} disabled={resetting} className="text-xs text-muted-foreground hover:text-foreground font-semibold flex items-center justify-center gap-1.5 w-full mx-auto transition-colors">
+            <button onClick={handleStartOver} disabled={resetting} className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 font-semibold flex items-center justify-center gap-1.5 w-full mx-auto transition-colors">
               <RotateCcw className="h-3.5 w-3.5" /> {resetting ? "Resetting..." : "Start over and retake assessment"}
             </button>
           </Card>

@@ -12,12 +12,12 @@ export async function POST(req: Request) {
     // Handle Coupons
     if (couponCode && uid) {
       try {
-        const normalizedCode = couponCode.toUpperCase();
+        const normalizedCode = couponCode.trim().toUpperCase();
         
         // Check if user already used this coupon
         const userSnap = await adminDb.collection("users").doc(uid).get();
         if (userSnap.exists && userSnap.data()?.usedCoupons?.includes(normalizedCode)) {
-           return NextResponse.json({ error: "Coupon already used" }, { status: 400 });
+           return NextResponse.json({ error: "This coupon code has already been used by your account. Each coupon can only be used once." }, { status: 400 });
         }
 
         const couponRef = await adminDb.collection("coupons").doc(normalizedCode).get();
@@ -34,8 +34,19 @@ export async function POST(req: Request) {
       }
     }
 
-    // If it's a 100% discount, return immediately
+    // If it's a 100% discount, record coupon usage and grant access immediately
     if (finalAmount <= 0) {
+      if (couponCode && uid) {
+        const normalizedCode = couponCode.trim().toUpperCase();
+        const { FieldValue } = await import("firebase-admin/firestore");
+        await adminDb.collection("users").doc(uid).set({
+          hasPaid: true,
+          paidAt: new Date().toISOString(),
+          orderId: `free_${normalizedCode}_${Date.now()}`,
+          usedCoupons: FieldValue.arrayUnion(normalizedCode)
+        }, { merge: true });
+      }
+
       return NextResponse.json({ 
         orderId: null, 
         amount: 0, 

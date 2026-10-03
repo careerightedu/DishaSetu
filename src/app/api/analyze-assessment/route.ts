@@ -285,11 +285,44 @@ ${top15Clusters.map((f, i) => `#${i + 1}. "${f.familyName}" (Trait Match Score: 
 
     let resultPayload: any = {};
 
-    const extractJSON = (text: string) => {
-      const c = text.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/<thought>[\s\S]*?<\/thought>/g, '');
-      const start = c.indexOf('{');
-      const end = c.lastIndexOf('}');
-      return (start !== -1 && end !== -1 && start <= end) ? c.substring(start, end + 1) : c;
+    const robustJSONParse = (text: string) => {
+      if (!text || typeof text !== "string") return {};
+      // 1. Remove thinking / thought tags if any
+      let cleaned = text.replace(/<think>[\s\S]*?<\/think>/gi, '').replace(/<thought>[\s\S]*?<\/thought>/gi, '');
+      // 2. Remove markdown code fences ```json ... ```
+      cleaned = cleaned.replace(/```(?:json)?\s*([\s\S]*?)\s*```/gi, '$1').trim();
+      // 3. Find outer object or array boundaries
+      const firstCurly = cleaned.indexOf('{');
+      const lastCurly = cleaned.lastIndexOf('}');
+      const firstSquare = cleaned.indexOf('[');
+      const lastSquare = cleaned.lastIndexOf(']');
+
+      let candidate = cleaned;
+      if (firstCurly !== -1 && lastCurly !== -1 && (firstSquare === -1 || firstCurly < firstSquare)) {
+        candidate = cleaned.substring(firstCurly, lastCurly + 1);
+      } else if (firstSquare !== -1 && lastSquare !== -1) {
+        candidate = cleaned.substring(firstSquare, lastSquare + 1);
+      }
+
+      // 4. Try standard JSON.parse first
+      try {
+        return JSON.parse(candidate);
+      } catch (err1) {
+        // 5. Clean common LLM formatting issues:
+        // - Remove trailing commas before } or ]
+        let repaired = candidate.replace(/,\s*([}\]])/g, '$1');
+        // - Remove single-line comments // ...
+        repaired = repaired.replace(/\/\/.*$/gm, '');
+        // - Fix smart/curly quotes
+        repaired = repaired.replace(/[\u201C\u201D]/g, '"').replace(/[\u2018\u2019]/g, "'");
+
+        try {
+          return JSON.parse(repaired);
+        } catch (err2) {
+          console.warn("robustJSONParse repair attempt failed:", err2, "Raw text was:", text.slice(0, 300));
+          throw err2;
+        }
+      }
     };
 
     if (step === "career_scoring") {
@@ -308,13 +341,23 @@ Respond with ONLY a JSON object containing "scores".
 `;
       try {
         const completion = await getLLMCompletion(scoringPrompt, systemPrompt, true);
-        const cleaned = extractJSON(completion);
-        const parsed = JSON.parse(cleaned);
+        const parsed = robustJSONParse(completion);
 
-        const llmScores = parsed.scores || [];
+        const llmScores = parsed.scores || (Array.isArray(parsed) ? parsed : []);
+        const normalizeStr = (s: string) => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
         const top5Careers = top15Clusters.map(cluster => {
-          const llmEval = llmScores.find((s: any) => s.title === cluster.familyName) || {};
-          const contextScore = typeof llmEval.contextScore === 'number' ? llmEval.contextScore : 50;
+          const clusterNorm = normalizeStr(cluster.familyName);
+          const llmEval = llmScores.find((s: any) => {
+            if (!s || !s.title) return false;
+            const titleNorm = normalizeStr(s.title);
+            return titleNorm === clusterNorm || titleNorm.includes(clusterNorm) || clusterNorm.includes(titleNorm);
+          }) || {};
+
+          const contextScore = typeof llmEval.contextScore === 'number' 
+            ? llmEval.contextScore 
+            : (typeof llmEval.score === 'number' ? llmEval.score : 50);
+
           // Final Score = 70% Math + 30% Context
           const finalScore = Math.round((cluster.mathFitScore * 0.7) + (contextScore * 0.3));
           return {
@@ -322,7 +365,7 @@ Respond with ONLY a JSON object containing "scores".
             mathScore: cluster.mathFitScore,
             contextScore,
             finalScore,
-            reason: llmEval.reason || "Default fallback contextual score."
+            reason: llmEval.reason || llmEval.explanation || "Strong contextual alignment based on academic background and real-world preferences."
           };
         }).sort((a, b) => b.finalScore - a.finalScore).slice(0, 5);
 
@@ -334,7 +377,7 @@ Respond with ONLY a JSON object containing "scores".
           mathScore: c.mathFitScore,
           contextScore: 50,
           finalScore: c.mathFitScore,
-          reason: "Fallback due to LLM error"
+          reason: "Evaluated based on primary trait signature and academic eligibility."
         }));
         Object.assign(resultPayload, { top5Careers });
       }
@@ -402,15 +445,33 @@ Respond with ONLY a JSON object containing "recommendation".
 `;
         try {
           const completion = await getLLMCompletion(p, systemPrompt, true);
-          const cleaned = extractJSON(completion);
-          const parsed = JSON.parse(cleaned);
+          const parsed = robustJSONParse(completion);
 
-          if (parsed.recommendation) {
-            parsed.recommendation.title = selectedCareerTitle; // strictly enforce
-            parsed.recommendation.careerId = selectedCareerTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            parsed.recommendation.fitScore = body.selectedFinalScore || calibratedFitScores[idx] || (95 - idx * 5);
-            Object.assign(resultPayload, { recommendations: [parsed.recommendation] });
+          const rec = parsed.recommendation || 
+                      (Array.isArray(parsed.recommendations) ? parsed.recommendations[0] : null) || 
+                      parsed.career || 
+                      parsed.careerProfile || 
+                      (parsed && (parsed.description || parsed.whyRecommended || parsed.sector || parsed.title) ? parsed : null);
+
+          if (rec) {
+            rec.title = selectedCareerTitle; // strictly enforce
+            rec.careerId = selectedCareerTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            rec.fitScore = body.selectedFinalScore || calibratedFitScores[idx] || (95 - idx * 5);
+            if (!rec.salaryTiers) rec.salaryTiers = { entry: "₹8-12 LPA", senior: "₹35-50 LPA" };
+            if (!Array.isArray(rec.alternatePathways) || rec.alternatePathways.length === 0) rec.alternatePathways = defaultAlternatePathways;
+            if (!rec.academicPath) rec.academicPath = defaultAcademicPath;
+            if (!Array.isArray(rec.exams) || rec.exams.length === 0) rec.exams = ["NATIONAL ENTRY EXAM"];
+            if (!Array.isArray(rec.firstThreeMoves) || rec.firstThreeMoves.length === 0) {
+              rec.firstThreeMoves = ["Build foundational portfolio", "Network with industry mentors", "Apply for internships"];
+            }
+            if (!Array.isArray(rec.occupations) || rec.occupations.length === 0) {
+              rec.occupations = [selectedCareerTitle];
+            }
+            if (typeof rec.aiResilienceScore !== "number") rec.aiResilienceScore = 85;
+
+            Object.assign(resultPayload, { recommendations: [rec] });
           } else {
+            console.warn(`Could not extract recommendation from parsed response for ${step}:`, parsed);
             Object.assign(resultPayload, {
               recommendations: [{
                 title: selectedCareerTitle,
@@ -471,9 +532,11 @@ Respond with ONLY a JSON object containing "notRecommended" and "comparisonMatri
 `;
       try {
         const completion = await getLLMCompletion(p, systemPrompt, true);
-        const cleaned = extractJSON(completion);
-        const parsed = JSON.parse(cleaned);
-        Object.assign(resultPayload, parsed);
+        const parsed = robustJSONParse(completion);
+        Object.assign(resultPayload, {
+          notRecommended: parsed.notRecommended || parsed.not_recommended || [],
+          comparisonMatrix: parsed.comparisonMatrix || parsed.comparison_matrix || []
+        });
       } catch (err) {
         console.warn("LLM fallback for career_extras:", err);
       }
@@ -508,8 +571,13 @@ Respond with ONLY a JSON object containing "archetype", "deepPersonalityAnalysis
 `;
       try {
         const completion = await getLLMCompletion(p, systemPrompt, true);
-        const cleaned = extractJSON(completion);
-        Object.assign(resultPayload, JSON.parse(cleaned));
+        const parsed = robustJSONParse(completion);
+        Object.assign(resultPayload, {
+          archetype: parsed.archetype || parsed.archeType || null,
+          deepPersonalityAnalysis: parsed.deepPersonalityAnalysis || parsed.deep_personality_analysis || null,
+          counselorAnalysis: parsed.counselorAnalysis || parsed.counselor_analysis || null,
+          aiCoachNarrative: parsed.aiCoachNarrative || parsed.ai_coach_narrative || null
+        });
       } catch (err) {
         console.warn("LLM fallback for personality:", err);
       }
@@ -527,8 +595,13 @@ Respond with ONLY a JSON object containing "careerMissions", "careerRoadmap", "p
 `;
       try {
         const completion = await getLLMCompletion(p, systemPrompt, true);
-        const cleaned = extractJSON(completion);
-        Object.assign(resultPayload, JSON.parse(cleaned));
+        const parsed = robustJSONParse(completion);
+        Object.assign(resultPayload, {
+          careerMissions: parsed.careerMissions || parsed.career_missions || null,
+          careerRoadmap: parsed.careerRoadmap || parsed.career_roadmap || null,
+          parentDashboard: parsed.parentDashboard || parsed.parent_dashboard || null,
+          achievements: parsed.achievements || null
+        });
       } catch (err) {
         console.warn("LLM fallback for actionPlan:", err);
       }

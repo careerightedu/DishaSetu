@@ -3,8 +3,8 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/features/auth/context/AuthContext";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { doc, getDoc, getDocFromCache } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 import { 
   CheckCircle2, ArrowRight, X, Sparkles, Award, Shield, Zap, TrendingUp, Compass, Target, Clock, BookOpen, User
 } from "lucide-react";
@@ -167,46 +167,146 @@ function CareerDiscoveryJourneyPrintInner() {
   const searchParams = useSearchParams();
   const reportId = searchParams.get("reportId");
 
+  const applyReportData = (data: any): boolean => {
+    if (!data) return false;
+    const recs = data.recommendations;
+    if (recs && Array.isArray(recs) && recs.length > 0) {
+      setScores(data.scores || null);
+      setRecommendations(recs);
+      setNotRecommended(data.notRecommended || null);
+      setArchetype(data.archetype || null);
+      setDeepPersonalityAnalysis(data.deepPersonalityAnalysis || null);
+      setComparisonMatrix(data.comparisonMatrix || null);
+      setCounselorAnalysis(data.counselorAnalysis || null);
+      setAiCoachNarrative(data.aiCoachNarrative || null);
+      setCareerMissions(data.careerMissions || null);
+      setCareerRoadmap(data.careerRoadmap || null);
+      setParentDashboard(data.parentDashboard || null);
+      setContextualSummary(data.contextualSummary || null);
+      return true;
+    }
+    return false;
+  };
+
   useEffect(() => {
+    let cancelled = false;
+
+    // 1. Instant check from localStorage (instant 0ms render if opened from Results page or Past Report)
+    try {
+      let cached: string | null = null;
+      if (reportId) {
+        cached = localStorage.getItem(`whatafter_report_${reportId}`) || 
+                 sessionStorage.getItem(`whatafter_report_${reportId}`);
+      } else {
+        cached = localStorage.getItem("whatafter_active_report") || 
+                 sessionStorage.getItem("whatafter_active_report") ||
+                 localStorage.getItem("whatafter_print_data");
+      }
+
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (applyReportData(parsed)) {
+          setLoading(false);
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn("Could not read local print cache:", e);
+    }
+
     async function fetchResults() {
-      if (authLoading) return;
-      if (!user) {
-        setLoading(false);
+      const currentUid = user?.uid || auth.currentUser?.uid;
+
+      if (authLoading && !currentUid) {
+        return; // Wait for onAuthStateChanged or safety watchdog timer
+      }
+
+      const uid = currentUid;
+      if (!uid) {
+        // Last check of cached data
+        try {
+          const cached = reportId 
+            ? (localStorage.getItem(`whatafter_report_${reportId}`) || sessionStorage.getItem(`whatafter_report_${reportId}`))
+            : (localStorage.getItem("whatafter_active_report") || localStorage.getItem("whatafter_print_data"));
+          if (cached && applyReportData(JSON.parse(cached))) {
+            if (!cancelled) setLoading(false);
+            return;
+          }
+        } catch (e) {}
+        if (!cancelled) setLoading(false);
         return;
       }
+
       try {
         let sessionRef;
         if (reportId) {
-          sessionRef = doc(db, "users", user.uid, "reports", reportId);
+          sessionRef = doc(db, "users", uid, "reports", reportId);
         } else {
-          sessionRef = doc(db, "assessment_sessions", user.uid);
+          sessionRef = doc(db, "assessment_sessions", uid);
         }
-        
-        const sessionSnap = await getDoc(sessionRef);
-        if (sessionSnap.exists()) {
+
+        // Try offline cache first for 0ms load, then network with 5s timeout
+        let sessionSnap;
+        try {
+          sessionSnap = await getDocFromCache(sessionRef);
+        } catch {
+          const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("Firestore fetch timeout")), 5000)
+          );
+          sessionSnap = (await Promise.race([getDoc(sessionRef), timeoutPromise])) as any;
+        }
+
+        if (!cancelled && sessionSnap && sessionSnap.exists()) {
           const data = sessionSnap.data();
-          if (data.status === "completed" && data.recommendations) {
-            setScores(data.scores || null);
-            setRecommendations(data.recommendations || []);
-            setNotRecommended(data.notRecommended || null);
-            setArchetype(data.archetype || null);
-            setDeepPersonalityAnalysis(data.deepPersonalityAnalysis || null);
-            setComparisonMatrix(data.comparisonMatrix || null);
-            setCounselorAnalysis(data.counselorAnalysis || null);
-            setAiCoachNarrative(data.aiCoachNarrative || null);
-            setCareerMissions(data.careerMissions || null);
-            setCareerRoadmap(data.careerRoadmap || null);
-            setParentDashboard(data.parentDashboard || null);
-            setContextualSummary(data.contextualSummary || null);
+          if (applyReportData(data)) {
+            try {
+              if (reportId) {
+                localStorage.setItem(`whatafter_report_${reportId}`, JSON.stringify(data));
+              } else {
+                localStorage.setItem("whatafter_active_report", JSON.stringify(data));
+                localStorage.setItem("whatafter_print_data", JSON.stringify(data));
+              }
+            } catch (e) {}
           }
         }
       } catch (err) {
         console.error("Error loading print details:", err);
+        try {
+          const cached = reportId 
+            ? (localStorage.getItem(`whatafter_report_${reportId}`) || sessionStorage.getItem(`whatafter_report_${reportId}`))
+            : (localStorage.getItem("whatafter_active_report") || localStorage.getItem("whatafter_print_data"));
+          if (cached && !cancelled) {
+            applyReportData(JSON.parse(cached));
+          }
+        } catch (e) {}
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
+
     fetchResults();
+
+    // 2. Safety Watchdog Timer: Never let user be stuck permanently on loading screen
+    const safetyTimer = setTimeout(() => {
+      if (!cancelled) {
+        try {
+          const cached = reportId 
+            ? (localStorage.getItem(`whatafter_report_${reportId}`) || sessionStorage.getItem(`whatafter_report_${reportId}`))
+            : (localStorage.getItem("whatafter_active_report") || localStorage.getItem("whatafter_print_data"));
+          if (cached) {
+            applyReportData(JSON.parse(cached));
+          }
+        } catch (e) {}
+        setLoading(false);
+      }
+    }, 4500);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(safetyTimer);
+    };
   }, [user, authLoading, reportId]);
 
   useEffect(() => {
@@ -230,8 +330,20 @@ function CareerDiscoveryJourneyPrintInner() {
 
   if (!recommendations || recommendations.length === 0) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#0B1120] text-white">
-        <h1 className="text-xl font-bold text-red-500 font-mono">Journey Data Not Found</h1>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#0B1120] text-white p-6 text-center space-y-4">
+        <div className="h-12 w-12 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
+          <X className="h-6 w-6" />
+        </div>
+        <h1 className="text-xl font-bold text-red-400 font-mono">Journey Data Not Found</h1>
+        <p className="text-xs text-slate-400 max-w-sm">
+          We couldn&apos;t retrieve your completed assessment session data. Please return to your Results dashboard and click &quot;Download Full PDF Report&quot; again.
+        </p>
+        <button
+          onClick={() => window.location.href = "/results"}
+          className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all"
+        >
+          Go to Results Dashboard
+        </button>
       </div>
     );
   }

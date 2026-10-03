@@ -21,25 +21,22 @@ export async function POST(req: Request) {
     if (generated_signature === razorpay_signature) {
       // Signature is valid. Update user document to mark hasPaid: true
       try {
+        const { FieldValue } = await import("firebase-admin/firestore");
         const userRef = adminDb.collection("users").doc(uid);
-        const userSnap = await userRef.get();
-        const userData = userSnap.data();
         
-        const usedCoupons = userData?.usedCoupons || [];
-        if (couponCode) {
-           const normalizedCode = couponCode.toUpperCase();
-           if (!usedCoupons.includes(normalizedCode)) {
-             usedCoupons.push(normalizedCode);
-           }
-        }
-
-        await userRef.set({
+        const updatePayload: any = {
           hasPaid: true,
           paymentId: razorpay_payment_id,
           orderId: razorpay_order_id,
-          paidAt: new Date().toISOString(),
-          usedCoupons
-        }, { merge: true });
+          paidAt: new Date().toISOString()
+        };
+
+        if (couponCode) {
+          const normalizedCode = couponCode.trim().toUpperCase();
+          updatePayload.usedCoupons = FieldValue.arrayUnion(normalizedCode);
+        }
+
+        await userRef.set(updatePayload, { merge: true });
       } catch (adminErr) {
         console.warn("Could not update user via adminDb (likely missing local credentials). The client SDK will handle it locally.", adminErr);
       }
