@@ -3,7 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthContextProvider } from "@/features/auth/context/AuthContext";
-
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,11 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable, playfair.variable)}>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", inter.variable, playfair.variable)}>
       <body className="antialiased bg-background text-foreground min-h-[100dvh] flex flex-col">
-        <AuthContextProvider>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <AuthContextProvider>
             {children}
-        </AuthContextProvider>
+          </AuthContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

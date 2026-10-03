@@ -35,6 +35,7 @@ interface Recommendation {
   whatYouWillLove?: string;
   challenges?: string;
   growth?: string;
+  skillGapsDescription?: string;
   occupations?: string[];
   firstThreeMoves?: string[];
 }
@@ -73,11 +74,17 @@ interface CounselorAnalysis {
   whatItMeans?: string;
   watchOut?: string;
   cognitiveStyle?: string;
+  cognitiveStyleTitle?: string;
   decisionMaking?: string;
+  decisionMakingTitle?: string;
   learningStyle?: string;
+  learningStyleTitle?: string;
   communicationStyle?: string;
+  communicationStyleTitle?: string;
   collaborationStyle?: string;
+  collaborationStyleTitle?: string;
   idealEnvironment?: string;
+  idealEnvironmentTitle?: string;
   strengths?: string[];
   blindspots?: string[];
   adjustmentAdvice?: string;

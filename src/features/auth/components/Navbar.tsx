@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/features/auth/context/AuthContext";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { 
   LogOut, 
   User, 
@@ -25,11 +25,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Navbar() {
   const { user, profile, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   React.useEffect(() => {
     setMobileMenuOpen(false);
@@ -97,17 +99,17 @@ export default function Navbar() {
                       )}
                     </DropdownMenuLabel>
                   </DropdownMenuGroup>
-                  <DropdownMenuItem asChild className="focus:bg-muted/60 cursor-pointer p-0">
-                    <Link href="/profile" className="flex items-center gap-2 w-full px-2.5 py-1.5">
+                  <DropdownMenuItem className="focus:bg-muted/60 cursor-pointer p-0" onClick={() => router.push("/profile")}>
+                    <div className="flex items-center gap-2 w-full px-2.5 py-1.5">
                       <User className="h-4 w-4 text-muted-foreground" />
                       <span>Edit Profile</span>
-                    </Link>
+                    </div>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="focus:bg-muted/60 cursor-pointer p-0">
-                    <Link href="/admin" className="flex items-center gap-2 w-full px-2.5 py-1.5">
+                  <DropdownMenuItem className="focus:bg-muted/60 cursor-pointer p-0" onClick={() => router.push("/admin")}>
+                    <div className="flex items-center gap-2 w-full px-2.5 py-1.5">
                       <ClipboardList className="h-4 w-4 text-muted-foreground" />
                       <span>Admin Panel</span>
-                    </Link>
+                    </div>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-border/40" />
                   <DropdownMenuItem className="focus:bg-destructive/10 text-destructive focus:text-destructive cursor-pointer" onClick={() => logout()}>
@@ -135,8 +137,9 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Menu toggle (Always visible) */}
-        <div className="flex">
+        {/* Actions: Theme Toggle + Menu */}
+        <div className="flex items-center gap-1 sm:gap-2">
+          <ThemeToggle />
           <Button
             variant="ghost"
             size="icon"
@@ -222,6 +225,11 @@ export default function Navbar() {
               </Link>
             </div>
           )}
+
+          {/* Quick Theme Toggle in Drawer */}
+          <div className="pt-2 border-t border-border/30">
+            <ThemeToggle showLabel />
+          </div>
         </div>
       )}
     </nav>

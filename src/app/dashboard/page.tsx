@@ -339,7 +339,7 @@ export default function Dashboard() {
                         <div>
                           <p className="font-semibold text-sm hover:underline">WhatAfter Career Intelligence Report</p>
                           <p className="text-xs text-muted-foreground mt-1">
-                            Archived on: {new Date(report.archivedAt).toLocaleDateString("en-IN", {
+                            Archived on: {new Date(report.archivedAt || Date.now()).toLocaleDateString("en-IN", {
                               day: 'numeric',
                               month: 'long',
                               year: 'numeric',
