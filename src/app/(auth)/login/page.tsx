@@ -4,10 +4,11 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/features/auth/context/AuthContext";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function LoginPage() {
   const { loginWithGoogle } = useAuth();
@@ -44,12 +45,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden bg-background text-foreground">
+    <div className="flex min-h-[100dvh] flex-col justify-between p-4 sm:p-6 lg:p-8 relative overflow-hidden bg-slate-50 dark:bg-background text-slate-900 dark:text-foreground selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200">
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         {/* Animated Grid */}
         <div 
-          className="absolute inset-0 bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:3rem_3rem]"
+          className="absolute inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:3rem_3rem]"
           style={{
             transform: `perspective(1000px) rotateX(60deg) translateY(-50px) translateZ(-200px)`,
             transformOrigin: "top center",
@@ -58,7 +59,7 @@ export default function LoginPage() {
         
         {/* Glow Orbs */}
         <motion.div 
-          className="absolute top-[10%] left-[10%] w-[40%] h-[40%] rounded-full bg-emerald-600/20 blur-[120px]"
+          className="absolute top-[10%] left-[10%] w-[40%] h-[40%] rounded-full bg-emerald-500/10 dark:bg-emerald-600/20 blur-[120px]"
           animate={{
             x: mousePosition.x * 30,
             y: mousePosition.y * 30,
@@ -66,7 +67,7 @@ export default function LoginPage() {
           transition={{ type: "spring", damping: 50, stiffness: 10 }}
         />
         <motion.div 
-          className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] rounded-full bg-blue-600/15 blur-[120px]"
+          className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-[120px]"
           animate={{
             x: mousePosition.x * -30,
             y: mousePosition.y * -30,
@@ -75,18 +76,29 @@ export default function LoginPage() {
         />
       </div>
 
+      {/* Top Header Navigation */}
+      <header className="w-full max-w-5xl mx-auto flex items-center justify-between relative z-20 mb-6">
+        <Link 
+          href="/" 
+          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-3 py-1.5 rounded-lg bg-white/70 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 shadow-sm backdrop-blur-md transition-colors"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to Home
+        </Link>
+        <ThemeToggle />
+      </header>
+
       {/* Main Container: Split 2-Column on LG, Stacked on Mobile */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10 px-2 sm:px-4 my-auto"
+        className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10 px-2 sm:px-4 my-auto py-4"
       >
         
         {/* Left Column: Big Brand Logo & Name */}
         <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left space-y-5 lg:pr-6">
           <Link href="/" className="inline-flex items-center gap-3 sm:gap-4 group">
-            <div className="flex h-14 w-14 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-white/5 border border-white/10 shadow-2xl shadow-emerald-500/10 p-2.5 sm:p-3 transition-transform group-hover:scale-105 shrink-0">
+            <div className="flex h-14 w-14 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-emerald-500 shadow-xl shadow-emerald-500/25 p-2.5 sm:p-3 transition-transform group-hover:scale-105 shrink-0">
               <Image 
                 src="/what_after_logo_white.png" 
                 alt="WhatAfter Logo" 
@@ -96,28 +108,28 @@ export default function LoginPage() {
                 priority
               />
             </div>
-            <span className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white whitespace-nowrap">
-              What<span className="text-emerald-400 font-extrabold">After</span>
+            <span className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-950 dark:text-white whitespace-nowrap">
+              What<span className="text-emerald-600 dark:text-emerald-400 font-extrabold">After</span>
             </span>
           </Link>
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-md leading-relaxed font-normal">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-md leading-relaxed font-normal">
             AI-Powered Career Intelligence for Class 8 to College. Mapping 35 cognitive traits to actionable, high-demand roadmaps.
           </p>
 
           {/* Value Proof Badges */}
-          <div className="hidden sm:flex flex-col gap-2.5 text-xs text-slate-400 pt-1">
+          <div className="hidden sm:flex flex-col gap-2.5 text-xs text-slate-700 dark:text-slate-300 pt-1">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>35-Trait Cognitive Aptitudes &amp; Work Values</span>
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span className="font-medium">35-Trait Cognitive Aptitudes &amp; Work Values</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Real Salary Trajectories &amp; AI-Resilience Scores</span>
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span className="font-medium">Real Salary Trajectories &amp; AI-Resilience Scores</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Available in English &amp; Hindi (हिंदी)</span>
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span className="font-medium">Available in English &amp; Hindi (हिंदी)</span>
             </div>
           </div>
         </div>
@@ -125,23 +137,23 @@ export default function LoginPage() {
         {/* Right Column: Login Card & Actions */}
         <div className="w-full max-w-md mx-auto space-y-4">
           <div className="text-center lg:text-left space-y-1">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Welcome back</h1>
-            <p className="text-sm text-slate-400">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Welcome back</h1>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               Sign in to resume your career assessment and report
             </p>
           </div>
 
           {/* Card Form */}
-          <Card className="border-white/10 bg-slate-900/50 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+          <Card className="border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-slate-900/60 backdrop-blur-xl shadow-xl dark:shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 pointer-events-none" />
             <CardHeader className="p-6 sm:p-8 pb-4 space-y-1 text-center relative z-10">
-              <CardTitle className="text-xl font-bold text-white">Log In</CardTitle>
-              <CardDescription className="text-slate-400">Continue with your Google account</CardDescription>
+              <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Log In</CardTitle>
+              <CardDescription className="text-slate-500 dark:text-slate-400">Continue with your Google account</CardDescription>
             </CardHeader>
             
             <CardContent className="p-6 sm:p-8 pt-0 space-y-6 text-center relative z-10">
               {error && (
-                <div className="flex items-start gap-2.5 rounded-lg bg-red-500/10 p-3 text-sm text-red-400 border border-red-500/20 animate-in fade-in slide-in-from-top-1 text-left">
+                <div className="flex items-start gap-2.5 rounded-lg bg-red-500/10 p-3 text-sm text-red-600 dark:text-red-400 border border-red-500/20 animate-in fade-in slide-in-from-top-1 text-left">
                   <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
                   <span>{error}</span>
                 </div>
@@ -150,11 +162,11 @@ export default function LoginPage() {
               <Button
                 variant="outline"
                 type="button"
-                className="group relative w-full font-semibold transition-all duration-300 border-white/10 bg-white/5 hover:bg-emerald-500/10 hover:border-emerald-500/30 overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.02)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] hover:-translate-y-1 h-12 text-base text-white"
+                className="group relative w-full font-semibold transition-all duration-300 border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-emerald-500/10 hover:border-emerald-500/40 text-slate-800 dark:text-white overflow-hidden shadow-sm hover:shadow-md dark:shadow-[0_0_20px_rgba(255,255,255,0.02)] dark:hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] hover:-translate-y-0.5 h-12 text-base"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
               >
-                <div className="absolute inset-0 w-full h-full -ml-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
+                <div className="absolute inset-0 w-full h-full -ml-[100%] bg-gradient-to-r from-transparent via-slate-100 dark:via-white/10 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
                 {/* Google SVG Icon */}
                 <svg className="relative z-10 mr-3 h-5 w-5 shrink-0" viewBox="0 0 24 24">
                   <path
@@ -178,10 +190,10 @@ export default function LoginPage() {
               </Button>
             </CardContent>
 
-            <CardFooter className="justify-center border-t border-white/5 p-6 sm:p-8 pt-4 pb-6 sm:pb-8 relative z-10 bg-black/10">
-              <p className="text-sm text-slate-400">
+            <CardFooter className="justify-center border-t border-slate-100 dark:border-white/5 p-6 sm:p-8 pt-4 pb-6 sm:pb-8 relative z-10 bg-slate-50/70 dark:bg-black/10">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 Don&apos;t have an account?{" "}
-                <Link href="/signup" className="font-semibold text-emerald-400 hover:text-emerald-300 hover:underline">
+                <Link href="/signup" className="font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline">
                   Sign up
                 </Link>
               </p>
@@ -190,6 +202,11 @@ export default function LoginPage() {
         </div>
 
       </motion.div>
+
+      {/* Subtle Footer */}
+      <footer className="w-full text-center py-4 relative z-10 text-xs text-slate-500 dark:text-slate-500">
+        <span>© {new Date().getFullYear()} WhatAfter (Careeright). All rights reserved.</span>
+      </footer>
     </div>
   );
 }
