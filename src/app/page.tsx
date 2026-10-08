@@ -45,7 +45,10 @@ export default function LandingPage() {
         "Identifies natural learning style (e.g., Build-to-Learn vs Theory-first)",
         "Maps subject affinity to long-term career viability",
         "Builds academic confidence without high-stakes pressure"
-      ]
+      ],
+      image: "/stages/stage_class_8.jpg",
+      imageAlt: "Class 8 student exploring hands-on science and foundational aptitude at home",
+      badge: "Foundational Aptitude"
     },
     {
       id: "class-10",
@@ -57,7 +60,10 @@ export default function LandingPage() {
         "Evidence-backed Stream Selection Matrix (PCM vs PCB vs Commerce vs Arts)",
         "Shows clash points (e.g., high artistic drive vs rigid rote systems)",
         "Includes a Parent Discussion Guide to prevent dinner-table conflict"
-      ]
+      ],
+      image: "/stages/stage_class_10.jpg",
+      imageAlt: "Class 10 student making a calm, data-backed stream choice with reference books",
+      badge: "Stream Matrix"
     },
     {
       id: "class-12",
@@ -69,7 +75,10 @@ export default function LandingPage() {
         "Expected entry vs senior salary ranges (e.g., ₹12–25 LPA vs ₹40–80 LPA)",
         "AI-Resilience scores (75–85/100) highlighting human moats in each field",
         "Backup educational pathways (e.g., certifications, specialized bootcamps)"
-      ]
+      ],
+      image: "/stages/stage_class_12.jpg",
+      imageAlt: "Class 12 student evaluating entrance exams and market-ready college majors",
+      badge: "Major & Degree Fit"
     },
     {
       id: "college",
@@ -81,7 +90,10 @@ export default function LandingPage() {
         "1-Month, 6-Month, 1-Year, and 3-Year sequenced execution roadmap",
         "Clear skill gap closures ('Do This First' action missions)",
         "Career eliminations explaining why certain traditional paths waste time"
-      ]
+      ],
+      image: "/stages/stage_college.jpg",
+      imageAlt: "College engineering student reviewing career roadmaps on campus",
+      badge: "First Career Move"
     }
   ];
 
@@ -118,28 +130,32 @@ export default function LandingPage() {
       name: "Sunita & Rajesh Verma",
       role: "Parents of Class 10 Student",
       location: "New Delhi",
-      tag: "Stream Selection"
+      tag: "Stream Selection",
+      avatar: "/testimonials/verma_parents.jpg"
     },
     {
       quote: "I was torn between corporate software engineering and product design. The report pinpointed my 100% Artistic trait alongside my engineering background and mapped out a Creative Technology path. It felt like someone had finally articulated my exact internal dilemma.",
       name: "Aarav Sharma",
       role: "1st Year B.Tech Student",
       location: "IIT Jodhpur",
-      tag: "College Specialization"
+      tag: "College Specialization",
+      avatar: "/testimonials/aarav.jpg"
     },
     {
       quote: "Most quizzes tell you 'You should be an engineer'. WhatAfter went 10 levels deeper: it gave me expected entry salaries (₹12–20 LPA), AI-risk scores, and literally mapped out my first three open-source projects to build.",
       name: "Ananya Iyer",
       role: "Class 12 Student (PCM)",
       location: "Bengaluru",
-      tag: "Degree & College Choice"
+      tag: "Degree & College Choice",
+      avatar: "/testimonials/ananya.jpg"
     },
     {
       quote: "The 'What We Eliminated' section was the most helpful part. It showed me exactly why traditional manufacturing would clash with my desire for autonomy, and directed me toward Robotics Product Management.",
       name: "Rohan Deshmukh",
       role: "Final Year Mechanical Engineering",
       location: "Pune",
-      tag: "Career Pivot"
+      tag: "Career Pivot",
+      avatar: "/testimonials/rohan.jpg"
     }
   ];
 
@@ -194,8 +210,37 @@ export default function LandingPage() {
               </a>
             </div>
 
+            {/* Social Proof Avatar Strip */}
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <div className="flex -space-x-2.5 overflow-hidden">
+                <div className="relative inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-[#061019] overflow-hidden shadow-sm">
+                  <Image src="/testimonials/aarav.jpg" alt="Aarav" fill className="object-cover" sizes="32px" />
+                </div>
+                <div className="relative inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-[#061019] overflow-hidden shadow-sm">
+                  <Image src="/testimonials/ananya.jpg" alt="Ananya" fill className="object-cover" sizes="32px" />
+                </div>
+                <div className="relative inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-[#061019] overflow-hidden shadow-sm">
+                  <Image src="/testimonials/rohan.jpg" alt="Rohan" fill className="object-cover" sizes="32px" />
+                </div>
+                <div className="relative inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-[#061019] overflow-hidden shadow-sm">
+                  <Image src="/testimonials/verma_parents.jpg" alt="Parents" fill className="object-cover" sizes="32px" />
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <div className="flex text-amber-500">
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
+                </div>
+                <span className="font-bold text-slate-800 dark:text-white">4.9/5</span>
+                <span className="text-slate-500 dark:text-[#8899a6]">• Trusted by 10,000+ students &amp; parents across India</span>
+              </div>
+            </div>
+
             {/* Micro-trust indicators */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-[#7d8e9c]">
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-[#7d8e9c]">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" /> 80 Thoughtful Scenarios
               </span>
@@ -401,34 +446,55 @@ export default function LandingPage() {
           <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-emerald-50/60 via-white to-slate-50 dark:from-[#0c1926] dark:to-[#08121c] border border-emerald-500/30 shadow-xl dark:shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
             
-            <div className="max-w-3xl">
-              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-2">
-                {stages[activeStage].tagline}
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 text-slate-900 dark:text-white">
-                &ldquo;{stages[activeStage].dilemma}&rdquo;
-              </h3>
-              <p className="text-slate-600 dark:text-[#9cb0be] text-base leading-relaxed mb-8">
-                {stages[activeStage].solution}
-              </p>
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+              {/* Left Column: Stage Details */}
+              <div className="lg:col-span-7">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-2">
+                  {stages[activeStage].tagline}
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 text-slate-900 dark:text-white">
+                  &ldquo;{stages[activeStage].dilemma}&rdquo;
+                </h3>
+                <p className="text-slate-600 dark:text-[#9cb0be] text-base leading-relaxed mb-8">
+                  {stages[activeStage].solution}
+                </p>
 
-              <div className="space-y-3 mb-8">
-                {stages[activeStage].outcomes.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-3 h-3 stroke-[3]" />
+                <div className="space-y-3 mb-8">
+                  {stages[activeStage].outcomes.map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="w-3 h-3 stroke-[3]" />
+                      </div>
+                      <span className="text-sm text-slate-700 dark:text-[#d4dde3] font-medium">{item}</span>
                     </div>
-                    <span className="text-sm text-slate-700 dark:text-[#d4dde3] font-medium">{item}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                <Link 
+                  href="/signup" 
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-400 text-black font-bold text-sm hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20"
+                >
+                  Solve Your {stages[activeStage].label} Decision <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
 
-              <Link 
-                href="/signup" 
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-400 text-black font-bold text-sm hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20"
-              >
-                Solve Your {stages[activeStage].label} Decision <ArrowRight className="w-4 h-4" />
-              </Link>
+              {/* Right Column: Stage Persona Photo */}
+              <div className="lg:col-span-5 relative">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-xl group bg-slate-100 dark:bg-black/30">
+                  <Image 
+                    src={stages[activeStage].image}
+                    alt={stages[activeStage].imageAlt}
+                    fill
+                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-3 left-3 right-3 px-3 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white flex items-center justify-between">
+                    <span className="text-xs font-medium">{stages[activeStage].label}</span>
+                    <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">{stages[activeStage].badge}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -658,31 +724,51 @@ export default function LandingPage() {
         {/* 7. THE PARENT & COUNSELLOR BRIDGE                         */}
         {/* ========================================================= */}
         <section className="max-w-[1200px] mx-auto px-6 py-20 border-b border-slate-200/80 dark:border-white/5">
-          <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-4">
-                Bridging The Generational Gap
-              </div>
-              <h3 className="text-2xl sm:text-4xl font-serif font-bold mb-4 text-slate-900 dark:text-white">
-                Written for the Dinner Table. <br />
-                Not an Academic Journal.
-              </h3>
-              <p className="text-slate-600 dark:text-[#a5b4c0] text-base leading-relaxed mb-8">
-                Most career advice turns into arguments between parents and students. WhatAfter includes two dedicated tools: <b>&ldquo;In Plain Words&rdquo;</b> (a one-page conversational letter) and the <b>&ldquo;Guide for Parents &amp; Counsellors&rdquo;</b> with specific conversation starters.
-              </p>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-white dark:bg-black/30 border border-slate-200/80 dark:border-white/5 shadow-sm">
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block mb-1">✓ Constructive Reflection</span>
-                  <p className="text-xs text-slate-600 dark:text-[#95a3ad]">
-                    &ldquo;How can we blend your technical degree with your passion for design to create a unique career moat?&rdquo;
-                  </p>
+          <div className="rounded-3xl p-8 sm:p-12 lg:p-14 bg-gradient-to-r from-emerald-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden">
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-7">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-4">
+                  Bridging The Generational Gap
                 </div>
-                <div className="p-4 rounded-xl bg-white dark:bg-black/30 border border-slate-200/80 dark:border-white/5 shadow-sm">
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block mb-1">✓ Financial &amp; Value Alignment</span>
-                  <p className="text-xs text-slate-600 dark:text-[#95a3ad]">
-                    &ldquo;What does a successful balance between high wealth aspirations and social impact look like for you?&rdquo;
-                  </p>
+                <h3 className="text-2xl sm:text-4xl font-serif font-bold mb-4 text-slate-900 dark:text-white">
+                  Written for the Dinner Table. <br />
+                  Not an Academic Journal.
+                </h3>
+                <p className="text-slate-600 dark:text-[#a5b4c0] text-base leading-relaxed mb-8">
+                  Most career advice turns into arguments between parents and students. WhatAfter includes two dedicated tools: <b>&ldquo;In Plain Words&rdquo;</b> (a one-page conversational letter) and the <b>&ldquo;Guide for Parents &amp; Counsellors&rdquo;</b> with specific conversation starters.
+                </p>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-white dark:bg-black/30 border border-slate-200/80 dark:border-white/5 shadow-sm">
+                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block mb-1">✓ Constructive Reflection</span>
+                    <p className="text-xs text-slate-600 dark:text-[#95a3ad]">
+                      &ldquo;How can we blend your technical degree with your passion for design to create a unique career moat?&rdquo;
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white dark:bg-black/30 border border-slate-200/80 dark:border-white/5 shadow-sm">
+                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block mb-1">✓ Financial &amp; Value Alignment</span>
+                    <p className="text-xs text-slate-600 dark:text-[#95a3ad]">
+                      &ldquo;What does a successful balance between high wealth aspirations and social impact look like for you?&rdquo;
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right column: Image */}
+              <div className="lg:col-span-5 relative">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl group">
+                  <Image 
+                    src="/images/dinner_table_bridge.jpg"
+                    alt="Indian mother and son reviewing career assessment on a tablet together at home"
+                    fill
+                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-3 left-3 right-3 px-3 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white flex items-center justify-between">
+                    <span className="text-xs font-medium">Calm dinner-table conversations</span>
+                    <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">No Arguments</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -723,7 +809,16 @@ export default function LandingPage() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3.5">
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 ring-2 ring-emerald-500/20 shadow-sm">
+                    <Image 
+                      src={t.avatar} 
+                      alt={t.name} 
+                      fill 
+                      sizes="48px"
+                      className="object-cover" 
+                    />
+                  </div>
                   <div>
                     <span className="text-sm font-bold block text-slate-900 dark:text-white">{t.name}</span>
                     <span className="text-xs text-slate-500 dark:text-[#798a97]">{t.role} • {t.location}</span>
