@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { 
@@ -19,16 +19,48 @@ import {
   BookOpen,
   PenSquare,
   ZoomIn,
-  X
+  X,
+  Users
 } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
 import Navbar from "@/features/auth/components/Navbar";
 import { INITIAL_BLOG_POSTS } from "@/lib/blogs";
+import ScrollCareerIntelligenceEngine from "@/components/ScrollCareerIntelligenceEngine";
+import ReportPage03InteractiveRadar from "@/components/ReportPage03InteractiveRadar";
+import ReportPage07InteractiveDeepDive from "@/components/ReportPage07InteractiveDeepDive";
+import ReportPage11InteractiveRoadmap from "@/components/ReportPage11InteractiveRoadmap";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import DinnerTableTranslator from "@/components/DinnerTableTranslator";
+import StackedHowItWorksWavy from "@/components/StackedHowItWorksWavy";
+import ScrollWavyConnector from "@/components/ScrollWavyConnector";
+import AmbientBackgroundGlows from "@/components/AmbientBackgroundGlows";
+import ScrollDimSection from "@/components/ScrollDimSection";
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeStage, setActiveStage] = useState<number>(1);
-  const [previewTab, setPreviewTab] = useState<"fingerprint" | "deepdive" | "plan">("fingerprint");
   const [zoomImage, setZoomImage] = useState<string | null>(null);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // Parallax transforms for staggered testimonial columns
+  const testimonialsRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: testimonialsProgress } = useScroll({
+    target: testimonialsRef,
+    offset: ["start end", "end start"],
+  });
+  const testimonialsSmooth = useSpring(testimonialsProgress, {
+    stiffness: 90,
+    damping: 25,
+    restDelta: 0.001,
+  });
+  const col1Y = useTransform(testimonialsSmooth, [0, 1], [25, -25]);
+  const col2Y = useTransform(testimonialsSmooth, [0, 1], [-20, 20]);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -160,7 +192,16 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-900 dark:text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-900 dark:text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200 transition-colors duration-200 relative">
+      {/* Dynamic Parallax Atmosphere Glows & Blueprint Grid */}
+      <AmbientBackgroundGlows />
+
+      {/* Top Viewport Reading Progress Beam */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 origin-left z-50 pointer-events-none"
+        style={{ scaleX }}
+      />
+
       <Navbar />
 
       <main className="overflow-hidden">
@@ -168,7 +209,7 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 1. HERO SECTION                                           */}
         {/* ========================================================= */}
-        <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 border-b border-slate-200/80 dark:border-white/5">
+        <ScrollDimSection isHero id="hero" className="relative pt-16 pb-20 md:pt-24 md:pb-28 border-b border-slate-200/80 dark:border-white/5">
           {/* Ambient background glow */}
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
           
@@ -255,161 +296,50 @@ export default function LandingPage() {
               </span>
             </div>
 
-            {/* ========================================================= */}
-            {/* 2. HERO VISUAL SHOWCASE (Interactive Report Preview)      */}
-            {/* ========================================================= */}
-            <div className="mt-14 w-full max-w-5xl rounded-2xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0b1723]/90 shadow-xl dark:shadow-2xl overflow-hidden backdrop-blur-sm p-4 sm:p-6 text-left">
-              {/* Report Tab Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  </div>
-                  <span className="text-xs text-slate-500 dark:text-[#8da0ad] font-mono">
-                    Career Intelligence Report • Confidential 2026
-                  </span>
-                </div>
-
-                {/* Preview Selector Tabs */}
-                <div className="flex items-center gap-2 bg-slate-100 dark:bg-[#061019] p-1 rounded-lg border border-slate-200 dark:border-white/5">
-                  <button 
-                    onClick={() => setPreviewTab("fingerprint")}
-                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                      previewTab === "fingerprint" 
-                        ? "bg-white dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-slate-200 dark:border-emerald-500/30 shadow-sm" 
-                        : "text-slate-600 dark:text-[#8da0ad] hover:text-slate-900 dark:hover:text-white"
-                    }`}
-                  >
-                    1. Cognitive Fingerprint
-                  </button>
-                  <button 
-                    onClick={() => setPreviewTab("deepdive")}
-                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                      previewTab === "deepdive" 
-                        ? "bg-white dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-slate-200 dark:border-emerald-500/30 shadow-sm" 
-                        : "text-slate-600 dark:text-[#8da0ad] hover:text-slate-900 dark:hover:text-white"
-                    }`}
-                  >
-                    2. Career Deep-Dive
-                  </button>
-                  <button 
-                    onClick={() => setPreviewTab("plan")}
-                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                      previewTab === "plan" 
-                        ? "bg-white dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-slate-200 dark:border-emerald-500/30 shadow-sm" 
-                        : "text-slate-600 dark:text-[#8da0ad] hover:text-slate-900 dark:hover:text-white"
-                    }`}
-                  >
-                    3. Sequenced Roadmap
-                  </button>
-                </div>
-              </div>
-
-              {/* Preview Image Container */}
-              <div 
-                onClick={() => {
-                  if (previewTab === "fingerprint") setZoomImage("/report/cognitive-fingerprint.png");
-                  if (previewTab === "deepdive") setZoomImage("/report/career-deep-dive.png");
-                  if (previewTab === "plan") setZoomImage("/report/execution-plan.png");
-                }}
-                className="mt-4 relative h-[380px] sm:h-[480px] lg:h-[520px] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-[#061019] border border-slate-200 dark:border-white/10 group cursor-zoom-in"
-              >
-                {previewTab === "fingerprint" && (
-                  <div className="relative w-full h-full">
-                    <Image 
-                      src="/report/cognitive-fingerprint.png" 
-                      alt="Cognitive Fingerprint and Trait Radar Preview" 
-                      fill 
-                      unoptimized
-                      quality={100}
-                      className="object-contain object-top transition-transform duration-300 group-hover:scale-[1.01]"
-                      priority
-                    />
-                  </div>
-                )}
-                {previewTab === "deepdive" && (
-                  <div className="relative w-full h-full">
-                    <Image 
-                      src="/report/career-deep-dive.png" 
-                      alt="Career Deep-Dive and Salary Projections Preview" 
-                      fill 
-                      unoptimized
-                      quality={100}
-                      className="object-contain object-top transition-transform duration-300 group-hover:scale-[1.01]"
-                    />
-                  </div>
-                )}
-                {previewTab === "plan" && (
-                  <div className="relative w-full h-full">
-                    <Image 
-                      src="/report/execution-plan.png" 
-                      alt="Execution Plan Timeline and Milestone Missions Preview" 
-                      fill 
-                      unoptimized
-                      quality={100}
-                      className="object-contain object-top transition-transform duration-300 group-hover:scale-[1.01]"
-                    />
-                  </div>
-                )}
-
-                {/* Hover to Zoom Pill */}
-                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-slate-300 text-[11px] font-medium backdrop-blur-md flex items-center gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
-                  <ZoomIn className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Click to expand</span>
-                </div>
-
-                {/* Interactive Overlaid Badges */}
-                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 pointer-events-none">
-                  <div className="px-3 py-1 rounded-md bg-white/95 dark:bg-[#061019]/90 border border-emerald-500/40 text-emerald-800 dark:text-emerald-400 text-[11px] font-semibold backdrop-blur-md shadow-sm">
-                    ✓ 35-Trait Psychological Model
-                  </div>
-                  <div className="px-3 py-1 rounded-md bg-white/95 dark:bg-[#061019]/90 border border-teal-500/40 text-teal-800 dark:text-teal-300 text-[11px] font-semibold backdrop-blur-md shadow-sm">
-                    ✓ Entry to Senior Salaries: ₹12–80 LPA
-                  </div>
-                  <div className="px-3 py-1 rounded-md bg-white/95 dark:bg-[#061019]/90 border border-amber-500/40 text-amber-800 dark:text-amber-300 text-[11px] font-semibold backdrop-blur-md shadow-sm">
-                    ✓ AI-Resilience: 75–85/100
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
           </div>
-        </section>
+        </ScrollDimSection>
 
 
         {/* ========================================================= */}
         {/* 3. PROOF & CREDIBILITY METRICS STRIP                      */}
         {/* ========================================================= */}
-        <div className="border-b border-slate-200/80 dark:border-white/5 py-10 bg-slate-100/70 dark:bg-[#08131d]/60">
-          <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="border-r border-slate-200 dark:border-white/5 last:border-none">
-              <span className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400">80</span>
-              <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Thoughtful Scenarios</span>
-            </div>
-            <div className="border-r border-slate-200 dark:border-white/5 last:border-none">
-              <span className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400">35</span>
-              <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Cognitive & Value Traits</span>
-            </div>
-            <div className="border-r border-slate-200 dark:border-white/5 last:border-none">
-              <span className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400">5</span>
-              <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Curated Deep-Dives</span>
-            </div>
-            <div>
-              <span className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400">3-Yr</span>
-              <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Sequenced Roadmap</span>
+        <ScrollDimSection as="div">
+          <div className="border-b border-slate-200/80 dark:border-white/5 py-10 bg-slate-100/70 dark:bg-[#08131d]/60">
+            <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div className="border-r border-slate-200 dark:border-white/5 last:border-none">
+                <AnimatedCounter value={80} className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Thoughtful Scenarios</span>
+              </div>
+              <div className="border-r border-slate-200 dark:border-white/5 last:border-none">
+                <AnimatedCounter value={35} className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Cognitive &amp; Value Traits</span>
+              </div>
+              <div className="border-r border-slate-200 dark:border-white/5 last:border-none">
+                <AnimatedCounter value={5} className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Curated Deep-Dives</span>
+              </div>
+              <div>
+                <AnimatedCounter value={3} suffix="-Yr" className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Sequenced Roadmap</span>
+              </div>
             </div>
           </div>
-        </div>
+
+          {/* ========================================================= */}
+          {/* 3B. SCROLL-DRIVEN CAREER INTELLIGENCE ENGINE              */}
+          {/* ========================================================= */}
+          <ScrollCareerIntelligenceEngine />
+        </ScrollDimSection>
 
 
         {/* ========================================================= */}
         {/* 4. THE 4 LIFE STAGES ("WHAT AFTER?")                      */}
         {/* ========================================================= */}
-        <section id="stages" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
-          <div className="text-center mb-16">
+        <ScrollDimSection id="stages" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
+          <div className="text-center mb-16 relative">
+            <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
+              02
+            </span>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
               The Life-Stage Decision Engine
             </div>
@@ -428,12 +358,19 @@ export default function LandingPage() {
               <button
                 key={stg.id}
                 onClick={() => setActiveStage(i)}
-                className={`p-4 rounded-xl text-left border transition-all ${
+                className={`relative p-4 rounded-xl text-left border transition-all ${
                   activeStage === i 
-                    ? "bg-white dark:bg-emerald-500/10 border-emerald-500 text-slate-950 dark:text-white shadow-lg shadow-emerald-500/10" 
+                    ? "border-emerald-500 text-slate-950 dark:text-white shadow-lg shadow-emerald-500/10" 
                     : "bg-white dark:bg-[#0b1723] border-slate-200 dark:border-white/5 text-slate-600 dark:text-[#8fa0ac] hover:border-slate-300 dark:hover:border-white/20 hover:text-slate-950 dark:hover:text-white shadow-sm"
                 }`}
               >
+                {activeStage === i && (
+                  <motion.div
+                    layoutId="activeStageTab"
+                    className="absolute inset-0 rounded-xl bg-white dark:bg-emerald-500/10 -z-10"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
                 <span className={`text-[10px] font-bold uppercase tracking-wider block mb-1 ${activeStage === i ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-[#627380]"}`}>
                   Stage {i + 1}
                 </span>
@@ -446,284 +383,275 @@ export default function LandingPage() {
           <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-emerald-50/60 via-white to-slate-50 dark:from-[#0c1926] dark:to-[#08121c] border border-emerald-500/30 shadow-xl dark:shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
             
-            <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-              {/* Left Column: Stage Details */}
-              <div className="lg:col-span-7">
-                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-2">
-                  {stages[activeStage].tagline}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 text-slate-900 dark:text-white">
-                  &ldquo;{stages[activeStage].dilemma}&rdquo;
-                </h3>
-                <p className="text-slate-600 dark:text-[#9cb0be] text-base leading-relaxed mb-8">
-                  {stages[activeStage].solution}
-                </p>
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={stages[activeStage].id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.28, ease: "easeOut" }}
+                className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center"
+              >
+                {/* Left Column: Stage Details */}
+                <div className="lg:col-span-7">
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-2">
+                    {stages[activeStage].tagline}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 text-slate-900 dark:text-white">
+                    &ldquo;{stages[activeStage].dilemma}&rdquo;
+                  </h3>
+                  <p className="text-slate-600 dark:text-[#9cb0be] text-base leading-relaxed mb-8">
+                    {stages[activeStage].solution}
+                  </p>
 
-                <div className="space-y-3 mb-8">
-                  {stages[activeStage].outcomes.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
-                        <Check className="w-3 h-3 stroke-[3]" />
+                  <div className="space-y-3 mb-8">
+                    {stages[activeStage].outcomes.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check className="w-3 h-3 stroke-[3]" />
+                        </div>
+                        <span className="text-sm text-slate-700 dark:text-[#d4dde3] font-medium">{item}</span>
                       </div>
-                      <span className="text-sm text-slate-700 dark:text-[#d4dde3] font-medium">{item}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+
+                  <Link 
+                    href="/signup" 
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-400 text-black font-bold text-sm hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20"
+                  >
+                    Solve Your {stages[activeStage].label} Decision <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </div>
 
-                <Link 
-                  href="/signup" 
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-400 text-black font-bold text-sm hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20"
-                >
-                  Solve Your {stages[activeStage].label} Decision <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-
-              {/* Right Column: Stage Persona Photo */}
-              <div className="lg:col-span-5 relative">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-xl group bg-slate-100 dark:bg-black/30">
-                  <Image 
-                    src={stages[activeStage].image}
-                    alt={stages[activeStage].imageAlt}
-                    fill
-                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-3 left-3 right-3 px-3 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white flex items-center justify-between">
-                    <span className="text-xs font-medium">{stages[activeStage].label}</span>
-                    <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">{stages[activeStage].badge}</span>
+                {/* Right Column: Stage Persona Photo */}
+                <div className="lg:col-span-5 relative">
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-xl group bg-slate-100 dark:bg-black/30">
+                    <Image 
+                      src={stages[activeStage].image}
+                      alt={stages[activeStage].imageAlt}
+                      fill
+                      className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                      sizes="(max-width: 1024px) 100vw, 40vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-3 left-3 right-3 px-3 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white flex items-center justify-between">
+                      <span className="text-xs font-medium">{stages[activeStage].label}</span>
+                      <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">{stages[activeStage].badge}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </section>
-
+        </ScrollDimSection>
 
         {/* ========================================================= */}
-        {/* 5. HOW IT WORKS                                           */}
+        {/* 5. HOW IT WORKS (STACKED WITH WAVY SELF-DRAWING CONDUITS) */}
         {/* ========================================================= */}
-        <section id="how-it-works" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              Methodology
-            </div>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4 text-slate-950 dark:text-white">How WhatAfter Works</h2>
-            <p className="text-slate-600 dark:text-[#aab7c0] max-w-2xl mx-auto">
-              From confusing career noise to an objective, sequenced career plan in three structured steps.
-            </p>
-          </div>
+        <ScrollDimSection as="div">
+          <StackedHowItWorksWavy />
+        </ScrollDimSection>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Step 1 */}
-            <div className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 hover:border-emerald-500/30 transition-all flex flex-col justify-between shadow-sm">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-6">
-                  <BrainCircuit className="w-6 h-6" />
-                </div>
-                <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider block mb-2">Step 01</span>
-                <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Signal Capture</h3>
-                <p className="text-sm text-slate-600 dark:text-[#929fa9] leading-relaxed">
-                  Respond to 80 scenario-based questions in your choice of language — fully available in both English and Hindi (हिंदी). Designed to assess how you think, how you handle ambiguity, and what you actually value — without any artificial timer or rush.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 text-xs text-slate-500 dark:text-[#6e808e] flex items-center justify-between">
-                <span>✓ Measures 35 Traits</span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">English &amp; हिंदी</span>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 hover:border-emerald-500/30 transition-all flex flex-col justify-between shadow-sm">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-6">
-                  <Target className="w-6 h-6" />
-                </div>
-                <span className="text-[11px] font-mono text-teal-600 dark:text-teal-400 font-bold uppercase tracking-wider block mb-2">Step 02</span>
-                <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Cognitive Modeling</h3>
-                <p className="text-sm text-slate-600 dark:text-[#929fa9] leading-relaxed">
-                  Our proprietary intelligence engine overlays your Core Aptitudes on your Work Values, calculating salary trajectories, market demand, and AI-resilience scores against thousands of active industry roles.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 text-xs text-slate-500 dark:text-[#6e808e]">
-                ✓ AI Automation Resilience Scored
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 hover:border-emerald-500/30 transition-all flex flex-col justify-between shadow-sm">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-6">
-                  <Route className="w-6 h-6" />
-                </div>
-                <span className="text-[11px] font-mono text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider block mb-2">Step 03</span>
-                <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Sequenced Execution</h3>
-                <p className="text-sm text-slate-600 dark:text-[#929fa9] leading-relaxed">
-                  Receive an exhaustive 15-page dossier including top recommendations, careers eliminated with clash reasons, a 3-year phased timeline, and a dedicated guide for parents and mentors.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 text-xs text-slate-500 dark:text-[#6e808e]">
-                ✓ 15-Page PDF + Parent Guide
-              </div>
-            </div>
-          </div>
-        </section>
-
+        {/* Wavy Conduit connecting How It Works into Inside Report */}
+        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+          <ScrollWavyConnector 
+            height={240} 
+            direction="s-curve" 
+            gradientId="wavy-how-to-dossier" 
+          />
+        </div>
 
         {/* ========================================================= */}
         {/* 6. INSIDE THE 15-PAGE REPORT (VISUAL PROOF)               */}
         {/* ========================================================= */}
-        <section id="inside-report" className="py-24 border-b border-slate-200/80 dark:border-white/5 bg-gradient-to-b from-slate-50 via-slate-100/60 to-slate-50 dark:from-[#061019] dark:via-[#091522] dark:to-[#061019]">
+        <ScrollDimSection id="inside-report" className="py-24 border-b border-slate-200/80 dark:border-white/5 bg-gradient-to-b from-slate-50 via-slate-100/60 to-slate-50 dark:from-[#061019] dark:via-[#091522] dark:to-[#061019] relative">
           <div className="max-w-[1200px] mx-auto px-6">
             
-            <div className="text-center mb-20">
+            <div className="text-center mb-24 lg:mb-28 relative">
+              <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
+                04
+              </span>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
                 Transparent Product Breakdown
               </div>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4 text-slate-950 dark:text-white">Inside Your Career Intelligence Report</h2>
-              <p className="text-slate-600 dark:text-[#aab7c0] max-w-2xl mx-auto">
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold mb-4 text-slate-950 dark:text-white tracking-tight">
+                Inside Your Career Intelligence Report
+              </h2>
+              <p className="text-slate-600 dark:text-[#aab7c0] text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
                 No generic 2-paragraph summaries. Every student receives a 15-page data-backed intelligence dossier. Here is exactly what you get:
               </p>
             </div>
 
-            <div className="space-y-24">
+            <div className="space-y-0">
 
               {/* Feature 1: Cognitive Fingerprint */}
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div 
-                  onClick={() => setZoomImage("/report/cognitive-fingerprint.png")}
-                  className="order-2 md:order-1 relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 dark:bg-[#061019] border border-slate-200 dark:border-white/10 shadow-xl group cursor-zoom-in"
-                >
-                  <Image 
-                    src="/report/cognitive-fingerprint.png" 
-                    alt="Cognitive Fingerprint and Trait Radar" 
-                    fill 
-                    unoptimized
-                    quality={100}
-                    className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-slate-300 text-[11px] font-medium backdrop-blur-md flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ZoomIn className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Expand</span>
+              <div className="relative">
+                {/* Ambient glow aura */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-80 sm:w-96 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Section Header & Explanatory Context */}
+                <div className="max-w-3xl mx-auto text-center mb-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono font-bold uppercase tracking-wider mb-2.5">
+                    Report Page 03 • Psychometric &amp; Value Architecture
                   </div>
-                </div>
-                <div className="order-1 md:order-2">
-                  <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider block mb-2">Report Page 03</span>
-                  <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 text-slate-900 dark:text-white">Your Cognitive Fingerprint</h3>
-                  <p className="text-slate-600 dark:text-[#95a2ac] mb-6 leading-relaxed">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-3 text-slate-900 dark:text-white tracking-tight">
+                    Your Cognitive Fingerprint
+                  </h3>
+                  <p className="text-slate-600 dark:text-[#95a2ac] text-sm leading-relaxed mb-6 max-w-2xl mx-auto">
                     Before we discuss careers, we map who you are. The 35-trait radar displays your Core Aptitudes (Logical, Numerical, Spatial, Verbal, Creative) overlaid directly against your Work Values (Autonomy, Wealth, Balance, Impact, Security).
                   </p>
-                  <div className="space-y-3">
-                    <div className="p-3 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 text-sm text-slate-700 dark:text-[#ccd7df] shadow-sm">
-                      <b className="text-slate-900 dark:text-white block mb-0.5">Cognitive Style (e.g., Analytical–Divergent):</b>
-                      Can imagine bold possibilities and map the technical path to realize them.
+
+                  {/* Context breakdown cards */}
+                  <div className="grid sm:grid-cols-2 gap-3.5 text-left max-w-2xl mx-auto">
+                    <div className="p-4 rounded-xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 text-xs sm:text-sm text-slate-700 dark:text-[#ccd7df] shadow-sm">
+                      <b className="text-slate-900 dark:text-white block mb-1 font-semibold flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span>Cognitive Style (Analytical–Divergent):</span>
+                      </b>
+                      Can imagine bold possibilities and map the technical path to realize them with structured logic trees.
                     </div>
-                    <div className="p-3 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 text-sm text-slate-700 dark:text-[#ccd7df] shadow-sm">
-                      <b className="text-slate-900 dark:text-white block mb-0.5">Learning Style (e.g., Build-to-Learn):</b>
-                      Visual-Kinesthetic learner who thrives through prototyping and technical feedback.
+                    <div className="p-4 rounded-xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 text-xs sm:text-sm text-slate-700 dark:text-[#ccd7df] shadow-sm">
+                      <b className="text-slate-900 dark:text-white block mb-1 font-semibold flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-teal-500" />
+                        <span>Learning Style (Build-to-Learn):</span>
+                      </b>
+                      Visual-Kinesthetic learner who thrives through rapid prototyping, architectural testing, and immediate feedback.
                     </div>
                   </div>
                 </div>
+
+                {/* Report Interactive View */}
+                <div className="max-w-4xl mx-auto">
+                  <ReportPage03InteractiveRadar onZoomPdf={() => setZoomImage("/report/cognitive-fingerprint.png")} />
+                </div>
               </div>
+
+              {/* Wavy Conduit: Radar to Deep-Dive */}
+              <ScrollWavyConnector 
+                height={200} 
+                className="-my-3"
+                direction="reverse-s" 
+                gradientId="wavy-radar-to-deepdive" 
+              />
 
               {/* Feature 2: Career Deep-Dive & Salary / AI Resilience */}
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                  <span className="text-xs font-mono text-teal-600 dark:text-teal-400 font-bold uppercase tracking-wider block mb-2">Report Pages 06–10</span>
-                  <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 text-slate-900 dark:text-white">Deep Dives with Salary &amp; AI-Resilience</h3>
-                  <p className="text-slate-600 dark:text-[#95a2ac] mb-6 leading-relaxed">
+              <div className="relative">
+                {/* Ambient glow aura */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-80 sm:w-96 h-80 bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Section Header & Explanatory Context */}
+                <div className="max-w-3xl mx-auto text-center mb-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-600 dark:text-teal-400 text-[11px] font-mono font-bold uppercase tracking-wider mb-2.5">
+                    Report Pages 06–10 • Labor Market Grounding
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-3 text-slate-900 dark:text-white tracking-tight">
+                    Deep Dives with Salary &amp; AI-Resilience
+                  </h3>
+                  <p className="text-slate-600 dark:text-[#95a2ac] text-sm leading-relaxed mb-6 max-w-2xl mx-auto">
                     Every top recommended career is scrutinized through rigorous labor market criteria, removing speculation and replacing it with grounded expectations.
                   </p>
-                  <ul className="space-y-3.5 text-sm text-slate-700 dark:text-[#aab7c0]">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
-                      <span><b className="text-slate-900 dark:text-white">Expected Salary Trajectories:</b> Clear benchmark ranges for Entry Level (e.g. ₹12–25 LPA) versus Senior Architect/Director (₹40–80 LPA).</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
-                      <span><b className="text-slate-900 dark:text-white">AI-Resilience Index (e.g. 75–85/100):</b> Explains why high-level system architecture and human-centric design protect this role from pure AI automation.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
-                      <span><b className="text-slate-900 dark:text-white">Day-in-the-Life &amp; Challenges:</b> Realistic daily tasks, things you&apos;ll love, and potential burnout friction points.</span>
-                    </li>
-                  </ul>
-                </div>
-                <div 
-                  onClick={() => setZoomImage("/report/career-deep-dive.png")}
-                  className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 dark:bg-[#061019] border border-slate-200 dark:border-white/10 shadow-xl group cursor-zoom-in"
-                >
-                  <Image 
-                    src="/report/career-deep-dive.png" 
-                    alt="Career Deep-Dive and Salary Trajectories" 
-                    fill 
-                    unoptimized
-                    quality={100}
-                    className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-slate-300 text-[11px] font-medium backdrop-blur-md flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ZoomIn className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Expand</span>
+
+                  {/* Context breakdown cards */}
+                  <div className="grid sm:grid-cols-3 gap-3.5 text-left max-w-3xl mx-auto">
+                    <div className="p-4 rounded-xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 text-xs text-slate-700 dark:text-[#ccd7df] shadow-sm">
+                      <b className="text-slate-900 dark:text-white block mb-1 font-semibold flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span>Expected Salaries:</span>
+                      </b>
+                      Clear benchmark ranges for Entry Level (₹12–25 LPA) up to Senior Architect/Director (₹40–80 LPA).
+                    </div>
+                    <div className="p-4 rounded-xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 text-xs text-slate-700 dark:text-[#ccd7df] shadow-sm">
+                      <b className="text-slate-900 dark:text-white block mb-1 font-semibold flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-teal-500" />
+                        <span>AI-Resilience (75/100):</span>
+                      </b>
+                      Why high-level system architecture and human-centric design protect this role from pure AI automation.
+                    </div>
+                    <div className="p-4 rounded-xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 text-xs text-slate-700 dark:text-[#ccd7df] shadow-sm">
+                      <b className="text-slate-900 dark:text-white block mb-1 font-semibold flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-cyan-500" />
+                        <span>Day-in-the-Life &amp; Friction:</span>
+                      </b>
+                      Realistic daily sprint tasks, intellectual thrills, and potential burnout friction points.
+                    </div>
                   </div>
+                </div>
+
+                {/* Report Interactive View */}
+                <div className="max-w-4xl mx-auto">
+                  <ReportPage07InteractiveDeepDive onZoomPdf={() => setZoomImage("/report/career-deep-dive.png")} />
                 </div>
               </div>
 
+              {/* Wavy Conduit: Deep-Dive to 3-Year Roadmap */}
+              <ScrollWavyConnector 
+                height={200} 
+                className="-my-3"
+                direction="s-curve" 
+                gradientId="wavy-deepdive-to-roadmap" 
+              />
+
               {/* Feature 3: Execution Plan & What We Eliminated */}
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div 
-                  onClick={() => setZoomImage("/report/execution-plan.png")}
-                  className="order-2 md:order-1 relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 dark:bg-[#061019] border border-slate-200 dark:border-white/10 shadow-xl group cursor-zoom-in"
-                >
-                  <Image 
-                    src="/report/execution-plan.png" 
-                    alt="Execution Plan Timeline and Milestones" 
-                    fill 
-                    unoptimized
-                    quality={100}
-                    className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-slate-300 text-[11px] font-medium backdrop-blur-md flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ZoomIn className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Expand</span>
+              <div className="relative">
+                {/* Ambient glow aura */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-80 sm:w-96 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Section Header & Explanatory Context */}
+                <div className="max-w-3xl mx-auto text-center mb-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[11px] font-mono font-bold uppercase tracking-wider mb-2.5">
+                    Report Pages 11 &amp; 13 • 3-Year Action Roadmap
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-3 text-slate-900 dark:text-white tracking-tight">
+                    Sequenced Execution Plan + Eliminations
+                  </h3>
+                  <p className="text-slate-600 dark:text-[#95a2ac] text-sm sm:text-base leading-relaxed mb-6 max-w-2xl mx-auto">
+                    A report without next steps is just entertainment. WhatAfter sequences your next 3 years and clearly outlines what prestigious careers to actively avoid.
+                  </p>
+
+                  {/* Context breakdown cards */}
+                  <div className="grid sm:grid-cols-2 gap-3.5 text-left max-w-2xl mx-auto">
+                    <div className="p-4 rounded-xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 text-xs sm:text-sm text-slate-700 dark:text-[#ccd7df] shadow-sm">
+                      <b className="text-slate-900 dark:text-white block mb-1 font-semibold flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span>Timeline Roadmaps (1M, 6M, 1Y, 3Y):</span>
+                      </b>
+                      Actionable milestones like auditing Design Thinking, securing target internships, and shipping high-leverage portfolios.
+                    </div>
+                    <div className="p-4 rounded-xl bg-red-50/80 dark:bg-red-950/20 border border-red-200 dark:border-red-500/20 text-xs sm:text-sm text-red-900/80 dark:text-[#b8a2a2] shadow-sm">
+                      <b className="text-red-700 dark:text-red-300 block mb-1 font-semibold flex items-center gap-1.5">
+                        <XCircle className="w-4 h-4 text-red-500 dark:text-red-400 shrink-0" />
+                        <span>Career Eliminations (What NOT to do):</span>
+                      </b>
+                      Explicitly details why high-profile paths (e.g. CA, Medical Doctor, Corporate Law) clash with your profile, saving years of costly misdirection.
+                    </div>
                   </div>
                 </div>
-                <div className="order-1 md:order-2">
-                  <span className="text-xs font-mono text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider block mb-2">Report Pages 11 &amp; 13</span>
-                  <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 text-slate-900 dark:text-white">Sequenced Execution Plan + Eliminations</h3>
-                  <p className="text-slate-600 dark:text-[#95a2ac] mb-6 leading-relaxed">
-                    A report without next steps is just entertainment. WhatAfter sequences your next 3 years and clearly outlines what careers to actively avoid.
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div className="p-4 rounded-xl bg-white dark:bg-[#0e1b28] border border-slate-200 dark:border-white/5 shadow-sm">
-                      <b className="text-slate-900 dark:text-white text-sm block mb-1">Timeline Roadmaps (1 Month, 6 Months, 1 Year, 3 Years):</b>
-                      <p className="text-xs text-slate-600 dark:text-[#95a3b0]">
-                        Actionable milestones like auditing a Design Thinking course, securing target internships, and building high-leverage portfolios.
-                      </p>
-                    </div>
 
-                    <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-500/20 shadow-sm">
-                      <b className="text-red-700 dark:text-red-300 text-sm flex items-center gap-1.5 mb-1">
-                        <XCircle className="w-4 h-4 text-red-500 dark:text-red-400" /> Career Eliminations:
-                      </b>
-                      <p className="text-xs text-red-900/80 dark:text-[#b8a2a2]">
-                        Explicitly details why high-profile paths (e.g. CA, Medical Doctor, or Corporate Law) clash with your profile, saving years of costly misdirection.
-                      </p>
-                    </div>
-                  </div>
+                {/* Report Interactive View - Expansive Full Width Container */}
+                <div className="max-w-5xl mx-auto">
+                  <ReportPage11InteractiveRoadmap onZoomPdf={() => setZoomImage("/report/execution-plan.png")} />
                 </div>
               </div>
 
             </div>
 
           </div>
-        </section>
+        </ScrollDimSection>
+
+        {/* Wavy Conduit connecting 3-Year Execution Plan into Parent Bridge */}
+        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+          <ScrollWavyConnector 
+            height={240} 
+            direction="reverse-s" 
+            gradientId="wavy-roadmap-to-parent" 
+          />
+        </div>
 
 
         {/* ========================================================= */}
         {/* 7. THE PARENT & COUNSELLOR BRIDGE                         */}
         {/* ========================================================= */}
-        <section className="max-w-[1200px] mx-auto px-6 py-20 border-b border-slate-200/80 dark:border-white/5">
+        <ScrollDimSection className="max-w-[1200px] mx-auto px-6 py-20 border-b border-slate-200/80 dark:border-white/5">
           <div className="rounded-3xl p-8 sm:p-12 lg:p-14 bg-gradient-to-r from-emerald-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden">
             <div className="grid lg:grid-cols-12 gap-10 items-center">
               <div className="lg:col-span-7">
@@ -734,23 +662,13 @@ export default function LandingPage() {
                   Written for the Dinner Table. <br />
                   Not an Academic Journal.
                 </h3>
-                <p className="text-slate-600 dark:text-[#a5b4c0] text-base leading-relaxed mb-8">
+                <p className="text-slate-600 dark:text-[#a5b4c0] text-base leading-relaxed mb-6">
                   Most career advice turns into arguments between parents and students. WhatAfter includes two dedicated tools: <b>&ldquo;In Plain Words&rdquo;</b> (a one-page conversational letter) and the <b>&ldquo;Guide for Parents &amp; Counsellors&rdquo;</b> with specific conversation starters.
                 </p>
 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-white dark:bg-black/30 border border-slate-200/80 dark:border-white/5 shadow-sm">
-                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block mb-1">✓ Constructive Reflection</span>
-                    <p className="text-xs text-slate-600 dark:text-[#95a3ad]">
-                      &ldquo;How can we blend your technical degree with your passion for design to create a unique career moat?&rdquo;
-                    </p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-white dark:bg-black/30 border border-slate-200/80 dark:border-white/5 shadow-sm">
-                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 block mb-1">✓ Financial &amp; Value Alignment</span>
-                    <p className="text-xs text-slate-600 dark:text-[#95a3ad]">
-                      &ldquo;What does a successful balance between high wealth aspirations and social impact look like for you?&rdquo;
-                    </p>
-                  </div>
+                {/* Interactive Dinner Table Translator */}
+                <div className="mt-2">
+                  <DinnerTableTranslator />
                 </div>
               </div>
 
@@ -773,13 +691,23 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </section>
+        </ScrollDimSection>
 
+
+        {/* Wavy Conduit connecting Parent Bridge into Testimonials */}
+        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+          <ScrollWavyConnector 
+            height={240} 
+            direction="s-curve" 
+            gradientId="wavy-parent-to-testimonials" 
+          />
+        </div>
 
         {/* ========================================================= */}
         {/* 8. REAL STUDENT & PARENT TESTIMONIALS                     */}
         {/* ========================================================= */}
-        <section className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
+        <ScrollDimSection className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
+          <div ref={testimonialsRef}>
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
               Real Experiences
@@ -790,50 +718,93 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            {testimonials.map((t, idx) => (
-              <div key={idx} className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 flex flex-col justify-between hover:border-emerald-500/30 transition-colors shadow-sm">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
-                      {t.tag}
-                    </span>
-                    <div className="flex text-emerald-500 dark:text-emerald-400">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                      ))}
+          <div className="grid sm:grid-cols-2 gap-6 items-start">
+            {/* Column 1 (Parallaxed) */}
+            <motion.div style={{ y: col1Y }} className="space-y-6">
+              {[testimonials[0], testimonials[2]].map((t, idx) => (
+                <div key={idx} className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 flex flex-col justify-between hover:border-emerald-500/30 transition-all hover:shadow-lg dark:hover:shadow-emerald-950/20 shadow-sm">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                        {t.tag}
+                      </span>
+                      <div className="flex text-emerald-500 dark:text-emerald-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-700 dark:text-[#c8d4dc] leading-relaxed mb-6 italic">
+                      &ldquo;{t.quote}&rdquo;
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3.5">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 ring-2 ring-emerald-500/20 shadow-sm">
+                      <Image 
+                        src={t.avatar} 
+                        alt={t.name} 
+                        fill 
+                        sizes="48px"
+                        className="object-cover" 
+                      />
+                    </div>
+                    <div>
+                      <span className="text-sm font-bold block text-slate-900 dark:text-white">{t.name}</span>
+                      <span className="text-xs text-slate-500 dark:text-[#798a97]">{t.role} • {t.location}</span>
                     </div>
                   </div>
-                  <p className="text-sm text-slate-700 dark:text-[#c8d4dc] leading-relaxed mb-6 italic">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
                 </div>
+              ))}
+            </motion.div>
 
-                <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3.5">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 ring-2 ring-emerald-500/20 shadow-sm">
-                    <Image 
-                      src={t.avatar} 
-                      alt={t.name} 
-                      fill 
-                      sizes="48px"
-                      className="object-cover" 
-                    />
-                  </div>
+            {/* Column 2 (Opposite Parallaxed) */}
+            <motion.div style={{ y: col2Y }} className="space-y-6 sm:mt-8">
+              {[testimonials[1], testimonials[3]].map((t, idx) => (
+                <div key={idx} className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 flex flex-col justify-between hover:border-emerald-500/30 transition-all hover:shadow-lg dark:hover:shadow-emerald-950/20 shadow-sm">
                   <div>
-                    <span className="text-sm font-bold block text-slate-900 dark:text-white">{t.name}</span>
-                    <span className="text-xs text-slate-500 dark:text-[#798a97]">{t.role} • {t.location}</span>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                        {t.tag}
+                      </span>
+                      <div className="flex text-emerald-500 dark:text-emerald-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-700 dark:text-[#c8d4dc] leading-relaxed mb-6 italic">
+                      &ldquo;{t.quote}&rdquo;
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3.5">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-white/10 ring-2 ring-emerald-500/20 shadow-sm">
+                      <Image 
+                        src={t.avatar} 
+                        alt={t.name} 
+                        fill 
+                        sizes="48px"
+                        className="object-cover" 
+                      />
+                    </div>
+                    <div>
+                      <span className="text-sm font-bold block text-slate-900 dark:text-white">{t.name}</span>
+                      <span className="text-xs text-slate-500 dark:text-[#798a97]">{t.role} • {t.location}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </motion.div>
           </div>
-        </section>
+          </div>
+        </ScrollDimSection>
 
 
         {/* ========================================================= */}
         {/* 8.5 WHATAFTER JOURNAL / LATEST BLOGS                      */}
         {/* ========================================================= */}
-        <section id="journal" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
+        <ScrollDimSection id="journal" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
@@ -900,91 +871,385 @@ export default function LandingPage() {
               </Link>
             ))}
           </div>
-        </section>
+        </ScrollDimSection>
 
+        {/* Wavy Conduit connecting Journal into Pricing */}
+        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+          <ScrollWavyConnector 
+            height={240} 
+            direction="reverse-s" 
+            gradientId="wavy-journal-to-pricing" 
+          />
+        </div>
 
         {/* ========================================================= */}
         {/* 9. TRANSPARENT PRICING BLOCK (₹999)                       */}
         {/* ========================================================= */}
-        <section id="pricing" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              Simple, Transparent Pricing
+        <ScrollDimSection id="pricing" className="max-w-[1240px] mx-auto px-6 py-24 sm:py-32 border-b border-slate-200/80 dark:border-white/5 relative">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16 relative">
+            <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
+              05
+            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
+              One-Time Investment • Zero Recurring Subscriptions
             </div>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4 text-slate-950 dark:text-white">One Investment. Lifelong Direction.</h2>
-            <p className="text-slate-600 dark:text-[#aab7c0] max-w-2xl mx-auto">
-              No hidden fees. No recurring monthly subscriptions. One complete dossier for your next big life decision.
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold mb-4 text-slate-950 dark:text-white tracking-tight">
+              Your Complete Career Intelligence Dossier
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 dark:text-[#aab7c0] max-w-2xl mx-auto leading-relaxed">
+              One assessment. A decision framework you can return to for years.
             </p>
           </div>
 
-          <div className="max-w-lg mx-auto p-8 sm:p-10 border-2 border-emerald-500/60 rounded-3xl bg-gradient-to-b from-emerald-50/50 via-white to-slate-50 dark:from-emerald-950/30 dark:via-[#0b1723] dark:to-[#07111b] relative text-center shadow-2xl dark:shadow-emerald-950/40">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-1.5 bg-emerald-400 text-black text-xs font-black rounded-full uppercase tracking-wider shadow-md">
-              Launch Offer • Full Access
-            </div>
+          {/* VISUAL TRANSFORMATION PIPELINE: 80 Scenarios → 35 Traits → 5 Career Paths → 3-Year Roadmap */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 dark:bg-[#07131e] text-white border border-slate-800 dark:border-white/10 shadow-2xl relative overflow-hidden mb-12">
+            <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -left-20 -top-20 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            <h3 className="text-2xl font-serif font-bold mb-2 text-slate-900 dark:text-white">Comprehensive Career Dossier</h3>
-            <p className="text-xs text-slate-600 dark:text-[#95a2ac] mb-6">Complete 15-Page Intelligence Report + Action Roadmap</p>
-            
-            <div className="flex items-baseline justify-center gap-2 mb-8">
-              <span className="text-6xl font-serif font-black text-slate-950 dark:text-white">₹999</span>
-              <span className="text-sm text-slate-400 dark:text-[#7f8f9b] line-through">₹2,499</span>
-              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold ml-1">Save 60%</span>
-            </div>
-            
-            <ul className="space-y-3.5 mb-8 text-sm text-left">
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>Full 80-Scenario Adaptive Assessment</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>35-Trait Cognitive Aptitudes &amp; Work Values Radar</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>Top 5 Ranked Career Matches with Day-in-the-Life breakdowns</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>AI-Resilience &amp; Expected Salary Benchmarks (Entry to Senior)</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>Eliminated Careers with Specific Mismatch Rationale</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>Sequenced 3-Year Action Plan (1m, 6m, 1y, 3y milestones)</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>Available in Both English &amp; Hindi (हिंदी) — Choose Your Preferred Language</span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-700 dark:text-[#d2dce3]">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                <span>Downloadable 15-Page PDF + Parent &amp; Counsellor Guide</span>
-              </li>
-            </ul>
+            <div className="relative z-10">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-5 border-b border-white/10">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold block mb-0.5">
+                    The Science Behind The Dossier
+                  </span>
+                  <h4 className="text-base sm:text-lg font-serif font-bold text-white">
+                    How Your Responses Transform Into Lifelong Direction
+                  </h4>
+                </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-bold self-start sm:self-auto">
+                  ₹999 Complete Access
+                </div>
+              </div>
 
-            <Link 
-              href="/signup" 
-              className="block w-full py-4 text-center rounded-xl bg-emerald-400 text-black text-base font-extrabold hover:bg-emerald-300 transition-colors shadow-lg shadow-emerald-500/20"
-            >
-              Start Assessment (₹999) →
-            </Link>
-            
-            <span className="block mt-4 text-[11px] text-slate-500 dark:text-[#71828f]">
-              Secure Payment • Instant Account Creation • Lifetime Access to Results
-            </span>
+              {/* Animated Laser Data Pulse Stream Track */}
+              <div className="hidden lg:block relative w-full h-[3px] bg-gradient-to-r from-emerald-500/20 via-teal-500/30 to-cyan-500/20 mb-6 rounded-full overflow-hidden">
+                <motion.div
+                  className="w-36 h-full bg-gradient-to-r from-transparent via-emerald-400 to-transparent blur-[1px]"
+                  animate={{ x: ["-100%", "900%"] }}
+                  transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
+                />
+              </div>
+
+              {/* 4 Compounding Steps */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative">
+                
+                {/* Step 1: 80 Scenarios */}
+                <motion.div 
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-white/[0.07] transition-colors flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">
+                        Step 01 • Input
+                      </span>
+                      <BrainCircuit className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-xl sm:text-2xl font-serif font-black text-white mb-1.5 flex items-center justify-between">
+                      <span>80 Scenarios</span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Adaptive, realistic work &amp; study dilemmas. Zero right/wrong anxiety or memorization stress.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-mono text-emerald-300 flex items-center gap-1 font-semibold">
+                    <span>Unconscious behavioral mapping</span>
+                  </div>
+                </motion.div>
+
+                {/* Step 2: 35 Traits */}
+                <motion.div 
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-teal-500/50 hover:bg-white/[0.07] transition-colors flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-teal-400 font-bold">
+                        Step 02 • Analysis
+                      </span>
+                      <Compass className="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-xl sm:text-2xl font-serif font-black text-white mb-1.5 flex items-center justify-between">
+                      <span>35 Traits</span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Cognitive aptitudes (numerical, spatial, logical, verbal, creative) mapped against work values.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-mono text-teal-300 flex items-center gap-1 font-semibold">
+                    <span>Multidimensional Radar Graph</span>
+                  </div>
+                </motion.div>
+
+                {/* Step 3: 5 Career Paths */}
+                <motion.div 
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-500/50 hover:bg-white/[0.07] transition-colors flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400 font-bold">
+                        Step 03 • Filtering
+                      </span>
+                      <Target className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-xl sm:text-2xl font-serif font-black text-white mb-1.5 flex items-center justify-between">
+                      <span>5 Career Paths</span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      900+ careers filtered down to top 5 recommendations with Indian market salary benchmarks &amp; AI resilience.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-mono text-cyan-300 flex items-center gap-1 font-semibold">
+                    <span>Labor-market grounded metrics</span>
+                  </div>
+                </motion.div>
+
+                {/* Step 4: 3-Year Roadmap */}
+                <motion.div 
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-white/[0.07] transition-colors flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">
+                        Step 04 • Execution
+                      </span>
+                      <Route className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+                    </div>
+                    <div className="text-xl sm:text-2xl font-serif font-black text-white mb-1.5 flex items-center justify-between">
+                      <span>3-Year Roadmap</span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Sequenced milestones (1m, 6m, 1y, 3y) plus what prestigious careers to actively eliminate.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/10 text-[11px] font-mono text-emerald-300 flex items-center gap-1 font-semibold">
+                    <span>From here to a job offer</span>
+                  </div>
+                </motion.div>
+
+              </div>
+
+              {/* Bottom Pipeline Summary */}
+              <div className="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span className="text-xs sm:text-sm text-slate-200">
+                    <b className="text-white">One assessment.</b> A decision framework you can return to for years.
+                  </span>
+                </div>
+                <div className="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+                  <span className="text-emerald-400">80 Scenarios</span>
+                  <span>→</span>
+                  <span className="text-teal-400">35 Traits</span>
+                  <span>→</span>
+                  <span className="text-cyan-400">5 Paths</span>
+                  <span>→</span>
+                  <span className="text-emerald-400">3-Year Plan</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
+
+          {/* 2-COLUMN MAIN CONVERSION SECTION: Designed for Students + Parents & The Investment Card */}
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left Column: Designed for Students + Parents & Cost Comparison */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Card 1: Designed for Students + Parents */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 shadow-lg">
+                <div className="flex items-center gap-2.5 mb-4">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+                    <Users className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block">
+                      The Generational Bridge
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 dark:text-white">
+                      Designed for Students + Parents
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-[#95a2ac] leading-relaxed mb-6">
+                  Most career anxiety comes from generational friction: students want freedom and modern fields, while parents want stability and ROI. WhatAfter replaces guesswork with objective data both sides can trust.
+                </p>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* For Students */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 space-y-2">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                      <span>🎓</span> For Students
+                    </span>
+                    <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                        <span>Discover hidden aptitudes without peer pressure or exam dread</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                        <span>Realistic day-in-the-life tasks, salary ceilings, and AI impact</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                        <span>Step-by-step 3-year execution roadmap from day one</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* For Parents */}
+                  <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 space-y-2">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 flex items-center gap-1.5">
+                      <span>🛡️</span> For Parents
+                    </span>
+                    <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-teal-500 shrink-0 mt-0.5" />
+                        <span>Objective data to have calm, constructive dinner-table conversations</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-teal-500 shrink-0 mt-0.5" />
+                        <span>Avoid ₹5–15 Lakhs in misdirected coaching or unsuitable degrees</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-teal-500 shrink-0 mt-0.5" />
+                        <span>Clear breakdown of high-burnout fields eliminated before signing up</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Cost of Misdirection vs ₹999 */}
+              <div className="p-6 rounded-3xl bg-emerald-500/5 border border-emerald-500/20 text-xs sm:text-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-1.5">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                      Cost of Misdirection vs. Cost of Clarity
+                    </span>
+                    <h4 className="font-serif font-bold text-slate-900 dark:text-white text-base">
+                      Why ₹999 is the Highest-ROI Decision of the Year
+                    </h4>
+                    <p className="text-slate-600 dark:text-[#95a2ac] text-xs leading-relaxed">
+                      A single semester in the wrong stream costs ₹75,000–₹3,00,000 and months of lost morale. Traditional counselors charge ₹5,000+ for subjective opinions. For <b>₹999</b>, WhatAfter gives you an algorithmic psychometric blueprint you can refer back to whenever you face your next crossroads.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Column: The Pricing & Offer Card */}
+            <div className="lg:col-span-5">
+              <div className="p-8 sm:p-10 border-2 border-emerald-500/50 rounded-3xl bg-gradient-to-b from-white via-slate-50 to-emerald-50/30 dark:from-[#0b1723] dark:via-[#07131e] dark:to-[#050e17] relative shadow-2xl dark:shadow-emerald-950/40">
+                
+                <div className="absolute top-0 right-8 -translate-y-1/2 px-4 py-1 bg-emerald-400 text-slate-950 text-[11px] font-mono font-black rounded-full uppercase tracking-wider shadow-md">
+                  60% Off • Launch Price
+                </div>
+
+                <div className="mb-6">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block mb-1">
+                    Complete Intelligence Package
+                  </span>
+                  <h3 className="text-2xl font-serif font-bold text-slate-900 dark:text-white">
+                    Career Intelligence Dossier
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-[#95a2ac] mt-1">
+                    Instant access to the adaptive evaluation + 15-page report
+                  </p>
+                </div>
+
+                {/* Price Display */}
+                <div className="flex items-baseline gap-2.5 mb-6 pb-6 border-b border-slate-200 dark:border-white/10">
+                  <span className="text-5xl sm:text-6xl font-serif font-black text-slate-950 dark:text-white">
+                    ₹999
+                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-sm text-slate-400 dark:text-slate-500 line-through">₹2,499</span>
+                    <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">One-Time Fee</span>
+                  </div>
+                </div>
+
+                {/* What You Receive */}
+                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block mb-3">
+                  Everything Included in Your ₹999 Access:
+                </span>
+                <ul className="space-y-3 mb-8 text-xs text-slate-700 dark:text-[#d2dce3]">
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>80-Scenario Adaptive Assessment</b> (Psychometric &amp; Values)</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>35-Trait Cognitive Aptitudes</b> &amp; Work Values Radar</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>Top 5 Ranked Careers</b> with Entry-to-Senior Indian Salary Data</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>AI-Resilience Index</b> (Human Moat vs Automated Tasks)</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>Career Eliminations</b> with Explicit Conflict Analysis</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>Sequenced 3-Year Action Plan</b> (1m, 6m, 1y, 3y)</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>Available in English &amp; Hindi (हिंदी)</b></span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span><b>Downloadable 15-Page PDF</b> + Lifetime Online Dashboard</span>
+                  </li>
+                </ul>
+
+                {/* CTA */}
+                <Link 
+                  href="/signup" 
+                  className="block w-full py-4 text-center rounded-xl bg-emerald-400 text-slate-950 text-base font-extrabold hover:bg-emerald-300 transition-all shadow-lg shadow-emerald-500/25 active:scale-[0.99]"
+                >
+                  Start Assessment (₹999) →
+                </Link>
+
+                <div className="mt-4 pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-center gap-3 text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                  <span>🔒 256-Bit SSL</span>
+                  <span>•</span>
+                  <span>⚡ Instant Access</span>
+                  <span>•</span>
+                  <span>♾️ Lifetime Validity</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </ScrollDimSection>
 
 
         {/* ========================================================= */}
         {/* 10. FREQUENTLY ASKED QUESTIONS (FAQ)                      */}
         {/* ========================================================= */}
-        <section id="faqs" className="max-w-[850px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
-          <div className="text-center mb-14">
+        <ScrollDimSection id="faqs" className="max-w-[850px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
+          <div className="text-center mb-14 relative">
+            <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
+              06
+            </span>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
               Clear Answers
             </div>
@@ -1000,27 +1265,40 @@ export default function LandingPage() {
                   className="w-full text-left px-6 py-5 flex items-center justify-between font-bold text-base sm:text-lg hover:bg-slate-50 dark:hover:bg-white/5 text-slate-900 dark:text-white transition-colors"
                 >
                   <span className="pr-4">{faq.q}</span>
-                  {openFaq === i ? (
-                    <ChevronUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />
-                  )}
+                  <motion.div
+                    animate={{ rotate: openFaq === i ? 180 : 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="shrink-0"
+                  >
+                    <ChevronDown className={`w-5 h-5 transition-colors ${openFaq === i ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"}`} />
+                  </motion.div>
                 </button>
-                {openFaq === i && (
-                  <div className="px-6 pb-5 text-sm text-slate-600 dark:text-[#9ab0bf] leading-relaxed border-t border-slate-100 dark:border-white/5 pt-3">
-                    {faq.a}
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {openFaq === i && (
+                    <motion.div
+                      key="faq-content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-5 text-sm text-slate-600 dark:text-[#9ab0bf] leading-relaxed border-t border-slate-100 dark:border-white/5 pt-3">
+                        {faq.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
-        </section>
+        </ScrollDimSection>
 
 
         {/* ========================================================= */}
         {/* 11. FINAL HIGH-IMPACT CTA                                 */}
         {/* ========================================================= */}
-        <section className="max-w-[1200px] mx-auto px-6 py-20">
+        <ScrollDimSection className="max-w-[1200px] mx-auto px-6 py-20">
           <div className="rounded-3xl p-10 md:p-16 text-center bg-gradient-to-b from-emerald-50 via-slate-50 to-white dark:from-emerald-950/40 dark:via-[#0a1622] dark:to-[#061019] border border-emerald-500/30 relative overflow-hidden shadow-xl dark:shadow-2xl">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
             
@@ -1037,7 +1315,7 @@ export default function LandingPage() {
               Take the Assessment →
             </Link>
           </div>
-        </section>
+        </ScrollDimSection>
 
       </main>
       
