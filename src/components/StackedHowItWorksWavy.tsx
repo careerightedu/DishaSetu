@@ -103,7 +103,7 @@ export default function StackedHowItWorksWavy() {
         {/* STEP 1: SIGNAL CAPTURE (Left on desktop)                */}
         {/* ======================================================== */}
         <motion.div 
-          style={isDesktop ? { filter: step1Filter, opacity: step1Opacity, willChange: "filter, opacity" } : undefined}
+          style={isDesktop ? { filter: step1Filter, opacity: step1Opacity, willChange: "filter, opacity" } : { opacity: step1Opacity, willChange: "opacity" }}
           className="relative grid md:grid-cols-12 gap-6 sm:gap-8 items-center transition-all duration-300"
         >
           {/* Card */}
@@ -166,7 +166,7 @@ export default function StackedHowItWorksWavy() {
         {/* ======================================================== */}
         {/* WAVY CONNECTOR 1: Flowing from Step 1 to Step 2         */}
         {/* ======================================================== */}
-        <div className="relative h-20 sm:h-28 md:h-72 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
+        <div className="relative h-24 sm:h-32 md:h-72 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
           {/* SVG Canvas for self-drawing long wavy S-curve */}
           <svg 
             className="w-full h-full overflow-visible"
@@ -202,7 +202,7 @@ export default function StackedHowItWorksWavy() {
               strokeWidth={isDesktop ? 4 : 3}
               strokeLinecap="round"
               filter="url(#glow1)"
-              style={{ pathLength: isDesktop ? path1Length : 1 }}
+              style={{ pathLength: path1Length }}
             />
 
             {/* Top terminal contact bead directly touching Step 1 card border */}
@@ -221,7 +221,7 @@ export default function StackedHowItWorksWavy() {
         {/* STEP 2: COGNITIVE MODELING (Right on desktop)           */}
         {/* ======================================================== */}
         <motion.div 
-          style={isDesktop ? { filter: step2Filter, opacity: step2Opacity, willChange: "filter, opacity" } : undefined}
+          style={isDesktop ? { filter: step2Filter, opacity: step2Opacity, willChange: "filter, opacity" } : { opacity: step2Opacity, willChange: "opacity" }}
           className="relative grid md:grid-cols-12 gap-6 sm:gap-8 items-center transition-all duration-300"
         >
           {/* Left Teaser Badge for Step 2 */}
@@ -284,7 +284,7 @@ export default function StackedHowItWorksWavy() {
         {/* ======================================================== */}
         {/* WAVY CONNECTOR 2: Flowing from Step 2 to Step 3         */}
         {/* ======================================================== */}
-        <div className="relative h-20 sm:h-28 md:h-72 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
+        <div className="relative h-24 sm:h-32 md:h-72 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
           {/* SVG Canvas for self-drawing long wavy reverse S-curve */}
           <svg 
             className="w-full h-full overflow-visible"
@@ -320,7 +320,7 @@ export default function StackedHowItWorksWavy() {
               strokeWidth={isDesktop ? 4 : 3}
               strokeLinecap="round"
               filter="url(#glow2)"
-              style={{ pathLength: isDesktop ? path2Length : 1 }}
+              style={{ pathLength: path2Length }}
             />
 
             {/* Top terminal contact bead directly touching Step 2 card border */}
@@ -339,7 +339,7 @@ export default function StackedHowItWorksWavy() {
         {/* STEP 3: SEQUENCED EXECUTION (Full-width Center Anchor)  */}
         {/* ======================================================== */}
         <motion.div 
-          style={isDesktop ? { filter: step3Filter, opacity: step3Opacity, willChange: "filter, opacity" } : undefined}
+          style={isDesktop ? { filter: step3Filter, opacity: step3Opacity, willChange: "filter, opacity" } : { opacity: step3Opacity, willChange: "opacity" }}
           className="relative transition-all duration-300"
         >
           <motion.div 

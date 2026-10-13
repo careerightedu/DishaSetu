@@ -202,7 +202,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-900 dark:text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200 transition-colors duration-200 relative">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-slate-50 dark:bg-[#061019] text-slate-900 dark:text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200 transition-colors duration-200 relative">
       {/* Dynamic Parallax Atmosphere Glows & Blueprint Grid */}
       <AmbientBackgroundGlows />
 
@@ -214,7 +214,7 @@ export default function LandingPage() {
 
       <Navbar />
 
-      <main className="overflow-hidden">
+      <main className="w-full max-w-full overflow-x-hidden">
         
         {/* ========================================================= */}
         {/* 1. HERO SECTION                                           */}
@@ -663,10 +663,10 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 7. THE PARENT & COUNSELLOR BRIDGE                         */}
         {/* ========================================================= */}
-        <ScrollDimSection className="max-w-[1200px] mx-auto px-4 sm:px-6 py-16 sm:py-20 border-b border-slate-200/80 dark:border-white/5">
-          <div className="rounded-3xl p-5 sm:p-10 lg:p-14 bg-gradient-to-r from-emerald-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden">
-            <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-              <div className="lg:col-span-7">
+        <ScrollDimSection className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-16 sm:py-20 border-b border-slate-200/80 dark:border-white/5 overflow-hidden">
+          <div className="rounded-3xl p-5 sm:p-10 lg:p-14 bg-gradient-to-r from-emerald-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden w-full max-w-full min-w-0">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center w-full max-w-full min-w-0">
+              <div className="w-full max-w-full min-w-0 lg:col-span-7">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-4">
                   Bridging The Generational Gap
                 </div>
@@ -674,19 +674,19 @@ export default function LandingPage() {
                   Written for the Dinner Table. <br className="hidden sm:inline" />
                   Not an Academic Journal.
                 </h3>
-                <p className="text-slate-600 dark:text-[#a5b4c0] text-sm sm:text-base leading-relaxed mb-6">
+                <p className="text-slate-600 dark:text-[#a5b4c0] text-sm sm:text-base leading-relaxed mb-6 break-words">
                   Most career advice turns into arguments between parents and students. WhatAfter includes two dedicated tools: <b>&ldquo;In Plain Words&rdquo;</b> (a one-page conversational letter) and the <b>&ldquo;Guide for Parents &amp; Counsellors&rdquo;</b> with specific conversation starters.
                 </p>
 
                 {/* Interactive Dinner Table Translator */}
-                <div className="mt-2">
+                <div className="mt-2 w-full max-w-full min-w-0">
                   <DinnerTableTranslator />
                 </div>
               </div>
 
               {/* Right column: Image */}
-              <div className="lg:col-span-5 relative">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl group">
+              <div className="w-full max-w-full min-w-0 lg:col-span-5 relative">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl group w-full">
                   <Image 
                     src="/images/dinner_table_bridge.jpg"
                     alt="Indian mother and son reviewing career assessment on a tablet together at home"

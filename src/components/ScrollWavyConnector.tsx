@@ -72,8 +72,8 @@ export default function ScrollWavyConnector({
     }
   }
 
-  // Mobile height is compact (75px) to eliminate awkward empty gaps; Desktop retains expansive height.
-  const effectiveHeight = isDesktop ? height : Math.min(height, 75);
+  // Mobile height is 100px so connectors feel prominent and graceful without excess gaps; Desktop retains expansive height.
+  const effectiveHeight = isDesktop ? height : Math.min(height, 100);
 
   return (
     <div 
@@ -115,7 +115,7 @@ export default function ScrollWavyConnector({
           strokeWidth={isDesktop ? 4 : 3}
           strokeLinecap="round"
           filter={`url(#${gradientId}-glow)`}
-          style={{ pathLength: isDesktop ? smoothProgress : 1 }}
+          style={{ pathLength: smoothProgress }}
         />
 
         {/* Top Terminal Contact Bead Touching Upper Section Border */}

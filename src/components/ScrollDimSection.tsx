@@ -65,6 +65,7 @@ export default function ScrollDimSection({
       ? [1, 0.88, dimBrightness]
       : [0.82, 1, 1, dimBrightness]
   );
+  const filter = useTransform(brightness, (b) => `brightness(${b})`);
 
   // Calculate opacity transform (desktop spotlight)
   const opacity = useTransform(
@@ -77,8 +78,16 @@ export default function ScrollDimSection({
       : [0.85, 1, 1, dimOpacity]
   );
 
-  // Convert brightness to CSS filter string
-  const filter = useTransform(brightness, (b) => `brightness(${b})`);
+  // Mobile dimming transform: uses GPU-composited opacity so it's 100% fluid at 60/120fps without heavy CSS filter re-rasters
+  const mobileOpacity = useTransform(
+    smoothProgress,
+    isHero
+      ? [0, 0.45, 0.92]
+      : [0, 0.15, 0.72, 0.95],
+    isHero
+      ? [1, 0.95, dimOpacity]
+      : [0.92, 1, 1, dimOpacity]
+  );
 
   const Component = as === "section" ? motion.section : motion.div;
 
@@ -93,7 +102,10 @@ export default function ScrollDimSection({
               opacity,
               willChange: "filter, opacity",
             }
-          : undefined
+          : {
+              opacity: mobileOpacity,
+              willChange: "opacity",
+            }
       }
       className={`transition-colors duration-200 ${className}`}
     >

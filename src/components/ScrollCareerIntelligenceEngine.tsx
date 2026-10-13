@@ -144,7 +144,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* STEP 1: COGNITIVE TRAITS (Input Nodes)                      */}
         {/* =========================================================== */}
         <motion.div 
-          style={isDesktop ? { opacity: step1Opacity, scale: step1Scale } : { opacity: 1, scale: 1 }}
+          style={{ opacity: step1Opacity, scale: step1Scale, willChange: "opacity, transform" }}
           className="relative"
         >
           {/* Subdued architectural category header */}
@@ -276,7 +276,7 @@ export default function ScrollCareerIntelligenceEngine() {
               strokeWidth={isDesktop ? 16 : 8} 
               strokeOpacity="0.2"
               strokeLinecap="round"
-              style={{ pathLength: isDesktop ? line1Progress : 1 }} 
+              style={{ pathLength: line1Progress }} 
             />
 
             {/* Layer 2: Secondary Luminous Conduit */}
@@ -306,7 +306,7 @@ export default function ScrollCareerIntelligenceEngine() {
               strokeWidth={isDesktop ? 7 : 4} 
               strokeOpacity="0.45"
               strokeLinecap="round"
-              style={{ pathLength: isDesktop ? line1Progress : 1 }} 
+              style={{ pathLength: line1Progress }} 
             />
 
             {/* Layer 3: High-Intensity Crisp Core Beam */}
@@ -334,7 +334,7 @@ export default function ScrollCareerIntelligenceEngine() {
               strokeWidth={isDesktop ? 3.5 : 2.5} 
               strokeLinecap="round"
               filter="url(#opticGlow1)"
-              style={{ pathLength: isDesktop ? line1Progress : 1 }} 
+              style={{ pathLength: line1Progress }} 
             />
           </svg>
         </div>
@@ -343,7 +343,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* STEP 2: COGNITIVE FINGERPRINT HUB (Central Profile Card)    */}
         {/* =========================================================== */}
         <motion.div 
-          style={isDesktop ? { opacity: hubOpacity, scale: hubScale } : { opacity: 1, scale: 1 }}
+          style={{ opacity: hubOpacity, scale: hubScale, willChange: "opacity, transform" }}
           className="relative rounded-3xl p-6 sm:p-10 md:p-12 bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/10 dark:from-[#0d2232] dark:via-[#091824] dark:to-[#0d2232] border-2 border-emerald-500/60 shadow-2xl overflow-visible transition-all"
         >
           {/* Terminal Connection Socket (Top) */}
@@ -475,7 +475,7 @@ export default function ScrollCareerIntelligenceEngine() {
               strokeWidth={isDesktop ? 16 : 8} 
               strokeOpacity="0.2"
               strokeLinecap="round"
-              style={{ pathLength: isDesktop ? line2Progress : 1 }} 
+              style={{ pathLength: line2Progress }} 
             />
 
             {/* Layer 2: Secondary Luminous Conduit */}
@@ -505,7 +505,7 @@ export default function ScrollCareerIntelligenceEngine() {
               strokeWidth={isDesktop ? 7 : 4} 
               strokeOpacity="0.45"
               strokeLinecap="round"
-              style={{ pathLength: isDesktop ? line2Progress : 1 }} 
+              style={{ pathLength: line2Progress }} 
             />
 
             {/* Layer 3: High-Intensity Crisp Core Beam */}
@@ -533,7 +533,7 @@ export default function ScrollCareerIntelligenceEngine() {
               strokeWidth={isDesktop ? 3.5 : 2.5} 
               strokeLinecap="round"
               filter="url(#opticGlow2)"
-              style={{ pathLength: isDesktop ? line2Progress : 1 }} 
+              style={{ pathLength: line2Progress }} 
             />
           </svg>
         </div>
@@ -542,7 +542,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* STEP 3: CAREER MATCHES (Output Nodes)                       */}
         {/* =========================================================== */}
         <motion.div 
-          style={isDesktop ? { opacity: careersOpacity, scale: careersScale } : { opacity: 1, scale: 1 }}
+          style={{ opacity: careersOpacity, scale: careersScale, willChange: "opacity, transform" }}
           className="relative"
         >
           <div className="flex items-center justify-between mb-5 px-1">
@@ -618,7 +618,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* STEP 4: THE SEQUENCED 3-YEAR ROADMAP & AI-RESILIENCE CARD   */}
         {/* =========================================================== */}
         <motion.div 
-          style={isDesktop ? { opacity: roadmapOpacity, y: roadmapY } : { opacity: 1, y: 0 }}
+          style={{ opacity: roadmapOpacity, y: roadmapY, willChange: "opacity, transform" }}
           className="mt-8 sm:mt-10 p-6 sm:p-8 md:p-10 rounded-3xl bg-slate-950 text-white dark:bg-[#061019] border-2 border-emerald-500/40 shadow-2xl relative overflow-hidden"
         >
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
