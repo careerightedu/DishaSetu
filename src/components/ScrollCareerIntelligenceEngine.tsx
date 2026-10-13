@@ -144,7 +144,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* STEP 1: COGNITIVE TRAITS (Input Nodes)                      */}
         {/* =========================================================== */}
         <motion.div 
-          style={{ opacity: step1Opacity, scale: step1Scale }}
+          style={isDesktop ? { opacity: step1Opacity, scale: step1Scale } : { opacity: 1, scale: 1 }}
           className="relative"
         >
           {/* Subdued architectural category header */}
@@ -200,8 +200,8 @@ export default function ScrollCareerIntelligenceEngine() {
                     />
                   </div>
 
-                  {/* Terminal Connection Socket (Bottom) */}
-                  <div className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 flex items-center justify-center">
+                  {/* Terminal Connection Socket (Bottom) - On desktop all cards have sockets; on mobile only the bottom card connects */}
+                  <div className={`absolute -bottom-3.5 left-1/2 -translate-x-1/2 ${idx === traits.length - 1 ? "flex" : "hidden md:flex"} items-center justify-center`}>
                     <div className="w-7 h-7 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/30 flex items-center justify-center">
                       <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-75" />
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-sm shadow-emerald-400" />
@@ -216,7 +216,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* =========================================================== */}
         {/* CONNECTOR 1: SCROLL-DRIVEN CONVERGING LINES                 */}
         {/* =========================================================== */}
-        <div className="relative h-20 sm:h-32 md:h-72 w-full my-2">
+        <div className="relative h-24 sm:h-36 md:h-72 lg:h-80 w-full my-2 flex items-center justify-center pointer-events-none">
           {/* Large Architectural SVG */}
           <svg 
             className="w-full h-full text-emerald-500 overflow-visible" 
@@ -233,104 +233,117 @@ export default function ScrollCareerIntelligenceEngine() {
 
               {/* Glowing optic filter */}
               <filter id="opticGlow1" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feGaussianBlur stdDeviation={isDesktop ? 6 : 3} result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
 
             {/* Background architectural guide conduits (Faint Dashed) */}
-            <path d="M 167,0 C 167,160 500,90 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
-            <path d="M 500,0 L 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
-            <path d="M 833,0 C 833,160 500,90 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+            {isDesktop ? (
+              <>
+                <path d="M 167,0 C 167,160 500,90 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+                <path d="M 500,0 L 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+                <path d="M 833,0 C 833,160 500,90 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+              </>
+            ) : (
+              <path d="M 500,0 L 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.2" />
+            )}
 
             {/* Layer 1: Wide Neon Ambient Bloom */}
-            <motion.path 
-              d="M 167,0 C 167,160 500,90 500,260" 
-              stroke="#10b981" 
-              strokeWidth="16" 
-              strokeOpacity="0.15"
-              strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
-            />
+            {isDesktop && (
+              <>
+                <motion.path 
+                  d="M 167,0 C 167,160 500,90 500,260" 
+                  stroke="#10b981" 
+                  strokeWidth="16" 
+                  strokeOpacity="0.15"
+                  strokeLinecap="round"
+                  style={{ pathLength: line1Progress }} 
+                />
+                <motion.path 
+                  d="M 833,0 C 833,160 500,90 500,260" 
+                  stroke="#10b981" 
+                  strokeWidth="16" 
+                  strokeOpacity="0.15"
+                  strokeLinecap="round"
+                  style={{ pathLength: line1Progress }} 
+                />
+              </>
+            )}
             <motion.path 
               d="M 500,0 L 500,260" 
               stroke="#10b981" 
-              strokeWidth="16" 
-              strokeOpacity="0.15"
+              strokeWidth={isDesktop ? 16 : 8} 
+              strokeOpacity="0.2"
               strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
-            />
-            <motion.path 
-              d="M 833,0 C 833,160 500,90 500,260" 
-              stroke="#10b981" 
-              strokeWidth="16" 
-              strokeOpacity="0.15"
-              strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
+              style={{ pathLength: isDesktop ? line1Progress : 1 }} 
             />
 
             {/* Layer 2: Secondary Luminous Conduit */}
-            <motion.path 
-              d="M 167,0 C 167,160 500,90 500,260" 
-              stroke="#34d399" 
-              strokeWidth="7" 
-              strokeOpacity="0.4"
-              strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
-            />
+            {isDesktop && (
+              <>
+                <motion.path 
+                  d="M 167,0 C 167,160 500,90 500,260" 
+                  stroke="#34d399" 
+                  strokeWidth="7" 
+                  strokeOpacity="0.4"
+                  strokeLinecap="round"
+                  style={{ pathLength: line1Progress }} 
+                />
+                <motion.path 
+                  d="M 833,0 C 833,160 500,90 500,260" 
+                  stroke="#34d399" 
+                  strokeWidth="7" 
+                  strokeOpacity="0.4"
+                  strokeLinecap="round"
+                  style={{ pathLength: line1Progress }} 
+                />
+              </>
+            )}
             <motion.path 
               d="M 500,0 L 500,260" 
               stroke="#34d399" 
-              strokeWidth="7" 
-              strokeOpacity="0.4"
+              strokeWidth={isDesktop ? 7 : 4} 
+              strokeOpacity="0.45"
               strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
-            />
-            <motion.path 
-              d="M 833,0 C 833,160 500,90 500,260" 
-              stroke="#34d399" 
-              strokeWidth="7" 
-              strokeOpacity="0.4"
-              strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
+              style={{ pathLength: isDesktop ? line1Progress : 1 }} 
             />
 
             {/* Layer 3: High-Intensity Crisp Core Beam */}
-            <motion.path 
-              d="M 167,0 C 167,160 500,90 500,260" 
-              stroke="url(#largeStreamGrad1)" 
-              strokeWidth="3.5" 
-              strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
-            />
+            {isDesktop && (
+              <>
+                <motion.path 
+                  d="M 167,0 C 167,160 500,90 500,260" 
+                  stroke="url(#largeStreamGrad1)" 
+                  strokeWidth="3.5" 
+                  strokeLinecap="round"
+                  style={{ pathLength: line1Progress }} 
+                />
+                <motion.path 
+                  d="M 833,0 C 833,160 500,90 500,260" 
+                  stroke="url(#largeStreamGrad1)" 
+                  strokeWidth="3.5" 
+                  strokeLinecap="round"
+                  style={{ pathLength: line1Progress }} 
+                />
+              </>
+            )}
             <motion.path 
               d="M 500,0 L 500,260" 
               stroke="url(#largeStreamGrad1)" 
-              strokeWidth="3.5" 
+              strokeWidth={isDesktop ? 3.5 : 2.5} 
               strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
-            />
-            <motion.path 
-              d="M 833,0 C 833,160 500,90 500,260" 
-              stroke="url(#largeStreamGrad1)" 
-              strokeWidth="3.5" 
-              strokeLinecap="round"
-              style={{ pathLength: line1Progress }} 
+              filter="url(#opticGlow1)"
+              style={{ pathLength: isDesktop ? line1Progress : 1 }} 
             />
           </svg>
-
-          {/* Central Conduit Convergence Badge */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full bg-slate-900/90 dark:bg-black/90 border border-emerald-500/50 text-[11px] font-mono text-emerald-300 font-bold backdrop-blur-md shadow-xl flex items-center gap-2 pointer-events-none">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>Multi-Trait Signal Convergence</span>
-          </div>
         </div>
 
         {/* =========================================================== */}
         {/* STEP 2: COGNITIVE FINGERPRINT HUB (Central Profile Card)    */}
         {/* =========================================================== */}
         <motion.div 
-          style={{ opacity: hubOpacity, scale: hubScale }}
+          style={isDesktop ? { opacity: hubOpacity, scale: hubScale } : { opacity: 1, scale: 1 }}
           className="relative rounded-3xl p-6 sm:p-10 md:p-12 bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/10 dark:from-[#0d2232] dark:via-[#091824] dark:to-[#0d2232] border-2 border-emerald-500/60 shadow-2xl overflow-visible transition-all"
         >
           {/* Terminal Connection Socket (Top) */}
@@ -404,7 +417,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* =========================================================== */}
         {/* CONNECTOR 2: SCROLL-DRIVEN DIVERGING LINES                 */}
         {/* =========================================================== */}
-        <div className="relative h-20 sm:h-32 md:h-72 w-full my-2">
+        <div className="relative h-24 sm:h-36 md:h-72 lg:h-80 w-full my-2 flex items-center justify-center pointer-events-none">
           <svg 
             className="w-full h-full text-emerald-500 overflow-visible" 
             viewBox="0 0 1000 260" 
@@ -417,101 +430,119 @@ export default function ScrollCareerIntelligenceEngine() {
                 <stop offset="50%" stopColor="#14b8a6" stopOpacity="0.85" />
                 <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.4" />
               </linearGradient>
+
+              <filter id="opticGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation={isDesktop ? 6 : 3} result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
             </defs>
 
             {/* Background architectural guide conduits */}
-            <path d="M 500,0 C 500,100 167,160 167,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
-            <path d="M 500,0 L 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
-            <path d="M 500,0 C 500,100 833,160 833,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+            {isDesktop ? (
+              <>
+                <path d="M 500,0 C 500,100 167,160 167,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+                <path d="M 500,0 L 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+                <path d="M 500,0 C 500,100 833,160 833,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.15" />
+              </>
+            ) : (
+              <path d="M 500,0 L 500,260" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" opacity="0.2" />
+            )}
 
             {/* Layer 1: Wide Neon Ambient Bloom */}
-            <motion.path 
-              d="M 500,0 C 500,100 167,160 167,260" 
-              stroke="#10b981" 
-              strokeWidth="16" 
-              strokeOpacity="0.15"
-              strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
-            />
+            {isDesktop && (
+              <>
+                <motion.path 
+                  d="M 500,0 C 500,100 167,160 167,260" 
+                  stroke="#10b981" 
+                  strokeWidth="16" 
+                  strokeOpacity="0.15"
+                  strokeLinecap="round"
+                  style={{ pathLength: line2Progress }} 
+                />
+                <motion.path 
+                  d="M 500,0 C 500,100 833,160 833,260" 
+                  stroke="#10b981" 
+                  strokeWidth="16" 
+                  strokeOpacity="0.15"
+                  strokeLinecap="round"
+                  style={{ pathLength: line2Progress }} 
+                />
+              </>
+            )}
             <motion.path 
               d="M 500,0 L 500,260" 
               stroke="#10b981" 
-              strokeWidth="16" 
-              strokeOpacity="0.15"
+              strokeWidth={isDesktop ? 16 : 8} 
+              strokeOpacity="0.2"
               strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
-            />
-            <motion.path 
-              d="M 500,0 C 500,100 833,160 833,260" 
-              stroke="#10b981" 
-              strokeWidth="16" 
-              strokeOpacity="0.15"
-              strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
+              style={{ pathLength: isDesktop ? line2Progress : 1 }} 
             />
 
             {/* Layer 2: Secondary Luminous Conduit */}
-            <motion.path 
-              d="M 500,0 C 500,100 167,160 167,260" 
-              stroke="#14b8a6" 
-              strokeWidth="7" 
-              strokeOpacity="0.4"
-              strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
-            />
+            {isDesktop && (
+              <>
+                <motion.path 
+                  d="M 500,0 C 500,100 167,160 167,260" 
+                  stroke="#14b8a6" 
+                  strokeWidth="7" 
+                  strokeOpacity="0.4"
+                  strokeLinecap="round"
+                  style={{ pathLength: line2Progress }} 
+                />
+                <motion.path 
+                  d="M 500,0 C 500,100 833,160 833,260" 
+                  stroke="#14b8a6" 
+                  strokeWidth="7" 
+                  strokeOpacity="0.4"
+                  strokeLinecap="round"
+                  style={{ pathLength: line2Progress }} 
+                />
+              </>
+            )}
             <motion.path 
               d="M 500,0 L 500,260" 
               stroke="#14b8a6" 
-              strokeWidth="7" 
-              strokeOpacity="0.4"
+              strokeWidth={isDesktop ? 7 : 4} 
+              strokeOpacity="0.45"
               strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
-            />
-            <motion.path 
-              d="M 500,0 C 500,100 833,160 833,260" 
-              stroke="#14b8a6" 
-              strokeWidth="7" 
-              strokeOpacity="0.4"
-              strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
+              style={{ pathLength: isDesktop ? line2Progress : 1 }} 
             />
 
             {/* Layer 3: High-Intensity Crisp Core Beam */}
-            <motion.path 
-              d="M 500,0 C 500,100 167,160 167,260" 
-              stroke="url(#largeStreamGrad2)" 
-              strokeWidth="3.5" 
-              strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
-            />
+            {isDesktop && (
+              <>
+                <motion.path 
+                  d="M 500,0 C 500,100 167,160 167,260" 
+                  stroke="url(#largeStreamGrad2)" 
+                  strokeWidth="3.5" 
+                  strokeLinecap="round"
+                  style={{ pathLength: line2Progress }} 
+                />
+                <motion.path 
+                  d="M 500,0 C 500,100 833,160 833,260" 
+                  stroke="url(#largeStreamGrad2)" 
+                  strokeWidth="3.5" 
+                  strokeLinecap="round"
+                  style={{ pathLength: line2Progress }} 
+                />
+              </>
+            )}
             <motion.path 
               d="M 500,0 L 500,260" 
               stroke="url(#largeStreamGrad2)" 
-              strokeWidth="3.5" 
+              strokeWidth={isDesktop ? 3.5 : 2.5} 
               strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
-            />
-            <motion.path 
-              d="M 500,0 C 500,100 833,160 833,260" 
-              stroke="url(#largeStreamGrad2)" 
-              strokeWidth="3.5" 
-              strokeLinecap="round"
-              style={{ pathLength: line2Progress }} 
+              filter="url(#opticGlow2)"
+              style={{ pathLength: isDesktop ? line2Progress : 1 }} 
             />
           </svg>
-
-          {/* Divergence Derivation Indicator */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full bg-slate-900/90 dark:bg-black/90 border border-emerald-500/50 text-[11px] font-mono text-emerald-300 font-bold backdrop-blur-md shadow-xl flex items-center gap-2 pointer-events-none">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>Deriving Ranked Career Matches</span>
-          </div>
         </div>
 
         {/* =========================================================== */}
         {/* STEP 3: CAREER MATCHES (Output Nodes)                       */}
         {/* =========================================================== */}
         <motion.div 
-          style={{ opacity: careersOpacity, scale: careersScale }}
+          style={isDesktop ? { opacity: careersOpacity, scale: careersScale } : { opacity: 1, scale: 1 }}
           className="relative"
         >
           <div className="flex items-center justify-between mb-5 px-1">
@@ -530,7 +561,7 @@ export default function ScrollCareerIntelligenceEngine() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {careers.map((career) => (
+            {careers.map((career, idx) => (
               <div
                 key={career.title}
                 className={`relative p-6 sm:p-7 rounded-2xl transition-all ${
@@ -539,8 +570,8 @@ export default function ScrollCareerIntelligenceEngine() {
                     : "bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 shadow-lg"
                 }`}
               >
-                {/* Terminal Connection Socket (Top) */}
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center justify-center">
+                {/* Terminal Connection Socket (Top) - On desktop all cards have sockets; on mobile only the top card connects */}
+                <div className={`absolute -top-3.5 left-1/2 -translate-x-1/2 ${idx === 0 ? "flex" : "hidden md:flex"} items-center justify-center`}>
                   <div className="w-7 h-7 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/30 flex items-center justify-center">
                     <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-sm shadow-emerald-400" />
@@ -587,7 +618,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* STEP 4: THE SEQUENCED 3-YEAR ROADMAP & AI-RESILIENCE CARD   */}
         {/* =========================================================== */}
         <motion.div 
-          style={{ opacity: roadmapOpacity, y: roadmapY }}
+          style={isDesktop ? { opacity: roadmapOpacity, y: roadmapY } : { opacity: 1, y: 0 }}
           className="mt-8 sm:mt-10 p-6 sm:p-8 md:p-10 rounded-3xl bg-slate-950 text-white dark:bg-[#061019] border-2 border-emerald-500/40 shadow-2xl relative overflow-hidden"
         >
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">

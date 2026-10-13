@@ -115,7 +115,7 @@ export default function ScrollWavyConnector({
           strokeWidth={isDesktop ? 4 : 3}
           strokeLinecap="round"
           filter={`url(#${gradientId}-glow)`}
-          style={{ pathLength: smoothProgress }}
+          style={{ pathLength: isDesktop ? smoothProgress : 1 }}
         />
 
         {/* Top Terminal Contact Bead Touching Upper Section Border */}

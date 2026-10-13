@@ -223,7 +223,7 @@ export default function LandingPage() {
           {/* Ambient background glow */}
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
           
-          <div className="max-w-[1200px] mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+          <div className="max-w-[1200px] mx-auto px-4 sm:px-6 relative z-10 flex flex-col items-center text-center">
             
             {/* Pill Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 text-xs font-semibold tracking-wide mb-8 shadow-sm">
@@ -347,7 +347,7 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 4. THE 4 LIFE STAGES ("WHAT AFTER?")                      */}
         {/* ========================================================= */}
-        <ScrollDimSection id="stages" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
+        <ScrollDimSection id="stages" className="max-w-[1200px] mx-auto px-4 sm:px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
           <div className="text-center mb-16 relative">
             <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
               02
@@ -392,7 +392,7 @@ export default function LandingPage() {
           </div>
 
           {/* Active Stage Card */}
-          <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-emerald-50/60 via-white to-slate-50 dark:from-[#0c1926] dark:to-[#08121c] border border-emerald-500/30 shadow-xl dark:shadow-2xl relative overflow-hidden">
+          <div className="p-5 sm:p-10 rounded-2xl bg-gradient-to-br from-emerald-50/60 via-white to-slate-50 dark:from-[#0c1926] dark:to-[#08121c] border border-emerald-500/30 shadow-xl dark:shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
             
             <AnimatePresence mode="wait">
@@ -429,7 +429,7 @@ export default function LandingPage() {
 
                   <Link 
                     href="/signup" 
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-400 text-black font-bold text-sm hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-emerald-400 text-black font-bold text-sm hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20 text-center"
                   >
                     Solve Your {stages[activeStage].label} Decision <ArrowRight className="w-4 h-4" />
                   </Link>
@@ -465,7 +465,7 @@ export default function LandingPage() {
         </ScrollDimSection>
 
         {/* Wavy Conduit connecting How It Works into Inside Report */}
-        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 -my-4 relative z-20">
           <ScrollWavyConnector 
             height={240} 
             direction="s-curve" 
@@ -477,7 +477,7 @@ export default function LandingPage() {
         {/* 6. INSIDE THE 15-PAGE REPORT (VISUAL PROOF)               */}
         {/* ========================================================= */}
         <ScrollDimSection id="inside-report" className="py-24 border-b border-slate-200/80 dark:border-white/5 bg-gradient-to-b from-slate-50 via-slate-100/60 to-slate-50 dark:from-[#061019] dark:via-[#091522] dark:to-[#061019] relative">
-          <div className="max-w-[1200px] mx-auto px-6">
+          <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
             
             <div className="text-center mb-24 lg:mb-28 relative">
               <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
@@ -651,7 +651,7 @@ export default function LandingPage() {
         </ScrollDimSection>
 
         {/* Wavy Conduit connecting 3-Year Execution Plan into Parent Bridge */}
-        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 -my-4 relative z-20">
           <ScrollWavyConnector 
             height={240} 
             direction="reverse-s" 
@@ -663,18 +663,18 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 7. THE PARENT & COUNSELLOR BRIDGE                         */}
         {/* ========================================================= */}
-        <ScrollDimSection className="max-w-[1200px] mx-auto px-6 py-20 border-b border-slate-200/80 dark:border-white/5">
-          <div className="rounded-3xl p-8 sm:p-12 lg:p-14 bg-gradient-to-r from-emerald-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
+        <ScrollDimSection className="max-w-[1200px] mx-auto px-4 sm:px-6 py-16 sm:py-20 border-b border-slate-200/80 dark:border-white/5">
+          <div className="rounded-3xl p-5 sm:p-10 lg:p-14 bg-gradient-to-r from-emerald-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden">
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
               <div className="lg:col-span-7">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-4">
                   Bridging The Generational Gap
                 </div>
-                <h3 className="text-2xl sm:text-4xl font-serif font-bold mb-4 text-slate-900 dark:text-white">
-                  Written for the Dinner Table. <br />
+                <h3 className="text-2xl sm:text-4xl font-serif font-bold mb-4 text-slate-900 dark:text-white break-words">
+                  Written for the Dinner Table. <br className="hidden sm:inline" />
                   Not an Academic Journal.
                 </h3>
-                <p className="text-slate-600 dark:text-[#a5b4c0] text-base leading-relaxed mb-6">
+                <p className="text-slate-600 dark:text-[#a5b4c0] text-sm sm:text-base leading-relaxed mb-6">
                   Most career advice turns into arguments between parents and students. WhatAfter includes two dedicated tools: <b>&ldquo;In Plain Words&rdquo;</b> (a one-page conversational letter) and the <b>&ldquo;Guide for Parents &amp; Counsellors&rdquo;</b> with specific conversation starters.
                 </p>
 
@@ -707,7 +707,7 @@ export default function LandingPage() {
 
 
         {/* Wavy Conduit connecting Parent Bridge into Testimonials */}
-        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 -my-4 relative z-20">
           <ScrollWavyConnector 
             height={240} 
             direction="s-curve" 
@@ -718,7 +718,7 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 8. REAL STUDENT & PARENT TESTIMONIALS                     */}
         {/* ========================================================= */}
-        <ScrollDimSection className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
+        <ScrollDimSection className="max-w-[1200px] mx-auto px-4 sm:px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
           <div ref={testimonialsRef}>
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
@@ -816,7 +816,7 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 8.5 WHATAFTER JOURNAL / LATEST BLOGS                      */}
         {/* ========================================================= */}
-        <ScrollDimSection id="journal" className="max-w-[1200px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
+        <ScrollDimSection id="journal" className="max-w-[1200px] mx-auto px-4 sm:px-6 py-24 border-b border-slate-200/80 dark:border-white/5">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
@@ -886,7 +886,7 @@ export default function LandingPage() {
         </ScrollDimSection>
 
         {/* Wavy Conduit connecting Journal into Pricing */}
-        <div className="max-w-[1200px] mx-auto px-6 -my-4 relative z-20">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 -my-4 relative z-20">
           <ScrollWavyConnector 
             height={240} 
             direction="reverse-s" 
@@ -897,7 +897,7 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 9. TRANSPARENT PRICING BLOCK (₹999)                       */}
         {/* ========================================================= */}
-        <ScrollDimSection id="pricing" className="max-w-[1240px] mx-auto px-6 py-24 sm:py-32 border-b border-slate-200/80 dark:border-white/5 relative">
+        <ScrollDimSection id="pricing" className="max-w-[1240px] mx-auto px-4 sm:px-6 py-24 sm:py-32 border-b border-slate-200/80 dark:border-white/5 relative">
           
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 relative">
@@ -1257,7 +1257,7 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 10. FREQUENTLY ASKED QUESTIONS (FAQ)                      */}
         {/* ========================================================= */}
-        <ScrollDimSection id="faqs" className="max-w-[850px] mx-auto px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
+        <ScrollDimSection id="faqs" className="max-w-[850px] mx-auto px-4 sm:px-6 py-24 border-b border-slate-200/80 dark:border-white/5 relative">
           <div className="text-center mb-14 relative">
             <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
               06
@@ -1274,7 +1274,7 @@ export default function LandingPage() {
               <div key={i} className="border border-slate-200 dark:border-white/5 rounded-xl overflow-hidden bg-white dark:bg-[#0b1723]/80 transition-colors shadow-sm">
                 <button 
                   onClick={() => toggleFaq(i)}
-                  className="w-full text-left px-6 py-5 flex items-center justify-between font-bold text-base sm:text-lg hover:bg-slate-50 dark:hover:bg-white/5 text-slate-900 dark:text-white transition-colors"
+                  className="w-full text-left px-5 sm:px-6 py-5 flex items-center justify-between font-bold text-base sm:text-lg hover:bg-slate-50 dark:hover:bg-white/5 text-slate-900 dark:text-white transition-colors"
                 >
                   <span className="pr-4">{faq.q}</span>
                   <motion.div
@@ -1295,7 +1295,7 @@ export default function LandingPage() {
                       transition={{ duration: 0.28, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-5 text-sm text-slate-600 dark:text-[#9ab0bf] leading-relaxed border-t border-slate-100 dark:border-white/5 pt-3">
+                      <div className="px-5 sm:px-6 pb-5 text-sm text-slate-600 dark:text-[#9ab0bf] leading-relaxed border-t border-slate-100 dark:border-white/5 pt-3">
                         {faq.a}
                       </div>
                     </motion.div>
@@ -1310,14 +1310,14 @@ export default function LandingPage() {
         {/* ========================================================= */}
         {/* 11. FINAL HIGH-IMPACT CTA                                 */}
         {/* ========================================================= */}
-        <ScrollDimSection className="max-w-[1200px] mx-auto px-6 py-20">
-          <div className="rounded-3xl p-10 md:p-16 text-center bg-gradient-to-b from-emerald-50 via-slate-50 to-white dark:from-emerald-950/40 dark:via-[#0a1622] dark:to-[#061019] border border-emerald-500/30 relative overflow-hidden shadow-xl dark:shadow-2xl">
+        <ScrollDimSection className="max-w-[1200px] mx-auto px-4 sm:px-6 py-16 sm:py-20">
+          <div className="rounded-3xl p-6 sm:p-10 md:p-16 text-center bg-gradient-to-b from-emerald-50 via-slate-50 to-white dark:from-emerald-950/40 dark:via-[#0a1622] dark:to-[#061019] border border-emerald-500/30 relative overflow-hidden shadow-xl dark:shadow-2xl">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
             
-            <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-6 max-w-2xl mx-auto text-slate-950 dark:text-white">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold tracking-tight mb-4 sm:mb-6 max-w-2xl mx-auto text-slate-950 dark:text-white">
               Your next big decision doesn&apos;t have to be a gamble.
             </h2>
-            <p className="text-slate-600 dark:text-[#aab7c0] text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
+            <p className="text-slate-600 dark:text-[#aab7c0] text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
               Join students and families who have replaced career anxiety with clear, data-driven direction.
             </p>
             <Link 
@@ -1336,7 +1336,7 @@ export default function LandingPage() {
       {/* 12. CLEAN, REAL FOOTER (ZERO BROKEN LINKS)                */}
       {/* ========================================================= */}
       <footer className="border-t border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#040b12] pt-16 pb-12 transition-colors duration-200">
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-4 gap-10 mb-14">
             
             {/* Column 1: Brand & Inquiries */}

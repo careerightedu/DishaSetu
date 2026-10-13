@@ -41,9 +41,9 @@ export default function DinnerTableTranslator() {
   const activePrompt = PROMPTS.find((p) => p.id === activeId) || PROMPTS[0];
 
   return (
-    <div className="w-full rounded-2xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 shadow-lg overflow-hidden text-left">
+    <div className="w-full max-w-full rounded-2xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 shadow-lg overflow-hidden text-left">
       {/* Tab Selector */}
-      <div className="flex border-b border-slate-200 dark:border-white/10 overflow-x-auto bg-slate-50 dark:bg-black/40 p-1.5 gap-1 text-xs">
+      <div className="flex border-b border-slate-200 dark:border-white/10 overflow-x-auto no-scrollbar bg-slate-50 dark:bg-black/40 p-1.5 gap-1 text-xs">
         {PROMPTS.map((prompt) => {
           const isSelected = activeId === prompt.id;
           return (
@@ -70,7 +70,7 @@ export default function DinnerTableTranslator() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.2 }}
-          className="p-5 sm:p-6 space-y-4"
+          className="p-4 sm:p-6 space-y-4"
         >
           {/* Parent Anxiety / Question */}
           <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs sm:text-sm">
@@ -89,9 +89,9 @@ export default function DinnerTableTranslator() {
           </div>
 
           {/* Dossier Data Answer */}
-          <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs sm:text-sm space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs sm:text-sm space-y-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 shrink-0">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>WhatAfter Grounded Evidence:</span>
               </span>

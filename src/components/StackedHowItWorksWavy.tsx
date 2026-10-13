@@ -202,7 +202,7 @@ export default function StackedHowItWorksWavy() {
               strokeWidth={isDesktop ? 4 : 3}
               strokeLinecap="round"
               filter="url(#glow1)"
-              style={{ pathLength: path1Length }}
+              style={{ pathLength: isDesktop ? path1Length : 1 }}
             />
 
             {/* Top terminal contact bead directly touching Step 1 card border */}
@@ -320,7 +320,7 @@ export default function StackedHowItWorksWavy() {
               strokeWidth={isDesktop ? 4 : 3}
               strokeLinecap="round"
               filter="url(#glow2)"
-              style={{ pathLength: path2Length }}
+              style={{ pathLength: isDesktop ? path2Length : 1 }}
             />
 
             {/* Top terminal contact bead directly touching Step 2 card border */}
