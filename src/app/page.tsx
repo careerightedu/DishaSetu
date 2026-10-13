@@ -40,6 +40,16 @@ export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeStage, setActiveStage] = useState<number>(1);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    const checkWidth = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkWidth();
+    window.addEventListener("resize", checkWidth, { passive: true });
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -305,7 +315,7 @@ export default function LandingPage() {
         {/* ========================================================= */}
         <ScrollDimSection as="div">
           <div className="border-b border-slate-200/80 dark:border-white/5 py-10 bg-slate-100/70 dark:bg-[#08131d]/60">
-            <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               <div className="border-r border-slate-200 dark:border-white/5 last:border-none">
                 <AnimatedCounter value={80} className="text-3xl sm:text-4xl font-serif font-bold block mb-1 text-emerald-600 dark:text-emerald-400" />
                 <span className="text-[11px] text-slate-600 dark:text-[#7d8c97] uppercase tracking-wider font-semibold">Thoughtful Scenarios</span>
@@ -324,10 +334,12 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+        </ScrollDimSection>
 
-          {/* ========================================================= */}
-          {/* 3B. SCROLL-DRIVEN CAREER INTELLIGENCE ENGINE              */}
-          {/* ========================================================= */}
+        {/* ========================================================= */}
+        {/* 3B. SCROLL-DRIVEN CAREER INTELLIGENCE ENGINE              */}
+        {/* ========================================================= */}
+        <ScrollDimSection as="div">
           <ScrollCareerIntelligenceEngine />
         </ScrollDimSection>
 
@@ -719,10 +731,10 @@ export default function LandingPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 gap-6 items-start">
-            {/* Column 1 (Parallaxed) */}
-            <motion.div style={{ y: col1Y }} className="space-y-6">
+            {/* Column 1 (Parallaxed on Desktop) */}
+            <motion.div style={{ y: isDesktop ? col1Y : 0 }} className="space-y-6">
               {[testimonials[0], testimonials[2]].map((t, idx) => (
-                <div key={idx} className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 flex flex-col justify-between hover:border-emerald-500/30 transition-all hover:shadow-lg dark:hover:shadow-emerald-950/20 shadow-sm">
+                <div key={idx} className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 flex flex-col justify-between hover:border-emerald-500/30 transition-all hover:shadow-lg dark:hover:shadow-emerald-950/20 shadow-sm">
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
@@ -758,8 +770,8 @@ export default function LandingPage() {
               ))}
             </motion.div>
 
-            {/* Column 2 (Opposite Parallaxed) */}
-            <motion.div style={{ y: col2Y }} className="space-y-6 sm:mt-8">
+            {/* Column 2 (Opposite Parallaxed on Desktop) */}
+            <motion.div style={{ y: isDesktop ? col2Y : 0 }} className="space-y-6 sm:mt-8">
               {[testimonials[1], testimonials[3]].map((t, idx) => (
                 <div key={idx} className="p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 flex flex-col justify-between hover:border-emerald-500/30 transition-all hover:shadow-lg dark:hover:shadow-emerald-950/20 shadow-sm">
                   <div>

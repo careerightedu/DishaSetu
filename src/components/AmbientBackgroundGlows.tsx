@@ -1,9 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 export default function AmbientBackgroundGlows() {
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkWidth = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkWidth();
+    window.addEventListener("resize", checkWidth, { passive: true });
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
   const { scrollYProgress } = useScroll();
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -12,7 +23,7 @@ export default function AmbientBackgroundGlows() {
     restDelta: 0.001,
   });
 
-  // Parallax offsets for floating atmospheric orbs
+  // Parallax offsets for floating atmospheric orbs (desktop only)
   const orb1Y = useTransform(smoothProgress, [0, 1], [-40, 220]);
   const orb1X = useTransform(smoothProgress, [0, 1], [-20, 80]);
   
@@ -44,22 +55,32 @@ export default function AmbientBackgroundGlows() {
       </svg>
 
       {/* Floating Parallax Atmosphere Orb 1 (Top Left) */}
-      <motion.div
-        style={{ y: orb1Y, x: orb1X }}
-        className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-400/5 blur-[140px] dark:from-emerald-500/15 dark:to-teal-400/10"
-      />
+      {isDesktop ? (
+        <motion.div
+          style={{ y: orb1Y, x: orb1X }}
+          className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-400/5 blur-[140px] dark:from-emerald-500/15 dark:to-teal-400/10"
+        />
+      ) : (
+        <div className="absolute -top-20 -left-20 w-[300px] h-[300px] rounded-full bg-emerald-500/10 blur-3xl dark:from-emerald-500/10" />
+      )}
 
       {/* Floating Parallax Atmosphere Orb 2 (Mid Right) */}
-      <motion.div
-        style={{ y: orb2Y, x: orb2X }}
-        className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-teal-500/10 to-cyan-400/5 blur-[160px] dark:from-teal-500/15 dark:to-cyan-400/10"
-      />
+      {isDesktop ? (
+        <motion.div
+          style={{ y: orb2Y, x: orb2X }}
+          className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-teal-500/10 to-cyan-400/5 blur-[160px] dark:from-teal-500/15 dark:to-cyan-400/10"
+        />
+      ) : (
+        <div className="absolute top-1/3 -right-20 w-[300px] h-[300px] rounded-full bg-teal-500/10 blur-3xl dark:from-teal-500/10" />
+      )}
 
       {/* Floating Parallax Atmosphere Orb 3 (Lower Left / Center) */}
-      <motion.div
-        style={{ y: orb3Y }}
-        className="absolute top-2/3 left-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-cyan-500/5 to-emerald-500/10 blur-[150px] dark:from-cyan-500/10 dark:to-emerald-500/12"
-      />
+      {isDesktop && (
+        <motion.div
+          style={{ y: orb3Y }}
+          className="absolute top-2/3 left-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-cyan-500/5 to-emerald-500/10 blur-[150px] dark:from-cyan-500/10 dark:to-emerald-500/12"
+        />
+      )}
     </div>
   );
 }

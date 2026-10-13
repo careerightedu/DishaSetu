@@ -16,6 +16,16 @@ import {
 
 export default function ScrollCareerIntelligenceEngine() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const checkWidth = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkWidth();
+    window.addEventListener("resize", checkWidth, { passive: true });
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
 
   // Link Framer Motion directly to page scroll through this container
   const { scrollYProgress } = useScroll({
@@ -87,6 +97,7 @@ export default function ScrollCareerIntelligenceEngine() {
       isPrimary: true,
     },
     {
+      name: "System Analysis & Database Management",
       title: "System Analysis & Database Management",
       match: 89,
       rank: "#2 Core Alignment",
@@ -118,11 +129,11 @@ export default function ScrollCareerIntelligenceEngine() {
     <section 
       ref={containerRef}
       id="intelligence-engine"
-      className="relative max-w-[1240px] mx-auto px-6 py-28 border-b border-slate-200/80 dark:border-white/5 overflow-hidden"
+      className="relative max-w-[1240px] mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-28 border-b border-slate-200/80 dark:border-white/5 overflow-hidden"
     >
       {/* Deep atmospheric ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-emerald-500/[0.07] dark:bg-emerald-500/[0.12] rounded-full blur-[180px] pointer-events-none" />
-      <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-teal-500/[0.05] dark:bg-teal-500/[0.10] rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[900px] h-[350px] sm:h-[550px] bg-emerald-500/[0.07] dark:bg-emerald-500/[0.12] rounded-full blur-[100px] sm:blur-[180px] pointer-events-none" />
+      <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[300px] sm:h-[450px] bg-teal-500/[0.05] dark:bg-teal-500/[0.10] rounded-full blur-[100px] sm:blur-[160px] pointer-events-none" />
 
       {/* ------------------------------------------------------------- */}
       {/* THE INTELLIGENCE ENGINE CANVAS                                */}
@@ -158,7 +169,7 @@ export default function ScrollCareerIntelligenceEngine() {
               return (
                 <div
                   key={t.name}
-                  className="relative p-6 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 shadow-lg dark:shadow-2xl transition-all"
+                  className="relative p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 shadow-lg dark:shadow-2xl transition-all"
                 >
                   <div className="flex items-start justify-between gap-3 mb-4">
                     <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm">
@@ -203,9 +214,9 @@ export default function ScrollCareerIntelligenceEngine() {
         </motion.div>
 
         {/* =========================================================== */}
-        {/* CONNECTOR 1: LARGE SCROLL-DRIVEN CONVERGING LINES           */}
+        {/* CONNECTOR 1: SCROLL-DRIVEN CONVERGING LINES                 */}
         {/* =========================================================== */}
-        <div className="relative h-48 sm:h-64 md:h-72 w-full my-2">
+        <div className="relative h-20 sm:h-32 md:h-72 w-full my-2">
           {/* Large Architectural SVG */}
           <svg 
             className="w-full h-full text-emerald-500 overflow-visible" 
@@ -320,7 +331,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* =========================================================== */}
         <motion.div 
           style={{ opacity: hubOpacity, scale: hubScale }}
-          className="relative rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/10 dark:from-[#0d2232] dark:via-[#091824] dark:to-[#0d2232] border-2 border-emerald-500/60 shadow-2xl overflow-visible transition-all"
+          className="relative rounded-3xl p-6 sm:p-10 md:p-12 bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/10 dark:from-[#0d2232] dark:via-[#091824] dark:to-[#0d2232] border-2 border-emerald-500/60 shadow-2xl overflow-visible transition-all"
         >
           {/* Terminal Connection Socket (Top) */}
           <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center justify-center">
@@ -356,7 +367,7 @@ export default function ScrollCareerIntelligenceEngine() {
             </div>
 
             {/* Validation & Market Evidence Card */}
-            <div className="shrink-0 p-5 rounded-2xl bg-white/90 dark:bg-black/50 border border-slate-200 dark:border-white/10 flex flex-col gap-2 min-w-[270px]">
+            <div className="shrink-0 p-5 rounded-2xl bg-white/90 dark:bg-black/50 border border-slate-200 dark:border-white/10 flex flex-col gap-2 w-full lg:w-auto lg:min-w-[270px]">
               <span className="text-[10px] font-mono uppercase text-slate-400 dark:text-[#6a7d8c] font-bold tracking-wider">
                 System Verification
               </span>
@@ -391,9 +402,9 @@ export default function ScrollCareerIntelligenceEngine() {
         </motion.div>
 
         {/* =========================================================== */}
-        {/* CONNECTOR 2: LARGE SCROLL-DRIVEN DIVERGING LINES           */}
+        {/* CONNECTOR 2: SCROLL-DRIVEN DIVERGING LINES                 */}
         {/* =========================================================== */}
-        <div className="relative h-48 sm:h-64 md:h-72 w-full my-2">
+        <div className="relative h-20 sm:h-32 md:h-72 w-full my-2">
           <svg 
             className="w-full h-full text-emerald-500 overflow-visible" 
             viewBox="0 0 1000 260" 
@@ -577,7 +588,7 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* =========================================================== */}
         <motion.div 
           style={{ opacity: roadmapOpacity, y: roadmapY }}
-          className="mt-10 p-8 sm:p-10 rounded-3xl bg-slate-950 text-white dark:bg-[#061019] border-2 border-emerald-500/40 shadow-2xl relative overflow-hidden"
+          className="mt-8 sm:mt-10 p-6 sm:p-8 md:p-10 rounded-3xl bg-slate-950 text-white dark:bg-[#061019] border-2 border-emerald-500/40 shadow-2xl relative overflow-hidden"
         >
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="flex-1">
@@ -620,7 +631,7 @@ export default function ScrollCareerIntelligenceEngine() {
             </div>
 
             {/* AI Resilience Shield Component */}
-            <div className="shrink-0 lg:w-72 p-5 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex flex-col justify-center">
+            <div className="shrink-0 w-full lg:w-72 p-5 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex flex-col justify-center">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-mono uppercase font-bold text-emerald-400 flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-emerald-400" /> AI-Resilience

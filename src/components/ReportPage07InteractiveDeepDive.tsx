@@ -197,10 +197,10 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
         <div className="p-4 sm:p-5 space-y-4">
           
           {/* Subtabs for exploring aspects */}
-          <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-3">
+          <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-3 overflow-x-auto no-scrollbar">
             <button
               onClick={() => setActiveTab("salary")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
                 activeTab === "salary"
                   ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-sm"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -211,7 +211,7 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
             </button>
             <button
               onClick={() => setActiveTab("ai")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
                 activeTab === "ai"
                   ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-sm"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -222,7 +222,7 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
             </button>
             <button
               onClick={() => setActiveTab("moves")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
                 activeTab === "moves"
                   ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-sm"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -242,7 +242,7 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
               className="space-y-3.5"
             >
               {/* Interactive Ladder Buttons */}
-              <div className="grid grid-cols-4 gap-1.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {CAREER_LADDER.map((lvl) => {
                   const isActive = activeLevelId === lvl.id;
                   return (

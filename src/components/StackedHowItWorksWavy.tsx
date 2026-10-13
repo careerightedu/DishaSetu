@@ -18,6 +18,16 @@ import {
 
 export default function StackedHowItWorksWavy() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const checkWidth = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkWidth();
+    window.addEventListener("resize", checkWidth, { passive: true });
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -34,7 +44,7 @@ export default function StackedHowItWorksWavy() {
   const path1Length = useTransform(smoothProgress, [0.08, 0.42], [0, 1]);
   const path2Length = useTransform(smoothProgress, [0.42, 0.82], [0, 1]);
 
-  // Progressive dimming for previous steps as user scrolls down
+  // Progressive dimming for previous steps as user scrolls down (desktop spotlight only)
   const step1Brightness = useTransform(smoothProgress, [0, 0.35, 0.52], [1, 1, 0.38]);
   const step1Opacity = useTransform(smoothProgress, [0, 0.35, 0.52], [1, 1, 0.58]);
   const step1Filter = useTransform(step1Brightness, (b) => `brightness(${b})`);
@@ -47,11 +57,24 @@ export default function StackedHowItWorksWavy() {
   const step3Opacity = useTransform(smoothProgress, [0.55, 0.8], [0.9, 1]);
   const step3Filter = useTransform(step3Brightness, (b) => `brightness(${b})`);
 
+  // Responsive SVG paths & pin anchors
+  const wavy1PathD = isDesktop 
+    ? "M 270,0 C 270,140 530,140 530,280" 
+    : "M 400,0 C 440,70 360,210 400,280";
+  const wavy1StartX = isDesktop ? 270 : 400;
+  const wavy1EndX = isDesktop ? 530 : 400;
+
+  const wavy2PathD = isDesktop 
+    ? "M 530,0 C 530,140 400,140 400,280" 
+    : "M 400,0 C 360,70 440,210 400,280";
+  const wavy2StartX = isDesktop ? 530 : 400;
+  const wavy2EndX = isDesktop ? 400 : 400;
+
   return (
     <section 
       id="how-it-works" 
       ref={containerRef}
-      className="max-w-[1200px] mx-auto px-6 py-28 border-b border-slate-200/80 dark:border-white/5 relative overflow-hidden"
+      className="max-w-[1200px] mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-28 border-b border-slate-200/80 dark:border-white/5 relative overflow-hidden"
     >
       {/* Background Ambient Aura */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
@@ -80,8 +103,8 @@ export default function StackedHowItWorksWavy() {
         {/* STEP 1: SIGNAL CAPTURE (Left on desktop)                */}
         {/* ======================================================== */}
         <motion.div 
-          style={{ filter: step1Filter, opacity: step1Opacity, willChange: "filter, opacity" }}
-          className="relative grid md:grid-cols-12 gap-8 items-center transition-all duration-300"
+          style={isDesktop ? { filter: step1Filter, opacity: step1Opacity, willChange: "filter, opacity" } : undefined}
+          className="relative grid md:grid-cols-12 gap-6 sm:gap-8 items-center transition-all duration-300"
         >
           {/* Card */}
           <motion.div 
@@ -89,7 +112,7 @@ export default function StackedHowItWorksWavy() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="md:col-span-8 p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#07131e] border-2 border-emerald-500/30 dark:border-emerald-500/20 shadow-xl shadow-emerald-500/5 hover:border-emerald-500/50 transition-all text-left relative group"
+            className="md:col-span-8 p-6 sm:p-8 md:p-10 rounded-3xl bg-white dark:bg-[#07131e] border-2 border-emerald-500/30 dark:border-emerald-500/20 shadow-xl shadow-emerald-500/5 hover:border-emerald-500/50 transition-all text-left relative group"
           >
             {/* Step Badge */}
             <div className="flex items-center justify-between mb-5">
@@ -143,7 +166,7 @@ export default function StackedHowItWorksWavy() {
         {/* ======================================================== */}
         {/* WAVY CONNECTOR 1: Flowing from Step 1 to Step 2         */}
         {/* ======================================================== */}
-        <div className="relative h-60 sm:h-72 md:h-80 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
+        <div className="relative h-20 sm:h-28 md:h-72 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
           {/* SVG Canvas for self-drawing long wavy S-curve */}
           <svg 
             className="w-full h-full overflow-visible"
@@ -158,39 +181,39 @@ export default function StackedHowItWorksWavy() {
                 <stop offset="100%" stopColor="#06b6d4" />
               </linearGradient>
               <filter id="glow1" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feGaussianBlur stdDeviation={isDesktop ? 4 : 2} result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
 
             {/* Background Faint Dashed Path - Always connected border-to-border */}
             <path
-              d="M 270,0 C 270,140 530,140 530,280"
+              d={wavy1PathD}
               stroke="currentColor"
-              strokeWidth="3"
+              strokeWidth={isDesktop ? 3 : 2}
               strokeDasharray="8 8"
               className="text-emerald-500/25 dark:text-emerald-400/20"
             />
 
             {/* Animated Self-Drawing Path on Scroll */}
             <motion.path
-              d="M 270,0 C 270,140 530,140 530,280"
+              d={wavy1PathD}
               stroke="url(#wavy1Gradient)"
-              strokeWidth="4"
+              strokeWidth={isDesktop ? 4 : 3}
               strokeLinecap="round"
               filter="url(#glow1)"
               style={{ pathLength: path1Length }}
             />
 
             {/* Top terminal contact bead directly touching Step 1 card border */}
-            <circle cx="270" cy="0" r="8" fill="none" stroke="#10b981" strokeWidth="1.5" className="animate-ping opacity-75" />
-            <circle cx="270" cy="0" r="5.5" fill="#10b981" opacity="0.3" filter="blur(2px)" />
-            <circle cx="270" cy="0" r="4.5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+            <circle cx={wavy1StartX} cy="0" r={isDesktop ? 8 : 6} fill="none" stroke="#10b981" strokeWidth="1.5" className="animate-ping opacity-75" />
+            <circle cx={wavy1StartX} cy="0" r={isDesktop ? 5.5 : 4} fill="#10b981" opacity="0.3" filter="blur(2px)" />
+            <circle cx={wavy1StartX} cy="0" r={isDesktop ? 4.5 : 3.5} fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
 
             {/* Bottom terminal contact bead directly touching Step 2 card border */}
-            <circle cx="530" cy="280" r="8" fill="none" stroke="#06b6d4" strokeWidth="1.5" className="animate-ping opacity-75" />
-            <circle cx="530" cy="280" r="5.5" fill="#06b6d4" opacity="0.3" filter="blur(2px)" />
-            <circle cx="530" cy="280" r="4.5" fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
+            <circle cx={wavy1EndX} cy="280" r={isDesktop ? 8 : 6} fill="none" stroke="#06b6d4" strokeWidth="1.5" className="animate-ping opacity-75" />
+            <circle cx={wavy1EndX} cy="280" r={isDesktop ? 5.5 : 4} fill="#06b6d4" opacity="0.3" filter="blur(2px)" />
+            <circle cx={wavy1EndX} cy="280" r={isDesktop ? 4.5 : 3.5} fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
           </svg>
         </div>
 
@@ -198,8 +221,8 @@ export default function StackedHowItWorksWavy() {
         {/* STEP 2: COGNITIVE MODELING (Right on desktop)           */}
         {/* ======================================================== */}
         <motion.div 
-          style={{ filter: step2Filter, opacity: step2Opacity, willChange: "filter, opacity" }}
-          className="relative grid md:grid-cols-12 gap-8 items-center transition-all duration-300"
+          style={isDesktop ? { filter: step2Filter, opacity: step2Opacity, willChange: "filter, opacity" } : undefined}
+          className="relative grid md:grid-cols-12 gap-6 sm:gap-8 items-center transition-all duration-300"
         >
           {/* Left Teaser Badge for Step 2 */}
           <div className="md:col-span-4 hidden md:flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 space-y-3 order-2 md:order-1">
@@ -220,7 +243,7 @@ export default function StackedHowItWorksWavy() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="md:col-span-8 p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#07131e] border-2 border-teal-500/30 dark:border-teal-500/20 shadow-xl shadow-teal-500/5 hover:border-teal-500/50 transition-all text-left relative group order-1 md:order-2"
+            className="md:col-span-8 p-6 sm:p-8 md:p-10 rounded-3xl bg-white dark:bg-[#07131e] border-2 border-teal-500/30 dark:border-teal-500/20 shadow-xl shadow-teal-500/5 hover:border-teal-500/50 transition-all text-left relative group order-1 md:order-2"
           >
             {/* Step Badge */}
             <div className="flex items-center justify-between mb-5">
@@ -261,7 +284,7 @@ export default function StackedHowItWorksWavy() {
         {/* ======================================================== */}
         {/* WAVY CONNECTOR 2: Flowing from Step 2 to Step 3         */}
         {/* ======================================================== */}
-        <div className="relative h-60 sm:h-72 md:h-80 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
+        <div className="relative h-20 sm:h-28 md:h-72 w-full flex items-center justify-center my-0 z-20 pointer-events-none overflow-visible">
           {/* SVG Canvas for self-drawing long wavy reverse S-curve */}
           <svg 
             className="w-full h-full overflow-visible"
@@ -276,39 +299,39 @@ export default function StackedHowItWorksWavy() {
                 <stop offset="100%" stopColor="#10b981" />
               </linearGradient>
               <filter id="glow2" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feGaussianBlur stdDeviation={isDesktop ? 4 : 2} result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
 
             {/* Background Faint Dashed Path - Always connected border-to-border */}
             <path
-              d="M 530,0 C 530,140 400,140 400,280"
+              d={wavy2PathD}
               stroke="currentColor"
-              strokeWidth="3"
+              strokeWidth={isDesktop ? 3 : 2}
               strokeDasharray="8 8"
               className="text-teal-500/25 dark:text-teal-400/20"
             />
 
             {/* Animated Self-Drawing Path on Scroll */}
             <motion.path
-              d="M 530,0 C 530,140 400,140 400,280"
+              d={wavy2PathD}
               stroke="url(#wavy2Gradient)"
-              strokeWidth="4"
+              strokeWidth={isDesktop ? 4 : 3}
               strokeLinecap="round"
               filter="url(#glow2)"
               style={{ pathLength: path2Length }}
             />
 
             {/* Top terminal contact bead directly touching Step 2 card border */}
-            <circle cx="530" cy="0" r="8" fill="none" stroke="#06b6d4" strokeWidth="1.5" className="animate-ping opacity-75" />
-            <circle cx="530" cy="0" r="5.5" fill="#06b6d4" opacity="0.3" filter="blur(2px)" />
-            <circle cx="530" cy="0" r="4.5" fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
+            <circle cx={wavy2StartX} cy="0" r={isDesktop ? 8 : 6} fill="none" stroke="#06b6d4" strokeWidth="1.5" className="animate-ping opacity-75" />
+            <circle cx={wavy2StartX} cy="0" r={isDesktop ? 5.5 : 4} fill="#06b6d4" opacity="0.3" filter="blur(2px)" />
+            <circle cx={wavy2StartX} cy="0" r={isDesktop ? 4.5 : 3.5} fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
 
             {/* Bottom terminal contact bead directly touching Step 3 card border */}
-            <circle cx="400" cy="280" r="8" fill="none" stroke="#10b981" strokeWidth="1.5" className="animate-ping opacity-75" />
-            <circle cx="400" cy="280" r="5.5" fill="#10b981" opacity="0.3" filter="blur(2px)" />
-            <circle cx="400" cy="280" r="4.5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+            <circle cx={wavy2EndX} cy="280" r={isDesktop ? 8 : 6} fill="none" stroke="#10b981" strokeWidth="1.5" className="animate-ping opacity-75" />
+            <circle cx={wavy2EndX} cy="280" r={isDesktop ? 5.5 : 4} fill="#10b981" opacity="0.3" filter="blur(2px)" />
+            <circle cx={wavy2EndX} cy="280" r={isDesktop ? 4.5 : 3.5} fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
           </svg>
         </div>
 
@@ -316,7 +339,7 @@ export default function StackedHowItWorksWavy() {
         {/* STEP 3: SEQUENCED EXECUTION (Full-width Center Anchor)  */}
         {/* ======================================================== */}
         <motion.div 
-          style={{ filter: step3Filter, opacity: step3Opacity, willChange: "filter, opacity" }}
+          style={isDesktop ? { filter: step3Filter, opacity: step3Opacity, willChange: "filter, opacity" } : undefined}
           className="relative transition-all duration-300"
         >
           <motion.div 
@@ -324,7 +347,7 @@ export default function StackedHowItWorksWavy() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/10 dark:from-[#0c1a27] dark:via-[#07131e] dark:to-[#071926] border-2 border-emerald-500/40 dark:border-emerald-500/30 shadow-2xl shadow-emerald-500/10 text-left relative group overflow-hidden"
+            className="p-6 sm:p-10 md:p-12 rounded-3xl bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/10 dark:from-[#0c1a27] dark:via-[#07131e] dark:to-[#071926] border-2 border-emerald-500/40 dark:border-emerald-500/30 shadow-2xl shadow-emerald-500/10 text-left relative group overflow-hidden"
           >
             <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 

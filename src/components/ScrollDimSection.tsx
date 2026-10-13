@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 interface ScrollDimSectionProps {
@@ -16,9 +16,9 @@ interface ScrollDimSectionProps {
 /**
  * ScrollDimSection:
  * Creates an intelligent focal spotlight across the homepage.
- * - When in focus/active reading zone: 100% full brightness and crisp saturation.
- * - When the user scrolls past and moves to the next section: the previous section smoothly dims down.
- * - When scrolling back up: immediately restores full brightness seamlessly.
+ * - On desktop: smoothly dims previous sections when user scrolls past them to focus on the active section.
+ * - On mobile (< 768px): maintains full 100% brightness and crisp readability without GPU filter overhead,
+ *   preventing premature dimming and ensuring buttery-smooth 60/120fps touch scrolling.
  */
 export default function ScrollDimSection({
   children,
@@ -30,6 +30,16 @@ export default function ScrollDimSection({
   dimOpacity = 0.58,
 }: ScrollDimSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkWidth = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkWidth();
+    window.addEventListener("resize", checkWidth, { passive: true });
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
 
   // Monitor the section's position relative to viewport
   const { scrollYProgress } = useScroll({
@@ -45,9 +55,7 @@ export default function ScrollDimSection({
     restDelta: 0.001,
   });
 
-  // Calculate brightness transform
-  // When scrolling down past this section (moving to next section):
-  // brightness drops down to dimBrightness
+  // Calculate brightness transform (desktop spotlight)
   const brightness = useTransform(
     smoothProgress,
     isHero 
@@ -58,7 +66,7 @@ export default function ScrollDimSection({
       : [0.82, 1, 1, dimBrightness]
   );
 
-  // Calculate opacity transform
+  // Calculate opacity transform (desktop spotlight)
   const opacity = useTransform(
     smoothProgress,
     isHero
@@ -78,11 +86,15 @@ export default function ScrollDimSection({
     <Component
       id={id}
       ref={containerRef}
-      style={{
-        filter,
-        opacity,
-        willChange: "filter, opacity",
-      }}
+      style={
+        isDesktop
+          ? {
+              filter,
+              opacity,
+              willChange: "filter, opacity",
+            }
+          : undefined
+      }
       className={`transition-colors duration-200 ${className}`}
     >
       {children}

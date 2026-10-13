@@ -262,14 +262,14 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
         </div>
       ) : (
         /* Interactive Roadmap View */
-        <div className="p-6 sm:p-10 space-y-8">
+        <div className="p-4 sm:p-8 md:p-10 space-y-6 sm:space-y-8">
           
           {/* Main Mode Tabs & Playback Controls */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-white/10 pb-5">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => setActiveTab("roadmap")}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
                   activeTab === "roadmap"
                     ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-md"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -280,7 +280,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
               </button>
               <button
                 onClick={() => setActiveTab("eliminations")}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
                   activeTab === "eliminations"
                     ? "bg-red-600 text-white dark:bg-red-500 dark:text-white shadow-md"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
@@ -295,17 +295,17 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-mono font-bold flex items-center gap-2 transition-colors border border-slate-200 dark:border-white/10 shadow-xs"
+                  className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 text-xs font-mono font-bold flex items-center gap-2 transition-colors border border-slate-200 dark:border-white/10 shadow-xs"
                 >
                   {isPlaying ? (
                     <>
                       <Pause className="w-3.5 h-3.5 text-amber-500" />
-                      <span>Pause Progression</span>
+                      <span>Pause</span>
                     </>
                   ) : (
                     <>
                       <Play className="w-3.5 h-3.5 text-emerald-500" />
-                      <span>Auto-Play Progression</span>
+                      <span>Auto-Play</span>
                     </>
                   )}
                 </button>
@@ -328,10 +328,10 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
             <div className="relative">
               
               {/* Central Glowing Vertical Spine Line that draws on scroll */}
-              <div className="absolute left-6 sm:left-8 top-8 bottom-8 w-1 bg-slate-200 dark:bg-white/10 rounded-full" />
+              <div className="absolute left-4 sm:left-8 top-8 bottom-8 w-1 bg-slate-200 dark:bg-white/10 rounded-full" />
               
               <motion.div
-                className="absolute left-6 sm:left-8 top-8 w-1 bg-gradient-to-b from-emerald-500 via-teal-400 to-cyan-400 rounded-full origin-top shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+                className="absolute left-4 sm:left-8 top-8 w-1 bg-gradient-to-b from-emerald-500 via-teal-400 to-cyan-400 rounded-full origin-top shadow-[0_0_12px_rgba(16,185,129,0.5)]"
                 style={{
                   height: `${((activeIndex + 0.5) / MILESTONES.length) * 100}%`,
                 }}
@@ -339,7 +339,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
               />
 
               {/* Stack of All 6 Milestones Spaced Out Generously */}
-              <div className="space-y-10 sm:space-y-12 relative pl-16 sm:pl-20">
+              <div className="space-y-8 sm:space-y-12 relative pl-10 sm:pl-20">
                 {MILESTONES.map((milestone, idx) => {
                   const isCurrent = activeIndex === idx;
                   const isPassed = activeIndex >= idx;
@@ -351,7 +351,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                         setIsPlaying(false);
                         setActiveIndex(idx);
                       }}
-                      className={`relative cursor-pointer transition-all duration-300 rounded-3xl p-6 sm:p-8 border-2 ${
+                      className={`relative cursor-pointer transition-all duration-300 rounded-2xl sm:rounded-3xl p-5 sm:p-8 border-2 ${
                         isCurrent
                           ? "bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-500 shadow-xl shadow-emerald-500/10 scale-[1.01]"
                           : isPassed
@@ -360,14 +360,14 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                       }`}
                     >
                       {/* Node Bubble on the Vertical Spine */}
-                      <div className="absolute -left-16 sm:-left-20 top-7 -translate-x-1/2 z-10">
+                      <div className="absolute -left-10 sm:-left-20 top-7 -translate-x-1/2 z-10">
                         <motion.div
                           animate={{
                             scale: isCurrent ? 1.35 : 1,
                             backgroundColor: isPassed ? "#10b981" : "#475569",
                           }}
                           transition={{ duration: 0.25 }}
-                          className="w-8 h-8 rounded-full flex items-center justify-center border-4 border-white dark:border-[#07131e] shadow-lg shadow-emerald-500/20 text-white"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-3 sm:border-4 border-white dark:border-[#07131e] shadow-lg shadow-emerald-500/20 text-white"
                         >
                           {isPassed ? (
                             <CheckCircle2 className="w-4 h-4 stroke-[3]" />
