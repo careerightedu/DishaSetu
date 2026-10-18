@@ -47,7 +47,7 @@ function renderFormattedInline(text: string): React.ReactNode {
     } else if (token.startsWith("*") && token.endsWith("*")) {
       const italicContent = token.slice(1, -1).replace(/\*/g, "");
       parts.push(
-        <em key={match.index} className="italic text-emerald-700 dark:text-emerald-200/90 font-medium">
+        <em key={match.index} className="italic text-sky-700 dark:text-sky-200/90 font-medium">
           {italicContent}
         </em>
       );
@@ -183,7 +183,7 @@ export default function SingleBlogPostClient({
       <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-800 dark:text-[#f4efe6]">
         <Navbar />
         <div className="py-32 text-center">
-          <div className="w-8 h-8 border-2 border-emerald-500 dark:border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <div className="w-8 h-8 border-2 border-sky-500 dark:border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-sm text-slate-500 dark:text-[#8fa1ad]">Loading essay...</p>
         </div>
       </div>
@@ -201,7 +201,7 @@ export default function SingleBlogPostClient({
           </p>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-400 dark:hover:bg-emerald-300 text-white dark:text-black font-bold text-sm transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 dark:bg-sky-400 dark:hover:bg-sky-300 text-white dark:text-black font-bold text-sm transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Journal
           </Link>
@@ -211,7 +211,7 @@ export default function SingleBlogPostClient({
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-800 dark:text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-800 dark:text-[#f4efe6] font-sans selection:bg-sky-500/30 selection:text-sky-900 dark:selection:text-sky-200">
       <Navbar />
 
       <main className="max-w-[800px] mx-auto px-6 py-12">
@@ -231,7 +231,7 @@ export default function SingleBlogPostClient({
           >
             {copied ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> Link Copied
+                <Check className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" /> Link Copied
               </>
             ) : (
               <>
@@ -243,7 +243,7 @@ export default function SingleBlogPostClient({
 
         {/* Article Header */}
         <header className="pb-8 border-b border-slate-200 dark:border-white/10 mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/20 text-sky-700 dark:text-sky-400 text-xs font-semibold uppercase tracking-widest mb-4">
             {post.category}
           </div>
 
@@ -257,7 +257,7 @@ export default function SingleBlogPostClient({
 
           <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500 dark:text-[#6e8290] pt-4 border-t border-slate-200 dark:border-white/5">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-200 dark:border-emerald-500/20">
+              <div className="w-8 h-8 rounded-full bg-sky-100 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 flex items-center justify-center font-bold text-xs border border-sky-200 dark:border-sky-500/20">
                 {post.authorName.charAt(0)}
               </div>
               <div>
@@ -279,13 +279,13 @@ export default function SingleBlogPostClient({
               );
             } else if (section.type === "h4") {
               return (
-                <h4 key={idx} className="text-lg sm:text-xl font-serif font-bold text-emerald-700 dark:text-emerald-300 mt-8 mb-3">
+                <h4 key={idx} className="text-lg sm:text-xl font-serif font-bold text-sky-700 dark:text-sky-300 mt-8 mb-3">
                   {renderFormattedInline(section.text)}
                 </h4>
               );
             } else if (section.type === "ul") {
               return (
-                <ul key={idx} className="space-y-2.5 my-4 pl-5 list-disc marker:text-emerald-600 dark:marker:text-emerald-400">
+                <ul key={idx} className="space-y-2.5 my-4 pl-5 list-disc marker:text-sky-600 dark:marker:text-sky-400">
                   {section.items.map((item, itemIdx) => (
                     <li key={itemIdx} className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-[#c3d1dc]">
                       {renderFormattedInline(item)}
@@ -295,7 +295,7 @@ export default function SingleBlogPostClient({
               );
             } else if (section.type === "ol") {
               return (
-                <ol key={idx} className="space-y-3 my-4 pl-5 list-decimal marker:text-emerald-600 dark:marker:text-emerald-400">
+                <ol key={idx} className="space-y-3 my-4 pl-5 list-decimal marker:text-sky-600 dark:marker:text-sky-400">
                   {section.items.map((item, itemIdx) => (
                     <li key={itemIdx} className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-[#c3d1dc]">
                       {renderFormattedInline(item)}
@@ -315,8 +315,8 @@ export default function SingleBlogPostClient({
         </article>
 
         {/* Next Steps CTA Box */}
-        <div className="mt-16 p-8 rounded-2xl bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/30 dark:from-[#0c1a26] dark:to-[#07131e] border border-emerald-200 dark:border-emerald-500/30 text-center shadow-lg dark:shadow-xl">
-          <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-4">
+        <div className="mt-16 p-8 rounded-2xl bg-gradient-to-br from-sky-50/80 via-white to-sky-50/30 dark:from-[#0c1a26] dark:to-[#07131e] border border-sky-200 dark:border-sky-500/30 text-center shadow-lg dark:shadow-xl">
+          <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center mx-auto mb-4">
             <Sparkles className="w-5 h-5" />
           </div>
           <h3 className="text-2xl font-serif font-bold text-slate-900 dark:text-white mb-2">
@@ -327,7 +327,7 @@ export default function SingleBlogPostClient({
           </p>
           <Link
             href="/signup"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-400 dark:hover:bg-emerald-300 text-white dark:text-black font-bold text-sm transition-colors shadow-lg shadow-emerald-500/20"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-600 dark:bg-sky-400 dark:hover:bg-sky-300 text-white dark:text-black font-bold text-sm transition-colors shadow-lg shadow-sky-500/20"
           >
             Take the Assessment (₹999) <ArrowRight className="w-4 h-4" />
           </Link>

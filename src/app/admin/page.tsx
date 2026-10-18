@@ -750,7 +750,7 @@ export default function AdminDashboard() {
                                 {coupon.id}
                               </td>
                               <td className="p-3.5">
-                                <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-extrabold bg-sky-500/10 text-sky-500 border border-sky-500/20">
                                   {coupon.discountPercentage}% OFF
                                 </span>
                               </td>

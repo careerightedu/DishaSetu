@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="flex min-h-[100dvh] flex-col justify-between p-4 relative overflow-hidden bg-slate-50 dark:bg-background text-slate-900 dark:text-foreground">
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -z-10 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -z-10 h-72 w-72 rounded-full bg-sky-500/10 blur-3xl pointer-events-none" />
 
       {/* Top Header Navigation */}
       <header className="w-full max-w-md mx-auto flex items-center justify-between relative z-20 mb-4">
@@ -60,11 +60,11 @@ export default function ForgotPasswordPage() {
         {/* Brand / Logo */}
         <div className="flex flex-col items-center text-center space-y-2">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500 shadow-lg shadow-emerald-500/20 p-2">
-              <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={28} height={28} className="object-contain" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-sky-500/30 shadow-md shadow-sky-500/10 p-2">
+              <Image src="/what_after_logo_blue.png" alt="WhatAfter Logo" width={28} height={28} className="object-contain" />
             </div>
             <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              What<span className="text-emerald-600 dark:text-emerald-400 font-extrabold">After</span>
+              What<span className="text-sky-600 dark:text-sky-400 font-extrabold">After</span>
             </span>
           </Link>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white mt-4">Reset password</h1>

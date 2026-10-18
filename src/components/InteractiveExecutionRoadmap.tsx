@@ -133,10 +133,10 @@ export default function InteractiveExecutionRoadmap() {
   const activeMilestone = activeRoadmap.milestones[activeMilestoneIndex] || activeRoadmap.milestones[0];
 
   return (
-    <div className="w-full rounded-2xl bg-slate-900 text-white dark:bg-[#07131e] border-2 border-emerald-500/40 shadow-2xl p-4 sm:p-7 relative overflow-hidden">
+    <div className="w-full rounded-2xl bg-slate-900 text-white dark:bg-[#07131e] border-2 border-sky-500/40 shadow-2xl p-4 sm:p-7 relative overflow-hidden">
       {/* Ambient glow backdrop */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-white/10 relative z-10">
@@ -210,7 +210,7 @@ export default function InteractiveExecutionRoadmap() {
                   <span>{activeRoadmap.theme}</span>
                 </h4>
               </div>
-              <span className="text-xs font-mono font-bold text-emerald-400 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30">
+              <span className="text-xs font-mono font-bold text-sky-400 px-2.5 py-1 rounded-md bg-sky-500/15 border border-sky-500/30">
                 3 Key Milestones
               </span>
             </div>
@@ -238,7 +238,7 @@ export default function InteractiveExecutionRoadmap() {
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <span className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                       <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 text-[10px] font-mono font-bold ${
-                        idx === 0 ? "bg-emerald-500 text-black" : "bg-cyan-500/30 text-cyan-300"
+                        idx === 0 ? "bg-sky-500 text-black" : "bg-cyan-500/30 text-cyan-300"
                       }`}>
                         {idx + 1}
                       </div>
@@ -255,7 +255,7 @@ export default function InteractiveExecutionRoadmap() {
 
                   <div className="pl-6 flex items-center gap-1.5 text-[11px] font-mono text-cyan-300">
                     <span className="text-slate-400">Deliverable:</span>
-                    <span className="font-semibold text-emerald-300">{ms.deliverable}</span>
+                    <span className="font-semibold text-sky-300">{ms.deliverable}</span>
                   </div>
                 </button>
               ))}
@@ -368,8 +368,8 @@ export default function InteractiveExecutionRoadmap() {
                   transition={{ duration: 0.15 }}
                   className="space-y-4"
                 >
-                  <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25">
-                    <span className="text-[10px] font-mono uppercase font-bold text-emerald-300 block mb-1">
+                  <div className="p-4 rounded-xl bg-sky-500/10 border border-sky-500/25">
+                    <span className="text-[10px] font-mono uppercase font-bold text-sky-300 block mb-1">
                       De-Biasing Family Apprehension
                     </span>
                     <p className="text-xs sm:text-sm font-bold text-white leading-snug">
@@ -397,7 +397,7 @@ export default function InteractiveExecutionRoadmap() {
                 <span className="text-[10px] font-mono uppercase text-slate-400 block">
                   Expected Timeline Compensation:
                 </span>
-                <span className="font-mono font-bold text-emerald-400 text-sm">
+                <span className="font-mono font-bold text-sky-400 text-sm">
                   {activeRoadmap.expectedStipend}
                 </span>
               </div>

@@ -36,7 +36,7 @@ export default function AmbientBackgroundGlows() {
     <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
       {/* Subtle Architectural Blueprint Dot Matrix Pattern */}
       <svg
-        className="absolute inset-0 w-full h-full opacity-[0.03] dark:opacity-[0.05] text-slate-900 dark:text-emerald-300"
+        className="absolute inset-0 w-full h-full opacity-[0.03] dark:opacity-[0.05] text-slate-900 dark:text-sky-300"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -55,32 +55,22 @@ export default function AmbientBackgroundGlows() {
       </svg>
 
       {/* Floating Parallax Atmosphere Orb 1 (Top Left) */}
-      {isDesktop ? (
-        <motion.div
-          style={{ y: orb1Y, x: orb1X }}
-          className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-400/5 blur-[140px] dark:from-emerald-500/15 dark:to-teal-400/10"
-        />
-      ) : (
-        <div className="absolute -top-20 -left-20 w-[300px] h-[300px] rounded-full bg-emerald-500/10 blur-3xl dark:from-emerald-500/10" />
-      )}
+      <motion.div
+        style={{ y: orb1Y, x: orb1X }}
+        className="absolute -top-32 -left-32 w-[340px] sm:w-[550px] h-[340px] sm:h-[550px] rounded-full bg-gradient-to-br from-sky-500/10 to-teal-400/5 blur-[90px] sm:blur-[140px] dark:from-sky-500/15 dark:to-teal-400/10 pointer-events-none"
+      />
 
       {/* Floating Parallax Atmosphere Orb 2 (Mid Right) */}
-      {isDesktop ? (
-        <motion.div
-          style={{ y: orb2Y, x: orb2X }}
-          className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-teal-500/10 to-cyan-400/5 blur-[160px] dark:from-teal-500/15 dark:to-cyan-400/10"
-        />
-      ) : (
-        <div className="absolute top-1/3 -right-20 w-[300px] h-[300px] rounded-full bg-teal-500/10 blur-3xl dark:from-teal-500/10" />
-      )}
+      <motion.div
+        style={{ y: orb2Y, x: orb2X }}
+        className="absolute top-1/3 -right-32 sm:-right-40 w-[360px] sm:w-[600px] h-[360px] sm:h-[600px] rounded-full bg-gradient-to-bl from-teal-500/10 to-cyan-400/5 blur-[100px] sm:blur-[160px] dark:from-teal-500/15 dark:to-cyan-400/10 pointer-events-none"
+      />
 
       {/* Floating Parallax Atmosphere Orb 3 (Lower Left / Center) */}
-      {isDesktop && (
-        <motion.div
-          style={{ y: orb3Y }}
-          className="absolute top-2/3 left-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-cyan-500/5 to-emerald-500/10 blur-[150px] dark:from-cyan-500/10 dark:to-emerald-500/12"
-        />
-      )}
+      <motion.div
+        style={{ y: orb3Y }}
+        className="absolute top-2/3 left-1/6 sm:left-1/4 w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] rounded-full bg-gradient-to-tr from-cyan-500/5 to-sky-500/10 blur-[90px] sm:blur-[150px] dark:from-cyan-500/10 dark:to-sky-500/12 pointer-events-none"
+      />
     </div>
   );
 }

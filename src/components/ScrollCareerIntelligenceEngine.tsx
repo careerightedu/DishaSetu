@@ -62,7 +62,7 @@ export default function ScrollCareerIntelligenceEngine() {
       sub: "Algorithmic thinking, first-principles logic & structured decomposition",
       score: 88,
       icon: Cpu,
-      color: "from-emerald-500 to-teal-400",
+      color: "from-sky-500 to-teal-400",
     },
     {
       name: "Investigative Inquiry",
@@ -76,7 +76,7 @@ export default function ScrollCareerIntelligenceEngine() {
       sub: "Self-directed execution, deep asynchronous focus & low micromanagement",
       score: 82,
       icon: Target,
-      color: "from-cyan-400 to-emerald-400",
+      color: "from-cyan-400 to-sky-400",
     },
   ];
 
@@ -132,7 +132,7 @@ export default function ScrollCareerIntelligenceEngine() {
       className="relative max-w-[1240px] mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-28 border-b border-slate-200/80 dark:border-white/5 overflow-hidden"
     >
       {/* Deep atmospheric ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[900px] h-[350px] sm:h-[550px] bg-emerald-500/[0.07] dark:bg-emerald-500/[0.12] rounded-full blur-[100px] sm:blur-[180px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[900px] h-[350px] sm:h-[550px] bg-sky-500/[0.07] dark:bg-sky-500/[0.12] rounded-full blur-[100px] sm:blur-[180px] pointer-events-none" />
       <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[300px] sm:h-[450px] bg-teal-500/[0.05] dark:bg-teal-500/[0.10] rounded-full blur-[100px] sm:blur-[160px] pointer-events-none" />
 
       {/* ------------------------------------------------------------- */}
@@ -151,10 +151,10 @@ export default function ScrollCareerIntelligenceEngine() {
           <div className="flex items-center justify-between mb-5 px-1">
             <div className="flex items-center gap-2.5">
               <span className="flex h-3 w-3 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500 shadow-sm shadow-sky-500/50" />
               </span>
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-700 dark:text-emerald-400">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-700 dark:text-sky-400">
                 Cognitive &amp; Work Value Inputs
               </span>
             </div>
@@ -169,14 +169,14 @@ export default function ScrollCareerIntelligenceEngine() {
               return (
                 <div
                   key={t.name}
-                  className="relative p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 shadow-lg dark:shadow-2xl transition-all"
+                  className="relative p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 hover:border-sky-500/50 shadow-lg dark:shadow-2xl transition-all"
                 >
                   <div className="flex items-start justify-between gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm">
+                    <div className="w-12 h-12 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0 shadow-sm">
                       <IconComp className="w-6 h-6" />
                     </div>
                     <div className="text-right">
-                      <span className="text-xl font-mono font-bold text-emerald-600 dark:text-emerald-400 block leading-none">
+                      <span className="text-xl font-mono font-bold text-sky-600 dark:text-sky-400 block leading-none">
                         {t.score}%
                       </span>
                       <span className="text-[10px] font-mono uppercase text-slate-400 dark:text-[#6a7d8c] mt-1 block">
@@ -202,9 +202,9 @@ export default function ScrollCareerIntelligenceEngine() {
 
                   {/* Terminal Connection Socket (Bottom) - On desktop all cards have sockets; on mobile only the bottom card connects */}
                   <div className={`absolute -bottom-3.5 left-1/2 -translate-x-1/2 ${idx === traits.length - 1 ? "flex" : "hidden md:flex"} items-center justify-center`}>
-                    <div className="w-7 h-7 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/30 flex items-center justify-center">
-                      <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-sm shadow-emerald-400" />
+                    <div className="w-7 h-7 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-sky-500/60 shadow-lg shadow-sky-500/30 flex items-center justify-center">
+                      <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-sky-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-400 shadow-sm shadow-sky-400" />
                     </div>
                   </div>
                 </div>
@@ -219,16 +219,16 @@ export default function ScrollCareerIntelligenceEngine() {
         <div className="relative h-24 sm:h-36 md:h-72 lg:h-80 w-full my-2 flex items-center justify-center pointer-events-none">
           {/* Large Architectural SVG */}
           <svg 
-            className="w-full h-full text-emerald-500 overflow-visible" 
+            className="w-full h-full text-sky-500 overflow-visible" 
             viewBox="0 0 1000 260" 
             fill="none" 
             preserveAspectRatio="none"
           >
             <defs>
               <linearGradient id="largeStreamGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#10b981" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="#34d399" stopOpacity="0.95" />
-                <stop offset="100%" stopColor="#10b981" stopOpacity="1" />
+                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.4" />
+                <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#0ea5e9" stopOpacity="1" />
               </linearGradient>
 
               {/* Glowing optic filter */}
@@ -254,7 +254,7 @@ export default function ScrollCareerIntelligenceEngine() {
               <>
                 <motion.path 
                   d="M 167,0 C 167,160 500,90 500,260" 
-                  stroke="#10b981" 
+                  stroke="#0ea5e9" 
                   strokeWidth="16" 
                   strokeOpacity="0.15"
                   strokeLinecap="round"
@@ -262,7 +262,7 @@ export default function ScrollCareerIntelligenceEngine() {
                 />
                 <motion.path 
                   d="M 833,0 C 833,160 500,90 500,260" 
-                  stroke="#10b981" 
+                  stroke="#0ea5e9" 
                   strokeWidth="16" 
                   strokeOpacity="0.15"
                   strokeLinecap="round"
@@ -272,7 +272,7 @@ export default function ScrollCareerIntelligenceEngine() {
             )}
             <motion.path 
               d="M 500,0 L 500,260" 
-              stroke="#10b981" 
+              stroke="#0ea5e9" 
               strokeWidth={isDesktop ? 16 : 8} 
               strokeOpacity="0.2"
               strokeLinecap="round"
@@ -284,7 +284,7 @@ export default function ScrollCareerIntelligenceEngine() {
               <>
                 <motion.path 
                   d="M 167,0 C 167,160 500,90 500,260" 
-                  stroke="#34d399" 
+                  stroke="#38bdf8" 
                   strokeWidth="7" 
                   strokeOpacity="0.4"
                   strokeLinecap="round"
@@ -292,7 +292,7 @@ export default function ScrollCareerIntelligenceEngine() {
                 />
                 <motion.path 
                   d="M 833,0 C 833,160 500,90 500,260" 
-                  stroke="#34d399" 
+                  stroke="#38bdf8" 
                   strokeWidth="7" 
                   strokeOpacity="0.4"
                   strokeLinecap="round"
@@ -302,7 +302,7 @@ export default function ScrollCareerIntelligenceEngine() {
             )}
             <motion.path 
               d="M 500,0 L 500,260" 
-              stroke="#34d399" 
+              stroke="#38bdf8" 
               strokeWidth={isDesktop ? 7 : 4} 
               strokeOpacity="0.45"
               strokeLinecap="round"
@@ -344,26 +344,26 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* =========================================================== */}
         <motion.div 
           style={{ opacity: hubOpacity, scale: hubScale, willChange: "opacity, transform" }}
-          className="relative rounded-3xl p-6 sm:p-10 md:p-12 bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/10 dark:from-[#0d2232] dark:via-[#091824] dark:to-[#0d2232] border-2 border-emerald-500/60 shadow-2xl overflow-visible transition-all"
+          className="relative rounded-3xl p-6 sm:p-10 md:p-12 bg-gradient-to-br from-sky-500/10 via-white to-teal-500/10 dark:from-[#0d2232] dark:via-[#091824] dark:to-[#0d2232] border-2 border-sky-500/60 shadow-2xl overflow-visible transition-all"
         >
           {/* Terminal Connection Socket (Top) */}
           <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-emerald-500 shadow-xl shadow-emerald-500/40 flex items-center justify-center">
-              <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 shadow-md shadow-emerald-400" />
+            <div className="w-8 h-8 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-sky-500 shadow-xl shadow-sky-500/40 flex items-center justify-center">
+              <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 shadow-md shadow-sky-400" />
             </div>
           </div>
 
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="flex items-start sm:items-center gap-5">
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-600 dark:text-emerald-300 flex items-center justify-center shrink-0 shadow-lg">
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-sky-500/20 border-2 border-sky-500/50 text-sky-600 dark:text-sky-300 flex items-center justify-center shrink-0 shadow-lg">
                 <BrainCircuit className="w-9 h-9 sm:w-11 sm:h-11 animate-pulse" />
-                <div className="absolute inset-0 rounded-2xl border border-emerald-400/60 animate-ping opacity-30" />
+                <div className="absolute inset-0 rounded-2xl border border-sky-400/60 animate-ping opacity-30" />
               </div>
 
               <div>
                 <div className="flex flex-wrap items-center gap-2.5 mb-2">
-                  <span className="text-[11px] uppercase font-mono tracking-wider px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-bold border border-emerald-500/30">
+                  <span className="text-[11px] uppercase font-mono tracking-wider px-2.5 py-0.5 rounded-md bg-sky-500/20 text-sky-800 dark:text-sky-300 font-bold border border-sky-500/30">
                     Cognitive Fingerprint • Synthesized
                   </span>
                   <span className="text-xs text-slate-500 dark:text-[#889aa8] font-mono font-semibold">
@@ -385,19 +385,19 @@ export default function ScrollCareerIntelligenceEngine() {
                 System Verification
               </span>
               <div className="space-y-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200">
-                <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>35 Psychometric Traits Converged</span>
                 </div>
-                <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>138 Career Families Evaluated</span>
                 </div>
-                <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>3,400+ Occupations Benchmarked</span>
                 </div>
-                <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>Stream-Eligibility Pre-Filtered</span>
                 </div>
@@ -407,9 +407,9 @@ export default function ScrollCareerIntelligenceEngine() {
 
           {/* Terminal Connection Socket (Bottom) */}
           <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-emerald-500 shadow-xl shadow-emerald-500/40 flex items-center justify-center">
-              <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 shadow-md shadow-emerald-400" />
+            <div className="w-8 h-8 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-sky-500 shadow-xl shadow-sky-500/40 flex items-center justify-center">
+              <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400 shadow-md shadow-sky-400" />
             </div>
           </div>
         </motion.div>
@@ -419,14 +419,14 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* =========================================================== */}
         <div className="relative h-24 sm:h-36 md:h-72 lg:h-80 w-full my-2 flex items-center justify-center pointer-events-none">
           <svg 
-            className="w-full h-full text-emerald-500 overflow-visible" 
+            className="w-full h-full text-sky-500 overflow-visible" 
             viewBox="0 0 1000 260" 
             fill="none" 
             preserveAspectRatio="none"
           >
             <defs>
               <linearGradient id="largeStreamGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#10b981" stopOpacity="1" />
+                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="1" />
                 <stop offset="50%" stopColor="#14b8a6" stopOpacity="0.85" />
                 <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.4" />
               </linearGradient>
@@ -453,7 +453,7 @@ export default function ScrollCareerIntelligenceEngine() {
               <>
                 <motion.path 
                   d="M 500,0 C 500,100 167,160 167,260" 
-                  stroke="#10b981" 
+                  stroke="#0ea5e9" 
                   strokeWidth="16" 
                   strokeOpacity="0.15"
                   strokeLinecap="round"
@@ -461,7 +461,7 @@ export default function ScrollCareerIntelligenceEngine() {
                 />
                 <motion.path 
                   d="M 500,0 C 500,100 833,160 833,260" 
-                  stroke="#10b981" 
+                  stroke="#0ea5e9" 
                   strokeWidth="16" 
                   strokeOpacity="0.15"
                   strokeLinecap="round"
@@ -471,7 +471,7 @@ export default function ScrollCareerIntelligenceEngine() {
             )}
             <motion.path 
               d="M 500,0 L 500,260" 
-              stroke="#10b981" 
+              stroke="#0ea5e9" 
               strokeWidth={isDesktop ? 16 : 8} 
               strokeOpacity="0.2"
               strokeLinecap="round"
@@ -548,10 +548,10 @@ export default function ScrollCareerIntelligenceEngine() {
           <div className="flex items-center justify-between mb-5 px-1">
             <div className="flex items-center gap-2.5">
               <span className="flex h-3 w-3 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500 shadow-sm shadow-sky-500/50" />
               </span>
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-700 dark:text-emerald-400">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-700 dark:text-sky-400">
                 Ranked Career Matches &amp; Compensation Benchmarks
               </span>
             </div>
@@ -566,27 +566,27 @@ export default function ScrollCareerIntelligenceEngine() {
                 key={career.title}
                 className={`relative p-6 sm:p-7 rounded-2xl transition-all ${
                   career.isPrimary
-                    ? "bg-white dark:bg-[#0d2232] border-2 border-emerald-500/80 shadow-2xl shadow-emerald-500/15 ring-2 ring-emerald-500/25"
+                    ? "bg-white dark:bg-[#0d2232] border-2 border-sky-500/80 shadow-2xl shadow-sky-500/15 ring-2 ring-sky-500/25"
                     : "bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 shadow-lg"
                 }`}
               >
                 {/* Terminal Connection Socket (Top) - On desktop all cards have sockets; on mobile only the top card connects */}
                 <div className={`absolute -top-3.5 left-1/2 -translate-x-1/2 ${idx === 0 ? "flex" : "hidden md:flex"} items-center justify-center`}>
-                  <div className="w-7 h-7 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/30 flex items-center justify-center">
-                    <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-sm shadow-emerald-400" />
+                  <div className="w-7 h-7 rounded-full bg-slate-900 dark:bg-[#061019] border-2 border-sky-500/60 shadow-lg shadow-sky-500/30 flex items-center justify-center">
+                    <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-sky-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-400 shadow-sm shadow-sky-400" />
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between gap-2 mb-4">
                   <span className={`text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-md ${
                     career.isPrimary
-                      ? "bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-500/40"
+                      ? "bg-sky-500/20 text-sky-800 dark:text-sky-300 border border-sky-500/40"
                       : "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-[#8899a6]"
                   }`}>
                     {career.rank}
                   </span>
-                  <span className="text-sm font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                  <span className="text-sm font-mono font-bold text-sky-600 dark:text-sky-400">
                     {career.match}% Match
                   </span>
                 </div>
@@ -605,7 +605,7 @@ export default function ScrollCareerIntelligenceEngine() {
 
                 <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-xs">
                   <span className="text-slate-500 dark:text-[#7a8d9b]">Target Salary:</span>
-                  <span className="font-mono font-bold text-slate-900 dark:text-emerald-300 text-sm">
+                  <span className="font-mono font-bold text-slate-900 dark:text-sky-300 text-sm">
                     {career.salary}
                   </span>
                 </div>
@@ -619,12 +619,12 @@ export default function ScrollCareerIntelligenceEngine() {
         {/* =========================================================== */}
         <motion.div 
           style={{ opacity: roadmapOpacity, y: roadmapY, willChange: "opacity, transform" }}
-          className="mt-8 sm:mt-10 p-6 sm:p-8 md:p-10 rounded-3xl bg-slate-950 text-white dark:bg-[#061019] border-2 border-emerald-500/40 shadow-2xl relative overflow-hidden"
+          className="mt-8 sm:mt-10 p-6 sm:p-8 md:p-10 rounded-3xl bg-slate-950 text-white dark:bg-[#061019] border-2 border-sky-500/40 shadow-2xl relative overflow-hidden"
         >
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-400">
                   Sequenced 3-Year Execution Blueprint
                 </span>
                 <span className="text-xs text-slate-400">• Software &amp; Application Development (Rank #1)</span>
@@ -635,7 +635,7 @@ export default function ScrollCareerIntelligenceEngine() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-[10px] font-mono font-bold text-emerald-400 block mb-1.5 uppercase">
+                  <span className="text-[10px] font-mono font-bold text-sky-400 block mb-1.5 uppercase">
                     Year 01: Skill Foundation
                   </span>
                   <span className="text-slate-200 leading-relaxed block">
@@ -662,12 +662,12 @@ export default function ScrollCareerIntelligenceEngine() {
             </div>
 
             {/* AI Resilience Shield Component */}
-            <div className="shrink-0 w-full lg:w-72 p-5 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex flex-col justify-center">
+            <div className="shrink-0 w-full lg:w-72 p-5 rounded-2xl bg-sky-500/15 border border-sky-500/30 flex flex-col justify-center">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono uppercase font-bold text-emerald-400 flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-emerald-400" /> AI-Resilience
+                <span className="text-xs font-mono uppercase font-bold text-sky-400 flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-sky-400" /> AI-Resilience
                 </span>
-                <span className="text-base font-bold font-mono text-emerald-300">
+                <span className="text-base font-bold font-mono text-sky-300">
                   {roadmap.aiResilienceScore}/100
                 </span>
               </div>

@@ -95,7 +95,7 @@ export default function WriteBlogPage() {
       <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-800 dark:text-[#f4efe6] font-sans">
         <Navbar />
         <main className="max-w-md mx-auto px-6 py-28 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 flex items-center justify-center mx-auto mb-6 border border-emerald-200 dark:border-emerald-500/20">
+          <div className="w-14 h-14 rounded-2xl bg-sky-100 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 flex items-center justify-center mx-auto mb-6 border border-sky-200 dark:border-sky-500/20">
             <Lock className="w-7 h-7" />
           </div>
 
@@ -110,7 +110,7 @@ export default function WriteBlogPage() {
           <div className="flex flex-col gap-3">
             <Link
               href="/login?redirect=/blog/new"
-              className="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-400 dark:hover:bg-emerald-300 text-white dark:text-black font-bold text-sm transition-colors shadow-lg shadow-emerald-500/20"
+              className="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-600 dark:bg-sky-400 dark:hover:bg-sky-300 text-white dark:text-black font-bold text-sm transition-colors shadow-lg shadow-sky-500/20"
             >
               Log In to Continue
             </Link>
@@ -151,7 +151,7 @@ export default function WriteBlogPage() {
     "Add a meta description or summary excerpt to see how this article snippet will appear when searched on Google, Bing, and social channels.";
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-800 dark:text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-800 dark:text-[#f4efe6] font-sans selection:bg-sky-500/30 selection:text-sky-900 dark:selection:text-sky-200">
       <Navbar />
 
       <main className="max-w-[860px] mx-auto px-6 py-12">
@@ -166,7 +166,7 @@ export default function WriteBlogPage() {
 
         {/* Page Header */}
         <div className="pb-8 border-b border-slate-200 dark:border-white/10 mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/20 text-sky-700 dark:text-sky-400 text-xs font-semibold uppercase tracking-widest mb-3">
             <PenSquare className="w-3.5 h-3.5" />
             Article Studio
           </div>
@@ -198,7 +198,7 @@ export default function WriteBlogPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g., Why Choosing PCM Wasn't Right for Me, and What I Did Next" 
-              className="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-base sm:text-lg font-serif font-bold focus:border-emerald-500/50 outline-none shadow-sm"
+              className="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-base sm:text-lg font-serif font-bold focus:border-sky-500/50 outline-none shadow-sm"
               required
             />
           </div>
@@ -212,7 +212,7 @@ export default function WriteBlogPage() {
               <select 
                 value={category}
                 onChange={(e) => setCategory(e.target.value as BlogPost["category"])}
-                className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:border-emerald-500/50 outline-none shadow-sm"
+                className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:border-sky-500/50 outline-none shadow-sm"
               >
                 <option value="Stream Selection">Stream Selection</option>
                 <option value="College & Beyond">College &amp; Beyond</option>
@@ -231,7 +231,7 @@ export default function WriteBlogPage() {
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
                 placeholder="e.g., Ananya Sharma, Rohit Verma, or Career Researcher" 
-                className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none shadow-sm"
+                className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-sky-500/50 outline-none shadow-sm"
                 required
               />
             </div>
@@ -247,7 +247,7 @@ export default function WriteBlogPage() {
               value={authorRole}
               onChange={(e) => setAuthorRole(e.target.value)}
               placeholder="e.g., 2nd Year Engineering Student, Parent, or Career Counsellor" 
-              className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none shadow-sm"
+              className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-sky-500/50 outline-none shadow-sm"
               required
             />
           </div>
@@ -262,7 +262,7 @@ export default function WriteBlogPage() {
               onChange={(e) => setExcerpt(e.target.value)}
               rows={2}
               placeholder="A brief overview that hooks readers on the blog list page..." 
-              className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none resize-none shadow-sm"
+              className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-sky-500/50 outline-none resize-none shadow-sm"
               required
             />
           </div>
@@ -282,7 +282,7 @@ export default function WriteBlogPage() {
               onChange={(e) => setContent(e.target.value)}
               rows={14}
               placeholder="Write your article here...&#10;&#10;### Section Heading&#10;Write detailed paragraphs explaining your experiences, decisions, and lessons learned.&#10;&#10;- Bullet point one&#10;- Bullet point two" 
-              className="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm leading-relaxed focus:border-emerald-500/50 outline-none font-mono shadow-sm"
+              className="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm leading-relaxed focus:border-sky-500/50 outline-none font-mono shadow-sm"
               required
             />
           </div>
@@ -290,14 +290,14 @@ export default function WriteBlogPage() {
           {/* ========================================================= */}
           {/* SEO & Social Metadata Configuration Card                   */}
           {/* ========================================================= */}
-          <div className="rounded-2xl bg-white dark:bg-[#091522] border border-emerald-200 dark:border-emerald-500/25 p-5 sm:p-7 space-y-6 shadow-md dark:shadow-xl relative overflow-hidden">
+          <div className="rounded-2xl bg-white dark:bg-[#091522] border border-sky-200 dark:border-sky-500/25 p-5 sm:p-7 space-y-6 shadow-md dark:shadow-xl relative overflow-hidden">
             {/* Ambient subtle glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
 
             {/* Section Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center shrink-0">
                   <Search className="w-5 h-5" />
                 </div>
                 <div>
@@ -305,7 +305,7 @@ export default function WriteBlogPage() {
                     <h3 className="text-base sm:text-lg font-serif font-bold text-slate-900 dark:text-white">
                       Search Engine Optimization (SEO) &amp; Social Meta
                     </h3>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-100 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-sky-100 dark:bg-sky-500/15 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30">
                       Google &amp; Social
                     </span>
                   </div>
@@ -318,7 +318,7 @@ export default function WriteBlogPage() {
               <button
                 type="button"
                 onClick={() => setIsSeoExpanded(!isSeoExpanded)}
-                className="inline-flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-semibold self-start sm:self-center px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-sky-700 dark:text-sky-400 hover:text-sky-800 dark:hover:text-sky-300 font-semibold self-start sm:self-center px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 transition-colors"
               >
                 {isSeoExpanded ? (
                   <>Collapse <ChevronUp className="w-3.5 h-3.5" /></>
@@ -334,14 +334,14 @@ export default function WriteBlogPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-[#98abb9] flex items-center gap-1.5">
-                      <Globe className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                      <Globe className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                       Live Google Search Snippet Preview
                     </label>
                     <span className="text-[11px] text-slate-500 dark:text-[#6e8290]">Real-time preview</span>
                   </div>
                   <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#050c13] border border-slate-200 dark:border-white/10 space-y-1.5 font-sans">
                     <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-[#9aa0a6]">
-                      <div className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold text-[10px]">W</div>
+                      <div className="w-4 h-4 rounded-full bg-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center font-bold text-[10px]">W</div>
                       <span className="truncate">
                         https://whatafter.in › blog › {activeSlug}
                       </span>
@@ -370,7 +370,7 @@ export default function WriteBlogPage() {
                     value={metaTitle}
                     onChange={(e) => setMetaTitle(e.target.value)}
                     placeholder={title.trim() ? `${title.trim()} | WhatAfter` : "e.g. Science vs Commerce After 10th: Which Stream Fits You? | WhatAfter"} 
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none shadow-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-sky-500/50 outline-none shadow-sm"
                   />
                   <span className="block text-[11px] text-slate-500 dark:text-[#6b7e8d] mt-1.5">
                     Leave empty to automatically use your article title. Recommended: 50–60 characters for optimal display on search engines.
@@ -392,7 +392,7 @@ export default function WriteBlogPage() {
                     onChange={(e) => setMetaDescription(e.target.value)}
                     rows={3}
                     placeholder={excerpt.trim() || "e.g. Compare PCM and Commerce in 2026. Discover how cognitive traits, salary trajectories, and automation risk guide your stream choice."} 
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none resize-none shadow-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-sky-500/50 outline-none resize-none shadow-sm"
                   />
                   <span className="block text-[11px] text-slate-500 dark:text-[#6b7e8d] mt-1.5">
                     Leave empty to automatically use your summary excerpt. Recommended: 140–160 characters.
@@ -406,7 +406,7 @@ export default function WriteBlogPage() {
                     <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-[#98abb9] mb-2">
                       Custom URL Slug (Optional)
                     </label>
-                    <div className="flex items-center rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 px-3.5 focus-within:border-emerald-500/50 shadow-sm">
+                    <div className="flex items-center rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 px-3.5 focus-within:border-sky-500/50 shadow-sm">
                       <span className="text-xs text-slate-500 dark:text-[#5f7484] select-none shrink-0 font-mono">/blog/</span>
                       <input 
                         type="text" 
@@ -424,7 +424,7 @@ export default function WriteBlogPage() {
                   {/* Social OG Image */}
                   <div>
                     <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-[#98abb9] mb-2 flex items-center gap-1.5">
-                      <Share2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                      <Share2 className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                       Social Share Image URL (Optional)
                     </label>
                     <input 
@@ -432,7 +432,7 @@ export default function WriteBlogPage() {
                       value={ogImage}
                       onChange={(e) => setOgImage(e.target.value)}
                       placeholder="https://whatafter.in/report/career-deep-dive.png" 
-                      className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none shadow-sm"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-sky-500/50 outline-none shadow-sm"
                     />
                     <span className="block text-[11px] text-slate-500 dark:text-[#6b7e8d] mt-1.5">
                       Image displayed on WhatsApp, LinkedIn, and Twitter/X cards.
@@ -443,7 +443,7 @@ export default function WriteBlogPage() {
                 {/* Keywords / Tags */}
                 <div>
                   <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-[#98abb9] mb-2 flex items-center gap-1.5">
-                    <Tag className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <Tag className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                     Focus Keywords / Meta Tags (Optional)
                   </label>
                   <input 
@@ -451,7 +451,7 @@ export default function WriteBlogPage() {
                     value={metaKeywords}
                     onChange={(e) => setMetaKeywords(e.target.value)}
                     placeholder="e.g. stream selection, class 10, PCM vs Commerce, cognitive assessment" 
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-emerald-500/50 outline-none shadow-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#506371] text-sm focus:border-sky-500/50 outline-none shadow-sm"
                   />
                   <span className="block text-[11px] text-slate-500 dark:text-[#6b7e8d] mt-1.5">
                     Separate keywords with commas. Used in meta keyword tags and internal search.
@@ -464,7 +464,7 @@ export default function WriteBlogPage() {
                         const clean = tag.trim();
                         if (!clean) return null;
                         return (
-                          <span key={idx} className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs text-emerald-700 dark:text-emerald-300 font-mono">
+                          <span key={idx} className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs text-sky-700 dark:text-sky-300 font-mono">
                             #{clean}
                           </span>
                         );
@@ -493,7 +493,7 @@ export default function WriteBlogPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-400 dark:hover:bg-emerald-300 text-white dark:text-black font-bold text-sm transition-colors disabled:opacity-50 shadow-lg shadow-emerald-500/20"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 dark:bg-sky-400 dark:hover:bg-sky-300 text-white dark:text-black font-bold text-sm transition-colors disabled:opacity-50 shadow-lg shadow-sky-500/20"
               >
                 {isSubmitting ? (
                   <>Publishing...</>

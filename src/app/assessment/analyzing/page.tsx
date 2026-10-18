@@ -208,43 +208,43 @@ export default function AnalyzingTransition() {
   return (
     <div className="flex min-h-[100dvh] items-center justify-center p-4 bg-slate-950 relative overflow-hidden font-mono">
       {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b9811a_1px,transparent_1px),linear-gradient(to_bottom,#10b9811a_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0ea5e91a_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e91a_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
 
       {/* Engine Core */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[100px] animate-pulse" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[100px] animate-pulse" />
 
-      <div className="z-10 w-full max-w-lg bg-slate-900/80 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8 sm:p-12 shadow-[0_0_50px_rgba(16,185,129,0.15)] flex flex-col items-center text-center">
+      <div className="z-10 w-full max-w-lg bg-slate-900/80 backdrop-blur-xl border border-sky-500/30 rounded-2xl p-8 sm:p-12 shadow-[0_0_50px_rgba(14,165,233,0.15)] flex flex-col items-center text-center">
         
         {/* Core spinner */}
         <div className="relative flex h-28 w-28 items-center justify-center mb-8">
-          <div className="absolute inset-0 rounded-full border-4 border-dashed border-emerald-500/30 animate-[spin_10s_linear_infinite]" />
-          <div className="absolute inset-4 rounded-full border-2 border-emerald-400/50 animate-[spin_5s_linear_infinite_reverse]" />
-          <div className="absolute h-14 w-14 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center animate-pulse shadow-[0_0_20px_rgba(16,185,129,0.5)]">
-            <Sparkles className="h-6 w-6 text-emerald-400 animate-[spin_8s_ease-in-out_infinite]" />
+          <div className="absolute inset-0 rounded-full border-4 border-dashed border-sky-500/30 animate-[spin_10s_linear_infinite]" />
+          <div className="absolute inset-4 rounded-full border-2 border-sky-400/50 animate-[spin_5s_linear_infinite_reverse]" />
+          <div className="absolute h-14 w-14 rounded-full bg-sky-500/20 border border-sky-400 flex items-center justify-center animate-pulse shadow-[0_0_20px_rgba(14,165,233,0.5)]">
+            <Sparkles className="h-6 w-6 text-sky-400 animate-[spin_8s_ease-in-out_infinite]" />
           </div>
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-500/0 via-emerald-500/10 to-emerald-500/30 border-r-2 border-emerald-400/50 animate-[spin_3s_linear_infinite]" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-sky-500/0 via-sky-500/10 to-sky-500/30 border-r-2 border-sky-400/50 animate-[spin_3s_linear_infinite]" />
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-widest mb-2 drop-shadow-lg">
           System Booting
         </h1>
-        <p className="text-emerald-400/80 text-xs sm:text-sm mb-10 tracking-widest uppercase font-bold">
+        <p className="text-sky-400/80 text-xs sm:text-sm mb-10 tracking-widest uppercase font-bold">
           Decision Intelligence Engine
         </p>
 
         {/* Terminal Window */}
         <div className="w-full bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-left relative overflow-hidden shadow-inner">
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-emerald-500/50 animate-scan" />
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-sky-500/50 animate-scan" />
           <div className="flex items-center gap-2 mb-3 text-slate-500 text-xs border-b border-slate-800 pb-2">
             <div className="w-2 h-2 rounded-full bg-red-500/50" />
             <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
             <div className="w-2 h-2 rounded-full bg-green-500/50" />
             <span className="ml-2 font-semibold tracking-wider">root@career-engine:~</span>
           </div>
-          <p className="text-emerald-400 text-sm sm:text-base transition-all duration-300">
-            <span className="text-emerald-600 mr-2">$</span>
+          <p className="text-sky-400 text-sm sm:text-base transition-all duration-300">
+            <span className="text-sky-600 mr-2">$</span>
             {statusText}
-            <span className="inline-block w-2.5 h-4 bg-emerald-400 ml-1.5 align-middle animate-ping" />
+            <span className="inline-block w-2.5 h-4 bg-sky-400 ml-1.5 align-middle animate-ping" />
           </p>
         </div>
 

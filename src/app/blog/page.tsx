@@ -64,7 +64,7 @@ export default function BlogListingPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-900 dark:text-[#f4efe6] font-sans selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200 transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#061019] text-slate-900 dark:text-[#f4efe6] font-sans selection:bg-sky-500/30 selection:text-sky-900 dark:selection:text-sky-200 transition-colors duration-200">
       <Navbar />
 
       <main className="max-w-[1200px] mx-auto px-6 py-16">
@@ -72,7 +72,7 @@ export default function BlogListingPage() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-slate-200 dark:border-white/10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400 text-xs font-semibold uppercase tracking-widest mb-4">
               <BookOpen className="w-3.5 h-3.5" />
               WhatAfter Journal
             </div>
@@ -88,7 +88,7 @@ export default function BlogListingPage() {
           <div className="shrink-0">
             <button
               onClick={handleWriteClick}
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-emerald-400 text-[#03110f] font-bold text-sm hover:bg-emerald-300 transition-all shadow-[0_0_25px_rgba(16,185,129,0.25)] hover:shadow-[0_0_35px_rgba(16,185,129,0.35)] transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-sky-400 text-[#03110f] font-bold text-sm hover:bg-sky-300 transition-all shadow-[0_0_25px_rgba(14,165,233,0.25)] hover:shadow-[0_0_35px_rgba(14,165,233,0.35)] transform hover:-translate-y-0.5"
             >
               <PenSquare className="w-4 h-4" />
               Write an Article
@@ -109,7 +109,7 @@ export default function BlogListingPage() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                   selectedCategory === cat 
-                    ? "bg-white dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-slate-200 dark:border-emerald-500/40 shadow-sm" 
+                    ? "bg-white dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-slate-200 dark:border-sky-500/40 shadow-sm" 
                     : "bg-white dark:bg-[#0b1723] text-slate-600 dark:text-[#8ea0ad] border border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/10 hover:text-slate-900 dark:hover:text-white shadow-sm"
                 }`}
               >
@@ -126,7 +126,7 @@ export default function BlogListingPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search essays & topics..."
-              className="w-full pl-9 pr-4 py-2 rounded-lg bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#5c707f] outline-none focus:border-emerald-500/50 shadow-sm"
+              className="w-full pl-9 pr-4 py-2 rounded-lg bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-[#5c707f] outline-none focus:border-sky-500/50 shadow-sm"
             />
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function BlogListingPage() {
         {/* Blog Posts Grid */}
         {loading ? (
           <div className="py-24 text-center">
-            <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
             <p className="text-sm text-slate-500 dark:text-[#8fa1ad]">Loading articles...</p>
           </div>
         ) : filteredPosts.length === 0 ? (
@@ -149,16 +149,16 @@ export default function BlogListingPage() {
               <Link 
                 key={post.id} 
                 href={`/blog/${post.slug}`}
-                className="group flex flex-col justify-between p-6 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 hover:border-emerald-500/30 transition-all hover:shadow-xl dark:hover:shadow-emerald-950/20 transform hover:-translate-y-1 shadow-sm"
+                className="group flex flex-col justify-between p-6 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200/80 dark:border-white/5 hover:border-sky-500/30 transition-all hover:shadow-xl dark:hover:shadow-sky-950/20 transform hover:-translate-y-1 shadow-sm"
               >
                 <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
                       {post.category}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-serif font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors mb-3 leading-snug">
+                  <h3 className="text-xl font-serif font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-300 transition-colors mb-3 leading-snug">
                     {post.title}
                   </h3>
 
@@ -174,7 +174,7 @@ export default function BlogListingPage() {
                       <span className="text-[10px] text-slate-400 dark:text-[#5d7180]">{post.authorRole}</span>
                     )}
                   </div>
-                  <span className="inline-flex items-center text-emerald-600 dark:text-emerald-400 font-bold group-hover:translate-x-1 transition-transform">
+                  <span className="inline-flex items-center text-sky-600 dark:text-sky-400 font-bold group-hover:translate-x-1 transition-transform">
                     Read <ChevronRight className="w-4 h-4 ml-0.5" />
                   </span>
                 </div>
@@ -188,8 +188,8 @@ export default function BlogListingPage() {
       {/* Login Required Modal */}
       {showLoginModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 dark:bg-black/80 backdrop-blur-sm">
-          <div className="max-w-md w-full p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-emerald-500/30 shadow-2xl relative">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-5">
+          <div className="max-w-md w-full p-8 rounded-2xl bg-white dark:bg-[#0b1723] border border-slate-200 dark:border-sky-500/30 shadow-2xl relative">
+            <div className="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center mb-5">
               <Lock className="w-6 h-6" />
             </div>
 
@@ -204,7 +204,7 @@ export default function BlogListingPage() {
             <div className="flex flex-col gap-3">
               <Link
                 href="/login?redirect=/blog/new"
-                className="w-full py-3 text-center rounded-xl bg-emerald-400 text-black font-bold text-sm hover:bg-emerald-300 transition-colors shadow-md shadow-emerald-500/20"
+                className="w-full py-3 text-center rounded-xl bg-sky-400 text-black font-bold text-sm hover:bg-sky-300 transition-colors shadow-md shadow-sky-500/20"
               >
                 Log In to Continue
               </Link>

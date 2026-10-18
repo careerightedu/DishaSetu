@@ -64,16 +64,16 @@ export default function ScrollWavyConnector({
     startX = 400;
     endX = 400;
     if (direction === "s-curve") {
-      pathD = "M 400,0 C 440,70 360,170 400,240";
+      pathD = "M 400,0 C 470,60 330,180 400,240";
     } else if (direction === "reverse-s") {
-      pathD = "M 400,0 C 360,70 440,170 400,240";
+      pathD = "M 400,0 C 330,60 470,180 400,240";
     } else {
-      pathD = "M 400,0 C 400,80 400,160 400,240";
+      pathD = "M 400,0 C 450,70 350,170 400,240";
     }
   }
 
-  // Mobile height is 100px so connectors feel prominent and graceful without excess gaps; Desktop retains expansive height.
-  const effectiveHeight = isDesktop ? height : Math.min(height, 100);
+  // Mobile height provides an expansive, graceful S-curve visible while scrolling on phones
+  const effectiveHeight = isDesktop ? height : Math.min(height, 160);
 
   return (
     <div 
@@ -89,9 +89,9 @@ export default function ScrollWavyConnector({
       >
         <defs>
           <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#10b981" />
-            <stop offset="50%" stopColor="#14b8a6" />
-            <stop offset="100%" stopColor="#06b6d4" />
+            <stop offset="0%" stopColor="#0ea5e9" />
+            <stop offset="50%" stopColor="#38bdf8" />
+            <stop offset="100%" stopColor="#0284c7" />
           </linearGradient>
           <filter id={`${gradientId}-glow`} x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation={isDesktop ? 4 : 2} result="blur" />
@@ -105,7 +105,7 @@ export default function ScrollWavyConnector({
           stroke="currentColor"
           strokeWidth={isDesktop ? 3 : 2}
           strokeDasharray="8 8"
-          className="text-emerald-500/25 dark:text-emerald-400/20"
+          className="text-sky-500/25 dark:text-sky-400/20"
         />
 
         {/* Dynamic self-drawing wavy glowing beam on scroll */}
@@ -119,14 +119,14 @@ export default function ScrollWavyConnector({
         />
 
         {/* Top Terminal Contact Bead Touching Upper Section Border */}
-        <circle cx={startX} cy={0} r={isDesktop ? 8 : 6} fill="none" stroke="#10b981" strokeWidth="1.5" className="animate-ping opacity-75" />
-        <circle cx={startX} cy={0} r={isDesktop ? 5.5 : 4} fill="#10b981" opacity="0.3" filter="blur(2px)" />
-        <circle cx={startX} cy={0} r={isDesktop ? 4.5 : 3.5} fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+        <circle cx={startX} cy={0} r={isDesktop ? 8 : 6} fill="none" stroke="#0ea5e9" strokeWidth="1.5" className="animate-ping opacity-75" />
+        <circle cx={startX} cy={0} r={isDesktop ? 5.5 : 4} fill="#0ea5e9" opacity="0.3" filter="blur(2px)" />
+        <circle cx={startX} cy={0} r={isDesktop ? 4.5 : 3.5} fill="#0ea5e9" stroke="#ffffff" strokeWidth="1.5" />
 
         {/* Bottom Terminal Contact Bead Touching Lower Section Border */}
-        <circle cx={endX} cy={240} r={isDesktop ? 8 : 6} fill="none" stroke="#06b6d4" strokeWidth="1.5" className="animate-ping opacity-75" />
-        <circle cx={endX} cy={240} r={isDesktop ? 5.5 : 4} fill="#06b6d4" opacity="0.3" filter="blur(2px)" />
-        <circle cx={endX} cy={240} r={isDesktop ? 4.5 : 3.5} fill="#06b6d4" stroke="#ffffff" strokeWidth="1.5" />
+        <circle cx={endX} cy={240} r={isDesktop ? 8 : 6} fill="none" stroke="#0284c7" strokeWidth="1.5" className="animate-ping opacity-75" />
+        <circle cx={endX} cy={240} r={isDesktop ? 5.5 : 4} fill="#0284c7" opacity="0.3" filter="blur(2px)" />
+        <circle cx={endX} cy={240} r={isDesktop ? 4.5 : 3.5} fill="#0284c7" stroke="#ffffff" strokeWidth="1.5" />
       </svg>
     </div>
   );

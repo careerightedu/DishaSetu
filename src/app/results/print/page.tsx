@@ -118,10 +118,10 @@ const PageContainer = ({ children, pageNumber, title }: { children: React.ReactN
     {title && (
       <div className="w-full flex justify-between items-center pb-3 border-b border-slate-800/80 mb-5 shrink-0">
         <div className="flex items-center gap-2.5">
-          <div className="bg-emerald-500 text-[#0B1120] text-[10px] font-black px-2 py-0.5 rounded font-mono">
+          <div className="bg-sky-500 text-[#0B1120] text-[10px] font-black px-2 py-0.5 rounded font-mono">
             {pageNumber ? String(pageNumber).padStart(2, '0') : "CR"}
           </div>
-          <span className="text-emerald-500 font-mono text-[10px] tracking-[0.2em] uppercase font-bold">{title}</span>
+          <span className="text-sky-500 font-mono text-[10px] tracking-[0.2em] uppercase font-bold">{title}</span>
         </div>
         <div className="text-slate-600 font-mono text-[9px] tracking-widest uppercase">
           Confidential • 2026
@@ -136,7 +136,7 @@ const PageContainer = ({ children, pageNumber, title }: { children: React.ReactN
 
     {/* Footer */}
     <div className="w-full flex justify-between items-center pt-3 border-t border-slate-800/80 mt-auto shrink-0">
-      <div className="text-emerald-500 font-mono text-[9px] tracking-widest uppercase font-semibold">
+      <div className="text-sky-500 font-mono text-[9px] tracking-widest uppercase font-semibold">
         WhatAfter • Career Intelligence Report
       </div>
       <div className="text-slate-500 font-mono text-[9px] tracking-widest uppercase font-semibold">
@@ -321,7 +321,7 @@ function CareerDiscoveryJourneyPrintInner() {
     return (
       <div className="flex h-screen items-center justify-center bg-[#0B1120] text-white">
         <div className="text-center space-y-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent mx-auto" />
           <p className="text-xs font-black uppercase tracking-wider text-slate-400 font-mono">Compiling Official 15-Page WhatAfter PDF...</p>
         </div>
       </div>
@@ -340,7 +340,7 @@ function CareerDiscoveryJourneyPrintInner() {
         </p>
         <button
           onClick={() => window.location.href = "/results"}
-          className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all"
+          className="px-5 py-2.5 bg-sky-500 hover:bg-sky-600 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all"
         >
           Go to Results Dashboard
         </button>
@@ -351,8 +351,8 @@ function CareerDiscoveryJourneyPrintInner() {
   // Neutral profile fit label — no arbitrary rarity tiers
   const getFitBadge = (idx: number) => {
     const labels = [
-      { label: "STRONGEST PROFILE MATCH", cls: "bg-emerald-950/80 text-emerald-400 border-emerald-500/40" },
-      { label: "STRONG PROFILE MATCH",   cls: "bg-emerald-950/70 text-emerald-400 border-emerald-600/40" },
+      { label: "STRONGEST PROFILE MATCH", cls: "bg-sky-950/80 text-sky-400 border-sky-500/40" },
+      { label: "STRONG PROFILE MATCH",   cls: "bg-sky-950/70 text-sky-400 border-sky-600/40" },
       { label: "GOOD PROFILE MATCH",     cls: "bg-teal-950/70   text-teal-400   border-teal-600/40" },
       { label: "SOLID PROFILE MATCH",    cls: "bg-slate-800/80  text-slate-300  border-slate-600/40" },
       { label: "CONSIDERED MATCH",       cls: "bg-slate-800/80  text-slate-400  border-slate-600/40" },
@@ -384,7 +384,7 @@ function CareerDiscoveryJourneyPrintInner() {
       <PageContainer>
         <div className="flex-1 flex flex-col justify-between py-4">
           <div>
-            <h4 className="text-emerald-500 font-mono text-xs tracking-[0.3em] uppercase mb-4 font-bold">PREPARED FOR</h4>
+            <h4 className="text-sky-500 font-mono text-xs tracking-[0.3em] uppercase mb-4 font-bold">PREPARED FOR</h4>
             <h1 className="text-6xl font-black text-white leading-[0.9] mb-6 font-serif">
               {profile?.fullName?.split(' ').map((n: string, i: number) => (
                 <React.Fragment key={i}>
@@ -396,14 +396,14 @@ function CareerDiscoveryJourneyPrintInner() {
             <div className="inline-flex items-center gap-3 bg-slate-900/80 border border-slate-800 rounded-full px-5 py-2.5 mb-8">
               <span className="text-slate-500 font-mono text-[10px] tracking-widest uppercase font-bold">CAREER IDENTITY</span>
               <span className="w-px h-3.5 bg-slate-800"></span>
-              <span className="text-emerald-400 font-bold text-xs">{archetype?.name || "The Sovereign Architect"}</span>
+              <span className="text-sky-400 font-bold text-xs">{archetype?.name || "The Sovereign Architect"}</span>
               <span className="text-slate-400 text-xs">· {archetype?.title || "Investigative–Artistic"}</span>
             </div>
           </div>
 
           <div className="grid grid-cols-3 gap-8 border-t border-slate-800/80 pt-6">
             <div>
-              <div className="text-4xl font-black text-emerald-500 mb-1 font-mono">80</div>
+              <div className="text-4xl font-black text-sky-500 mb-1 font-mono">80</div>
               <div className="text-[10px] text-slate-400 font-mono leading-tight">Responses analysed across a 35-trait model</div>
             </div>
             <div className="border-l border-slate-800/80 pl-8">
@@ -441,7 +441,7 @@ function CareerDiscoveryJourneyPrintInner() {
             <div>
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-sm font-bold text-white">Your profile signals</h3>
-                <span className="bg-emerald-950 text-emerald-400 border border-emerald-900 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider font-mono">ANALYSED</span>
+                <span className="bg-sky-950 text-sky-400 border border-sky-900 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider font-mono">ANALYSED</span>
               </div>
               <p className="text-[11px] text-slate-300 leading-relaxed mb-4">
                 {counselorAnalysis?.executiveSummary || "Your assessment reveals a distinctive cognitive fingerprint — a blend of analytical precision and creative drive that narrows down naturally to a specific set of career families."}
@@ -459,9 +459,9 @@ function CareerDiscoveryJourneyPrintInner() {
                   <div key={name} className="flex items-center gap-3 text-xs">
                     <span className="w-24 text-slate-300 font-semibold text-[11px] truncate">{name}</span>
                     <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${Math.min(100, val)}%` }} />
+                      <div className="h-full bg-sky-500 rounded-full" style={{ width: `${Math.min(100, val)}%` }} />
                     </div>
-                    <span className="w-8 text-right font-mono text-[10px] text-emerald-400 font-bold">{Math.round(val)}</span>
+                    <span className="w-8 text-right font-mono text-[10px] text-sky-400 font-bold">{Math.round(val)}</span>
                   </div>
                 ))}
             </div>
@@ -482,11 +482,11 @@ function CareerDiscoveryJourneyPrintInner() {
 
             <div className="flex gap-6 border-t border-slate-800/80 pt-2.5">
               <div>
-                <div className="text-sm font-black text-emerald-400 font-mono">{primaryMatch?.salaryTiers?.entry || primaryMatch?.salaryTiers?.tier1 || "₹8–12 LPA"}</div>
+                <div className="text-sm font-black text-sky-400 font-mono">{primaryMatch?.salaryTiers?.entry || primaryMatch?.salaryTiers?.tier1 || "₹8–12 LPA"}</div>
                 <div className="text-[9px] text-slate-500 font-mono uppercase">Expected Entry Salary</div>
               </div>
               <div>
-                <div className="text-sm font-black text-emerald-400 font-mono">{primaryMatch?.salaryTiers?.senior || primaryMatch?.salaryTiers?.tier3 || "₹35–50 LPA"}</div>
+                <div className="text-sm font-black text-sky-400 font-mono">{primaryMatch?.salaryTiers?.senior || primaryMatch?.salaryTiers?.tier3 || "₹35–50 LPA"}</div>
                 <div className="text-[9px] text-slate-500 font-mono uppercase">Expected Senior Salary</div>
               </div>
             </div>
@@ -510,7 +510,7 @@ function CareerDiscoveryJourneyPrintInner() {
             </div>
             <div className="bg-slate-950/70 p-2 rounded-xl border border-slate-800/80">
               <div className="text-[8px] font-mono font-bold text-slate-500 uppercase mb-0.5">LOCATION TIER</div>
-              <div className="text-[10px] font-bold text-emerald-400 truncate">{profile?.cityTier || "Metro / Tier 1"}</div>
+              <div className="text-[10px] font-bold text-sky-400 truncate">{profile?.cityTier || "Metro / Tier 1"}</div>
             </div>
             <div className="bg-slate-950/70 p-2 rounded-xl border border-slate-800/80">
               <div className="text-[8px] font-mono font-bold text-slate-500 uppercase mb-0.5">WORK-LIFE PREFERENCE</div>
@@ -524,12 +524,12 @@ function CareerDiscoveryJourneyPrintInner() {
         </div>
 
         {/* Action Item Box */}
-        <div className="bg-emerald-950/20 border border-emerald-900/50 rounded-2xl p-3.5 mb-4 flex items-center gap-3.5">
-          <div className="bg-emerald-900/50 p-2 rounded-xl text-emerald-400 shrink-0">
+        <div className="bg-sky-950/20 border border-sky-900/50 rounded-2xl p-3.5 mb-4 flex items-center gap-3.5">
+          <div className="bg-sky-900/50 p-2 rounded-xl text-sky-400 shrink-0">
             <ArrowRight className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase">DO THIS FIRST</div>
+            <div className="text-[9px] font-mono font-bold text-sky-500 tracking-widest uppercase">DO THIS FIRST</div>
             <h4 className="text-xs font-bold text-white">{careerMissions?.[0]?.title || "Shadow a Professional"}</h4>
             <p className="text-[11px] text-slate-400">{careerMissions?.[0]?.objective || "Spend 20 hours shadowing a working professional to understand the daily balance between theory and execution."}</p>
           </div>
@@ -538,15 +538,15 @@ function CareerDiscoveryJourneyPrintInner() {
         {/* 4 Bottom Columns Grid */}
         <div className="grid grid-cols-4 gap-3">
           <div className="border-t border-slate-800/80 pt-2.5">
-            <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-1">WHY</div>
+            <div className="text-[9px] font-mono font-bold text-sky-500 tracking-widest uppercase mb-1">WHY</div>
             <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.why || "A rare profile that fuses deep analysis with creative building."}</p>
           </div>
           <div className="border-t border-slate-800/80 pt-2.5">
-            <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-1">SO WHAT</div>
+            <div className="text-[9px] font-mono font-bold text-sky-500 tracking-widest uppercase mb-1">SO WHAT</div>
             <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.soWhat || "You fit roles that fuse logic with creation — engineering, data, design-adjacent tech."}</p>
           </div>
           <div className="border-t border-slate-800/80 pt-2.5">
-            <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-1">WHAT IT MEANS</div>
+            <div className="text-[9px] font-mono font-bold text-sky-500 tracking-widest uppercase mb-1">WHAT IT MEANS</div>
             <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.whatItMeans || "Your ceiling is high in technical craft; your risk is boredom in repetitive environments."}</p>
           </div>
           <div className="border-t border-slate-800/80 pt-2.5">
@@ -569,7 +569,7 @@ function CareerDiscoveryJourneyPrintInner() {
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden">
             <div className="flex justify-between items-center mb-1">
               <span className="text-xs font-bold text-white">Trait radar</span>
-              <span className="bg-emerald-950 text-emerald-400 border border-emerald-900 px-2 py-0.5 rounded text-[9px] font-mono font-bold">35-TRAIT MODEL</span>
+              <span className="bg-sky-950 text-sky-400 border border-sky-900 px-2 py-0.5 rounded text-[9px] font-mono font-bold">35-TRAIT MODEL</span>
             </div>
             
             {/* Hexagonal / Circular Radar Visual */}
@@ -583,19 +583,19 @@ function CareerDiscoveryJourneyPrintInner() {
                 {/* Score polygon */}
                 <polygon 
                   points="100,25 165,65 155,145 100,170 45,140 35,65" 
-                  fill="#10B981" 
+                  fill="#0EA5E9" 
                   fillOpacity={0.2} 
-                  stroke="#10B981" 
+                  stroke="#0EA5E9" 
                   strokeWidth={2} 
                 />
                 
                 {/* RIASEC Points */}
-                <circle cx={100} cy={25} r={4} fill="#10B981" />
-                <circle cx={165} cy={65} r={4} fill="#10B981" />
-                <circle cx={155} cy={145} r={4} fill="#10B981" />
-                <circle cx={100} cy={170} r={4} fill="#10B981" />
-                <circle cx={45} cy={140} r={4} fill="#10B981" />
-                <circle cx={35} cy={65} r={4} fill="#10B981" />
+                <circle cx={100} cy={25} r={4} fill="#0EA5E9" />
+                <circle cx={165} cy={65} r={4} fill="#0EA5E9" />
+                <circle cx={155} cy={145} r={4} fill="#0EA5E9" />
+                <circle cx={100} cy={170} r={4} fill="#0EA5E9" />
+                <circle cx={45} cy={140} r={4} fill="#0EA5E9" />
+                <circle cx={35} cy={65} r={4} fill="#0EA5E9" />
                 
                 <text x={100} y={15} textAnchor="middle" fill="#94A3B8" fontSize={9} fontWeight="bold" fontFamily="monospace">LOGICAL ({scores?.Logical || 95})</text>
                 <text x={175} y={65} textAnchor="start" fill="#94A3B8" fontSize={9} fontWeight="bold" fontFamily="monospace">NUMERICAL ({scores?.Numerical || 90})</text>
@@ -626,7 +626,7 @@ function CareerDiscoveryJourneyPrintInner() {
                 <div key={item.name} className="flex items-center gap-3 text-xs">
                   <span className="w-20 text-slate-300 font-semibold">{item.name}</span>
                   <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${item.score}%` }} />
+                    <div className="h-full bg-sky-500 rounded-full" style={{ width: `${item.score}%` }} />
                   </div>
                   <span className="w-6 text-right font-mono text-xs font-bold text-slate-300">{item.score}</span>
                 </div>
@@ -658,7 +658,7 @@ function CareerDiscoveryJourneyPrintInner() {
         {/* 3 Middle Style Cards */}
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
-             <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-1">COGNITIVE STYLE</div>
+             <div className="text-[9px] font-mono font-bold text-sky-500 tracking-widest uppercase mb-1">COGNITIVE STYLE</div>
              <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.cognitiveStyleTitle || "Analytical–Divergent"}</h4>
              <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.cognitiveStyle || "You break problems into parts, then recombine them unusually. Strong at both convergent and divergent thinking."}</p>
           </div>
@@ -679,17 +679,17 @@ function CareerDiscoveryJourneyPrintInner() {
           <div className="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-widest mb-1.5">MOTIVATION PROFILE — RANKED DRIVERS BEHIND YOUR VALUE SCORES</div>
           <div className="grid grid-cols-4 gap-4">
             <div>
-              <div className="h-1 bg-emerald-500 rounded-full mb-1" />
+              <div className="h-1 bg-sky-500 rounded-full mb-1" />
               <div className="text-xs font-bold text-white">Mastery</div>
               <div className="text-[10px] text-slate-400">Getting visibly better at a hard craft</div>
             </div>
             <div>
-              <div className="h-1 bg-emerald-500 rounded-full mb-1" />
+              <div className="h-1 bg-sky-500 rounded-full mb-1" />
               <div className="text-xs font-bold text-white">Autonomy</div>
               <div className="text-[10px] text-slate-400">Owning how the work gets done</div>
             </div>
             <div>
-              <div className="h-1 bg-emerald-500/60 rounded-full mb-1" />
+              <div className="h-1 bg-sky-500/60 rounded-full mb-1" />
               <div className="text-xs font-bold text-white">Creation</div>
               <div className="text-[10px] text-slate-400">Seeing a thing you made exist</div>
             </div>
@@ -712,10 +712,10 @@ function CareerDiscoveryJourneyPrintInner() {
         {/* Hidden Strengths & Hidden Risks Row */}
         <div className="grid grid-cols-2 gap-5 mb-4">
           {/* Hidden Strengths */}
-          <div className="bg-slate-900/90 border border-emerald-900/40 rounded-2xl p-4 space-y-3">
+          <div className="bg-slate-900/90 border border-sky-900/40 rounded-2xl p-4 space-y-3">
              <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
                <h3 className="text-xs font-bold text-white">Hidden strengths</h3>
-               <span className="bg-emerald-950 text-emerald-400 border border-emerald-900 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase">UNDER-USED</span>
+               <span className="bg-sky-950 text-sky-400 border border-sky-900 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase">UNDER-USED</span>
              </div>
              <div className="space-y-3">
                {(() => {
@@ -735,7 +735,7 @@ function CareerDiscoveryJourneyPrintInner() {
                  }
                  return items.map((item: any, i: number) => (
                    <div key={i} className="flex gap-2.5">
-                     <span className="text-emerald-500 font-mono font-bold text-xs">0{i+1}</span>
+                     <span className="text-sky-500 font-mono font-bold text-xs">0{i+1}</span>
                      <div>
                        <h4 className="text-xs font-bold text-white mb-0.5">{item.traitName || item.title || `Strength 0${i+1}`}</h4>
                        <p className="text-[11px] text-slate-300 leading-snug">{item.advantages || item.description || "Exceptional productivity and strategic impact."}</p>
@@ -785,7 +785,7 @@ function CareerDiscoveryJourneyPrintInner() {
         {/* 3 Short 1-2 Liner Sections (Communication, Collaboration, Ideal Environment) */}
         <div className="grid grid-cols-3 gap-4">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
-            <div className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-1">COMMUNICATION STYLE</div>
+            <div className="text-[9px] font-mono font-bold text-sky-500 tracking-widest uppercase mb-1">COMMUNICATION STYLE</div>
             <h4 className="text-xs font-bold text-white mb-1">{counselorAnalysis?.communicationStyleTitle || "Precise & written"}</h4>
             <p className="text-[11px] text-slate-300 leading-snug">{counselorAnalysis?.communicationStyle || "Clearest in writing and diagrams; less in improvised group talk. Async-first teams suit you best."}</p>
           </div>
@@ -813,7 +813,7 @@ function CareerDiscoveryJourneyPrintInner() {
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 mb-4 space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-xs font-bold text-white">Skill gaps to close — {primaryMatch?.title}</span>
-            <span className="bg-emerald-950 text-emerald-400 border border-emerald-900 px-2 py-0.5 rounded text-[9px] font-mono font-bold">ACTIONABLE</span>
+            <span className="bg-sky-950 text-sky-400 border border-sky-900 px-2 py-0.5 rounded text-[9px] font-mono font-bold">ACTIONABLE</span>
           </div>
           <p className="text-xs text-slate-300 leading-snug">
             {primaryMatch?.skillGapsDescription || "Based on your trait profile and contextual background, the primary gaps to focus on for entry into this field are: real-world domain exposure, advanced domain-specific tools, and relevant internships or certifications."}
@@ -859,9 +859,9 @@ function CareerDiscoveryJourneyPrintInner() {
                       
                       return (
                         <div key={i} className="flex flex-col items-center gap-0.5">
-                          <span className="font-bold text-emerald-400 text-[9px]">{rawScore}/10</span>
+                          <span className="font-bold text-sky-400 text-[9px]">{rawScore}/10</span>
                           <div className="w-full h-1 bg-slate-800 rounded overflow-hidden">
-                            <div className="h-full bg-emerald-500" style={{ width: `${rawScore * 10}%` }} />
+                            <div className="h-full bg-sky-500" style={{ width: `${rawScore * 10}%` }} />
                           </div>
                         </div>
                       );
@@ -881,7 +881,7 @@ function CareerDiscoveryJourneyPrintInner() {
             <div>
               <div className="flex justify-between items-center mb-1">
                 <h3 className="text-xs font-bold text-white">Risk vs. reward</h3>
-                <span className="bg-emerald-950 text-emerald-400 border border-emerald-900 px-1.5 py-0.5 rounded text-[8px] font-bold font-mono">SWEET SPOT</span>
+                <span className="bg-sky-950 text-sky-400 border border-sky-900 px-1.5 py-0.5 rounded text-[8px] font-bold font-mono">SWEET SPOT</span>
               </div>
               <p className="text-[9px] text-slate-500 font-mono mb-3">Success probability × upside</p>
 
@@ -915,8 +915,8 @@ function CareerDiscoveryJourneyPrintInner() {
                   left = Math.max(5, Math.min(85, left));
 
                   const colors = [
-                    "bg-emerald-500 shadow-[0_0_6px_#10B981]",
-                    "bg-emerald-400",
+                    "bg-sky-500 shadow-[0_0_6px_#0EA5E9]",
+                    "bg-sky-400",
                     "bg-amber-400",
                     "bg-purple-400"
                   ];
@@ -958,7 +958,7 @@ function CareerDiscoveryJourneyPrintInner() {
                   <span className="bg-amber-500/10 text-amber-500 border border-amber-500/30 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider">Aspirational Pivot</span>
                 )}
                 {rec.matchType === "Immediate Fit" && (
-                  <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider">Immediate Fit</span>
+                  <span className="bg-sky-500/10 text-sky-500 border border-sky-500/30 px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider">Immediate Fit</span>
                 )}
               </div>
             </div>
@@ -978,17 +978,17 @@ function CareerDiscoveryJourneyPrintInner() {
           )}
 
           {/* WHY THIS RANKS HERE (2 LINES LLM SUMMARY + TOP 3 CONTRIBUTING TRAITS) */}
-          <div className="bg-emerald-950/20 border border-emerald-900/50 rounded-2xl p-3.5 mb-3 space-y-2">
+          <div className="bg-sky-950/20 border border-sky-900/50 rounded-2xl p-3.5 mb-3 space-y-2">
             <div className="flex justify-between items-center">
-              <div className="text-[9px] font-mono font-bold text-emerald-400 tracking-widest uppercase">WHY THIS RANKS HERE</div>
-              <span className="text-[8px] font-mono font-bold text-emerald-500/80 uppercase">TOP 3 CONTRIBUTING TRAITS</span>
+              <div className="text-[9px] font-mono font-bold text-sky-400 tracking-widest uppercase">WHY THIS RANKS HERE</div>
+              <span className="text-[8px] font-mono font-bold text-sky-500/80 uppercase">TOP 3 CONTRIBUTING TRAITS</span>
             </div>
             <p className="text-slate-200 text-xs leading-relaxed">
               {rec.whyRecommended || `Your ${topTraitsString} profile maps cleanly onto this role. Four of your five strongest traits are the core pillars rewarded by ${rec.title}, matching both your cognitive aptitudes and real-world preferences.`}
             </p>
             
             {/* Top 3 Contributing Traits Grid */}
-            <div className="grid grid-cols-3 gap-2 border-t border-emerald-900/30 pt-2">
+            <div className="grid grid-cols-3 gap-2 border-t border-sky-900/30 pt-2">
               {(() => {
                 let traitsList: any[] = [];
                 if (Array.isArray(rec.topContributingTraits) && rec.topContributingTraits.length > 0) {
@@ -1015,7 +1015,7 @@ function CareerDiscoveryJourneyPrintInner() {
                   const traitDesc = typeof item === "object" ? (item.contribution || item.explanation || item.why || "Key driver for role success.") : "High-alignment trait powering success in this career family.";
                   return (
                     <div key={tIdx} className="bg-slate-950/80 border border-slate-800 p-2 rounded-xl">
-                      <div className="text-[10px] font-bold text-emerald-400 mb-0.5">{traitTitle}</div>
+                      <div className="text-[10px] font-bold text-sky-400 mb-0.5">{traitTitle}</div>
                       <p className="text-[9px] text-slate-300 leading-tight line-clamp-2">{traitDesc}</p>
                     </div>
                   );
@@ -1035,7 +1035,7 @@ function CareerDiscoveryJourneyPrintInner() {
                 </div>
                 
                 <div>
-                  <h4 className="text-[9px] font-mono font-bold text-emerald-500 tracking-widest uppercase mb-0.5">WHAT YOU&apos;LL LOVE</h4>
+                  <h4 className="text-[9px] font-mono font-bold text-sky-500 tracking-widest uppercase mb-0.5">WHAT YOU&apos;LL LOVE</h4>
                   <p className="text-[11px] text-slate-300 leading-relaxed line-clamp-3">{rec.whatYouWillLove || "Building things from scratch and solving complex puzzles."}</p>
                 </div>
                 
@@ -1087,11 +1087,11 @@ function CareerDiscoveryJourneyPrintInner() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-center">
                     <div className="text-[8px] font-mono font-bold text-slate-500 uppercase mb-0.5">EXPECTED ENTRY SALARY</div>
-                    <div className="text-[12px] font-bold font-mono text-emerald-400">{rec.salaryTiers?.entry || rec.salaryTiers?.tier1 || "₹8–12 LPA"}</div>
+                    <div className="text-[12px] font-bold font-mono text-sky-400">{rec.salaryTiers?.entry || rec.salaryTiers?.tier1 || "₹8–12 LPA"}</div>
                   </div>
                   <div className="border border-slate-800 bg-slate-950 p-2.5 rounded-xl text-center">
                     <div className="text-[8px] font-mono font-bold text-slate-500 uppercase mb-0.5">EXPECTED SENIOR SALARY</div>
-                    <div className="text-[12px] font-bold font-mono text-emerald-400">{rec.salaryTiers?.senior || rec.salaryTiers?.tier3 || "₹35–50 LPA"}</div>
+                    <div className="text-[12px] font-bold font-mono text-sky-400">{rec.salaryTiers?.senior || rec.salaryTiers?.tier3 || "₹35–50 LPA"}</div>
                   </div>
                 </div>
 
@@ -1124,7 +1124,7 @@ function CareerDiscoveryJourneyPrintInner() {
                     "Contribute to one open-source repo or internship"
                   ]).slice(0, 3).map((move, mIdx) => (
                     <div key={mIdx} className="flex gap-2.5 items-center bg-slate-950/60 p-2 rounded-xl border border-slate-800/60">
-                      <span className="text-emerald-500 font-mono font-black text-[11px] shrink-0">0{mIdx + 1}</span>
+                      <span className="text-sky-500 font-mono font-black text-[11px] shrink-0">0{mIdx + 1}</span>
                       <span className="text-[11px] text-slate-300 font-medium leading-snug">{move}</span>
                     </div>
                   ))}
@@ -1172,7 +1172,7 @@ function CareerDiscoveryJourneyPrintInner() {
           </div>
 
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-            <div className="prose prose-invert prose-emerald max-w-none text-slate-300 font-serif leading-relaxed text-xs space-y-3">
+            <div className="prose prose-invert prose-sky max-w-none text-slate-300 font-serif leading-relaxed text-xs space-y-3">
               {aiCoachNarrative ? (
                 aiCoachNarrative.split('\n\n').map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
@@ -1206,10 +1206,10 @@ function CareerDiscoveryJourneyPrintInner() {
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 mb-4">
            <h3 className="text-xs font-bold text-white mb-4">Timeline</h3>
            <div className="grid grid-cols-4 gap-4 relative">
-             <div className="absolute top-2 left-0 w-full h-px bg-gradient-to-r from-emerald-500 via-blue-500 to-indigo-500" />
+             <div className="absolute top-2 left-0 w-full h-px bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500" />
              
              <div className="pt-3 relative">
-               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 absolute top-[-4px] left-0 shadow-[0_0_8px_#10B981]" />
+               <div className="w-2.5 h-2.5 rounded-full bg-sky-500 absolute top-[-4px] left-0 shadow-[0_0_8px_#0EA5E9]" />
                <h4 className="text-white font-bold text-xs mb-1.5">1 month</h4>
                <ul className="text-[11px] text-slate-300 space-y-1">
                  {safeArray(careerRoadmap?.oneMonth).slice(0, 3).map((item: any, i: number) => <li key={i} className="leading-snug">{item}</li>)}
@@ -1260,11 +1260,11 @@ function CareerDiscoveryJourneyPrintInner() {
               difficulty: careerMissions?.[1]?.difficulty || "HARD"
             }
           ].map((mission, idx) => (
-            <div key={idx} className="bg-slate-900/90 border border-emerald-900/40 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+            <div key={idx} className="bg-slate-900/90 border border-sky-900/40 rounded-2xl p-5 flex flex-col justify-between space-y-4">
               <div>
                 <div className="flex justify-between items-start mb-2 gap-2">
                   <h3 className="text-sm font-bold text-white">{mission.title}</h3>
-                  <span className="bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded text-[9px] font-mono font-bold tracking-wider">+{mission.xpReward} XP</span>
+                  <span className="bg-sky-950 text-sky-400 px-2 py-0.5 rounded text-[9px] font-mono font-bold tracking-wider">+{mission.xpReward} XP</span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed">{mission.objective}</p>
               </div>
@@ -1296,7 +1296,7 @@ function CareerDiscoveryJourneyPrintInner() {
                 "Don't push him toward rigid, traditional roles for security's sake — it works against his grain."
               ]).map((help, i) => (
                 <li key={i} className="flex gap-2.5 text-xs text-slate-300 leading-relaxed">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-sky-500 flex-shrink-0 mt-0.5" />
                   <span>{help}</span>
                 </li>
               ))}
@@ -1323,7 +1323,7 @@ function CareerDiscoveryJourneyPrintInner() {
           
           <div className="grid grid-cols-3 gap-4 font-mono text-xs">
             <div>
-              <div className="text-2xl font-bold text-emerald-500 mb-1">01</div>
+              <div className="text-2xl font-bold text-sky-500 mb-1">01</div>
               <p className="text-slate-300 leading-snug font-sans text-[11px]">Which recommended career surprised you most, and why?</p>
             </div>
             <div>
@@ -1341,7 +1341,7 @@ function CareerDiscoveryJourneyPrintInner() {
       {/* ==================== PAGE 15: CLOSING PAGE ==================== */}
       <PageContainer pageNumber={15} title="YOUR NEXT STEP">
         <div className="flex-1 flex flex-col justify-center items-center text-center max-w-lg mx-auto space-y-6 py-8">
-          <div className="text-xs font-mono font-bold text-emerald-500 tracking-[0.3em] uppercase">ASSESSMENT COMPLETE</div>
+          <div className="text-xs font-mono font-bold text-sky-500 tracking-[0.3em] uppercase">ASSESSMENT COMPLETE</div>
 
           <h1 className="text-5xl font-black text-white font-serif">Now, act on it.</h1>
 
@@ -1349,14 +1349,14 @@ function CareerDiscoveryJourneyPrintInner() {
             This report is your foundation — a data-backed starting point. Use it to have real conversations with mentors, parents, and counsellors. The careers listed are directions, not destinations. Your effort and choices will shape everything.
           </p>
 
-          <div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-5 font-mono text-xs space-y-3 text-left border-t-2 border-t-emerald-500 mt-2">
+          <div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-5 font-mono text-xs space-y-3 text-left border-t-2 border-t-sky-500 mt-2">
             <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
               <span className="text-slate-500">Prepared for</span>
               <span className="text-white font-bold">{profile?.fullName || "Student"}</span>
             </div>
             <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
               <span className="text-slate-500">Top recommended career</span>
-              <span className="text-emerald-400 font-bold">{primaryMatch?.title}</span>
+              <span className="text-sky-400 font-bold">{primaryMatch?.title}</span>
             </div>
             <div className="flex justify-between items-center border-b border-slate-800/80 pb-2">
               <span className="text-slate-500">Traits assessed</span>
@@ -1416,7 +1416,7 @@ export default function CareerDiscoveryJourneyPrint() {
   return (
     <Suspense fallback={
       <div className="flex h-screen items-center justify-center bg-[#0B1120] text-white">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-sky-500 border-t-transparent mx-auto" />
       </div>
     }>
       <CareerDiscoveryJourneyPrintInner />

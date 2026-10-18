@@ -17,22 +17,22 @@ const PROMPTS: ConversationPrompt[] = [
     id: "ai-fear",
     topic: "AI Threat & Job Security",
     parentQuestion: "“Will AI replace software developers before my child even finishes college?”",
-    reportAnswer: "AI-Resilience Score 75/100. Routine syntax is automated, but high-level system architecture, security compliance, and business domain logic protect this career path from pure AI automation.",
-    metricBadge: "Report Page 08 • AI Resilience Index",
+    reportAnswer: "AI-Resilience Score 75/100 • High-level system architecture and security protect this path from automation.",
+    metricBadge: "Page 08 • AI Resilience Index",
   },
   {
     id: "stream-conflict",
     topic: "Govt Job vs. Tech Builder",
     parentQuestion: "“Should we force our child to prepare for stable government exams instead of private tech?”",
-    reportAnswer: "Candidate exhibits 85% Work Autonomy and Divergent Analytical Reasoning. Strict bureaucratic hierarchies cause friction; dynamic product engineering provides both higher earnings and fulfillment.",
-    metricBadge: "Report Page 03 • Work Values Radar",
+    reportAnswer: "85% Autonomy Trait • Bureaucracy causes friction; product engineering yields higher pay & fulfillment.",
+    metricBadge: "Page 03 • Work Values Radar",
   },
   {
     id: "salary-reality",
     topic: "Realistic Salary Expectations",
     parentQuestion: "“Are the ₹50 LPA college placement headlines real, or should we expect something grounded?”",
-    reportAnswer: "Calibrated Indian labor market data: ₹12–25 LPA for top product entry-level roles, progressing systematically to ₹40–80 LPA at Staff Architect level over 7+ years.",
-    metricBadge: "Report Page 07 • Salary Trajectory",
+    reportAnswer: "Verified Indian Market: ₹12–25 LPA starting pay, rising to ₹40–80 LPA at Staff level (7+ yrs).",
+    metricBadge: "Page 07 • Salary Trajectory",
   },
 ];
 
@@ -43,17 +43,17 @@ export default function DinnerTableTranslator() {
   return (
     <div className="w-full max-w-full min-w-0 rounded-2xl bg-white dark:bg-[#07131e] border border-slate-200 dark:border-white/10 shadow-lg overflow-hidden text-left">
       {/* Tab Selector */}
-      <div className="flex w-full max-w-full min-w-0 border-b border-slate-200 dark:border-white/10 overflow-x-auto no-scrollbar bg-slate-50 dark:bg-black/40 p-1.5 gap-1 text-xs">
+      <div className="flex w-full max-w-full min-w-0 border-b border-slate-200 dark:border-white/10 overflow-x-auto no-scrollbar bg-slate-100/70 dark:bg-black/40 p-2 gap-1.5 text-xs sm:text-sm">
         {PROMPTS.map((prompt) => {
           const isSelected = activeId === prompt.id;
           return (
             <button
               key={prompt.id}
               onClick={() => setActiveId(prompt.id)}
-              className={`px-3 py-1.5 rounded-lg font-mono text-xs font-semibold shrink-0 whitespace-nowrap transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shrink-0 whitespace-nowrap transition-all ${
                 isSelected
-                  ? "bg-white dark:bg-emerald-500 text-slate-900 dark:text-slate-950 shadow-xs font-bold"
-                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  ? "bg-white dark:bg-sky-500 text-slate-950 dark:text-slate-950 shadow-sm font-bold ring-1 ring-slate-200/80 dark:ring-transparent"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
               }`}
             >
               {prompt.topic}
@@ -70,36 +70,36 @@ export default function DinnerTableTranslator() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.2 }}
-          className="p-4 sm:p-6 space-y-4 w-full min-w-0"
+          className="p-5 sm:p-7 space-y-4 w-full min-w-0"
         >
           {/* Parent Anxiety / Question */}
-          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs sm:text-sm w-full min-w-0">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block mb-1">
+          <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/25 w-full min-w-0">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 block mb-1.5">
               💬 Typical Dinner-Table Question:
             </span>
-            <p className="font-serif italic text-slate-800 dark:text-slate-200 break-words">
+            <p className="font-serif italic text-base sm:text-lg text-slate-900 dark:text-slate-100 break-words leading-snug">
               {activePrompt.parentQuestion}
             </p>
           </div>
 
           {/* Arrow divider */}
-          <div className="flex items-center justify-center text-slate-400 dark:text-slate-500 text-xs font-mono gap-1.5 text-center">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-            <span className="break-words">Answered with Objective Dossier Data ↓</span>
+          <div className="flex items-center justify-center text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium gap-2 text-center py-0.5">
+            <Sparkles className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+            <span className="break-words font-semibold">Answered with Objective Dossier Evidence ↓</span>
           </div>
 
           {/* Dossier Data Answer */}
-          <div className="p-3.5 sm:p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs sm:text-sm space-y-2 w-full min-w-0">
+          <div className="p-4 sm:p-5 rounded-2xl bg-sky-500/10 border border-sky-500/30 space-y-2.5 w-full min-w-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 w-full min-w-0">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 shrink-0">
-                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                <span>WhatAfter Grounded Evidence:</span>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-800 dark:text-sky-400 flex items-center gap-1.5 shrink-0">
+                <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+                <span>WhatAfter Report Evidence:</span>
               </span>
-              <span className="text-[10px] font-mono font-semibold text-slate-500 dark:text-slate-400 truncate">
+              <span className="text-xs font-mono font-semibold text-slate-600 dark:text-slate-400">
                 {activePrompt.metricBadge}
               </span>
             </div>
-            <p className="text-slate-700 dark:text-slate-200 leading-relaxed font-medium break-words">
+            <p className="text-sm sm:text-base text-slate-800 dark:text-slate-100 leading-relaxed font-medium break-words">
               {activePrompt.reportAnswer}
             </p>
           </div>

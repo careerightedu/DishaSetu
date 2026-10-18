@@ -24,7 +24,7 @@ const PHASES: TimelinePhase[] = [
     id: "now",
     time: "NOW",
     phaseLabel: "Baseline Assessment",
-    dotColor: "bg-emerald-500",
+    dotColor: "bg-sky-500",
     points: [
       "Completed 80 scenarios across 35 traits.",
       "Mapped Core Aptitudes vs Work Values (Wealth, Social Impact, Autonomy).",
@@ -35,7 +35,7 @@ const PHASES: TimelinePhase[] = [
     id: "1-month",
     time: "1 month",
     phaseLabel: "Exploration & Foundation",
-    dotColor: "bg-emerald-400",
+    dotColor: "bg-sky-400",
     points: [
       "Research the intersection of Engineering and Visual Arts (e.g., Generative Art, Product Design, Creative Coding).",
       "Identify 5 industry leaders who have transitioned from B.Tech to Creative/Design roles.",
@@ -113,10 +113,10 @@ export default function AnimatedCareerPathTimeline() {
       {/* ========================================================= */}
       <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10 text-xs font-mono">
         <div className="flex items-center gap-2.5">
-          <span className="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-black text-[11px] tracking-wider">
+          <span className="px-2 py-0.5 rounded bg-sky-500 text-slate-950 font-black text-[11px] tracking-wider">
             13
           </span>
-          <span className="font-bold tracking-widest uppercase text-emerald-700 dark:text-emerald-400">
+          <span className="font-bold tracking-widest uppercase text-sky-700 dark:text-sky-400">
             EXECUTION PLAN
           </span>
         </div>
@@ -139,7 +139,7 @@ export default function AnimatedCareerPathTimeline() {
 
       {/* Internal Connecting Conduit: Header -> Timeline */}
       <div className="my-6 flex flex-col items-center">
-        <div className="w-0.5 h-10 bg-gradient-to-b from-emerald-500 via-blue-500 to-indigo-500" />
+        <div className="w-0.5 h-10 bg-gradient-to-b from-sky-500 via-blue-500 to-indigo-500" />
       </div>
 
       {/* ========================================================= */}
@@ -154,8 +154,8 @@ export default function AnimatedCareerPathTimeline() {
             </span>
           </h4>
 
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-mono font-bold">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-700 dark:text-sky-300 text-xs font-mono font-bold">
+            <span className="w-2 h-2 rounded-full bg-sky-500 animate-ping" />
             <span>Phase: {PHASES[activeStep].time}</span>
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function AnimatedCareerPathTimeline() {
           {/* Animated Glowing Progress Line */}
           <motion.div 
             style={{ height: lineHeight }}
-            className="absolute left-[18px] sm:left-[118px] md:left-[148px] top-4 w-1 bg-gradient-to-b from-emerald-500 via-blue-500 via-indigo-500 to-purple-500 -translate-x-1/2 rounded-full shadow-[0_0_14px_rgba(16,185,129,0.8)] z-10"
+            className="absolute left-[18px] sm:left-[118px] md:left-[148px] top-4 w-1 bg-gradient-to-b from-sky-500 via-blue-500 via-indigo-500 to-purple-500 -translate-x-1/2 rounded-full shadow-[0_0_14px_rgba(14,165,233,0.8)] z-10"
           />
 
           {/* Floating Moving Beacon "You are here →" */}
@@ -179,7 +179,7 @@ export default function AnimatedCareerPathTimeline() {
             }}
             className="absolute left-[18px] sm:left-[118px] md:left-[148px] -translate-x-full pr-3.5 -translate-y-1/2 z-30 pointer-events-none transition-transform"
           >
-            <div className="flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 text-white dark:text-slate-950 font-mono text-[10px] sm:text-xs font-black shadow-[0_0_20px_rgba(5,150,105,0.4)] dark:shadow-[0_0_20px_rgba(52,211,153,0.9)] border border-emerald-500 dark:border-emerald-200">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-sky-600 dark:bg-sky-400 text-white dark:text-slate-950 font-mono text-[10px] sm:text-xs font-black shadow-[0_0_20px_rgba(5,150,105,0.4)] dark:shadow-[0_0_20px_rgba(52,211,153,0.9)] border border-sky-500 dark:border-sky-200">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white dark:bg-slate-950 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white dark:bg-slate-950" />
@@ -206,7 +206,7 @@ export default function AnimatedCareerPathTimeline() {
                   <div className="hidden sm:flex flex-col items-end w-20 md:w-28 shrink-0 pt-0.5 text-right">
                     <span className={`font-mono text-sm sm:text-base font-black transition-colors ${
                       isCurrent 
-                        ? "text-emerald-600 dark:text-emerald-400" 
+                        ? "text-sky-600 dark:text-sky-400" 
                         : isPassed 
                         ? "text-slate-800 dark:text-slate-300" 
                         : "text-slate-400 dark:text-slate-500"
@@ -221,14 +221,14 @@ export default function AnimatedCareerPathTimeline() {
                   {/* Node Circle on Track */}
                   <div className="relative flex items-center justify-center shrink-0 mt-0.5">
                     {isCurrent && (
-                      <div className="absolute w-8 h-8 rounded-full bg-emerald-500/25 dark:bg-emerald-500/30 animate-ping" />
+                      <div className="absolute w-8 h-8 rounded-full bg-sky-500/25 dark:bg-sky-500/30 animate-ping" />
                     )}
 
                     <div className={`relative w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
                       isCurrent
-                        ? "bg-emerald-500 dark:bg-emerald-400 border-white text-white dark:text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.5)] scale-110"
+                        ? "bg-sky-500 dark:bg-sky-400 border-white text-white dark:text-slate-950 shadow-[0_0_15px_rgba(14,165,233,0.5)] scale-110"
                         : isPassed
-                        ? "bg-emerald-50 dark:bg-emerald-950 border-emerald-500 text-emerald-700 dark:text-emerald-400"
+                        ? "bg-sky-50 dark:bg-sky-950 border-sky-500 text-sky-700 dark:text-sky-400"
                         : "bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-400"
                     }`}>
                       <span className="w-2.5 h-2.5 rounded-full bg-current" />
@@ -238,14 +238,14 @@ export default function AnimatedCareerPathTimeline() {
                   {/* Right Content Card for Phase */}
                   <div className={`flex-1 rounded-xl p-4 sm:p-5 border transition-all duration-300 ${
                     isCurrent 
-                      ? "bg-white dark:bg-white/10 border-emerald-500/60 shadow-md ring-1 ring-emerald-500/30" 
+                      ? "bg-white dark:bg-white/10 border-sky-500/60 shadow-md ring-1 ring-sky-500/30" 
                       : isPassed
                       ? "bg-white/80 dark:bg-white/[0.04] border-slate-200 dark:border-white/10"
                       : "bg-white/50 dark:bg-white/[0.02] border-slate-200/60 dark:border-white/5 opacity-60"
                   }`}>
                     {/* Mobile Timestamp Label */}
                     <div className="sm:hidden flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                      <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
                         {phase.time}
                       </span>
                       <span className="text-[10px] font-mono text-slate-400">
@@ -261,7 +261,7 @@ export default function AnimatedCareerPathTimeline() {
                     <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
                       {phase.points.map((pt, pIdx) => (
                         <li key={pIdx} className="flex items-start gap-2">
-                          <span className="text-emerald-500 shrink-0 mt-0.5">•</span>
+                          <span className="text-sky-500 shrink-0 mt-0.5">•</span>
                           <span className="leading-relaxed">{pt}</span>
                         </li>
                       ))}
@@ -279,10 +279,10 @@ export default function AnimatedCareerPathTimeline() {
       {/* Sleek bottom milestone assurance */}
       <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 font-mono">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+          <span className="w-2 h-2 rounded-full bg-sky-500" />
           <span>Every phase closes a specific hiring gap in order of highest leverage.</span>
         </div>
-        <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
+        <span className="text-sky-600 dark:text-sky-400 font-bold shrink-0">
           Target Outcome: Offer Placement
         </span>
       </div>

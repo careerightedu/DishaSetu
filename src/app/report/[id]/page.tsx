@@ -193,8 +193,8 @@ export default function ArchivedReportDashboard() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
             points={points}
-            fill="rgba(16, 185, 129, 0.25)"
-            stroke="#10b981"
+            fill="rgba(14, 165, 233, 0.25)"
+            stroke="#0ea5e9"
             strokeWidth="2.5"
             style={{ transformOrigin: "150px 150px" }}
           />
@@ -228,7 +228,7 @@ export default function ArchivedReportDashboard() {
         
         {/* Header Section */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-sky-500/10 text-sky-500 border border-sky-500/20">
             <CheckCircle2 className="h-3.5 w-3.5" /> Archived Report
           </span>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-foreground">
@@ -271,7 +271,7 @@ export default function ArchivedReportDashboard() {
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-6 space-y-4 rounded-3xl bg-card border border-border/50">
                   <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Match #{index + 1}</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded-full border border-emerald-500/20">{rec.fitScore}% Fit</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-sky-500/10 text-sky-500 px-2 py-0.5 rounded-full border border-sky-500/20">{rec.fitScore}% Fit</span>
                   </div>
                   <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/20 mt-4">
                     <Briefcase className="h-7 w-7 text-primary" />
@@ -292,7 +292,7 @@ export default function ArchivedReportDashboard() {
         {/* Footer Actions */}
         <div className="transition-all duration-1000 transform max-w-md w-full">
           <Card className="border-border/40 bg-gradient-to-br from-card/90 via-card/70 to-card/50 backdrop-blur-xl shadow-2xl p-8 relative overflow-hidden text-center space-y-6">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-primary to-emerald-400" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sky-500 via-primary to-sky-400" />
             <Button 
               onClick={handleDownloadPDF} 
               size="lg"

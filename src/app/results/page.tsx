@@ -394,8 +394,8 @@ export default function ResultsDashboard() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
             points={points}
-            fill="rgba(16, 185, 129, 0.25)"
-            stroke="#10b981"
+            fill="rgba(14, 165, 233, 0.25)"
+            stroke="#0ea5e9"
             strokeWidth="2.5"
             style={{ transformOrigin: "150px 150px" }}
           />
@@ -430,7 +430,7 @@ export default function ResultsDashboard() {
         <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center overflow-hidden">
           {/* Confetti placeholders - in a real app you'd use react-confetti */}
           <div className="absolute top-10 left-1/4 w-3 h-3 bg-primary rotate-45 animate-ping" />
-          <div className="absolute top-20 right-1/4 w-3 h-3 bg-emerald-500 rotate-12 animate-ping" style={{ animationDelay: '0.2s' }} />
+          <div className="absolute top-20 right-1/4 w-3 h-3 bg-sky-500 rotate-12 animate-ping" style={{ animationDelay: '0.2s' }} />
           <div className="absolute top-1/3 left-1/3 w-3 h-3 bg-amber-500 rotate-90 animate-ping" style={{ animationDelay: '0.4s' }} />
           <div className="absolute top-1/4 right-1/3 w-3 h-3 bg-rose-500 rotate-45 animate-ping" style={{ animationDelay: '0.1s' }} />
         </div>
@@ -440,11 +440,11 @@ export default function ResultsDashboard() {
         
         {/* Header Section */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
             <CheckCircle2 className="h-3.5 w-3.5" /> Assessment Complete
           </span>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-            Your Future is <span className="text-emerald-600 dark:text-emerald-400">Unlocking</span>
+            Your Future is <span className="text-sky-600 dark:text-sky-400">Unlocking</span>
           </h1>
           <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
             We've analyzed your psychometric profile. Click on the locked cards below to reveal your top 3 scientifically-backed career recommendations!
@@ -456,13 +456,13 @@ export default function ResultsDashboard() {
 
         {/* Dynamic Archetype Banner (Identity Gamification) */}
         {archetype && (
-          <div className="w-full max-w-3xl border border-emerald-500/30 bg-emerald-50/60 dark:bg-emerald-950/20 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 shadow-xl shadow-emerald-500/5 relative overflow-hidden">
-            <div className="absolute -right-10 -top-10 h-40 w-40 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="h-24 w-24 shrink-0 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 border border-emerald-400/30 rotate-3 transition-transform hover:rotate-6">
+          <div className="w-full max-w-3xl border border-sky-500/30 bg-sky-50/60 dark:bg-sky-950/20 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 shadow-xl shadow-sky-500/5 relative overflow-hidden">
+            <div className="absolute -right-10 -top-10 h-40 w-40 bg-sky-500/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="h-24 w-24 shrink-0 rounded-2xl bg-gradient-to-br from-sky-500 to-teal-600 flex items-center justify-center shadow-lg shadow-sky-500/20 border border-sky-400/30 rotate-3 transition-transform hover:rotate-6">
               <Sparkles className="h-10 w-10 text-white" />
             </div>
             <div className="flex-1 text-center sm:text-left space-y-2 z-10">
-              <div className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Your Core Archetype</div>
+              <div className="text-xs font-black uppercase tracking-widest text-sky-600 dark:text-sky-400">Your Core Archetype</div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">{archetype.title}</h2>
               <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{archetype.description}</p>
             </div>
@@ -482,9 +482,9 @@ export default function ResultsDashboard() {
                 className={cn(
                   "relative h-[280px] w-full rounded-3xl border-2 transition-all duration-700 preserve-3d cursor-pointer flex flex-col items-center justify-center p-6 text-center shadow-xl group",
                   isRevealed 
-                    ? "bg-white dark:bg-slate-900 border-emerald-500/30 shadow-emerald-500/10 rotate-y-180" 
+                    ? "bg-white dark:bg-slate-900 border-sky-500/30 shadow-sky-500/10 rotate-y-180" 
                     : isNextToReveal 
-                      ? "bg-emerald-50/70 dark:bg-slate-900 border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.2)] animate-pulse hover:scale-105" 
+                      ? "bg-sky-50/70 dark:bg-slate-900 border-sky-500 shadow-[0_0_30px_rgba(14,165,233,0.2)] animate-pulse hover:scale-105" 
                       : "bg-slate-100/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 opacity-70 cursor-not-allowed"
                 )}
               >
@@ -492,10 +492,10 @@ export default function ResultsDashboard() {
                 <div className={cn("absolute inset-0 flex flex-col items-center justify-center backface-hidden", isRevealed ? "hidden" : "flex")}>
                   {isNextToReveal ? (
                     <>
-                      <div className="h-16 w-16 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <Unlock className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+                      <div className="h-16 w-16 rounded-full bg-sky-100 dark:bg-sky-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <Unlock className="h-8 w-8 text-sky-600 dark:text-sky-400" />
                       </div>
-                      <h3 className="font-black text-lg text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Tap to Reveal</h3>
+                      <h3 className="font-black text-lg text-sky-600 dark:text-sky-400 uppercase tracking-widest">Tap to Reveal</h3>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 font-bold uppercase">Match #{index + 1}</p>
                     </>
                   ) : (
@@ -511,14 +511,14 @@ export default function ResultsDashboard() {
                 <div className={cn("absolute inset-0 flex flex-col items-center justify-center p-6 space-y-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800", isRevealed ? "flex rotate-y-180" : "hidden")}>
                   <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Match #{index + 1}</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20">{rec.fitScore}% Fit</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-sky-500/10 text-sky-600 dark:text-sky-400 px-2 py-0.5 rounded-full border border-sky-500/20">{rec.fitScore}% Fit</span>
                   </div>
-                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 flex items-center justify-center border border-emerald-500/20 mt-4">
-                    <Briefcase className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
+                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-sky-500/20 to-sky-500/5 flex items-center justify-center border border-sky-500/20 mt-4">
+                    <Briefcase className="h-7 w-7 text-sky-600 dark:text-sky-400" />
                   </div>
                   <div className="space-y-1 w-full">
                     <h3 className="font-black text-lg text-slate-900 dark:text-white leading-tight">{rec.title}</h3>
-                    <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">{rec.sector}</p>
+                    <p className="text-xs text-sky-600 dark:text-sky-400 font-bold">{rec.sector}</p>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed w-full">
                     {rec.whyRecommended}
@@ -532,7 +532,7 @@ export default function ResultsDashboard() {
         {/* Download PDF CTA - Only shows when all 3 are revealed */}
         <div className={cn("transition-all duration-1000 transform max-w-md w-full", revealedCount === 3 ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none")}>
           <Card className="border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl p-8 relative overflow-hidden text-center space-y-6">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sky-500 via-teal-500 to-sky-400" />
             
             <div className="text-center space-y-4">
               <h3 className="font-black text-xl text-slate-900 dark:text-white">Get Your Full 15-Page Report</h3>
@@ -544,7 +544,7 @@ export default function ResultsDashboard() {
             <Button 
               onClick={handleDownloadPDF} 
               size="lg"
-              className="w-full font-black text-sm uppercase tracking-wider shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2.5 h-12 bg-emerald-500 hover:bg-emerald-600 text-white transition-all hover:scale-105"
+              className="w-full font-black text-sm uppercase tracking-wider shadow-xl shadow-sky-500/20 flex items-center justify-center gap-2.5 h-12 bg-sky-500 hover:bg-sky-600 text-white transition-all hover:scale-105"
             >
               <Download className="h-5 w-5" /> Download Full PDF Report
             </Button>

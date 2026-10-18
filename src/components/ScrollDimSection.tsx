@@ -95,18 +95,11 @@ export default function ScrollDimSection({
     <Component
       id={id}
       ref={containerRef}
-      style={
-        isDesktop
-          ? {
-              filter,
-              opacity,
-              willChange: "filter, opacity",
-            }
-          : {
-              opacity: mobileOpacity,
-              willChange: "opacity",
-            }
-      }
+      style={{
+        filter,
+        opacity,
+        willChange: "filter, opacity",
+      }}
       className={`transition-colors duration-200 ${className}`}
     >
       {children}

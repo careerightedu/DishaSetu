@@ -49,7 +49,7 @@ const MILESTONES: Record<number, { emoji: string; msg: string }> = {
 };
 
 const DIMENSION_COLORS: Record<string, string> = {
-  "Interest": "from-emerald-50/90 via-white to-emerald-50/40 border-emerald-200/90 dark:from-emerald-950/40 dark:to-slate-900/40 dark:border-emerald-800/40",
+  "Interest": "from-sky-50/90 via-white to-sky-50/40 border-sky-200/90 dark:from-sky-950/40 dark:to-slate-900/40 dark:border-sky-800/40",
   "Work Preference": "from-indigo-50/90 via-white to-indigo-50/40 border-indigo-200/90 dark:from-indigo-950/40 dark:to-slate-900/40 dark:border-indigo-800/40",
   "Academic": "from-sky-50/90 via-white to-sky-50/40 border-sky-200/90 dark:from-sky-950/40 dark:to-slate-900/40 dark:border-sky-800/40",
   "Personality": "from-purple-50/90 via-white to-purple-50/40 border-purple-200/90 dark:from-purple-900/40 dark:to-purple-950/20 dark:border-purple-800/40",
@@ -465,8 +465,8 @@ export default function AssessmentSession() {
         <Navbar />
         <div className="flex-grow flex flex-col items-center justify-center gap-5">
           <div className="relative">
-            <div className="h-16 w-16 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 animate-spin" />
-            <Zap className="h-6 w-6 text-emerald-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="h-16 w-16 rounded-full border-4 border-sky-500/20 border-t-sky-500 animate-spin" />
+            <Zap className="h-6 w-6 text-sky-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
           </div>
           <p className="text-sm font-semibold text-muted-foreground animate-pulse">{t("initializing")}</p>
         </div>
@@ -506,7 +506,7 @@ export default function AssessmentSession() {
   return (
     <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden select-none text-slate-900 dark:text-foreground", getBgClass())}>
       {/* Background Ambient Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#0ea5e90a_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e90a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       {/* Particle Effect Layer */}
       <AnimatePresence>
         {particles.map(p => (
@@ -540,7 +540,7 @@ export default function AssessmentSession() {
               <div className="w-full relative h-2 bg-slate-800 rounded-full mb-8">
                 {/* Active Track */}
                 <motion.div 
-                  className="absolute top-0 left-0 h-full bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"
+                  className="absolute top-0 left-0 h-full bg-sky-500 rounded-full shadow-[0_0_15px_rgba(14,165,233,0.5)]"
                   initial={{ width: `${Math.max(0, currentIdx - 20) / questions.length * 100}%` }}
                   animate={{ width: `${(currentIdx / questions.length) * 100}%` }}
                   transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
@@ -548,7 +548,7 @@ export default function AssessmentSession() {
                 
                 {/* Ship Icon */}
                 <motion.div 
-                  className="absolute top-1/2 -translate-y-1/2 text-4xl sm:text-5xl drop-shadow-[0_0_15px_rgba(16,185,129,0.8)] z-10"
+                  className="absolute top-1/2 -translate-y-1/2 text-4xl sm:text-5xl drop-shadow-[0_0_15px_rgba(14,165,233,0.8)] z-10"
                   initial={{ left: `calc(${Math.max(0, currentIdx - 20) / questions.length * 100}% - 24px)` }}
                   animate={{ left: `calc(${(currentIdx / questions.length) * 100}% - 24px)` }}
                   transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
@@ -562,7 +562,7 @@ export default function AssessmentSession() {
                     key={node} 
                     className={cn(
                       "absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-slate-950 transition-colors duration-500 z-0",
-                      currentIdx >= node ? "bg-emerald-400" : "bg-slate-700"
+                      currentIdx >= node ? "bg-sky-400" : "bg-slate-700"
                     )}
                     style={{ left: `calc(${(node / 80) * 100}% - 8px)` }}
                   />
@@ -573,7 +573,7 @@ export default function AssessmentSession() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.8 }}
-                className="text-emerald-400 font-mono font-bold tracking-widest mt-8"
+                className="text-sky-400 font-mono font-bold tracking-widest mt-8"
               >
                 {currentIdx} / {questions.length} Checkpoint Reached
               </motion.p>
@@ -622,7 +622,7 @@ export default function AssessmentSession() {
       <AnimatePresence>
         {milestone && (
           <div className="fixed bottom-28 left-1/2 -translate-x-1/2 z-50 milestone-toast pointer-events-none">
-            <div className="bg-slate-900 border border-emerald-500/40 rounded-2xl px-6 py-3 flex items-center gap-3 shadow-2xl shadow-emerald-500/10 backdrop-blur-xl">
+            <div className="bg-slate-900 border border-sky-500/40 rounded-2xl px-6 py-3 flex items-center gap-3 shadow-2xl shadow-sky-500/10 backdrop-blur-xl">
               <span className="text-2xl">{milestone.emoji}</span>
               <span className="text-sm font-bold text-white">{milestone.msg}</span>
             </div>
@@ -665,10 +665,10 @@ export default function AssessmentSession() {
             transition={{ type: "spring", damping: 14, stiffness: 120 }}
             className="fixed top-6 sm:top-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
           >
-            <div className="flex items-center gap-3 bg-slate-900/80 backdrop-blur-md border border-emerald-500/30 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+            <div className="flex items-center gap-3 bg-slate-900/80 backdrop-blur-md border border-sky-500/30 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(14,165,233,0.2)]">
               <span className="text-2xl sm:text-3xl">⚡</span>
               <div className="flex flex-col">
-                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-teal-500">
                   Halfway There!
                 </h2>
                 <p className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-widest">
@@ -723,14 +723,14 @@ export default function AssessmentSession() {
               <span className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1 text-xs font-mono font-bold text-slate-800 dark:text-slate-300 shadow-sm">
                 Q {currentIdx + 1}<span className="text-slate-400 dark:text-slate-500">/{questions.length}</span>
               </span>
-              <span className="hidden sm:inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">
+              <span className="hidden sm:inline-flex items-center gap-1 bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/20 text-sky-700 dark:text-sky-400 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">
                 {activeQuestion.dimension}
               </span>
             </div>
 
             <div className="flex items-center gap-2 relative">
               {showXpPop && (
-                <span key={xpPopKey} className="xp-pop absolute -top-2 left-1/2 -translate-x-1/2 text-xs font-black text-emerald-400 whitespace-nowrap z-10">
+                <span key={xpPopKey} className="xp-pop absolute -top-2 left-1/2 -translate-x-1/2 text-xs font-black text-sky-400 whitespace-nowrap z-10">
                   +10 XP
                 </span>
               )}
@@ -740,9 +740,9 @@ export default function AssessmentSession() {
                   <span className="text-xs font-black text-orange-600 dark:text-orange-400">{streak}</span>
                 </div>
               )}
-              <div className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-full px-2.5 py-1 shadow-sm">
-                <Zap className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-xs font-black text-emerald-700 dark:text-emerald-400">{xp} XP</span>
+              <div className="flex items-center gap-1 bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/20 rounded-full px-2.5 py-1 shadow-sm">
+                <Zap className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400" />
+                <span className="text-xs font-black text-sky-700 dark:text-sky-400">{xp} XP</span>
               </div>
             </div>
           </div>
@@ -750,7 +750,7 @@ export default function AssessmentSession() {
           {/* Progress Bar */}
           <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-300 dark:border-slate-700/50 shadow-inner">
             <motion.div
-              className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full relative overflow-hidden"
+              className="h-full bg-gradient-to-r from-sky-600 to-sky-400 rounded-full relative overflow-hidden"
               initial={{ width: 0 }}
               animate={{ width: `${progressPercent}%` }}
               transition={{ duration: 0.4, ease: "easeOut" }}
@@ -761,7 +761,7 @@ export default function AssessmentSession() {
 
           {/* Dimension mobile */}
           <div className="flex sm:hidden">
-            <span className="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-sm">
+            <span className="inline-flex items-center gap-1 bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/20 text-sky-700 dark:text-sky-400 text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full shadow-sm">
               {activeQuestion.dimension}
             </span>
           </div>
@@ -804,7 +804,7 @@ export default function AssessmentSession() {
                             animate={isSelected ? { scale: [1, 1.025, 0.995, 1] } : { scale: 1 }}
                             transition={{ duration: 0.35 }}
                             onClick={(e) => {
-                              spawnParticles(e, '#34d399');
+                              spawnParticles(e, '#38bdf8');
                               if (isOtherOption) {
                                 handleAnswerChange(activeQuestion.id, currentAnsStr.startsWith("Other:") ? currentAnsStr : "E");
                               } else {
@@ -814,8 +814,8 @@ export default function AssessmentSession() {
                             className={cn(
                               "group rounded-xl border cursor-pointer transition-all duration-200 select-none relative overflow-hidden shadow-sm",
                               isSelected
-                                ? "border-emerald-500 bg-emerald-50/90 dark:bg-emerald-950/50 dark:border-emerald-500/60 shadow-md shadow-emerald-500/10 glow-pulse"
-                                : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-emerald-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/40"
+                                ? "border-sky-500 bg-sky-50/90 dark:bg-sky-950/50 dark:border-sky-500/60 shadow-md shadow-sky-500/10 glow-pulse"
+                                : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-sky-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/40"
                             )}
                           >
                             {isSelected && (
@@ -823,15 +823,15 @@ export default function AssessmentSession() {
                                 initial={{ scaleY: 0 }}
                                 animate={{ scaleY: 1 }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute left-0 top-0 w-1 h-full bg-emerald-500 origin-top rounded-r"
+                                className="absolute left-0 top-0 w-1 h-full bg-sky-500 origin-top rounded-r"
                               />
                             )}
                             <div className="flex items-start gap-3 p-4">
                               <span className={cn(
                                 "h-8 w-8 rounded-lg font-bold text-xs flex items-center justify-center border shrink-0 transition-all duration-200",
                                 isSelected
-                                  ? "bg-emerald-500 border-emerald-500 text-white dark:text-slate-950 shadow-sm"
-                                  : "border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 group-hover:border-emerald-500/40 group-hover:text-emerald-700 dark:group-hover:text-slate-200"
+                                  ? "bg-sky-500 border-sky-500 text-white dark:text-slate-950 shadow-sm"
+                                  : "border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 group-hover:border-sky-500/40 group-hover:text-sky-700 dark:group-hover:text-slate-200"
                               )}>
                                 {value}
                               </span>
@@ -843,7 +843,7 @@ export default function AssessmentSession() {
                                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                                   className="shrink-0 mt-0.5"
                                 >
-                                  <Check className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                                  <Check className="h-5 w-5 text-sky-600 dark:text-sky-400" />
                                 </motion.div>
                               )}
                             </div>
@@ -857,7 +857,7 @@ export default function AssessmentSession() {
                                     const val = e.target.value;
                                     setAnswers((prev) => ({ ...prev, [activeQuestion.id]: val ? `Other: ${val}` : "E" }));
                                   }}
-                                  className="w-full px-3.5 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-emerald-500/40 text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 select-text shadow-sm"
+                                  className="w-full px-3.5 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-sky-500/40 text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500/30 select-text shadow-sm"
                                   autoFocus
                                 />
                               </div>
@@ -909,10 +909,10 @@ export default function AssessmentSession() {
                           transition={{ type: "spring", stiffness: 300, damping: 20 }}
                           className={cn(
                             "absolute z-10 w-full max-w-[280px] aspect-[3/4] rounded-3xl shadow-2xl flex flex-col items-center justify-center p-6 text-center cursor-grab touch-none border-2 transition-colors duration-300",
-                            isSelectedA ? "bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-500/50" : isSelectedB ? "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-500/50" : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-md"
+                            isSelectedA ? "bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-500/50" : isSelectedB ? "bg-sky-50 dark:bg-sky-950/40 border-sky-300 dark:border-sky-500/50" : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-md"
                           )}
                         >
-                          <div className="text-emerald-500 dark:text-emerald-400 mb-2 opacity-50">
+                          <div className="text-sky-500 dark:text-sky-400 mb-2 opacity-50">
                             <Zap className="h-6 w-6" />
                           </div>
                           <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center justify-center gap-2 w-full">
@@ -930,9 +930,9 @@ export default function AssessmentSession() {
                           
                           <div className="w-12 h-px bg-slate-200 dark:bg-slate-700 my-2 opacity-50 mx-auto" />
                           
-                          <div className={cn("w-full flex items-start gap-3 rounded-xl p-2 transition-colors", isSelectedB ? "bg-emerald-500/10 dark:bg-emerald-500/20" : "")}>
+                          <div className={cn("w-full flex items-start gap-3 rounded-xl p-2 transition-colors", isSelectedB ? "bg-sky-500/10 dark:bg-sky-500/20" : "")}>
                             <p className={cn("flex-1 text-[13px] font-medium leading-snug text-right", isSelectedB ? "text-slate-900 dark:text-white" : "text-slate-700 dark:text-slate-300")}>
-                              <span className="text-emerald-600 dark:text-emerald-400 font-bold block mb-0.5">{optB.value}:</span> {optB.text}
+                              <span className="text-sky-600 dark:text-sky-400 font-bold block mb-0.5">{optB.value}:</span> {optB.text}
                             </p>
                             <span className="text-xl opacity-60 shrink-0 mt-1">👉</span>
                           </div>
@@ -956,15 +956,15 @@ export default function AssessmentSession() {
                                 key={i}
                                 type="button"
                                 onClick={(e) => {
-                                  spawnParticles(e, '#34d399');
+                                  spawnParticles(e, '#38bdf8');
                                   handleAnswerChange(activeQuestion.id, numVal);
                                 }}
                                 whileTap={{ scale: 0.88 }}
                                 className={cn(
                                   "flex-1 flex flex-col items-center gap-1.5 rounded-xl border py-3 px-1 transition-all duration-200 min-h-[72px] cursor-pointer shadow-sm",
                                   isSelected
-                                    ? "border-emerald-500 bg-emerald-50/90 dark:bg-emerald-950/60 dark:border-emerald-500/60 shadow-md shadow-emerald-500/10 glow-pulse"
-                                    : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-emerald-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/50"
+                                    ? "border-sky-500 bg-sky-50/90 dark:bg-sky-950/60 dark:border-sky-500/60 shadow-md shadow-sky-500/10 glow-pulse"
+                                    : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-sky-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/50"
                                 )}
                               >
                                 <motion.span
@@ -974,7 +974,7 @@ export default function AssessmentSession() {
                                 >
                                   {emojis[i]}
                                 </motion.span>
-                                <span className={cn("text-[10px] font-bold", isSelected ? "text-emerald-700 dark:text-emerald-400" : "text-slate-500 dark:text-slate-400")}>
+                                <span className={cn("text-[10px] font-bold", isSelected ? "text-sky-700 dark:text-sky-400" : "text-slate-500 dark:text-slate-400")}>
                                   {numVal}
                                 </span>
                               </motion.button>
@@ -994,7 +994,7 @@ export default function AssessmentSession() {
                     <div className="space-y-3">
                       <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 font-semibold">
                         <span>Select all that apply</span>
-                        <span className="text-emerald-600 dark:text-emerald-400 font-bold">{((answers[activeQuestion.id] as string[]) || []).length} selected</span>
+                        <span className="text-sky-600 dark:text-sky-400 font-bold">{((answers[activeQuestion.id] as string[]) || []).length} selected</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {activeQuestion.options.map((opt, i) => {
@@ -1008,18 +1008,18 @@ export default function AssessmentSession() {
                               className={cn(
                                 "group rounded-xl border cursor-pointer flex items-center gap-3 p-3.5 transition-all duration-200 select-none relative overflow-hidden shadow-sm",
                                 isSelected
-                                  ? "border-emerald-500 bg-emerald-50/90 dark:bg-emerald-950/50 dark:border-emerald-500/60 shadow-md glow-pulse"
-                                  : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-emerald-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/50"
+                                  ? "border-sky-500 bg-sky-50/90 dark:bg-sky-950/50 dark:border-sky-500/60 shadow-md glow-pulse"
+                                  : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-sky-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/50"
                               )}
                             >
                               {isSelected && (
                                 <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 0.15 }}
-                                  className="absolute left-0 top-0 w-1 h-full bg-emerald-500 origin-top" />
+                                  className="absolute left-0 top-0 w-1 h-full bg-sky-500 origin-top" />
                               )}
                               <Checkbox
                                 checked={isSelected}
                                 onCheckedChange={() => handleCheckboxToggle(opt)}
-                                className="border-slate-300 dark:border-slate-600 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500 shrink-0"
+                                className="border-slate-300 dark:border-slate-600 data-[state=checked]:bg-sky-500 data-[state=checked]:border-sky-500 shrink-0"
                               />
                               <span className={cn("text-sm font-semibold leading-tight", isSelected ? "text-slate-950 dark:text-white" : "text-slate-700 dark:text-slate-300")}>{opt}</span>
                             </motion.div>
@@ -1056,13 +1056,13 @@ export default function AssessmentSession() {
                               className={cn(
                                 "group rounded-xl border cursor-pointer flex items-start gap-3.5 p-4 transition-all duration-200 select-none shadow-sm",
                                 isRanked 
-                                  ? "border-emerald-500 bg-emerald-50/90 dark:bg-emerald-950/50 dark:border-emerald-500/60 shadow-md" 
-                                  : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-emerald-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/50"
+                                  ? "border-sky-500 bg-sky-50/90 dark:bg-sky-950/50 dark:border-sky-500/60 shadow-md" 
+                                  : "border-slate-200 dark:border-slate-700/60 bg-white/90 dark:bg-slate-900/40 hover:border-sky-500/40 hover:bg-slate-50 dark:hover:border-slate-600 dark:hover:bg-slate-800/50"
                               )}
                             >
                               <span className={cn(
                                 "h-8 w-8 rounded-lg font-bold text-xs flex items-center justify-center border shrink-0 transition-all duration-200",
-                                isRanked ? "bg-emerald-500 border-emerald-500 text-white dark:text-slate-950 shadow-sm" : "border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 group-hover:border-emerald-500/40"
+                                isRanked ? "bg-sky-500 border-sky-500 text-white dark:text-slate-950 shadow-sm" : "border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 group-hover:border-sky-500/40"
                               )}>
                                 <AnimatePresence mode="wait">
                                   <motion.span key={isRanked ? rankIndex : "plus"}
@@ -1076,7 +1076,7 @@ export default function AssessmentSession() {
                                 {value ? <span className="font-bold text-slate-400 dark:text-slate-500 mr-1.5">{value})</span> : null}
                                 {text}
                               </div>
-                              {isRanked && <Star className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />}
+                              {isRanked && <Star className="h-4 w-4 text-sky-500 dark:text-sky-400 shrink-0 mt-0.5" />}
                             </motion.div>
                           );
                         })}
@@ -1095,14 +1095,14 @@ export default function AssessmentSession() {
                         placeholder="Write your response here..."
                         value={(answers[activeQuestion.id] as string) || ""}
                         onChange={(e) => handleAnswerChange(activeQuestion.id, e.target.value)}
-                        className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 focus-visible:ring-emerald-500/50 text-sm leading-relaxed p-4 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 resize-none rounded-xl select-text shadow-inner"
+                        className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 focus-visible:ring-sky-500/50 text-sm leading-relaxed p-4 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 resize-none rounded-xl select-text shadow-inner"
                       />
                       <div className="flex justify-between items-center text-xs font-semibold px-1">
-                        <span className={answered ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500 dark:text-slate-400"}>
+                        <span className={answered ? "text-sky-600 dark:text-sky-400" : "text-slate-500 dark:text-slate-400"}>
                           {((answers[activeQuestion.id] as string) || "").trim().split(/\s+/).filter(Boolean).length} / 15 words
                         </span>
                         {answered && (
-                          <motion.span initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-bold">
+                          <motion.span initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-sky-600 dark:text-sky-400 flex items-center gap-1 font-bold">
                             <Check className="h-3.5 w-3.5" /> Good to go!
                           </motion.span>
                         )}
@@ -1148,7 +1148,7 @@ export default function AssessmentSession() {
                 "flex-1 h-12 font-bold text-sm shadow-lg transition-all duration-300",
                 showShake ? "bg-red-900/60 text-red-400 border border-red-500/50" : "",
                 !showShake && answered
-                  ? "bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-emerald-500/30 btn-pulse-active"
+                  ? "bg-sky-500 hover:bg-sky-400 text-slate-950 shadow-sky-500/30 btn-pulse-active"
                   : (!showShake && !answered) ? "bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border border-slate-300 dark:border-slate-700" : ""
               )}
             >

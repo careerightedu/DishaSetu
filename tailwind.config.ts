@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 const config: Config = {
   darkMode: ["class"],
@@ -11,6 +12,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        emerald: colors.sky,
+        teal: colors.cyan,
         background: "var(--background)",
         foreground: "var(--foreground)",
         card: {

@@ -186,7 +186,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
   return (
     <div 
       ref={containerRef}
-      className="w-full rounded-3xl bg-white dark:bg-[#07131e] text-slate-900 dark:text-white border-2 border-emerald-500/30 dark:border-emerald-500/20 shadow-2xl overflow-hidden transition-all text-left"
+      className="w-full rounded-3xl bg-white dark:bg-[#07131e] text-slate-900 dark:text-white border-2 border-sky-500/30 dark:border-sky-500/20 shadow-2xl overflow-hidden transition-all text-left"
     >
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 sm:px-8 py-5 bg-slate-50 dark:bg-black/40 border-b border-slate-200 dark:border-white/10 text-xs">
@@ -271,7 +271,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                 onClick={() => setActiveTab("roadmap")}
                 className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
                   activeTab === "roadmap"
-                    ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-md"
+                    ? "bg-slate-900 text-white dark:bg-sky-500 dark:text-slate-950 shadow-md"
                     : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
@@ -304,7 +304,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                     </>
                   ) : (
                     <>
-                      <Play className="w-3.5 h-3.5 text-emerald-500" />
+                      <Play className="w-3.5 h-3.5 text-sky-500" />
                       <span>Auto-Play</span>
                     </>
                   )}
@@ -331,7 +331,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
               <div className="absolute left-4 sm:left-8 top-8 bottom-8 w-1 bg-slate-200 dark:bg-white/10 rounded-full" />
               
               <motion.div
-                className="absolute left-4 sm:left-8 top-8 w-1 bg-gradient-to-b from-emerald-500 via-teal-400 to-cyan-400 rounded-full origin-top shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+                className="absolute left-4 sm:left-8 top-8 w-1 bg-gradient-to-b from-sky-500 via-teal-400 to-cyan-400 rounded-full origin-top shadow-[0_0_12px_rgba(14,165,233,0.5)]"
                 style={{
                   height: `${((activeIndex + 0.5) / MILESTONES.length) * 100}%`,
                 }}
@@ -353,9 +353,9 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                       }}
                       className={`relative cursor-pointer transition-all duration-300 rounded-2xl sm:rounded-3xl p-5 sm:p-8 border-2 ${
                         isCurrent
-                          ? "bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-500 shadow-xl shadow-emerald-500/10 scale-[1.01]"
+                          ? "bg-sky-50/70 dark:bg-sky-950/20 border-sky-500 shadow-xl shadow-sky-500/10 scale-[1.01]"
                           : isPassed
-                          ? "bg-white dark:bg-[#07131e] border-slate-200 dark:border-white/10 hover:border-emerald-500/30"
+                          ? "bg-white dark:bg-[#07131e] border-slate-200 dark:border-white/10 hover:border-sky-500/30"
                           : "bg-slate-50/60 dark:bg-white/[0.02] border-slate-200/60 dark:border-white/5 opacity-70 hover:opacity-100"
                       }`}
                     >
@@ -364,10 +364,10 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                         <motion.div
                           animate={{
                             scale: isCurrent ? 1.35 : 1,
-                            backgroundColor: isPassed ? "#10b981" : "#475569",
+                            backgroundColor: isPassed ? "#0ea5e9" : "#475569",
                           }}
                           transition={{ duration: 0.25 }}
-                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-3 sm:border-4 border-white dark:border-[#07131e] shadow-lg shadow-emerald-500/20 text-white"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-3 sm:border-4 border-white dark:border-[#07131e] shadow-lg shadow-sky-500/20 text-white"
                         >
                           {isPassed ? (
                             <CheckCircle2 className="w-4 h-4 stroke-[3]" />
@@ -378,21 +378,21 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
 
                         {/* Pulsing Ripple if Currently Active */}
                         {isCurrent && (
-                          <span className="absolute -inset-2 rounded-full bg-emerald-500/40 animate-ping pointer-events-none" />
+                          <span className="absolute -inset-2 rounded-full bg-sky-500/40 animate-ping pointer-events-none" />
                         )}
                       </div>
 
                       {/* Top Meta Header */}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3">
                         <div className="flex items-center gap-2.5">
-                          <span className="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-mono font-bold uppercase tracking-wider">
+                          <span className="px-3 py-1 rounded-full bg-sky-500/15 border border-sky-500/30 text-sky-700 dark:text-sky-400 text-xs font-mono font-bold uppercase tracking-wider">
                             {milestone.stage} • {milestone.timeframe}
                           </span>
                           {isCurrent && (
                             <motion.span
                               initial={{ opacity: 0, x: -6 }}
                               animate={{ opacity: 1, x: 0 }}
-                              className="px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 text-[10px] font-black uppercase font-mono tracking-wider shadow-sm"
+                              className="px-2.5 py-0.5 rounded-full bg-sky-500 text-slate-950 text-[10px] font-black uppercase font-mono tracking-wider shadow-sm"
                             >
                               YOU ARE HERE →
                             </motion.span>
@@ -430,7 +430,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                         {milestone.skillsGained.map((skill) => (
                           <span
                             key={skill}
-                            className="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-mono font-medium"
+                            className="px-2.5 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-700 dark:text-sky-300 text-xs font-mono font-medium"
                           >
                             ✓ {skill}
                           </span>
@@ -476,7 +476,7 @@ export default function ReportPage11InteractiveRoadmap({ onZoomPdf }: Props) {
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                        <span className="text-[11px] font-mono text-sky-600 dark:text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
                           {elim.savedYears}
                         </span>
                         <span className="text-[11px] font-mono font-bold text-red-600 dark:text-red-400 bg-red-500/10 px-2.5 py-0.5 rounded-full border border-red-500/20">

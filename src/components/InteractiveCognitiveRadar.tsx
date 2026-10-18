@@ -133,15 +133,15 @@ export default function InteractiveCognitiveRadar() {
   }).join(" ");
 
   return (
-    <div className="w-full rounded-2xl bg-white dark:bg-[#07131e] text-slate-900 dark:text-white border border-slate-200 dark:border-emerald-500/40 shadow-xl dark:shadow-2xl p-4 sm:p-7 relative overflow-hidden transition-colors">
+    <div className="w-full rounded-2xl bg-white dark:bg-[#07131e] text-slate-900 dark:text-white border border-slate-200 dark:border-sky-500/40 shadow-xl dark:shadow-2xl p-4 sm:p-7 relative overflow-hidden transition-colors">
       {/* Ambient glow backdrop */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-sky-500/5 dark:bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-teal-500/5 dark:bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-slate-200 dark:border-white/10 relative z-10">
         <div>
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-500/15 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-mono font-bold uppercase tracking-wider mb-1.5">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-sky-50 dark:bg-sky-500/15 border border-sky-200 dark:border-sky-500/30 text-sky-700 dark:text-sky-400 text-xs font-mono font-bold uppercase tracking-wider mb-1.5">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Interactive Sample Fingerprint</span>
           </div>
@@ -155,8 +155,8 @@ export default function InteractiveCognitiveRadar() {
 
         {/* Trait count indicator */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shrink-0 self-start sm:self-auto">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping" />
-          <span className="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300">
+          <span className="w-2 h-2 rounded-full bg-sky-500 dark:bg-sky-400 animate-ping" />
+          <span className="text-xs font-mono font-bold text-sky-700 dark:text-sky-300">
             35 Traits Synthesized
           </span>
         </div>
@@ -176,11 +176,11 @@ export default function InteractiveCognitiveRadar() {
               className="w-full h-full select-none overflow-visible"
             >
               <defs>
-                {/* Luminous emerald fill gradient */}
+                {/* Luminous sky blue fill gradient */}
                 <radialGradient id="radarFillGrad" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.45" />
-                  <stop offset="70%" stopColor="#10b981" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="#059669" stopOpacity="0.1" />
+                  <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.45" />
+                  <stop offset="70%" stopColor="#0ea5e9" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.1" />
                 </radialGradient>
 
                 {/* Glow filter for active point */}
@@ -222,7 +222,7 @@ export default function InteractiveCognitiveRadar() {
                     y2={outer.y}
                     stroke="currentColor"
                     strokeWidth={isActive ? "2" : "1"}
-                    className={isActive ? "text-emerald-500" : "text-slate-300 dark:text-white/15"}
+                    className={isActive ? "text-sky-500" : "text-slate-300 dark:text-white/15"}
                   />
                 );
               })}
@@ -231,7 +231,7 @@ export default function InteractiveCognitiveRadar() {
               <polygon
                 points={polygonPoints}
                 fill="url(#radarFillGrad)"
-                stroke="#10b981"
+                stroke="#0ea5e9"
                 strokeWidth="3"
                 strokeLinejoin="round"
                 className="transition-all duration-300"
@@ -255,7 +255,7 @@ export default function InteractiveCognitiveRadar() {
                         cx={coords.x}
                         cy={coords.y}
                         r="16"
-                        fill="#10b981"
+                        fill="#0ea5e9"
                         fillOpacity="0.25"
                         className="animate-ping"
                       />
@@ -274,7 +274,7 @@ export default function InteractiveCognitiveRadar() {
                       cx={coords.x}
                       cy={coords.y}
                       r={isActive ? "9" : "6"}
-                      fill={isActive ? "#10b981" : "#059669"}
+                      fill={isActive ? "#0ea5e9" : "#0284c7"}
                       stroke="#ffffff"
                       strokeWidth={isActive ? "2.5" : "1.5"}
                       filter={isActive ? "url(#pointGlow)" : "none"}
@@ -297,7 +297,7 @@ export default function InteractiveCognitiveRadar() {
 
             {/* Central classification token */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 font-bold block">
                 COGNITIVE
               </span>
               <span className="text-xs font-serif font-bold text-slate-900 dark:text-white block">
@@ -315,7 +315,7 @@ export default function InteractiveCognitiveRadar() {
                 onMouseEnter={() => setActiveIndex(i)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all flex items-center gap-1.5 ${
                   activeIndex === i
-                    ? "bg-emerald-500 text-white dark:text-slate-950 font-bold shadow-md shadow-emerald-500/20 scale-105"
+                    ? "bg-sky-500 text-white dark:text-slate-950 font-bold shadow-md shadow-sky-500/20 scale-105"
                     : "bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5"
                 }`}
               >
@@ -342,15 +342,15 @@ export default function InteractiveCognitiveRadar() {
               {/* Top Bar with Icon & Score */}
               <div className="flex items-center justify-between gap-3 mb-4 pb-4 border-b border-slate-200 dark:border-white/10">
                 <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 border border-emerald-300 dark:border-emerald-500/40 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm">
+                  <div className="w-11 h-11 rounded-xl bg-sky-100 dark:bg-sky-500/20 border border-sky-300 dark:border-sky-500/40 text-sky-700 dark:text-sky-400 flex items-center justify-center shrink-0 shadow-sm">
                     <activeTrait.icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-bold block">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-sky-700 dark:text-sky-400 font-bold block">
                       {activeTrait.category} • {activeTrait.percentile}
                     </span>
                     <h4 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 dark:text-white">
-                      {activeTrait.name} — <span className="text-emerald-600 dark:text-emerald-400 font-mono">{activeTrait.score}</span>
+                      {activeTrait.name} — <span className="text-sky-600 dark:text-sky-400 font-mono">{activeTrait.score}</span>
                     </h4>
                   </div>
                 </div>
@@ -359,15 +359,15 @@ export default function InteractiveCognitiveRadar() {
                   <span className="text-[10px] font-mono uppercase text-slate-500 dark:text-slate-400 block">
                     Diagnostic Score
                   </span>
-                  <span className="text-lg font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                  <span className="text-lg font-mono font-bold text-sky-600 dark:text-sky-400">
                     {activeTrait.score}/100
                   </span>
                 </div>
               </div>
 
               {/* The Core Insight Highlight */}
-              <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 mb-5">
-                <span className="text-[10px] font-mono uppercase font-bold text-emerald-700 dark:text-emerald-300 block mb-1">
+              <div className="p-4 rounded-xl bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/30 mb-5">
+                <span className="text-[10px] font-mono uppercase font-bold text-sky-700 dark:text-sky-300 block mb-1">
                   Psychological Reality
                 </span>
                 <p className="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug">
@@ -387,8 +387,8 @@ export default function InteractiveCognitiveRadar() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-200 dark:border-white/5">
-                  <span className="text-[11px] font-mono uppercase text-emerald-700 dark:text-emerald-400 font-bold block mb-1 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> High-Affinity Environment:
+                  <span className="text-[11px] font-mono uppercase text-sky-700 dark:text-sky-400 font-bold block mb-1 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" /> High-Affinity Environment:
                   </span>
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
                     {activeTrait.workImplication}
@@ -408,7 +408,7 @@ export default function InteractiveCognitiveRadar() {
               {/* Bottom Assurance Note */}
               <div className="mt-5 pt-3.5 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                 <span>Objective scenario measurement</span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Zero generic personality boxes</span>
+                <span className="text-sky-600 dark:text-sky-400 font-semibold">Zero generic personality boxes</span>
               </div>
             </motion.div>
           </AnimatePresence>

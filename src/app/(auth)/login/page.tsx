@@ -45,12 +45,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[100dvh] flex-col justify-between p-4 sm:p-6 lg:p-8 relative overflow-hidden bg-slate-50 dark:bg-background text-slate-900 dark:text-foreground selection:bg-emerald-500/30 selection:text-emerald-900 dark:selection:text-emerald-200">
+    <div className="flex min-h-[100dvh] flex-col justify-between p-4 sm:p-6 lg:p-8 relative overflow-hidden bg-slate-50 dark:bg-background text-slate-900 dark:text-foreground selection:bg-sky-500/30 selection:text-sky-900 dark:selection:text-sky-200">
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         {/* Animated Grid */}
         <div 
-          className="absolute inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:3rem_3rem]"
+          className="absolute inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#0ea5e90a_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e90a_1px,transparent_1px)] bg-[size:3rem_3rem]"
           style={{
             transform: `perspective(1000px) rotateX(60deg) translateY(-50px) translateZ(-200px)`,
             transformOrigin: "top center",
@@ -59,7 +59,7 @@ export default function LoginPage() {
         
         {/* Glow Orbs */}
         <motion.div 
-          className="absolute top-[10%] left-[10%] w-[40%] h-[40%] rounded-full bg-emerald-500/10 dark:bg-emerald-600/20 blur-[120px]"
+          className="absolute top-[10%] left-[10%] w-[40%] h-[40%] rounded-full bg-sky-500/10 dark:bg-sky-600/20 blur-[120px]"
           animate={{
             x: mousePosition.x * 30,
             y: mousePosition.y * 30,
@@ -98,9 +98,9 @@ export default function LoginPage() {
         {/* Left Column: Big Brand Logo & Name */}
         <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left space-y-5 lg:pr-6">
           <Link href="/" className="inline-flex items-center gap-3 sm:gap-4 group">
-            <div className="flex h-14 w-14 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-emerald-500 shadow-xl shadow-emerald-500/25 p-2.5 sm:p-3 transition-transform group-hover:scale-105 shrink-0">
+            <div className="flex h-14 w-14 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-sky-500/30 shadow-lg shadow-sky-500/10 p-2.5 sm:p-3 transition-transform group-hover:scale-105 shrink-0">
               <Image 
-                src="/what_after_logo_white.png" 
+                src="/what_after_logo_blue.png" 
                 alt="WhatAfter Logo" 
                 width={64} 
                 height={64} 
@@ -109,7 +109,7 @@ export default function LoginPage() {
               />
             </div>
             <span className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-950 dark:text-white whitespace-nowrap">
-              What<span className="text-emerald-600 dark:text-emerald-400 font-extrabold">After</span>
+              What<span className="text-sky-600 dark:text-sky-400 font-extrabold">After</span>
             </span>
           </Link>
 
@@ -120,15 +120,15 @@ export default function LoginPage() {
           {/* Value Proof Badges */}
           <div className="hidden sm:flex flex-col gap-2.5 text-xs text-slate-700 dark:text-slate-300 pt-1">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
               <span className="font-medium">35-Trait Cognitive Aptitudes &amp; Work Values</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
               <span className="font-medium">Real Salary Trajectories &amp; AI-Resilience Scores</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
               <span className="font-medium">Available in English &amp; Hindi (हिंदी)</span>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function LoginPage() {
 
           {/* Card Form */}
           <Card className="border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-slate-900/60 backdrop-blur-xl shadow-xl dark:shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-sky-500/5 via-transparent to-blue-500/5 pointer-events-none" />
             <CardHeader className="p-6 sm:p-8 pb-4 space-y-1 text-center relative z-10">
               <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Log In</CardTitle>
               <CardDescription className="text-slate-500 dark:text-slate-400">Continue with your Google account</CardDescription>
@@ -162,7 +162,7 @@ export default function LoginPage() {
               <Button
                 variant="outline"
                 type="button"
-                className="group relative w-full font-semibold transition-all duration-300 border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-emerald-500/10 hover:border-emerald-500/40 text-slate-800 dark:text-white overflow-hidden shadow-sm hover:shadow-md dark:shadow-[0_0_20px_rgba(255,255,255,0.02)] dark:hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] hover:-translate-y-0.5 h-12 text-base"
+                className="group relative w-full font-semibold transition-all duration-300 border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-sky-500/10 hover:border-sky-500/40 text-slate-800 dark:text-white overflow-hidden shadow-sm hover:shadow-md dark:shadow-[0_0_20px_rgba(255,255,255,0.02)] dark:hover:shadow-[0_0_40px_rgba(14,165,233,0.3)] hover:-translate-y-0.5 h-12 text-base"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
               >
@@ -193,7 +193,7 @@ export default function LoginPage() {
             <CardFooter className="justify-center border-t border-slate-100 dark:border-white/5 p-6 sm:p-8 pt-4 pb-6 sm:pb-8 relative z-10 bg-slate-50/70 dark:bg-black/10">
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 Don&apos;t have an account?{" "}
-                <Link href="/signup" className="font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline">
+                <Link href="/signup" className="font-semibold text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 hover:underline">
                   Sign up
                 </Link>
               </p>

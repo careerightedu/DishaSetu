@@ -46,8 +46,8 @@ const CAREER_LADDER: CareerLevel[] = [
     years: "0–2 Years",
     salary: "₹12–25 LPA",
     progress: 25,
-    scope: "Writing modular code, agile sprint shipping, debugging services & API integration.",
-    keySkills: ["Full-Stack Dev", "Git Workflows", "REST APIs", "Unit Testing"],
+    scope: "Build new features, fix bugs, and connect web applications.",
+    keySkills: ["Web Development", "Git & APIs", "Problem Solving"],
   },
   {
     id: "senior_dev",
@@ -56,8 +56,8 @@ const CAREER_LADDER: CareerLevel[] = [
     years: "3–5 Years",
     salary: "₹25–40 LPA",
     progress: 50,
-    scope: "Owning core backend modules, microservices, database tuning & CI/CD automation.",
-    keySkills: ["Distributed Systems", "PostgreSQL Tuning", "Cloud Infra (AWS/GCP)", "Code Audits"],
+    scope: "Lead core feature development, optimize databases, and launch reliable services.",
+    keySkills: ["Backend Systems", "Databases", "Cloud Setup"],
   },
   {
     id: "tech_lead",
@@ -66,8 +66,8 @@ const CAREER_LADDER: CareerLevel[] = [
     years: "5–8 Years",
     salary: "₹35–55 LPA",
     progress: 75,
-    scope: "Sprint architecture, team mentorship, high-availability SLAs & product alignment.",
-    keySkills: ["System Architecture", "Team Mentorship", "Resilience Design", "Cross-Squad Sync"],
+    scope: "Guide the engineering team, design system architecture, and plan sprints.",
+    keySkills: ["System Design", "Team Mentorship", "Sprint Planning"],
   },
   {
     id: "architect",
@@ -76,8 +76,8 @@ const CAREER_LADDER: CareerLevel[] = [
     years: "8+ Years",
     salary: "₹40–80 LPA",
     progress: 100,
-    scope: "Multi-region distributed systems, enterprise technical roadmap & security standards.",
-    keySkills: ["Enterprise Scalability", "Disaster Recovery", "Tech Strategy", "CapEx/OpEx Trade-offs"],
+    scope: "Set long-term tech strategy, cloud scale, and company security standards.",
+    keySkills: ["Large Scale Systems", "Tech Strategy", "Security"],
   },
 ];
 
@@ -120,16 +120,16 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-3.5 bg-slate-50 dark:bg-black/40 border-b border-slate-200 dark:border-white/10 text-xs">
         <div>
           <span className="text-[10px] font-mono uppercase tracking-wider text-teal-600 dark:text-teal-400 font-bold block mb-0.5">
-            Sample Dossier • Report Page 07
+            Sample Report • Page 07
           </span>
           <h4 className="text-sm sm:text-base font-serif font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap">
-            <span>Software &amp; Application Development</span>
-            <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">
-              Rank #2 • 94% Match
+            <span>Software &amp; Technology Careers</span>
+            <span className="text-[11px] font-mono font-bold text-sky-600 dark:text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/30">
+              Rank #1 • 94% Match
             </span>
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-500/10 border border-teal-500/25 text-[10px] font-mono text-teal-600 dark:text-teal-400 font-bold">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-500/10 border border-teal-500/25 text-[11px] font-mono text-teal-600 dark:text-teal-400 font-semibold">
               <span className={`w-1.5 h-1.5 rounded-full bg-teal-500 ${isHovered ? "" : "animate-ping"}`} />
-              <span>{isHovered ? "Paused" : "Live Ladder Projection"}</span>
+              <span>{isHovered ? "Paused" : "Auto-Preview"}</span>
             </span>
           </h4>
         </div>
@@ -200,36 +200,36 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
           <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-3 overflow-x-auto no-scrollbar">
             <button
               onClick={() => setActiveTab("salary")}
-              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+              className={`shrink-0 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === "salary"
-                  ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-sm"
+                  ? "bg-slate-900 text-white dark:bg-sky-500 dark:text-slate-950 shadow-sm font-bold"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               <TrendingUp className="w-3.5 h-3.5" />
-              <span>Growth &amp; Salary</span>
+              <span>Growth &amp; Salaries</span>
             </button>
             <button
               onClick={() => setActiveTab("ai")}
-              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+              className={`shrink-0 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === "ai"
-                  ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-sm"
+                  ? "bg-slate-900 text-white dark:bg-sky-500 dark:text-slate-950 shadow-sm font-bold"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>AI-Resilience (75/100)</span>
+              <span>AI Safety Score (75/100)</span>
             </button>
             <button
               onClick={() => setActiveTab("moves")}
-              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+              className={`shrink-0 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === "moves"
-                  ? "bg-slate-900 text-white dark:bg-emerald-500 dark:text-slate-950 shadow-sm"
+                  ? "bg-slate-900 text-white dark:bg-sky-500 dark:text-slate-950 shadow-sm font-bold"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>First 3 Moves</span>
+              <span>First 3 Action Steps</span>
             </button>
           </div>
 
@@ -239,29 +239,29 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="space-y-3.5"
+              className="space-y-4"
             >
               {/* Interactive Ladder Buttons */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {CAREER_LADDER.map((lvl) => {
                   const isActive = activeLevelId === lvl.id;
                   return (
                     <button
                       key={lvl.id}
                       onClick={() => setActiveLevelId(lvl.id)}
-                      className={`p-2 rounded-xl text-left transition-all border ${
+                      className={`p-3 rounded-xl text-left transition-all border ${
                         isActive
-                          ? "bg-emerald-500/10 border-emerald-500 dark:border-emerald-400 text-slate-950 dark:text-white shadow-sm"
+                          ? "bg-sky-500/10 border-sky-500 dark:border-sky-400 text-slate-950 dark:text-white shadow-sm ring-1 ring-sky-500/30"
                           : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/15"
                       }`}
                     >
-                      <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                         {lvl.years}
                       </div>
-                      <div className="font-semibold text-xs truncate">
+                      <div className="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate">
                         {lvl.shortTitle}
                       </div>
-                      <div className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                      <div className="text-xs sm:text-sm font-mono font-bold text-sky-600 dark:text-sky-400 mt-1">
                         {lvl.salary}
                       </div>
                     </button>
@@ -270,40 +270,40 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
               </div>
 
               {/* Animated Progress Bar */}
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#061019] border border-slate-200 dark:border-white/10 space-y-3">
-                <div className="flex items-center justify-between text-xs">
+              <div className="p-4 sm:p-5 rounded-xl bg-slate-50 dark:bg-[#061019] border border-slate-200 dark:border-white/10 space-y-3">
+                <div className="flex items-center justify-between text-sm sm:text-base">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-slate-900 dark:text-white text-sm">
+                    <span className="font-bold text-slate-900 dark:text-white text-base sm:text-lg">
                       {activeLevel.title}
                     </span>
-                    <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
                       ({activeLevel.years})
                     </span>
                   </div>
-                  <div className="font-mono font-black text-emerald-600 dark:text-emerald-400 text-sm">
+                  <div className="font-mono font-black text-sky-600 dark:text-sky-400 text-base sm:text-lg">
                     {activeLevel.salary}
                   </div>
                 </div>
 
                 <div className="w-full h-2.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 rounded-full"
+                    className="h-full bg-gradient-to-r from-sky-500 via-teal-400 to-cyan-400 rounded-full"
                     animate={{ width: `${activeLevel.progress}%` }}
                     transition={{ duration: 0.35, ease: "easeOut" }}
                   />
                 </div>
 
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 font-medium leading-relaxed">
                   {activeLevel.scope}
                 </p>
 
                 {/* Key Skills Tags */}
-                <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Required Skills:</span>
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <span className="text-xs font-semibold text-slate-500">Core skills:</span>
                   {activeLevel.keySkills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-2 py-0.5 rounded-md bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300"
+                      className="px-2.5 py-1 rounded-md bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-medium text-slate-800 dark:text-slate-200"
                     >
                       {skill}
                     </span>
@@ -311,24 +311,24 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
                 </div>
               </div>
 
-              {/* Day in the Life preview snippet */}
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5">
-                  <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold mb-1">
-                    <Heart className="w-3.5 h-3.5" />
+              {/* What You'll Love & Challenges */}
+              <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                  <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold mb-1.5 text-sm sm:text-base">
+                    <Heart className="w-4 h-4" />
                     <span>What You&apos;ll Love</span>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-snug">
-                    Building tools that impact millions &amp; the intellectual thrill of solving hard technical puzzles.
+                  <p className="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    Building real apps used by millions &amp; solving satisfying real-world challenges.
                   </p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5">
-                  <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-bold mb-1">
-                    <AlertTriangle className="w-3.5 h-3.5" />
+                <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
+                  <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold mb-1.5 text-sm sm:text-base">
+                    <AlertTriangle className="w-4 h-4" />
                     <span>Known Challenges</span>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-snug">
-                    Rapidly shifting framework standards &amp; sprint deployment deadlines requiring constant upskilling.
+                  <p className="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    Keeping up with new tools and meeting sprint delivery deadlines.
                   </p>
                 </div>
               </div>
@@ -341,56 +341,56 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="space-y-3.5"
+              className="space-y-4"
             >
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#061019] border border-slate-200 dark:border-white/10">
-                <div className="flex items-center justify-between mb-3">
+              <div className="p-5 rounded-xl bg-slate-50 dark:bg-[#061019] border border-slate-200 dark:border-white/10 space-y-3">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
                   <div>
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
-                      Labor Market Vulnerability Score
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-0.5">
+                      AI Impact &amp; Safety Rating
                     </span>
-                    <span className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-teal-500" />
-                      <span>75 / 100 • Sustained High Demand</span>
+                    <span className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                      <span>75 / 100 • Safe &amp; In High Demand</span>
                     </span>
                   </div>
-                  <div className="px-2.5 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-mono font-bold">
-                    Strong Human Moat
+                  <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-bold">
+                    Strong Human Advantage
                   </div>
                 </div>
 
-                <div className="w-full h-2.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden mb-3">
-                  <div className="h-full bg-gradient-to-r from-teal-500 to-emerald-400 rounded-full w-[75%]" />
+                <div className="w-full h-2.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-[75%]" />
                 </div>
 
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Generative AI heavily automates routine boilerplate code and basic CRUD scaffolding, but <b className="text-slate-900 dark:text-white">high-level system design</b>, distributed consensus, failure orchestration, and human-centric product trade-offs remain firmly in human hands.
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  AI speeds up repetitive starter code and simple tasks. However, <b className="text-slate-900 dark:text-white">creative problem solving</b>, real business decisions, system design, and security remain firmly in human hands.
                 </p>
               </div>
 
-              {/* Moat vs Automated Comparison */}
-              <div className="grid sm:grid-cols-2 gap-2.5 text-xs">
-                <div className="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
-                  <div className="font-bold text-emerald-700 dark:text-emerald-400 mb-1.5 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Protected Human Moat (75%)</span>
+              {/* Safe vs Accelerated Comparison */}
+              <div className="grid sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+                <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                  <div className="font-bold text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <span>Safe From AI (75%)</span>
                   </div>
-                  <ul className="space-y-1 text-slate-600 dark:text-slate-300 text-[11px]">
-                    <li>• Distributed architecture &amp; high availability</li>
-                    <li>• Translating vague business needs to tech specs</li>
-                    <li>• Security audits, data privacy &amp; resilience</li>
+                  <ul className="space-y-1.5 text-slate-700 dark:text-slate-300">
+                    <li>• Planning system architecture &amp; logic</li>
+                    <li>• Turning user ideas into real products</li>
+                    <li>• Data privacy, security, and reliability</li>
                   </ul>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
-                  <div className="font-bold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                    <span>AI-Accelerated Tasks (25%)</span>
+                <div className="p-4 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
+                  <div className="font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>Sped Up by AI (25%)</span>
                   </div>
-                  <ul className="space-y-1 text-slate-500 dark:text-slate-400 text-[11px]">
-                    <li>• Writing repetitive boilerplate &amp; schema stubs</li>
-                    <li>• Generating synthetic test datasets</li>
-                    <li>• Syntax conversion across languages</li>
+                  <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
+                    <li>• Writing boilerplate starter code</li>
+                    <li>• Catching typos and syntax bugs</li>
+                    <li>• Generating preliminary test cases</li>
                   </ul>
                 </div>
               </div>
@@ -406,11 +406,11 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
               className="space-y-3"
             >
               <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#061019] border border-slate-200 dark:border-white/10">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">
-                  Verified Action Plan (Report Page 07)
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-0.5">
+                  Action Steps • Report Page 07
                 </span>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Click the milestones below to track your execution readiness:
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                  Tap each step to track your starting plan:
                 </p>
               </div>
 
@@ -418,20 +418,20 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
                 {
                   id: 0,
                   num: "01",
-                  title: "Build and deploy 2 full-stack applications on GitHub",
-                  desc: "Demonstrates end-to-end capability: user authentication, relational database, external APIs, and live production deployment.",
+                  title: "Build & launch 2 real projects you can show off",
+                  desc: "Create 2 full applications with login and a database so employers can see your real capability.",
                 },
                 {
                   id: 1,
                   num: "02",
-                  title: "Master Data Structures & Algorithms (DSA) for technical rounds",
-                  desc: "Systematic mastery of arrays, graphs, dynamic programming, and space/time complexity analysis for top-tier product screenings.",
+                  title: "Master practical coding & interview basics",
+                  desc: "Practice core programming fundamentals and common technical interview questions.",
                 },
                 {
                   id: 2,
                   num: "03",
-                  title: "Contribute to a major open-source collaborative project",
-                  desc: "Validates code review adherence, git branch etiquette, and collaboration within large existing codebases.",
+                  title: "Collaborate on a real open-source project",
+                  desc: "Work alongside other developers to learn professional code reviews and team workflows.",
                 },
               ].map((move) => {
                 const isDone = !!completedMoves[move.id];
@@ -439,29 +439,29 @@ export default function ReportPage07InteractiveDeepDive({ onZoomPdf }: Props) {
                   <div
                     key={move.id}
                     onClick={() => toggleMove(move.id)}
-                    className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-start gap-3 ${
+                    className={`p-4 rounded-xl border transition-all cursor-pointer flex items-start gap-3.5 ${
                       isDone
-                        ? "bg-emerald-500/5 border-emerald-500/30 text-slate-900 dark:text-white"
+                        ? "bg-sky-500/5 border-sky-500/30 text-slate-900 dark:text-white"
                         : "bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/5 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/15"
                     }`}
                   >
                     <div className="mt-0.5 shrink-0">
                       {isDone ? (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                        <CheckCircle2 className="w-5 h-5 text-sky-500" />
                       ) : (
                         <Circle className="w-5 h-5 text-slate-400 dark:text-slate-600" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[11px] font-mono font-bold text-sky-600 dark:text-sky-400">
                           Step {move.num}
                         </span>
-                        <h5 className={`text-xs font-bold ${isDone ? "line-through text-slate-500 dark:text-slate-400" : ""}`}>
+                        <h5 className={`text-sm font-bold ${isDone ? "line-through text-slate-500 dark:text-slate-400" : ""}`}>
                           {move.title}
                         </h5>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-snug">
                         {move.desc}
                       </p>
                     </div>

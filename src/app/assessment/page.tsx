@@ -255,7 +255,7 @@ export default function AssessmentHome() {
           email: user.email || "",
         },
         theme: {
-          color: "#10b981"
+          color: "#0ea5e9"
         }
       };
 
@@ -286,7 +286,7 @@ export default function AssessmentHome() {
     <div className={cn("flex flex-col min-h-[100dvh] transition-colors duration-1000 relative overflow-hidden", getBgClass())}>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       {/* Grid Parallax */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#10b9810a_1px,transparent_1px),linear-gradient(to_bottom,#10b9810a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#0ea5e90a_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e90a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       <Navbar />
 
       <main className="flex-grow max-w-3xl mx-auto px-4 sm:px-6 py-10 w-full flex items-center justify-center">
@@ -303,29 +303,29 @@ export default function AssessmentHome() {
 
           <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 backdrop-blur-md shadow-xl overflow-hidden relative">
             {/* Top highlight bar */}
-            <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500" />
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-sky-500" />
             
             <CardHeader className="p-6 sm:p-8 pb-4 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left relative z-10">
               {/* Holographic Core */}
               <div className="relative flex h-20 w-20 sm:h-24 sm:w-24 shrink-0 items-center justify-center mt-2 sm:mt-0">
                 <div className={cn(
                   "absolute inset-0 rounded-full border-4 border-dashed animate-[spin_10s_linear_infinite]",
-                  sessionProgress.answered > 0 ? "border-emerald-500/40" : "border-slate-300 dark:border-slate-700/40"
+                  sessionProgress.answered > 0 ? "border-sky-500/40" : "border-slate-300 dark:border-slate-700/40"
                 )} />
                 <div className={cn(
                   "absolute inset-3 rounded-full border-2 animate-[spin_5s_linear_infinite_reverse]",
-                  sessionProgress.answered > 0 ? "border-emerald-500/50" : "border-slate-300 dark:border-slate-700/60"
+                  sessionProgress.answered > 0 ? "border-sky-500/50" : "border-slate-300 dark:border-slate-700/60"
                 )} />
                 <div className={cn(
                   "absolute h-10 w-10 sm:h-12 sm:w-12 rounded-full flex items-center justify-center animate-pulse",
-                  sessionProgress.answered > 0 ? "bg-emerald-500/20 border border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.3)]" : "bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600"
+                  sessionProgress.answered > 0 ? "bg-sky-500/20 border border-sky-500/50 shadow-[0_0_20px_rgba(14,165,233,0.3)]" : "bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600"
                 )}>
-                  <Compass className={cn("h-5 w-5 sm:h-6 sm:w-6", sessionProgress.answered > 0 ? "text-emerald-500 animate-[spin_12s_ease-in-out_infinite]" : "text-slate-400 dark:text-slate-500")} />
+                  <Compass className={cn("h-5 w-5 sm:h-6 sm:w-6", sessionProgress.answered > 0 ? "text-sky-500 animate-[spin_12s_ease-in-out_infinite]" : "text-slate-400 dark:text-slate-500")} />
                 </div>
               </div>
 
               <div className="space-y-2 flex-grow">
-                <div className="flex items-center justify-center md:justify-start gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider">
+                <div className="flex items-center justify-center md:justify-start gap-2 text-sky-600 dark:text-sky-400 font-bold text-xs uppercase tracking-wider">
                   <ClipboardList className="h-4.5 w-4.5" /> Career mapping session
                 </div>
                 <CardTitle className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
@@ -340,9 +340,9 @@ export default function AssessmentHome() {
             <CardContent className="p-6 sm:p-8 pt-0 space-y-6">
               
               {/* Confirmed Stage Alert */}
-              <div className="rounded-xl border border-emerald-500/20 bg-emerald-50/50 dark:bg-slate-950/60 dark:border-emerald-500/30 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="rounded-xl border border-sky-500/20 bg-sky-50/50 dark:bg-slate-950/60 dark:border-sky-500/30 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">Target Academic/Career Stage</span>
+                  <span className="text-[10px] text-sky-600 dark:text-sky-400 font-bold uppercase tracking-wider">Target Academic/Career Stage</span>
                   <h3 className="font-extrabold text-slate-900 dark:text-white text-base">
                     {getSegmentTitle(profile?.segment)}
                   </h3>
@@ -354,12 +354,12 @@ export default function AssessmentHome() {
 
               {/* Mission Parameters (Metric Grid) */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-sky-500/40 hover:bg-sky-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(14,165,233,0.1)]">
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Clock className="h-16 w-16 text-emerald-500" />
+                    <Clock className="h-16 w-16 text-sky-500" />
                   </div>
                   <div className="relative z-10 space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 mb-1">
+                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-500/20 mb-1">
                       <Clock className="h-4 w-4" />
                     </div>
                     <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Duration</div>
@@ -368,12 +368,12 @@ export default function AssessmentHome() {
                   </div>
                 </div>
 
-                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-sky-500/40 hover:bg-sky-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(14,165,233,0.1)]">
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <HelpCircle className="h-16 w-16 text-emerald-500" />
+                    <HelpCircle className="h-16 w-16 text-sky-500" />
                   </div>
                   <div className="relative z-10 space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 mb-1">
+                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-500/20 mb-1">
                       <HelpCircle className="h-4 w-4" />
                     </div>
                     <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Questions</div>
@@ -382,12 +382,12 @@ export default function AssessmentHome() {
                   </div>
                 </div>
 
-                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+                <div className="group relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-5 overflow-hidden transition-all duration-300 hover:border-sky-500/40 hover:bg-sky-50/30 dark:hover:bg-slate-900 hover:shadow-[0_0_20px_rgba(14,165,233,0.1)]">
                   <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Compass className="h-16 w-16 text-emerald-500" />
+                    <Compass className="h-16 w-16 text-sky-500" />
                   </div>
                   <div className="relative z-10 space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 mb-1">
+                    <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-500/20 mb-1">
                       <Compass className="h-4 w-4" />
                     </div>
                     <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Methodology</div>
@@ -398,20 +398,20 @@ export default function AssessmentHome() {
               </div>
 
               {/* Mission Briefing Terminal */}
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-950/60 p-6 border-l-4 border-l-emerald-500 border-y border-r border-slate-200 dark:border-slate-800 relative overflow-hidden group hover:border-l-emerald-400 transition-colors shadow-sm">
-                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(16,185,129,0.03)_100%)] pointer-events-none" />
+              <div className="rounded-xl bg-slate-50 dark:bg-slate-950/60 p-6 border-l-4 border-l-sky-500 border-y border-r border-slate-200 dark:border-slate-800 relative overflow-hidden group hover:border-l-sky-400 transition-colors shadow-sm">
+                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(14,165,233,0.03)_100%)] pointer-events-none" />
                 <div className="relative z-10 space-y-4">
-                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                  <div className="flex items-center gap-2 text-sky-600 dark:text-sky-400">
                     <Terminal className="h-5 w-5 animate-pulse" />
                     <p className="font-mono text-sm font-bold tracking-wider uppercase">{t("guidelinesTitle") || "Mission Briefing"}</p>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-1">
                     <div className="flex items-start gap-3 bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors shadow-sm">
-                      <div className="mt-0.5 text-emerald-600 dark:text-emerald-400"><Clock className="h-4 w-4" /></div>
+                      <div className="mt-0.5 text-sky-600 dark:text-sky-400"><Clock className="h-4 w-4" /></div>
                       <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"><strong className="text-slate-800 dark:text-slate-200">{t("guideline1Title")}</strong> {t("guideline1Desc")}</p>
                     </div>
                     <div className="flex items-start gap-3 bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors shadow-sm">
-                      <div className="mt-0.5 text-emerald-500 dark:text-emerald-400"><Brain className="h-4 w-4" /></div>
+                      <div className="mt-0.5 text-sky-500 dark:text-sky-400"><Brain className="h-4 w-4" /></div>
                       <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"><strong className="text-slate-800 dark:text-slate-200">{t("guideline2Title")}</strong> {t("guideline2Desc")}</p>
                     </div>
                     <div className="flex items-start gap-3 bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 hover:bg-slate-100/60 dark:hover:bg-slate-800/60 transition-colors shadow-sm">
@@ -448,7 +448,7 @@ export default function AssessmentHome() {
                         href="/assessment/session"
                         className={cn(
                           buttonVariants({ variant: "default", size: "default" }),
-                          "font-bold shadow-md shadow-emerald-500/20 bg-emerald-500 hover:bg-emerald-600 text-white h-10 px-6 gap-1.5 flex items-center justify-center"
+                          "font-bold shadow-md shadow-sky-500/20 bg-sky-500 hover:bg-sky-600 text-white h-10 px-6 gap-1.5 flex items-center justify-center"
                         )}
                       >
                         Resume Assessment <Play className="h-4 w-4 fill-white" />
@@ -459,7 +459,7 @@ export default function AssessmentHome() {
                       href="/assessment/session"
                       className={cn(
                         buttonVariants({ variant: "default", size: "default" }),
-                        "font-bold shadow-md shadow-emerald-500/20 bg-emerald-500 hover:bg-emerald-600 text-white h-10 px-6 gap-1.5 flex items-center justify-center w-full sm:w-auto"
+                        "font-bold shadow-md shadow-sky-500/20 bg-sky-500 hover:bg-sky-600 text-white h-10 px-6 gap-1.5 flex items-center justify-center w-full sm:w-auto"
                       )}
                     >
                       Start Assessment <ChevronRight className="h-4.5 w-4.5" />
@@ -468,10 +468,10 @@ export default function AssessmentHome() {
                 </div>
               ) : (
                 // UNPAID STATE -> Checkout Flow
-                <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4 p-4 rounded-xl border border-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-950/30 dark:border-emerald-500/30">
+                <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4 p-4 rounded-xl border border-sky-500/20 bg-sky-50/50 dark:bg-sky-950/30 dark:border-sky-500/30">
                   <div className="flex flex-col gap-1 w-full md:w-1/2">
                     <p className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                      <CreditCard className="h-4 w-4 text-emerald-600 dark:text-emerald-400" /> Unlock Assessment
+                      <CreditCard className="h-4 w-4 text-sky-600 dark:text-sky-400" /> Unlock Assessment
                     </p>
                     <p className="text-xs text-slate-600 dark:text-slate-400">Access your comprehensive 80-question career mapping assessment.</p>
                   </div>
@@ -501,7 +501,7 @@ export default function AssessmentHome() {
                       <Button 
                         onClick={handlePayment} 
                         disabled={paying}
-                        className="w-full sm:w-auto h-10 px-6 font-bold shadow-lg shadow-emerald-500/20 bg-emerald-500 hover:bg-emerald-600 text-white gap-2"
+                        className="w-full sm:w-auto h-10 px-6 font-bold shadow-lg shadow-sky-500/20 bg-sky-500 hover:bg-sky-600 text-white gap-2"
                       >
                         {paying ? (
                           <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -514,7 +514,7 @@ export default function AssessmentHome() {
                       </Button>
                     </div>
                     {couponMessage.text && (
-                      <p className={`text-[10px] font-bold uppercase tracking-wider px-1 ${couponMessage.type === "success" ? "text-emerald-500" : "text-red-500"}`}>
+                      <p className={`text-[10px] font-bold uppercase tracking-wider px-1 ${couponMessage.type === "success" ? "text-sky-500" : "text-red-500"}`}>
                         {couponMessage.text}
                       </p>
                     )}

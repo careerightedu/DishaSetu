@@ -54,12 +54,11 @@ export default function Navbar() {
         
         {/* Brand Logo */}
         <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2.5 transition-transform hover:scale-102">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500 shadow-md shadow-emerald-500/20 p-1.5">
-            {/* Logo image cropped from user screenshot */}
-            <Image src="/what_after_logo_white.png" alt="WhatAfter Logo" width={24} height={24} className="object-contain" />
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-500/25 shadow-sm p-1.5">
+            <Image src="/what_after_logo_blue.png" alt="WhatAfter Logo" width={28} height={28} className="object-contain" priority />
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-950 dark:text-white">
-            What<span className="text-emerald-600 dark:text-emerald-400 font-extrabold">After</span>
+            What<span className="text-sky-600 dark:text-sky-400 font-extrabold">After</span>
           </span>
         </Link>
 
@@ -225,6 +224,62 @@ export default function Navbar() {
               </Link>
             </div>
           )}
+
+          {/* Quick Jump Navigation Links */}
+          <div className="pt-2 border-t border-slate-200/60 dark:border-white/10 space-y-1">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 block mb-1">
+              Explore
+            </span>
+            <Link
+              href="/#urgency"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              ⚠️ The 35-Year Career Regret
+            </Link>
+            <Link
+              href="/#how-it-works"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              How It Works
+            </Link>
+            <Link
+              href="/#stages"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              The 4 Life Stages
+            </Link>
+            <Link
+              href="/#inside-report"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              Inside 15-Page Dossier
+            </Link>
+            <Link
+              href="/#journal"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              WhatAfter Journal
+            </Link>
+            <Link
+              href="/#pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-bold text-sky-600 dark:text-sky-400 hover:bg-sky-500/10"
+            >
+              Pricing (₹999 Only)
+            </Link>
+            <Link
+              href="/#faqs"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
+            >
+              FAQs
+            </Link>
+          </div>
 
           {/* Quick Theme Toggle in Drawer */}
           <div className="pt-2 border-t border-border/30">

@@ -28,57 +28,57 @@ export interface RadarTraitItem {
 const TRAITS: RadarTraitItem[] = [
   {
     id: "analytical",
-    name: "Analytical Reasoning",
+    name: "Analytical Thinking",
     score: 82,
-    takeaway: "Strong pattern recognition and structured problem solving.",
-    subdetail: "Decomposes ambiguous questions into first-principles logic trees.",
+    takeaway: "You solve hard problems quickly with clear logic and common sense.",
+    subdetail: "You naturally break down big challenges into simple, step-by-step solutions.",
     icon: Cpu,
-    color: "#10b981", // emerald
+    color: "#0ea5e9",
   },
   {
     id: "creative",
     name: "Creative Thinking",
     score: 61,
-    takeaway: "Prefers structured creativity over open-ended ideation.",
-    subdetail: "Innovates by combining, remixing, and optimizing proven frameworks.",
+    takeaway: "You improve and remix existing ideas to make them work better.",
+    subdetail: "You prefer practical improvements over starting completely from scratch.",
     icon: Palette,
-    color: "#14b8a6", // teal
+    color: "#38bdf8",
   },
   {
     id: "spatial",
-    name: "Spatial & Systems Logic",
+    name: "Systems Thinking",
     score: 78,
-    takeaway: "High 3D mental modeling and system architecture intuition.",
-    subdetail: "Mentally simulates how complex physical and digital components interact in space.",
+    takeaway: "You easily see how different parts connect into a working system.",
+    subdetail: "Perfect for tech architecture, engineering, and designing processes.",
     icon: Compass,
-    color: "#06b6d4", // cyan
+    color: "#06b6d4",
   },
   {
     id: "numerical",
-    name: "Numerical Aptitude",
+    name: "Numbers & Data",
     score: 74,
-    takeaway: "Quantitative reasoning and statistical comfort.",
-    subdetail: "Evaluates risk, probability, and trade-offs using mathematical models.",
+    takeaway: "You are comfortable making decisions backed by facts and numbers.",
+    subdetail: "You evaluate risks with data rather than relying purely on guesswork.",
     icon: LineChart,
-    color: "#3b82f6", // blue
+    color: "#3b82f6",
   },
   {
     id: "verbal",
-    name: "Verbal Reasoning",
+    name: "Communication",
     score: 72,
-    takeaway: "Clear conceptual communication and articulate reasoning.",
-    subdetail: "Translates nuanced technical mechanics into concise, structured narratives.",
+    takeaway: "You explain technical ideas in simple words that anyone understands.",
+    subdetail: "Makes it easy for you to align teams, write clearly, and share ideas.",
     icon: MessageSquare,
-    color: "#8b5cf6", // purple
+    color: "#8b5cf6",
   },
   {
     id: "autonomy",
-    name: "Work Autonomy",
+    name: "Independent Drive",
     score: 85,
-    takeaway: "Takes relentless self-directed ownership with low micromanagement.",
-    subdetail: "Thrives when given clear outcome goals with the freedom to execute independently.",
+    takeaway: "You do your best work when given a clear goal and freedom to build.",
+    subdetail: "You take ownership quickly and don't need someone watching over your shoulder.",
     icon: Key,
-    color: "#f59e0b", // amber
+    color: "#f59e0b",
   },
 ];
 
@@ -138,16 +138,16 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-3.5 bg-slate-50 dark:bg-black/40 border-b border-slate-200 dark:border-white/10 text-xs">
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block mb-0.5">
-            Sample Dossier • Page 03
+          <span className="text-[10px] font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 font-bold block mb-0.5">
+            Sample Report • Page 03
           </span>
           <div className="flex items-center gap-2">
             <h4 className="text-sm sm:text-base font-serif font-bold text-slate-900 dark:text-white">
-              Explore a sample Cognitive Fingerprint
+              Interactive Preview: Your Natural Strengths
             </h4>
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
-              <span className={`w-1.5 h-1.5 rounded-full bg-emerald-500 ${hoveredId !== null ? "" : "animate-ping"}`} />
-              <span>{hoveredId !== null ? "Paused" : "Live Auto-Cycle"}</span>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/25 text-[11px] font-mono text-sky-600 dark:text-sky-400 font-semibold">
+              <span className={`w-1.5 h-1.5 rounded-full bg-sky-500 ${hoveredId !== null ? "" : "animate-ping"}`} />
+              <span>{hoveredId !== null ? "Paused" : "Auto-Preview"}</span>
             </div>
           </div>
         </div>
@@ -158,18 +158,18 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
             onClick={() => setViewPdf(false)}
             className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all flex items-center gap-1.5 ${
               !viewPdf
-                ? "bg-white dark:bg-emerald-500 text-slate-900 dark:text-slate-950 shadow-sm border border-slate-200 dark:border-transparent font-bold"
+                ? "bg-white dark:bg-sky-500 text-slate-900 dark:text-slate-950 shadow-sm border border-slate-200 dark:border-transparent font-bold"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
-            <Sparkles className="w-3 h-3 text-emerald-500 dark:text-slate-950" />
+            <Sparkles className="w-3 h-3 text-sky-500 dark:text-slate-950" />
             <span>Interactive</span>
           </button>
           <button
             onClick={() => setViewPdf(true)}
             className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all flex items-center gap-1.5 ${
               viewPdf
-                ? "bg-white dark:bg-emerald-500 text-slate-900 dark:text-slate-950 shadow-sm border border-slate-200 dark:border-transparent font-bold"
+                ? "bg-white dark:bg-sky-500 text-slate-900 dark:text-slate-950 shadow-sm border border-slate-200 dark:border-transparent font-bold"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
@@ -194,7 +194,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
             className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.02]"
           />
           <div className="absolute top-3 right-3 px-3 py-1.5 rounded-full bg-black/75 border border-white/15 text-white text-xs font-medium backdrop-blur-md flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
-            <ZoomIn className="w-3.5 h-3.5 text-emerald-400" />
+            <ZoomIn className="w-3.5 h-3.5 text-sky-400" />
             <span>Click to Fullscreen Zoom</span>
           </div>
           <div className="absolute bottom-3 left-3 right-3 px-3 py-2 rounded-xl bg-slate-950/85 border border-white/10 text-white text-[11px] backdrop-blur-md flex items-center justify-between">
@@ -204,7 +204,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                 e.stopPropagation();
                 setViewPdf(false);
               }}
-              className="text-emerald-400 hover:underline font-bold"
+              className="text-sky-400 hover:underline font-bold"
             >
               Switch to Live Interactive Radar ↑
             </button>
@@ -217,8 +217,8 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
             
             {/* Left Column: SVG Radar Chart */}
             <div className="md:col-span-6 flex flex-col items-center">
-              <p className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2 text-center">
-                Hover or tap any axis node:
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 text-center">
+                Tap or hover on any strength to see details:
               </p>
 
               {/* SVG Radar Visual */}
@@ -229,9 +229,9 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                 >
                   <defs>
                     <radialGradient id="interactiveRadarFill" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.5" />
-                      <stop offset="70%" stopColor="#10b981" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="#059669" stopOpacity="0.08" />
+                      <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.5" />
+                      <stop offset="70%" stopColor="#0ea5e9" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#0284c7" stopOpacity="0.08" />
                     </radialGradient>
                   </defs>
 
@@ -271,7 +271,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                         y2={outer.y}
                         stroke="currentColor"
                         strokeWidth={isSpokeActive ? "2" : "1"}
-                        className={isSpokeActive ? "text-emerald-500" : "text-slate-200 dark:text-white/15"}
+                        className={isSpokeActive ? "text-sky-500" : "text-slate-200 dark:text-white/15"}
                       />
                     );
                   })}
@@ -280,7 +280,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                   <polygon
                     points={polygonPoints}
                     fill="url(#interactiveRadarFill)"
-                    stroke="#10b981"
+                    stroke="#0ea5e9"
                     strokeWidth="2.5"
                     strokeLinejoin="round"
                     className="transition-all duration-300"
@@ -308,7 +308,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                             cx={coords.x}
                             cy={coords.y}
                             r="14"
-                            fill="#10b981"
+                            fill="#0ea5e9"
                             fillOpacity="0.3"
                             className="animate-ping"
                           />
@@ -319,7 +319,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                           cx={coords.x}
                           cy={coords.y}
                           r={isSelected ? "7" : "5"}
-                          fill={isSelected ? "#10b981" : "#059669"}
+                          fill={isSelected ? "#0ea5e9" : "#0284c7"}
                           stroke="#ffffff"
                           strokeWidth={isSelected ? "2.5" : "1.5"}
                           className="transition-all duration-200"
@@ -344,7 +344,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                         onClick={() => setActiveId(t.id)}
                         className={`text-[10px] font-mono font-bold cursor-pointer transition-all ${
                           isSelected
-                            ? "fill-emerald-600 dark:fill-emerald-400 font-black scale-105"
+                            ? "fill-sky-600 dark:fill-sky-400 font-black scale-105"
                             : "fill-slate-600 dark:fill-slate-400 hover:fill-slate-900 dark:hover:fill-white"
                         }`}
                       >
@@ -359,7 +359,7 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
                   <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 font-bold block">
                     35-Trait
                   </span>
-                  <span className="text-[11px] font-mono font-black text-emerald-600 dark:text-emerald-400 block">
+                  <span className="text-[11px] font-mono font-black text-sky-600 dark:text-sky-400 block">
                     Radar
                   </span>
                 </div>
@@ -367,39 +367,51 @@ export default function ReportPage03InteractiveRadar({ onZoomPdf }: Props) {
             </div>
 
             {/* Right Column: Detailed Trait Card */}
-            <div className="md:col-span-6 space-y-3.5">
-              {/* THE EXACT REQUESTED HOVER CARD */}
+            <div className="md:col-span-6 space-y-4">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTrait.id}
-                  initial={{ opacity: 0, y: 3 }}
+                  initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -3 }}
+                  exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="p-4 rounded-xl bg-emerald-50/70 dark:bg-[#061019] border border-emerald-500/30 shadow-sm space-y-2"
+                  className="p-5 sm:p-6 rounded-2xl bg-sky-50/80 dark:bg-[#061019] border border-sky-500/30 shadow-sm space-y-3"
                 >
                   <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                        <IconComp className="w-4 h-4" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                        <IconComp className="w-5 h-5" />
                       </div>
-                      <h5 className="text-sm font-serif font-bold text-slate-900 dark:text-white">
-                        {activeTrait.name} — <span className="font-mono text-emerald-600 dark:text-emerald-400">{activeTrait.score}</span>
-                      </h5>
+                      <div>
+                        <h5 className="text-base sm:text-lg font-serif font-bold text-slate-900 dark:text-white leading-tight">
+                          {activeTrait.name}
+                        </h5>
+                        <span className="text-xs font-mono font-bold text-sky-600 dark:text-sky-400">
+                          Score: {activeTrait.score} / 100
+                        </span>
+                      </div>
                     </div>
-                    <span className="text-[10px] font-mono uppercase text-slate-500 dark:text-slate-400 font-semibold px-2 py-0.5 rounded bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10">
-                      Measured Score
+                    <span className="text-[11px] font-mono uppercase text-sky-700 dark:text-sky-300 font-bold px-2.5 py-1 rounded-full bg-white dark:bg-white/10 border border-sky-200 dark:border-white/10">
+                      Top Strength
                     </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm font-semibold text-emerald-800 dark:text-emerald-300 leading-snug">
+                  <p className="text-sm sm:text-base font-semibold text-slate-900 dark:text-sky-100 leading-snug pt-1">
                     {activeTrait.takeaway}
                   </p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {activeTrait.subdetail}
                   </p>
                 </motion.div>
               </AnimatePresence>
+
+              {/* Minimal clarity takeaway */}
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2.5">
+                <Sparkles className="w-4 h-4 text-sky-500 shrink-0" />
+                <span>
+                  Your 15-page report tests <b>35 traits</b> to pinpoint the exact careers where you naturally succeed.
+                </span>
+              </div>
             </div>
 
           </div>

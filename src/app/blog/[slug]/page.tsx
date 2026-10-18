@@ -18,7 +18,7 @@ export async function generateMetadata({
   const title = post.metaTitle || `${post.title} | WhatAfter`;
   const description = post.metaDescription || post.excerpt;
   const canonicalUrl = post.canonicalUrl || `https://whatafter.in/blog/${post.slug}`;
-  const ogImage = post.ogImage || "/what_after_logo_white.png";
+  const ogImage = post.ogImage || "/what_after_logo_blue.png";
   const keywords =
     post.metaKeywords && post.metaKeywords.length > 0
       ? post.metaKeywords
