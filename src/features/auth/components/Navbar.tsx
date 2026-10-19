@@ -225,61 +225,6 @@ export default function Navbar() {
             </div>
           )}
 
-          {/* Quick Jump Navigation Links */}
-          <div className="pt-2 border-t border-slate-200/60 dark:border-white/10 space-y-1">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 block mb-1">
-              Explore
-            </span>
-            <Link
-              href="/#urgency"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              ⚠️ The 35-Year Career Regret
-            </Link>
-            <Link
-              href="/#how-it-works"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              How It Works
-            </Link>
-            <Link
-              href="/#stages"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              The 4 Life Stages
-            </Link>
-            <Link
-              href="/#inside-report"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              Inside 15-Page Dossier
-            </Link>
-            <Link
-              href="/#journal"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              WhatAfter Journal
-            </Link>
-            <Link
-              href="/#pricing"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-bold text-sky-600 dark:text-sky-400 hover:bg-sky-500/10"
-            >
-              Pricing (₹999 Only)
-            </Link>
-            <Link
-              href="/#faqs"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5"
-            >
-              FAQs
-            </Link>
-          </div>
 
           {/* Quick Theme Toggle in Drawer */}
           <div className="pt-2 border-t border-border/30">

@@ -680,43 +680,23 @@ export default function LandingPage() {
         {/* 7. THE PARENT & COUNSELLOR BRIDGE                         */}
         {/* ========================================================= */}
         <ScrollDimSection className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-16 sm:py-20 border-b border-slate-200/80 dark:border-white/5 overflow-hidden">
-          <div className="rounded-3xl p-5 sm:p-10 lg:p-14 bg-gradient-to-r from-sky-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden w-full max-w-full min-w-0">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center w-full max-w-full min-w-0">
-              <div className="w-full max-w-full min-w-0 lg:col-span-7">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400 text-xs font-semibold uppercase tracking-widest mb-4">
-                  Bridging The Generational Gap
-                </div>
-                <h3 className="text-2xl sm:text-4xl font-serif font-bold mb-4 text-slate-900 dark:text-white break-words">
-                  Written for the Dinner Table. <br className="hidden sm:inline" />
-                  Not an Academic Journal.
-                </h3>
-                <p className="text-slate-600 dark:text-[#a5b4c0] text-base mb-6 font-medium">
-                  Objective data to replace dinner-table arguments with calm conviction.
-                </p>
-
-                {/* Interactive Dinner Table Translator */}
-                <div className="mt-2 w-full max-w-full min-w-0">
-                  <DinnerTableTranslator />
-                </div>
+          <div className="rounded-3xl p-5 sm:p-8 lg:p-12 bg-gradient-to-b from-sky-50/70 via-white to-slate-50 dark:from-[#0b1723] dark:via-[#0d1d2d] dark:to-[#0b1723] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl relative overflow-hidden w-full max-w-full min-w-0">
+            <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400 text-xs font-semibold uppercase tracking-widest mb-3">
+                Bridging The Generational Gap
               </div>
+              <h3 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 text-slate-900 dark:text-white break-words">
+                Written for the Dinner Table. <br className="hidden sm:inline" />
+                Not an Academic Journal.
+              </h3>
+              <p className="text-slate-600 dark:text-[#a5b4c0] text-sm sm:text-base font-medium max-w-xl mx-auto">
+                Objective data to replace dinner-table arguments with calm conviction.
+              </p>
+            </div>
 
-              {/* Right column: Image */}
-              <div className="w-full max-w-full min-w-0 lg:col-span-5 relative">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl group w-full">
-                  <Image 
-                    src="/images/dinner_table_bridge.jpg"
-                    alt="Indian mother and son reviewing career assessment on a tablet together at home"
-                    fill
-                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-3 left-3 right-3 px-3 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-white flex items-center justify-between">
-                    <span className="text-xs font-medium">Calm dinner-table conversations</span>
-                    <span className="text-[10px] text-sky-300 font-bold uppercase tracking-wider">No Arguments</span>
-                  </div>
-                </div>
-              </div>
+            {/* Interactive Dinner Table Discussion & WhatAfter Answer */}
+            <div className="w-full max-w-full min-w-0">
+              <DinnerTableTranslator />
             </div>
           </div>
         </ScrollDimSection>
