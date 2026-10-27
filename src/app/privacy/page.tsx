@@ -1,8 +1,21 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | WhatAfter",
-  description: "Privacy Policy for WhatAfter Career Assessment Platform",
+  title: {
+    absolute: "Privacy Policy | WhatAfter",
+  },
+  description: "Privacy Policy and data governance principles for WhatAfter Career Assessment Platform.",
+  alternates: {
+    canonical: "https://whatafter.in/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy | WhatAfter",
+    description: "Privacy Policy and data governance principles for WhatAfter Career Assessment Platform.",
+    url: "https://whatafter.in/privacy",
+    siteName: "WhatAfter",
+    locale: "en_IN",
+    type: "website",
+  },
 };
 
 export default function PrivacyPolicy() {

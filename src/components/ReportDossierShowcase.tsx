@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,317 +10,289 @@ import {
   Route, 
   ZoomIn, 
   ArrowRight, 
-  Sparkles, 
-  Wifi, 
-  Battery, 
-  Signal,
-  CheckCircle2,
-  FileText
+  Eye, 
+  MessageSquare, 
+  Target, 
+  AlertCircle,
+  FileText,
+  Maximize2,
+  CheckCircle2
 } from "lucide-react";
 
 interface Props {
   onZoomPdf?: (imageSrc: string) => void;
 }
 
-interface ReportPageItem {
+interface ReportComponent {
   id: string;
   pageNum: string;
   title: string;
   subtitle: string;
   icon: React.ElementType;
   image: string;
-  popoutBadge: string;
-  popoutHeading: string;
-  popoutText: string;
-  tag: string;
-  accentColor: string;
+  badge: string;
+  whatYouSee: string;
+  plainMeaning: string;
+  howItInforms: string;
+  whatItCannotEstablish: string;
 }
 
-const REPORT_PAGES: ReportPageItem[] = [
+const REPORT_COMPONENTS: ReportComponent[] = [
   {
-    id: "page-03",
+    id: "cognitive-fingerprint",
     pageNum: "Page 03",
-    title: "Natural Strengths",
-    subtitle: "35 Cognitive Dimensions & Values",
+    title: "Cognitive Profile & Strengths",
+    subtitle: "Natural working styles & problem-solving tendencies",
     icon: BrainCircuit,
     image: "/report/cognitive-fingerprint.png",
-    popoutBadge: "Page 03 • Strengths Radar",
-    popoutHeading: "What You Are Naturally Good At",
-    popoutText: "Pinpoints your natural cognitive traits and work style without peer bias or coaching pressure.",
-    tag: "35 Cognitive Traits Tested",
-    accentColor: "from-sky-500 to-cyan-500",
+    badge: "Self-Understanding",
+    whatYouSee: "A clear spectrum mapping your behavioral styles, problem-solving habits, and work environment preferences derived from your 80 real-world scenario responses.",
+    plainMeaning: "Reveals the types of challenges, communication patterns, and team dynamics where you are most likely to thrive versus those that drain your energy.",
+    howItInforms: "Helps you filter out streams, degrees, or roles that demand working styles fundamentally misaligned with your natural inclinations.",
+    whatItCannotEstablish: "It does not measure fixed biological intelligence, and it does not define a permanent destiny. Your skills and interests can and will grow with practice."
   },
   {
-    id: "page-07",
+    id: "career-deep-dive",
     pageNum: "Page 07",
-    title: "Salaries & AI Safety",
-    subtitle: "Real Indian Salary Progression",
+    title: "Career Matches & Trajectory",
+    subtitle: "Day-to-day reality, responsibilities & industry benchmarks",
     icon: TrendingUp,
     image: "/report/career-deep-dive.png",
-    popoutBadge: "Page 07 • Market Reality",
-    popoutHeading: "Verified Salaries & AI Risk",
-    popoutText: "Realistic salary growth from entry (₹12–25L) to Lead (₹40–80L) paired with an AI safety resilience score.",
-    tag: "Verified Indian Pay Scales",
-    accentColor: "from-teal-500 to-emerald-500",
+    badge: "Career Exploration",
+    whatYouSee: "Detailed profile breakdowns of matched career paths, showing daily responsibilities, core skills required, and verified progression benchmarks.",
+    plainMeaning: "An objective view of what working in these roles actually involves day-to-day, looking past coaching advertisements and social media hype.",
+    howItInforms: "Provides concrete, evidence-backed options to research in depth, compare against alternatives, and discuss openly with parents and mentors.",
+    whatItCannotEstablish: "It cannot guarantee college admission, hiring selection, or specific earnings. Success in any path depends on your effort and market conditions."
   },
   {
-    id: "page-11",
+    id: "execution-plan",
     pageNum: "Page 11",
-    title: "3-Year Action Plan",
-    subtitle: "Milestones & Hyped Degrees to Avoid",
+    title: "3-Year Execution Roadmap",
+    subtitle: "Sequenced milestones & development priorities",
     icon: Route,
     image: "/report/execution-plan.png",
-    popoutBadge: "Page 11 • Execution Roadmap",
-    popoutHeading: "Milestones & Careers to Avoid",
-    popoutText: "Month-by-month actions and entrance exams, plus hyped high-burnout degrees eliminated.",
-    tag: "Eliminates Wasted Degrees",
-    accentColor: "from-sky-600 to-indigo-600",
-  },
+    badge: "Structured Action",
+    whatYouSee: "A sequenced timeline organized into 1-month, 6-month, 1-year, and 3-year horizons, detailing core projects, skill bridges, and next steps.",
+    plainMeaning: "A practical action plan that converts high-level career ideas into tangible priorities you can begin working on immediately.",
+    howItInforms: "Helps you prioritize which entrance exams, courses, or projects to focus on first, preventing wasted time and unnecessary financial investments.",
+    whatItCannotEstablish: "It cannot substitute for your own sustained dedication and hard work. It gives you directional clarity, but you must drive the execution."
+  }
 ];
-
-const AUTO_ROTATE_INTERVAL = 5500; // 5.5 seconds per page
 
 export default function ReportDossierShowcase({ onZoomPdf }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const activePage = REPORT_PAGES[activeIndex];
-
-  // Auto-rotate effect
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % REPORT_PAGES.length);
-    }, AUTO_ROTATE_INTERVAL);
-
-    return () => clearInterval(timer);
-  }, [activeIndex]);
+  const activeComponent = REPORT_COMPONENTS[activeIndex];
+  const IconComponent = activeComponent.icon;
 
   return (
-    <div className="w-full">
-      {/* Main Showcase Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    <div className="w-full space-y-10">
+      
+      {/* 1. Component Selector Tabs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+        {REPORT_COMPONENTS.map((item, idx) => {
+          const isActive = idx === activeIndex;
+          const ItemIcon = item.icon;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveIndex(idx)}
+              className={`p-4 sm:p-5 rounded-2xl text-left border transition-all duration-200 flex items-start gap-3.5 relative overflow-hidden ${
+                isActive
+                  ? "bg-white dark:bg-slate-900 border-sky-500 shadow-md ring-2 ring-sky-500/20 text-slate-950 dark:text-white"
+                  : "bg-white/60 dark:bg-slate-900/40 border-slate-200/80 dark:border-white/5 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/15"
+              }`}
+            >
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                isActive
+                  ? "bg-sky-500/10 text-sky-600 dark:text-sky-400"
+                  : "bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400"
+              }`}>
+                <ItemIcon className="w-5 h-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                    isActive
+                      ? "bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300"
+                      : "bg-slate-100 dark:bg-white/5 text-slate-500"
+                  }`}>
+                    {item.pageNum}
+                  </span>
+                  <span className="text-xs text-slate-400 truncate">{item.badge}</span>
+                </div>
+                <h4 className="text-base font-bold text-slate-950 dark:text-white truncate">
+                  {item.title}
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                  {item.subtitle}
+                </p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* 2. Main Inspection Grid: 4-Point Explanation + Actual Readable Document Canvas */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
         
-        {/* Left Column: Simple Pill Navigation (matching reference design) */}
-        <div className="lg:col-span-5 order-2 lg:order-1">
-          <div className="p-4 sm:p-6 rounded-3xl bg-white dark:bg-[#07131e] border border-slate-200/90 dark:border-white/10 shadow-xl space-y-3">
-            <div className="flex items-center justify-between px-2 mb-2">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">
-                Sample Report Pages ({activeIndex + 1}/{REPORT_PAGES.length})
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-sky-600 dark:text-sky-400 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Auto-cycling
-              </span>
+        {/* Left Column: 4-Point Plain Language Explanation (as mandated by the brief) */}
+        <div className="lg:col-span-6 space-y-6">
+          
+          {/* Active Component Title */}
+          <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
+            <div>
+              <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">
+                <span>{activeComponent.pageNum} • {activeComponent.badge}</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white tracking-tight">
+                {activeComponent.title}
+              </h3>
             </div>
-
-            {/* List of tabs */}
-            <div className="space-y-2.5">
-              {REPORT_PAGES.map((page, idx) => {
-                const isActive = idx === activeIndex;
-                const IconComponent = page.icon;
-
-                return (
-                  <button
-                    key={page.id}
-                    onClick={() => setActiveIndex(idx)}
-                    className={`w-full text-left p-3.5 sm:p-4 rounded-2xl transition-all duration-300 relative overflow-hidden flex items-center justify-between group ${
-                      isActive
-                        ? "bg-gradient-to-r from-sky-500 via-sky-600 to-teal-500 text-white shadow-lg shadow-sky-500/25 scale-[1.01]"
-                        : "bg-slate-50 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/[0.08] border border-slate-200/60 dark:border-white/5"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3.5 min-w-0">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
-                        isActive
-                          ? "bg-white/20 text-white shadow-inner"
-                          : "bg-slate-200/70 dark:bg-white/10 text-slate-700 dark:text-slate-300 group-hover:text-sky-500"
-                      }`}>
-                        <IconComponent className="w-5 h-5" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
-                            isActive ? "bg-white/25 text-white" : "text-slate-500 dark:text-slate-400"
-                          }`}>
-                            {page.pageNum}
-                          </span>
-                        </div>
-                        <h4 className={`text-base font-serif font-bold truncate ${
-                          isActive ? "text-white" : "text-slate-900 dark:text-white"
-                        }`}>
-                          {page.title}
-                        </h4>
-                        <p className={`text-xs truncate ${
-                          isActive ? "text-sky-100" : "text-slate-500 dark:text-slate-400"
-                        }`}>
-                          {page.subtitle}
-                        </p>
-                      </div>
-                    </div>
-
-                    <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${
-                      isActive ? "text-white translate-x-0.5 opacity-100" : "text-slate-400 opacity-0 group-hover:opacity-100"
-                    }`} />
-
-                    {/* Active progress bar countdown */}
-                    {isActive && (
-                      <motion.div
-                        key={`progress-${activeIndex}`}
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: AUTO_ROTATE_INTERVAL / 1000, ease: "linear" }}
-                        className="absolute bottom-0 left-0 h-[3px] bg-white/40"
-                      />
-                    )}
-                  </button>
-                );
-              })}
+            <div className="w-12 h-12 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-500/20 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+              <IconComponent className="w-6 h-6" />
             </div>
+          </div>
 
-            {/* Micro CTA Box under the tabs */}
-            <div className="pt-3 border-t border-slate-200/80 dark:border-white/10 text-center">
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
-                Sample excerpts from the 15-page dossier
+          {/* The 4 Specific Brief Questions Answered */}
+          <div className="space-y-4">
+            
+            {/* 1. What the user will see */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-white/10 shadow-xs">
+              <div className="flex items-center gap-2.5 text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                <Eye className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+                <span>What You Will See</span>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                {activeComponent.whatYouSee}
               </p>
-              <Link
-                href="/signup"
-                className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 font-bold text-xs sm:text-sm transition-all shadow-md active:scale-[0.99]"
-              >
-                <span>Unlock Your Full 15-Page Dossier (₹999)</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+            </div>
+
+            {/* 2. What it means in plain language */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-white/10 shadow-xs">
+              <div className="flex items-center gap-2.5 text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                <MessageSquare className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
+                <span>What It Means In Plain Language</span>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                {activeComponent.plainMeaning}
+              </p>
+            </div>
+
+            {/* 3. How it can inform their decision */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-white/10 shadow-xs">
+              <div className="flex items-center gap-2.5 text-xs font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                <Target className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                <span>How It Informs Your Decision</span>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                {activeComponent.howItInforms}
+              </p>
+            </div>
+
+            {/* 4. What it cannot establish (Grounded honest limitation) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20 shadow-xs">
+              <div className="flex items-center gap-2.5 text-xs font-mono font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-2">
+                <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                <span>What It Cannot Establish</span>
+              </div>
+              <p className="text-sm text-amber-900/80 dark:text-amber-200/90 leading-relaxed">
+                {activeComponent.whatItCannotEstablish}
+              </p>
             </div>
 
           </div>
+
+          {/* Prominent Action CTAs */}
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <button
+              onClick={() => onZoomPdf?.(activeComponent.image)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 font-bold text-sm transition-all shadow-md active:scale-[0.99]"
+            >
+              <Maximize2 className="w-4 h-4" />
+              <span>Preview the Sample Report</span>
+            </button>
+
+            <Link
+              href="/signup"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition-all shadow-md active:scale-[0.99]"
+            >
+              <span>Get Your Report (₹999)</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
         </div>
 
-        {/* Right Column: Realistic Phone Mockup Display + Popout Card */}
-        <div className="lg:col-span-7 order-1 lg:order-2 flex justify-center">
-          <div className="relative w-full max-w-[360px] sm:max-w-[400px] pt-4 pb-14 sm:pb-16 flex justify-center">
+        {/* Right Column: Actual Readable Document Canvas (No tiny device mockups) */}
+        <div className="lg:col-span-6">
+          <div className="sticky top-24 space-y-3">
             
-            {/* Ambient Glow behind the phone */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-80 h-96 bg-gradient-to-tr from-sky-500/20 via-teal-500/20 to-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
-
-            {/* SMARTPHONE DEVICE FRAME (Realistic Modern iPhone) */}
-            <div className="relative w-[290px] xs:w-[310px] sm:w-[335px] rounded-[48px] sm:rounded-[52px] p-3 sm:p-3.5 bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 border-[3px] border-slate-600/70 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6),0_0_35px_rgba(14,165,233,0.15)] ring-1 ring-white/20 select-none">
+            {/* Document Frame */}
+            <div className="rounded-3xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-white/10 shadow-2xl overflow-hidden">
               
-              {/* Hardware buttons simulation */}
-              <div className="absolute -left-1.5 top-24 w-1 h-7 bg-slate-600 rounded-l" />
-              <div className="absolute -left-1.5 top-34 w-1 h-10 bg-slate-600 rounded-l" />
-              <div className="absolute -left-1.5 top-48 w-1 h-10 bg-slate-600 rounded-l" />
-              <div className="absolute -right-1.5 top-28 w-1 h-14 bg-slate-600 rounded-r" />
+              {/* Document Header Bar */}
+              <div className="px-4 py-3 bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-white/10 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-sky-500" />
+                  <span className="font-semibold text-slate-900 dark:text-white">WhatAfter Dossier</span>
+                  <span className="text-slate-400">•</span>
+                  <span className="font-mono text-slate-500 dark:text-slate-400">{activeComponent.pageNum}</span>
+                </div>
+                <button
+                  onClick={() => onZoomPdf?.(activeComponent.image)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-white/10 hover:bg-sky-50 dark:hover:bg-sky-500/20 text-slate-800 dark:text-white text-xs font-semibold transition-colors border border-slate-200 dark:border-white/10"
+                >
+                  <ZoomIn className="w-3.5 h-3.5 text-sky-500" />
+                  <span>Enlarge Page</span>
+                </button>
+              </div>
 
-              {/* SCREEN CONTAINER */}
+              {/* Clickable Readable Document Image */}
               <div 
-                onClick={() => onZoomPdf?.(activePage.image)}
-                className="relative rounded-[38px] sm:rounded-[42px] overflow-hidden bg-slate-950 border border-slate-800/80 aspect-[9/19] h-[550px] xs:h-[580px] sm:h-[620px] flex flex-col cursor-zoom-in group"
+                onClick={() => onZoomPdf?.(activeComponent.image)}
+                className="relative aspect-[3/4] w-full bg-slate-50 dark:bg-slate-950 overflow-hidden cursor-zoom-in group"
               >
-                
-                {/* 1. iOS Status Bar */}
-                <div className="relative z-30 pt-3 px-6 pb-1 flex items-center justify-between text-white text-[11px] font-semibold bg-slate-950/90 backdrop-blur-sm">
-                  <span>09:41</span>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeComponent.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={activeComponent.image}
+                      alt={activeComponent.title}
+                      fill
+                      className="object-contain object-top group-hover:scale-[1.015] transition-transform duration-300"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
 
-                  {/* Dynamic Island */}
-                  <div className="w-24 h-5 bg-black rounded-full flex items-center justify-end pr-2 ring-1 ring-white/10">
-                    <span className="w-2.5 h-2.5 rounded-full bg-slate-900 ring-1 ring-slate-800 inline-block" />
-                  </div>
-
-                  {/* Right Icons */}
-                  <div className="flex items-center gap-1.5 text-slate-200">
-                    <Signal className="w-3 h-3 stroke-[2.5]" />
-                    <Wifi className="w-3 h-3 stroke-[2.5]" />
-                    <Battery className="w-3.5 h-3.5 stroke-[2.5]" />
-                  </div>
+                {/* Bottom Overlay Hint */}
+                <div className="absolute inset-x-0 bottom-0 py-3 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent flex items-center justify-center pointer-events-none">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-white text-xs font-medium border border-white/10">
+                    <ZoomIn className="w-3 h-3 text-sky-400" />
+                    <span>Click anywhere to inspect high-resolution page</span>
+                  </span>
                 </div>
-
-                {/* 2. In-App Mini Header */}
-                <div className="relative z-20 px-4 py-2 border-b border-white/10 bg-slate-950/80 backdrop-blur-md flex items-center justify-between text-white text-xs">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
-                    <span className="font-mono text-[10px] text-sky-300 font-bold uppercase tracking-wider">
-                      CareeRight • {activePage.pageNum}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 text-[10px] text-slate-300 bg-white/10 px-2 py-0.5 rounded-full font-mono">
-                    <ZoomIn className="w-3 h-3" />
-                    <span>Zoom</span>
-                  </div>
-                </div>
-
-                {/* 3. Report PDF Page Content inside Phone Viewport */}
-                <div className="relative flex-1 w-full bg-slate-950 overflow-hidden">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activePage.id}
-                      initial={{ opacity: 0, scale: 0.98 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.01 }}
-                      transition={{ duration: 0.35, ease: "easeInOut" }}
-                      className="relative w-full h-full"
-                    >
-                      <Image
-                        src={activePage.image}
-                        alt={activePage.popoutHeading}
-                        fill
-                        className="object-contain object-top group-hover:scale-[1.03] transition-transform duration-500"
-                        sizes="(max-width: 640px) 300px, 350px"
-                        priority
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {/* Subtle hover gradient indicator on tap */}
-                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/90 to-transparent pointer-events-none flex items-end justify-center pb-2">
-                    <span className="text-[10px] font-mono text-slate-400 group-hover:text-sky-300 transition-colors">
-                      Tap phone screen to expand
-                    </span>
-                  </div>
-                </div>
-
-                {/* 4. iOS Home Indicator Bar */}
-                <div className="relative z-20 py-2 bg-slate-950 flex justify-center">
-                  <div className="w-28 h-1 bg-white/40 rounded-full" />
-                </div>
-
               </div>
 
             </div>
 
-            {/* POPOUT CALLOUT BOX (Overlapping the phone card, exactly like the reference image) */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`popout-${activePage.id}`}
-                initial={{ opacity: 0, y: 16, scale: 0.94 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.96 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="absolute -bottom-2 sm:-bottom-4 -left-3 xs:-left-5 sm:-left-8 lg:-left-12 z-40 w-[270px] xs:w-[290px] sm:w-[320px] p-4 sm:p-5 rounded-3xl bg-white/95 dark:bg-[#0c1e2e]/95 text-slate-900 dark:text-white shadow-2xl border-2 border-slate-200/90 dark:border-white/15 backdrop-blur-xl"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-sky-500 to-teal-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-sky-500/30">
-                    <Sparkles className="w-4 h-4" />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 font-bold block mb-0.5">
-                      {activePage.popoutBadge}
-                    </span>
-                    <h5 className="text-sm sm:text-base font-serif font-bold leading-tight mb-1 text-slate-950 dark:text-white">
-                      {activePage.popoutHeading}
-                    </h5>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-2.5">
-                      {activePage.popoutText}
-                    </p>
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/20 text-sky-700 dark:text-sky-300 text-[10px] font-mono font-bold">
-                      <CheckCircle2 className="w-3 h-3 text-sky-500" />
-                      <span>{activePage.tag}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+            {/* Mobile helper note */}
+            <p className="text-center text-xs text-slate-500 dark:text-slate-400">
+              Readable preview directly from the official 15-page dossier. Tap to inspect in full screen.
+            </p>
 
           </div>
         </div>
 
       </div>
+
     </div>
   );
 }

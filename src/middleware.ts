@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   );
 
   const isPublicRoute =
-    ["/api", "/privacy"].some((route) => pathname.startsWith(route)) ||
+    ["/api", "/privacy", "/methodology"].some((route) => pathname.startsWith(route)) ||
     (pathname.startsWith("/blog") && pathname !== "/blog/new") ||
     pathname === "/";
 

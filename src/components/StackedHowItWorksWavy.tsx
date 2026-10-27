@@ -80,19 +80,15 @@ export default function StackedHowItWorksWavy() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-sky-500/5 dark:bg-sky-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       {/* Section Header */}
-      <div className="text-center mb-20 relative">
-        <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-[110px] sm:text-[160px] md:text-[200px] font-serif font-black text-slate-900/[0.03] dark:text-white/[0.03] pointer-events-none select-none -z-10 leading-none">
-          03
-        </span>
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400 text-xs font-semibold uppercase tracking-widest mb-3.5 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>The Methodology</span>
+      <div className="text-center mb-16 sm:mb-20 relative">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 text-xs font-semibold uppercase tracking-wider mb-4">
+          <span>How It Works</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold mb-4 text-slate-950 dark:text-white tracking-tight">
-          How WhatAfter Works
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 dark:text-white tracking-tight leading-[1.15]">
+          From confusion to a clearer next step.
         </h2>
-        <p className="text-slate-600 dark:text-[#aab7c0] max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-          From confusing career noise to an objective, sequenced career plan in three structured, connected steps.
+        <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          The goal isn&apos;t to decide your entire future in one sitting. It&apos;s to help you make your next decision with better information.
         </p>
       </div>
 
@@ -100,7 +96,7 @@ export default function StackedHowItWorksWavy() {
       <div className="relative max-w-4xl mx-auto space-y-0">
         
         {/* ======================================================== */}
-        {/* STEP 1: SIGNAL CAPTURE (Left on desktop)                */}
+        {/* STEP 1: UNDERSTAND YOURSELF (Left on desktop)            */}
         {/* ======================================================== */}
         <motion.div 
           style={{ filter: step1Filter, opacity: step1Opacity, willChange: "filter, opacity" }}
@@ -118,33 +114,33 @@ export default function StackedHowItWorksWavy() {
             <div className="flex items-center justify-between mb-5">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">
                 <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-                <span>Step 01 • Evaluation</span>
+                <span>Step 01 • Discovery</span>
               </div>
               <div className="w-12 h-12 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold shadow-xs group-hover:scale-110 transition-transform">
                 <BrainCircuit className="w-6 h-6" />
               </div>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold mb-3 text-slate-950 dark:text-white">
-              Answer 80 Real Scenarios
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-slate-950 dark:text-white tracking-tight">
+              Step 1 — Understand yourself
             </h3>
-            <p className="text-base sm:text-lg text-slate-700 dark:text-[#97a6b2] mb-6 font-medium">
-              30 minutes • Zero exam anxiety • Available in English &amp; हिंदी
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+              Answer 80 real-life scenarios designed to explore your preferences, interests and ways of approaching different situations.
             </p>
 
             {/* Micro-telemetry breakdown pills */}
-            <div className="grid sm:grid-cols-3 gap-3 pt-5 border-t border-slate-200/80 dark:border-white/10 text-sm sm:text-base">
-              <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold">
-                <CheckCircle2 className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0" />
-                <span>80 Real Dilemmas</span>
+            <div className="grid sm:grid-cols-3 gap-3 pt-5 border-t border-slate-200/80 dark:border-white/10 text-sm">
+              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+                <span>80 Scenarios</span>
               </div>
-              <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold">
-                <Languages className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0" />
+              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+                <Languages className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
                 <span>English &amp; हिंदी</span>
               </div>
-              <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold">
-                <CheckCircle2 className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0" />
-                <span>Zero Exam Anxiety</span>
+              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+                <span>No Stress or Anxiety</span>
               </div>
             </div>
 
@@ -152,13 +148,13 @@ export default function StackedHowItWorksWavy() {
             <div className="flex md:hidden items-center justify-between p-4 rounded-2xl bg-sky-50 dark:bg-white/[0.04] border border-sky-200/80 dark:border-white/10 mt-5 shadow-xs">
               <div>
                 <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block">
-                  No Exam Stress
+                  Practical Scenarios
                 </span>
                 <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                   No right or wrong answers
                 </span>
               </div>
-              <div className="text-2xl font-serif font-black text-sky-600 dark:text-sky-400">
+              <div className="text-xl font-bold text-sky-600 dark:text-sky-400">
                 80 Scenarios
               </div>
             </div>
@@ -167,13 +163,13 @@ export default function StackedHowItWorksWavy() {
           {/* Right Teaser Badge for Step 1 */}
           <div className="md:col-span-4 hidden md:flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 space-y-3">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">
-              No Right or Wrong Answers
+              Real Situations
             </span>
-            <div className="text-4xl font-serif font-black text-sky-600 dark:text-sky-400">
+            <div className="text-3xl font-black text-sky-600 dark:text-sky-400">
               80 Scenarios
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              &ldquo;A simple 30-minute test to understand what you naturally enjoy and excel at.&rdquo;
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              Everyday school, college, and workplace dilemmas that reflect how you naturally think.
             </p>
           </div>
         </motion.div>
@@ -233,7 +229,7 @@ export default function StackedHowItWorksWavy() {
         </div>
 
         {/* ======================================================== */}
-        {/* STEP 2: COGNITIVE MODELING (Right on desktop)           */}
+        {/* STEP 2: EXPLORE YOUR OPTIONS (Right on desktop)          */}
         {/* ======================================================== */}
         <motion.div 
           style={{ filter: step2Filter, opacity: step2Opacity, willChange: "filter, opacity" }}
@@ -242,13 +238,13 @@ export default function StackedHowItWorksWavy() {
           {/* Left Teaser Badge for Step 2 */}
           <div className="md:col-span-4 hidden md:flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 space-y-3 order-2 md:order-1">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">
-              Real Job Market Check
+              Uncover Patterns
             </span>
-            <div className="text-4xl font-serif font-black text-teal-600 dark:text-teal-400">
-              900+ Careers
+            <div className="text-3xl font-black text-teal-600 dark:text-teal-400">
+              Clear Options
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              &ldquo;We check actual Indian salaries and identify which jobs are safe from AI automation.&rdquo;
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              Understand the consistent patterns in what you enjoy and how you make choices.
             </p>
           </div>
 
@@ -271,26 +267,26 @@ export default function StackedHowItWorksWavy() {
               </div>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold mb-3 text-slate-950 dark:text-white">
-              Match With 900+ Indian Careers
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-slate-950 dark:text-white tracking-tight">
+              Step 2 — Explore your options
             </h3>
-            <p className="text-base sm:text-lg text-slate-700 dark:text-[#97a6b2] mb-6 font-medium">
-              Big Five + Holland RIASEC • Real Salaries • AI-Resilience Index
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+              Understand the patterns in your responses and explore career directions that may be worth considering.
             </p>
 
             {/* Micro-telemetry breakdown pills */}
-            <div className="grid sm:grid-cols-3 gap-3 pt-5 border-t border-slate-200/80 dark:border-white/10 text-sm sm:text-base">
-              <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold">
-                <ShieldCheck className="w-5 h-5 text-teal-600 dark:text-teal-400 shrink-0" />
-                <span>Safe From AI</span>
+            <div className="grid sm:grid-cols-3 gap-3 pt-5 border-t border-slate-200/80 dark:border-white/10 text-sm">
+              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
+                <span>Pattern Recognition</span>
               </div>
-              <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold">
-                <TrendingUp className="w-5 h-5 text-teal-600 dark:text-teal-400 shrink-0" />
-                <span>Real Indian Salaries</span>
+              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
+                <span>Realistic Horizons</span>
               </div>
-              <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold">
-                <CheckCircle2 className="w-5 h-5 text-teal-600 dark:text-teal-400 shrink-0" />
-                <span>900+ Jobs Screened</span>
+              <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
+                <span>No Generic Labels</span>
               </div>
             </div>
 
@@ -298,14 +294,14 @@ export default function StackedHowItWorksWavy() {
             <div className="flex md:hidden items-center justify-between p-4 rounded-2xl bg-teal-50 dark:bg-white/[0.04] border border-teal-200/80 dark:border-white/10 mt-5 shadow-xs">
               <div>
                 <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block">
-                  Real Job Market Check
+                  Directional Fit
                 </span>
                 <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">
-                  Salaries &amp; AI-safety
+                  Patterns in your choices
                 </span>
               </div>
-              <div className="text-2xl font-serif font-black text-teal-600 dark:text-teal-400">
-                900+ Careers
+              <div className="text-xl font-bold text-teal-600 dark:text-teal-400">
+                Clear Options
               </div>
             </div>
           </motion.div>
@@ -366,7 +362,7 @@ export default function StackedHowItWorksWavy() {
         </div>
 
         {/* ======================================================== */}
-        {/* STEP 3: ACTION & DELIVERY (Full-width Center Anchor)     */}
+        {/* STEP 3: PLAN YOUR NEXT STEP (Full-width Center Anchor)   */}
         {/* ======================================================== */}
         <motion.div 
           style={{ filter: step3Filter, opacity: step3Opacity, willChange: "filter, opacity" }}
@@ -384,73 +380,58 @@ export default function StackedHowItWorksWavy() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/15 text-sky-700 dark:text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">
                 <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-                <span>Step 03 • Action &amp; Delivery</span>
+                <span>Step 03 • Action &amp; Priorities</span>
               </div>
               <div className="w-12 h-12 rounded-2xl bg-sky-500/20 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold shadow-xs group-hover:scale-110 transition-transform">
                 <Route className="w-6 h-6" />
               </div>
             </div>
 
-            <h3 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-slate-950 dark:text-white">
-              Get Your 15-Page Career Plan
+            <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-slate-950 dark:text-white tracking-tight">
+              Step 3 — Plan your next step
             </h3>
-            <p className="text-base sm:text-lg text-slate-700 dark:text-[#97a6b2] mb-6 font-medium">
-              Top 5 Best-Fit Careers • High-Risk Eliminations • 3-Year Action Plan
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+              Use your personalized report to research options, identify development priorities and make better-informed decisions.
             </p>
-
-            {/* Mobile Companion Stat Badge */}
-            <div className="flex md:hidden items-center justify-between p-4 rounded-2xl bg-sky-50 dark:bg-white/[0.04] border border-sky-200/80 dark:border-white/10 mb-6 shadow-xs">
-              <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block">
-                  Actionable Roadmap
-                </span>
-                <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">
-                  Month-by-month clarity
-                </span>
-              </div>
-              <div className="text-2xl font-serif font-black text-sky-600 dark:text-sky-400">
-                15 Pages
-              </div>
-            </div>
 
             {/* Compounding deliverables grid */}
             <div className="grid sm:grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 dark:border-white/10">
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-white/5 space-y-1.5">
                 <b className="font-bold text-slate-950 dark:text-white text-base block flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
-                  <span>3-Year Action Plan</span>
+                  <span>Research Options</span>
                 </b>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                  Milestones for Month 1, Month 6, Year 1, and Year 3.
-                </p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-white/5 space-y-1.5">
-                <b className="font-bold text-red-600 dark:text-red-400 text-base block flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                  <span>Careers to Avoid</span>
-                </b>
-                <p className="text-sm text-slate-600 dark:text-slate-300">
-                  Hyped coaching paths that clash with your traits.
+                  Know which pathways and questions deserve your focused attention first.
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-white/5 space-y-1.5">
                 <b className="font-bold text-teal-600 dark:text-teal-400 text-base block flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
-                  <span>Parent Discussion Guide</span>
+                  <span>Development Priorities</span>
                 </b>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                  Zero-conflict talking points for the dinner table.
+                  Identify specific skills, experiences, and coursework to build towards.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-200 dark:border-white/5 space-y-1.5">
+                <b className="font-bold text-sky-600 dark:text-sky-400 text-base block flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
+                  <span>Informed Decisions</span>
+                </b>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  Discuss your path with parents and mentors with objective confidence.
                 </p>
               </div>
             </div>
 
-            {/* Seamless Transition Indicator to the 15-Page Report */}
+            {/* Seamless Transition Indicator to the Report Section */}
             <div className="mt-8 pt-6 border-t border-slate-200/60 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-2">
                 <ArrowDown className="w-4 h-4 text-sky-500 animate-bounce" />
-                <span>Explore the live 15-Page dossier chapters directly below ↓</span>
+                <span>See what you&apos;ll receive inside your report directly below ↓</span>
               </div>
               <a 
                 href="#inside-report"
