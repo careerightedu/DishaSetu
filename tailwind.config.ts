@@ -11,6 +11,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"DM Sans"', "system-ui", "sans-serif"],
+        heading: ['"Bricolage Grotesque"', '"DM Sans"', "sans-serif"],
+      },
       colors: {
         emerald: colors.sky,
         teal: colors.cyan,

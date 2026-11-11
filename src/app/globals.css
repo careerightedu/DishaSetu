@@ -16,6 +16,18 @@
     --font-sans: var(--font-sans);
   }
   :root {
+    --brand-bg: #F4F7FC;
+    --brand-card: #ffffff;
+    --brand-ink: #002058;
+    --brand-muted: #3F5377;
+    --brand-navy: #002060;
+    --brand-on-navy: #EAF2FB;
+    --brand-accent: #0B63E0;
+    --brand-on-accent: #ffffff;
+    --brand-hl: #A9D2FF;
+    --brand-line: #D3DEEF;
+    --brand-ph: #E4ECF8;
+
     --background: hsl(210, 40%, 98%); /* #f8fafc slate-50 */
     --foreground: hsl(222.2, 47.4%, 11.2%); /* #0f172a slate-900 */
     --card: hsl(0, 0%, 100%); /* #ffffff pure white */
@@ -52,6 +64,18 @@
   }
 
   .dark {
+    --brand-bg: #000F2E;
+    --brand-card: #07204F;
+    --brand-ink: #EAF2FB;
+    --brand-muted: #A9C0E0;
+    --brand-navy: #0B2F80;
+    --brand-on-navy: #EAF2FB;
+    --brand-accent: #5AAEFF;
+    --brand-on-accent: #00123A;
+    --brand-hl: #1D4FB8;
+    --brand-line: #17356F;
+    --brand-ph: #0B2A63;
+
     --background: hsl(222.2, 47.4%, 11.2%); /* #0f172a Slate 900 */
     --foreground: hsl(210, 40%, 98%);
     --card: hsl(222.2, 47.4%, 11.2%);
@@ -173,4 +197,131 @@
     margin-left: 100%;
   }
 }
+
+/* ============================================================ */
+/* WhatAfter Redesign Specific Styles & Neo-Brutalist Utilities  */
+/* ============================================================ */
+
+.w-redesign {
+  width: min(1120px, 100% - 40px);
+  margin-inline: auto;
+}
+
+.highlight-ink {
+  background: linear-gradient(transparent 62%, var(--brand-hl) 62% 92%, transparent 92%);
+}
+
+.btn-pri {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: var(--brand-accent);
+  color: var(--brand-on-accent);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+  font-family: var(--font-sans), "DM Sans", sans-serif;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s, background 0.2s;
+}
+.btn-pri:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 rgba(0, 0, 0, 0.25);
+}
+.btn-pri:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-sec {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid currentColor;
+  cursor: pointer;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans), "DM Sans", sans-serif;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s, color 0.2s;
+}
+.btn-sec:hover {
+  background: var(--brand-ink);
+  color: var(--brand-bg);
+}
+
+.dark-brand-section {
+  --brand-accent: #6CB6FF;
+  --brand-on-accent: #002060;
+  background: var(--brand-navy);
+  color: var(--brand-on-navy);
+}
+.dark-brand-section .lead-text,
+.dark-brand-section p {
+  color: #C6DBF3;
+}
+
+.pricing-card-redesign {
+  background: #ffffff;
+  color: #002058;
+  border-radius: 28px;
+  padding: 2.25rem 2rem;
+  box-shadow: 12px 12px 0 #589CF5;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dialogue Quote Cards with playful hover tilt */
+.qc {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  padding: 22px;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  user-select: none;
+}
+.qc:hover,
+.qc:focus-visible {
+  transform: rotate(-1.8deg) translateY(-6px);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.35);
+}
+.qc:nth-child(even):hover,
+.qc:nth-child(even):focus-visible {
+  transform: rotate(1.8deg) translateY(-6px);
+}
+.qc:active {
+  transform: rotate(0deg) translateY(-2px) scale(0.98);
+}
+.qc.tilted-odd {
+  transform: rotate(-2.5deg) translateY(-6px);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.qc.tilted-even {
+  transform: rotate(2.5deg) translateY(-6px);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Sticky mobile CTA bar */
+.sticky-mobile-bar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  transform: translateY(140%);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sticky-mobile-bar.active {
+  transform: translateY(0);
+}
+
 
