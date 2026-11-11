@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import ThemeToggle from "@/components/ThemeToggle";
+import InteractiveReportDossier from "@/components/InteractiveReportDossier";
 
 export default function LandingPage() {
   const { user } = useAuth();
@@ -717,54 +718,9 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* Right Column: Real Dossier Carousel Preview with Zoom */}
-            <div className="bg-[var(--brand-card)] border-2 border-[var(--brand-ink)] rounded-[24px] p-5 sm:p-6 shadow-[8px_8px_0_var(--brand-navy)] dark:shadow-[8px_8px_0_#0F387E] flex flex-col justify-between">
-              
-              {/* Carousel Tab Buttons */}
-              <div className="flex items-center gap-2 pb-4 border-b border-[var(--brand-line)] overflow-x-auto">
-                {reportPages.map((page, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setIsReportPaused(true);
-                      setActiveReportPage(idx);
-                    }}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
-                      activeReportPage === idx
-                        ? "bg-[var(--brand-navy)] dark:bg-[var(--brand-accent)] text-white dark:text-[#00123A] shadow-xs"
-                        : "bg-[var(--brand-bg)] text-[var(--brand-muted)] hover:text-[var(--brand-ink)]"
-                    }`}
-                  >
-                    Page {idx === 0 ? "03" : idx === 1 ? "07" : "11"}
-                  </button>
-                ))}
-              </div>
-
-              {/* Active Page Preview with Lightbox Trigger */}
-              <div className="relative mt-4 group">
-                <div 
-                  onClick={() => {
-                    setIsReportPaused(true);
-                    setZoomImage(reportPages[activeReportPage].src);
-                  }}
-                  className="relative aspect-[3/4] max-h-[420px] w-full rounded-xl overflow-hidden border border-[var(--brand-line)] cursor-zoom-in bg-white dark:bg-[#040C1A] flex items-center justify-center shadow-inner"
-                >
-                  <Image
-                    src={reportPages[activeReportPage].src}
-                    alt={reportPages[activeReportPage].title}
-                    fill
-                    className="object-contain p-2"
-                    sizes="(max-width: 768px) 100vw, 500px"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-3 py-1.5 rounded-full bg-white text-xs font-bold text-slate-900 shadow-md flex items-center gap-1.5">
-                      <ZoomIn className="w-3.5 h-3.5" /> Tap to zoom
-                    </span>
-                  </div>
-                </div>
-              </div>
-
+            {/* Right Column: Interactive Vector Dossier with Trait Radar & Custom Charts */}
+            <div className="bg-[var(--brand-card)] border-2 border-[var(--brand-ink)] rounded-[24px] p-4 sm:p-6 shadow-[8px_8px_0_var(--brand-navy)] dark:shadow-[8px_8px_0_#0F387E] flex flex-col justify-between">
+              <InteractiveReportDossier />
             </div>
 
           </div>
