@@ -40,13 +40,13 @@ export default function InteractiveReportDossier() {
         {activeTab === 0 && (
           <div className="space-y-4 animate-in fade-in duration-300">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
-                  03 • COGNITIVE PROFILE
-                </span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-400 tracking-wider">CONFIDENTIAL · 2026</span>
+            <div className="flex flex-wrap items-center justify-between gap-y-1.5 border-b border-slate-800 pb-2.5">
+              <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-800 whitespace-nowrap">
+                03 • COGNITIVE PROFILE
+              </span>
+              <span className="text-[10px] font-mono text-slate-400 tracking-wider whitespace-nowrap">
+                CONFIDENTIAL · 2026
+              </span>
             </div>
 
             <div>
@@ -191,21 +191,21 @@ export default function InteractiveReportDossier() {
         {activeTab === 1 && (
           <div className="space-y-4 animate-in fade-in duration-300">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-sky-950 text-sky-400 border border-sky-800">
-                  07 • CAREER DEEP-DIVE
-                </span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-400 tracking-wider">MATCH RANK: #01</span>
+            <div className="flex flex-wrap items-center justify-between gap-y-1.5 border-b border-slate-800 pb-2.5">
+              <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-sky-950 text-sky-400 border border-sky-800 whitespace-nowrap">
+                07 • CAREER DEEP-DIVE
+              </span>
+              <span className="text-[10px] font-mono text-slate-400 tracking-wider whitespace-nowrap">
+                MATCH RANK: #01
+              </span>
             </div>
 
             <div>
-              <div className="flex items-baseline justify-between">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h3 className="font-heading font-extrabold text-base sm:text-lg text-white tracking-tight">
                   Systems Architect & AI Engineering
                 </h3>
-                <span className="text-xs font-mono font-extrabold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+                <span className="text-xs font-mono font-extrabold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800 whitespace-nowrap">
                   94% FIT
                 </span>
               </div>
@@ -261,13 +261,13 @@ export default function InteractiveReportDossier() {
         {activeTab === 2 && (
           <div className="space-y-4 animate-in fade-in duration-300">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-purple-950 text-purple-400 border border-purple-800">
-                  11 • 3-YEAR ACTION PLAN
-                </span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-400 tracking-wider">EXECUTION TIMELINE</span>
+            <div className="flex flex-wrap items-center justify-between gap-y-1.5 border-b border-slate-800 pb-2.5">
+              <span className="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-purple-950 text-purple-400 border border-purple-800 whitespace-nowrap">
+                11 • 3-YEAR ACTION PLAN
+              </span>
+              <span className="text-[10px] font-mono text-slate-400 tracking-wider whitespace-nowrap">
+                EXECUTION TIMELINE
+              </span>
             </div>
 
             <div>
